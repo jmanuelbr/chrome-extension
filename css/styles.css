@@ -1,0 +1,39 @@
+.parent--container {
+    position: absolute;
+    top:0px;
+    left:0;
+    margin: 15px;
+    font-size: 80%;
+    color: #777;
+    max-width: 260px;
+    font-family: "Open Sans"
+}
+
+.extension--table {
+    border: 1px solid #DDD;
+    padding: 4px;
+    border-radius: 3px;
+    margin-top: 2px;
+}
+.extension--row {
+    display: table;
+}
+
+.extension--cell {
+    display: table-cell;
+    padding: 0 4px;
+}
+.currency--value {
+    font-weight: 600;
+}
+
+.news--row { 
+    margin-bottom: 6px;
+    font-family: "Open Sans"
+}
+
+.news--table {
+    max-height: 300px;
+    overflow-y: scroll;
+    font-size: 115%;
+}
