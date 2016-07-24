@@ -57,7 +57,7 @@ xhr.onreadystatechange = function(resp) {
       $('#currency-table').append(currencyTable);
       
   }
-}
+};
 xhr.send();
 
 // ******************************************************************
@@ -67,7 +67,13 @@ xhr.send();
 var isTodayNews = function(date, today) {
     return (today.getMonth() == date.getMonth() && 
         today.getDate() == date.getDate());
-}
+};
+
+var isNew = function(date, today) {
+    var hours = Math.abs(today - date) / 36e5; //60*60*1000
+    console.log(hours);
+    return (hours <= 1);
+};
 
 var findUrl = function(text) {
     var source = (text || '').toString();
@@ -80,7 +86,7 @@ var findUrl = function(text) {
         break;
     }
     return url;
-}
+};
 
 var theGuardianFeed = "https://www.theguardian.com/uk/rss";
 var xhr2 = new XMLHttpRequest();
@@ -101,7 +107,8 @@ xhr2.onreadystatechange = function(resp) {
         if (isTodayNews(date, today)) {
             todayNews.push({
                 "title" : title,
-                "link" : link
+                "link" : link,
+                "isNew" : isNew(date, today)
             });    
         }
     });
@@ -109,7 +116,8 @@ xhr2.onreadystatechange = function(resp) {
     var allNews = "";
     todayNews.forEach(function(entry) {
         allNews += '<a href="' + entry.link + '" target="_blank">' +
-                '<div class="extension--row news--row text-left">' +
+                '<div class="extension--row news--row text-left hvr-push">' +
+                ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/new.png') + '" height="16px"/></div>'):'') +
                     '<div class="extension--cell">'+ entry.title + '</div>' +
                 '</div>' +
             '</a><hr class="news--row--separator">';
@@ -120,7 +128,7 @@ xhr2.onreadystatechange = function(resp) {
                     '</div>';
     $('#news-table').append(allNews);  
   }
-}
+};
 xhr2.send();
 
 
