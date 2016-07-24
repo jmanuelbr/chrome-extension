@@ -81,6 +81,15 @@
     padding: 7px 3px;
 }
 
+.news--table::-webkit-scrollbar {
+    width: 6px;
+}
+ 
+.news--table::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 1px solid #CCC;
+}
+
 .is--new {
     position: relative;
     top: 4px;
