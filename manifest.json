@@ -7,8 +7,8 @@
     "persistent": false,
     "scripts": ["js/scripts.js"]
   },
-  "permissions": ["http://mysafeinfo.com/*", "https://www.theguardian.com/*", "https://rss.sciencedaily.com/top.xml"],
-  "web_accessible_resources": ["assets/ukeur.jpg", "assets/new.png", "assets/theguardian.png", "assets/science.png", "*.ttf"],  
+  "permissions": ["http://mysafeinfo.com/*", "https://www.theguardian.com/*", "https://rss.sciencedaily.com/top.xml", "https://feeds.bbci.co.uk/news/rss.xml?edition=uk*"],
+  "web_accessible_resources": ["assets/ukeur.jpg", "assets/new.png", "assets/theguardian.png", "assets/science.png", "assets/bbc-news.jpg", "*.ttf"],  
   "browser_action": {
     "default_title": "Jose Extension",
     "default_icon": "assets/icon.png",

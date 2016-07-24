@@ -37,12 +37,14 @@ var mydiv='<div class="parent--container" id="parent-container">' +
             '<div id="tab-container">' +
                 '<ul class="tabs-menu">' +
                     '<li class="current tab1--li--class"><a href="#tab-1"><img class="img--tabs" src="'+ chrome.extension.getURL('assets/theguardian.png') + '"/>News</a></li>' +
-                    '<li class="tab2--li--class"><a href="#tab-2"><img class="img--tabs" src="'+ chrome.extension.getURL('assets/science.png') + '"/>Science</a></li>' +
+                    '<li class="tab2--li--class"><a href="#tab-2"><img class="img--tabs" src="'+ chrome.extension.getURL('assets/bbc-news.jpg') + '"/>BBC-News</a></li>' +
+                    '<li class="tab2--li--class"><a href="#tab-3"><img class="img--tabs" src="'+ chrome.extension.getURL('assets/science.png') + '"/>Science</a></li>' +
                 '</ul>' +
             '</div>' +
             '<div class="tab">' +
                 '<div id="tab-1" class="tab-content"></div>' +
                 '<div id="tab-2" class="tab-content"></div>' +
+                '<div id="tab-3" class="tab-content"></div>' +
             '</div>' +
         '</div>' +
     '</div>';
@@ -204,9 +206,66 @@ xhr3.onreadystatechange = function(resp) {
     scienceNews = '<div class="news--table">' +
                     scienceNews +
                     '</div>';
-    $('#tab-2').append(scienceNews); 
+    $('#tab-3').append(scienceNews); 
   }
 };
 xhr3.send();
+
+// ******************************************************************
+//  BBC tab
+// ******************************************************************
+
+var slashDot = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
+var xhr4 = new XMLHttpRequest();
+xhr4.open("GET", slashDot, true);
+xhr4.onreadystatechange = function(resp) {
+  if (xhr4.readyState == 4) {
+      var data = xhr4.responseText;
+      
+      var today = new Date();
+      var todayNews = [];
+      
+      $(data).find("item").each(function () {
+        var el = $(this);
+        
+        var title = el.find("title").text();
+        var link = findUrl(el.text());
+        var date = new Date(el.find("pubDate").text());
+          
+        if (isTodayNews(date, today)) {
+            todayNews.push({
+                "title" : title,
+                "link" : link,
+                "isNew" : isNew(date, today)
+            });    
+        }
+    });
+      
+    var bbcNews = "";
+    if (todayNews.length == 0) {
+        bbcNews = '<div class="extension--row news--row text--center">No news for today.</div>'
+    }
+    else {
+        todayNews.forEach(function(entry) {
+        bbcNews += '<a href="' + entry.link + '" target="_blank">' +
+                '<div class="extension--row news--row hvr-push">' +
+                ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/new.png') + '" height="16px"/></div>'):'') +
+                    '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
+                '</div>' +
+            '</a><hr class="news--row--separator">';
+        
+        });
+    }
+
+    bbcNews = '<div class="news--table">' +
+              bbcNews +
+              '</div>';
+    $('#tab-2').append(bbcNews); 
+  }
+};
+xhr4.send();
+
+
+
 
 
