@@ -96,7 +96,7 @@ xhr2.onreadystatechange = function(resp) {
                 '<div class="extension--row news--row text-left">' +
                     '<div class="extension--cell">'+ entry.title + '</div>' +
                 '</div>' +
-            '</a>';
+            '</a><hr class="news--row--separator">';
         
     });
     var allNews = '<div class="extension--table news--table">' +

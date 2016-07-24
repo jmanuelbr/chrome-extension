@@ -32,8 +32,13 @@
     font-family: "Open Sans"
 }
 
+.news--row--separator {
+    margin: 0px 0px 5px;
+}
+
 .news--table {
     max-height: 300px;
     overflow-y: scroll;
     font-size: 115%;
+    padding: 7px 3px;
 }
