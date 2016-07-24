@@ -47,7 +47,7 @@ xhr.onreadystatechange = function(resp) {
       var currencyTable = 
            '<div class="extension--table">' +
                 '<div class="extension-row">' +
-                    '<div class="extension--cell"><img src="' + chrome.extension.getURL('assets/ukeur.jpg') + '" height="16px"/></div>' +
+                    '<div class="extension--cell"><img class="ukeur--logo--margin"src="' + chrome.extension.getURL('assets/ukeur.jpg') + '" height="16px"/></div>' +
                     '<div class="extension--cell extenstion--cell--text">' + result.col0 + '</div>' +
                     '<div class="extension--cell extenstion--cell--text currency--value">' + result.col1 + '</div>' +
                     '<div class="extension--cell extenstion--cell--text">' + getDate(result.col2) + '</div>' +
