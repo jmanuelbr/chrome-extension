@@ -13,13 +13,39 @@ window.onresize = t; function t (e) {
 };
 
 // ******************************************************************
+//  Tabs
+// ******************************************************************
+
+$(document).ready(function() {
+    $(".tabs-menu a").click(function(event) {
+        event.preventDefault();
+        $(this).parent().addClass("current");
+        $(this).parent().siblings().removeClass("current");
+        var tab = $(this).attr("href");
+        $(".tab-content").not(tab).css("display", "none");
+        $(tab).fadeIn();
+    });
+});
+
+// ******************************************************************
 //  Parent container
 // ******************************************************************
 
 var mydiv='<div class="parent--container" id="parent-container">' +
-          '<div id="currency-table"></div>' +
-          '<div id="news-table"></div>' +
-          '</div>';
+        '<div id="currency-table"></div>' +
+        '<div class="news--container>' +
+            '<div id="tab-container">' +
+                '<ul class="tabs-menu">' +
+                    '<li class="current tab1--li--class"><a href="#tab-1"><img class="img--tabs" src="'+ chrome.extension.getURL('assets/theguardian.png') + '"/>News</a></li>' +
+                    '<li class="tab2--li--class"><a href="#tab-2"><img class="img--tabs" src="'+ chrome.extension.getURL('assets/science.png') + '"/>Science</a></li>' +
+                '</ul>' +
+            '</div>' +
+            '<div class="tab">' +
+                '<div id="tab-1" class="tab-content"></div>' +
+                '<div id="tab-2" class="tab-content"></div>' +
+            '</div>' +
+        '</div>' +
+    '</div>';
 $('body').append(mydiv);
 
 
@@ -61,7 +87,7 @@ xhr.onreadystatechange = function(resp) {
 xhr.send();
 
 // ******************************************************************
-//  The Guardian section
+//  News Tab
 // ******************************************************************
 
 var isTodayNews = function(date, today) {
@@ -71,7 +97,6 @@ var isTodayNews = function(date, today) {
 
 var isNew = function(date, today) {
     var hours = Math.abs(today - date) / 36e5; //60*60*1000
-    console.log(hours);
     return (hours <= 1);
 };
 
@@ -123,12 +148,65 @@ xhr2.onreadystatechange = function(resp) {
             '</a><hr class="news--row--separator">';
         
     });
-    var allNews = '<div class="extension--table news--table">' +
+    var allNews = '<div class="news--table">' +
                     allNews +
                     '</div>';
-    $('#news-table').append(allNews);  
+    $('#tab-1').append(allNews);  
   }
 };
 xhr2.send();
+
+// ******************************************************************
+//  Science tab
+// ******************************************************************
+
+var slashDot = "https://rss.sciencedaily.com/top.xml";
+var xhr3 = new XMLHttpRequest();
+xhr3.open("GET", slashDot, true);
+xhr3.onreadystatechange = function(resp) {
+  if (xhr3.readyState == 4) {
+      var data = xhr3.responseText;
+      var today = new Date();
+      var todayNews = [];
+      
+      $(data).find("item").each(function () {
+        var el = $(this);
+        
+        var title = el.find("title").text();
+        var link = findUrl(el.text());
+        var date = new Date(el.find("pubDate").text());
+          
+        if (isTodayNews(date, today)) {
+            todayNews.push({
+                "title" : title,
+                "link" : link,
+                "isNew" : isNew(date, today)
+            });    
+        }
+    });
+      
+    var scienceNews = "";
+    if (todayNews.length == 0) {
+        scienceNews = '<div class="extension--row news--row text--center">No news for today.</div>'
+    }
+    else {
+        todayNews.forEach(function(entry) {
+        scienceNews += '<a href="' + entry.link + '" target="_blank">' +
+                '<div class="extension--row news--row hvr-push">' +
+                ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/new.png') + '" height="16px"/></div>'):'') +
+                    '<div class="extension--cell">'+ entry.title + '</div>' +
+                '</div>' +
+            '</a><hr class="news--row--separator">';
+        
+        });
+    }
+
+    scienceNews = '<div class="news--table">' +
+                    scienceNews +
+                    '</div>';
+    $('#tab-2').append(scienceNews); 
+  }
+};
+xhr3.send();
 
 
