@@ -25,6 +25,7 @@
 }
 .currency--value {
     font-weight: 600;
+    font-size: 110%;
 }
 
 .news--row { 
