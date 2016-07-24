@@ -1,10 +1,26 @@
+// ******************************************************************
+//  Responsive hide logic
+// ******************************************************************
+
+window.onresize = t; function t (e) { 
+    var screenWidth = $(window).width();
+    if (screenWidth < 1050) {
+        $("#parent-container").hide();
+    }
+    else {
+        $("#parent-container").show();
+    }
+};
+
+// ******************************************************************
+//  Parent container
+// ******************************************************************
+
 var mydiv='<div class="parent--container" id="parent-container">' +
           '<div id="currency-table"></div>' +
           '<div id="news-table"></div>' +
           '</div>';
 $('body').append(mydiv);
-
-console.log(location.pathname);
 
 
 var getDate = function(date) {
