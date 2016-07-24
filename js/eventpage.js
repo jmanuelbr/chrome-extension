@@ -30,12 +30,12 @@ xhr.onreadystatechange = function(resp) {
       var result = obj.query.results.row;
       var currencyTable = 
            '<div class="extension--table">' +
-                '<div class="extension-row text-center">' +
+                '<div class="extension-row">' +
                     '<div class="extension--cell"><img src="' + chrome.extension.getURL('assets/ukeur.jpg') + '" height="16px"/></div>' +
-                    '<div class="extension--cell">' + result.col0 + '</div>' +
-                    '<div class="extension--cell currency--value">' + result.col1 + '</div>' +
-                    '<div class="extension--cell">' + getDate(result.col2) + '</div>' +
-                    '<div class="extension--cell">' + result.col3 + '</div>' +
+                    '<div class="extension--cell extenstion--cell--text">' + result.col0 + '</div>' +
+                    '<div class="extension--cell extenstion--cell--text currency--value">' + result.col1 + '</div>' +
+                    '<div class="extension--cell extenstion--cell--text">' + getDate(result.col2) + '</div>' +
+                    '<div class="extension--cell extenstion--cell--text">' + result.col3 + '</div>' +
                 '</div>' +
             '</div>';
       $('#currency-table').append(currencyTable);

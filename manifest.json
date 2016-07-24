@@ -21,7 +21,7 @@
     "content_scripts": [
     {
       "matches": ["https://www.google.co.uk/?gfe_rd*"],
-      "css": ["css/bootstrap.css","css/styles.css"],
+      "css": ["css/styles.css"],
       "js": ["js/lib/jquery.js", "js/eventpage.js"]
     }
   ]

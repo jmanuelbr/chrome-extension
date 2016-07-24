@@ -14,15 +14,24 @@
     padding: 4px;
     border-radius: 3px;
     margin-top: 2px;
+    box-sizing: border-box;
 }
 .extension--row {
     display: table;
+    box-sizing: border-box;
+    display: block;
 }
 
 .extension--cell {
     display: table-cell;
     padding: 0 4px;
 }
+.extenstion--cell--text {
+    text-align: center;
+    position: relative;
+    top: -3px;
+}
+
 .currency--value {
     font-weight: 600;
     font-size: 110%;
@@ -35,6 +44,26 @@
 
 .news--row--separator {
     margin: 0px 0px 5px;
+    border-right-style: initial;
+    border-bottom-style: initial;
+    border-left-style: initial;
+    border-right-color: initial;
+    border-bottom-color: initial;
+    border-left-color: initial;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    border-width: 1px 0px 0px;
+    border-top: 1px solid rgb(238, 238, 238);
+    height: 0px;
+    box-sizing: content-box;
+    display: block;
+    -webkit-margin-before: 0.5em;
+    -webkit-margin-after: 0.5em;
+    -webkit-margin-start: auto;
+    -webkit-margin-end: auto;
 }
 
 .news--table {
