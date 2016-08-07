@@ -36,7 +36,7 @@ var mydiv='<div class="parent--container" id="parent-container">' +
         '<div class="news--container>' +
             '<div id="tab-container">' +
                 '<ul class="tabs-menu">' +
-                    '<li class="current tab1--li--class"><a href="#tab-1"><img class="img--tabs" src="'+ chrome.extension.getURL('assets/theguardian.png') + '"/>News</a></li>' +
+                    '<li class="current tab1--li--class"><a href="#tab-1"><img class="img--tabs" src="'+ chrome.extension.getURL('assets/theguardian.png') + '"/>TheGuardian</a></li>' +
                     '<li class="tab2--li--class"><a href="#tab-2"><img class="img--tabs" src="'+ chrome.extension.getURL('assets/bbc-news.jpg') + '"/>BBC-News</a></li>' +
                     '<li class="tab2--li--class"><a href="#tab-3"><img class="img--tabs" src="'+ chrome.extension.getURL('assets/science.png') + '"/>Science</a></li>' +
                 '</ul>' +
@@ -177,7 +177,6 @@ xhr3.onreadystatechange = function(resp) {
         var title = el.find("title").text();
         var link = findUrl(el.text());
         var date = new Date(el.find("pubDate").text());
-          
         if (isTodayNews(date, today)) {
             todayNews.push({
                 "title" : title,
