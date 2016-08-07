@@ -27,6 +27,7 @@
     display: table;
     box-sizing: border-box;
     display: block;
+    border-left: 4px solid white;
 }
 
 .extension--cell {
@@ -49,11 +50,11 @@
 }
 
 .news--row { 
-    margin-bottom: 6px;
+    padding: 3px 0px 3px 0px;
 }
 
 .news--row--separator {
-    margin: 0px 0px 5px;
+    margin: 0;
     border-right-style: initial;
     border-bottom-style: initial;
     border-left-style: initial;
@@ -70,10 +71,6 @@
     height: 0px;
     box-sizing: content-box;
     display: block;
-    -webkit-margin-before: 0.5em;
-    -webkit-margin-after: 0.5em;
-    -webkit-margin-start: auto;
-    -webkit-margin-end: auto;
 }
 
 .news--table {
@@ -81,11 +78,13 @@
     margin-top: 2px;
     overflow-y: scroll;
     font-size: 115%;
-    padding: 7px 3px;
+    padding: 7px 3px 7px 0px;
     box-sizing: border-box;
 }
-#news-table {
-    margin-top: 3px;
+.news--hour {
+    margin: 2px 0 0 0;
+    text-align: right;
+    font-size: 80%;
 }
 
 .news--table::-webkit-scrollbar {
@@ -117,6 +116,9 @@ a:hover {
     color: #3f5068 !important;
     text-decoration: none !important;
 }
+.news--row:hover {
+    border-left: 4px solid #458FB5;
+}
 
 a:active {
     color: #3667bc !important;
@@ -135,39 +137,23 @@ a:active {
   }
 }
 
-.hvr-push {
-  display: inline-block;
-  vertical-align: middle;
-  transform: translateZ(0);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  backface-visibility: hidden;
-}
-.hvr-push:hover, .hvr-push:focus, .hvr-push:active {
-  animation-name: hvr-push;
-  animation-duration: 0.2s;
-  animation-timing-function: linear;
-  animation-iteration-count: 1;
-}
-
-
 /* Tabs */
 
 .tabs-menu {
     margin: 3px 0 0 0;
     padding-left: 0;
-    height: 22px;
+    height: 25px;
     clear: both;
 }
 
 .tabs-menu li {
-    height: 22px;
-    line-height: 22px;
+    height: 25px;
+    line-height: 21px;
     display: table-cell;
     margin-right: 0px;
     background-color: #eee;
     border-top: 1px solid #d4d4d1;
     border-right: 1px solid #d4d4d1;
-    border-left: 1px solid #d4d4d1;
 }
 
 .tabs-menu li.current {
@@ -178,7 +164,7 @@ a:active {
 }
 
 .tabs-menu li a {
-    padding: 10px 7px 10px 7px;
+    padding: 3px;
     color: #AAA;
     text-decoration: none; 
 }
@@ -223,15 +209,16 @@ a:active {
 .img--tabs { 
     position: relative;
     top: 2px;
-    margin-right: 6px;
-    height: 16px;
+    margin: 1px 3px 0px 3px;
+    height: 19px;
 }
 
-.tab1--li--class {
+.first--tab {
     border-top-left-radius: 4px;    
+    border-left: 1px solid #d4d4d1;
 }
 
-.tab2--li--class {
+.tab3--li--class {
     border-top-right-radius: 4px;    
 }
 .text--center {
