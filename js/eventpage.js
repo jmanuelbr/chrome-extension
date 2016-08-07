@@ -41,7 +41,9 @@ var mydiv='<div class="parent--container" id="parent-container">' +
                     chrome.extension.getURL('assets/bbc-news.png') + '"/></a></li>' +
                     '<li><a href="#tab-3"><img class="img--tabs" src="'+ 
                     chrome.extension.getURL('assets/daily-news.png') + '"/></a></li>' +
-                    '<li class="last--tab"><a href="#tab-4"><img class="img--tabs" src="' + 
+                    '<li><a href="#tab-4"><img class="img--tabs" src="' +
+                    chrome.extension.getURL('assets/slashdot.png') + '"/></a></li>' +
+                    '<li class="last--tab"><a href="#tab-5"><img class="img--tabs" src="' +
                     chrome.extension.getURL('assets/science.png') + '"/></a></li>' +
                 '</ul>' +
             '</div>' +
@@ -50,6 +52,7 @@ var mydiv='<div class="parent--container" id="parent-container">' +
                 '<div id="tab-2" class="tab-content"></div>' +
                 '<div id="tab-3" class="tab-content"></div>' +
                 '<div id="tab-4" class="tab-content"></div>' +
+                '<div id="tab-5" class="tab-content"></div>' +
             '</div>' +
         '</div>' +
     '</div>';
@@ -172,9 +175,9 @@ xhr2.send();
 //  Science tab
 // ******************************************************************
 
-var slashDot = "https://rss.sciencedaily.com/top.xml";
+var science = "https://rss.sciencedaily.com/top.xml";
 var xhr3 = new XMLHttpRequest();
-xhr3.open("GET", slashDot, true);
+xhr3.open("GET", science, true);
 xhr3.onreadystatechange = function(resp) {
   if (xhr3.readyState == 4) {
       var data = xhr3.responseText;
@@ -215,7 +218,7 @@ xhr3.onreadystatechange = function(resp) {
     scienceNews = '<div class="news--table">' +
                     scienceNews +
                     '</div>';
-    $('#tab-4').append(scienceNews); 
+    $('#tab-5').append(scienceNews); 
   }
 };
 xhr3.send();
@@ -224,9 +227,9 @@ xhr3.send();
 //  BBC tab
 // ******************************************************************
 
-var slashDot = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
+var bbc = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
 var xhr4 = new XMLHttpRequest();
-xhr4.open("GET", slashDot, true);
+xhr4.open("GET", bbc, true);
 xhr4.onreadystatechange = function(resp) {
   if (xhr4.readyState == 4) {
       var data = xhr4.responseText;
@@ -280,9 +283,9 @@ xhr4.send();
 //  Daily News tab
 // ******************************************************************
 
-var slashDot = "https://www.nydailynews.com/cmlink/NYDN.News.World.rss";
+var daily = "https://www.nydailynews.com/cmlink/NYDN.News.World.rss";
 var xhr5 = new XMLHttpRequest();
-xhr5.open("GET", slashDot, true);
+xhr5.open("GET", daily, true);
 xhr5.onreadystatechange = function(resp) {
   if (xhr5.readyState == 4) {
       var data = xhr5.responseText;
@@ -330,3 +333,63 @@ xhr5.onreadystatechange = function(resp) {
   }
 };
 xhr5.send();
+
+
+// ******************************************************************
+//  Slashdot tab
+// ******************************************************************
+
+var getSlashdotIcon = function(element) {
+    var array = element.text().split(/\n/); 
+    return 'https://a.fsdn.com/sd/topics/' + array[array.length - 2].replace(/\t/g, '').replace(/\W+\./g, "");
+}
+
+var slashDotFeed = "https://slashdot.org/slashdot.xml";
+var xhr6 = new XMLHttpRequest();
+xhr6.open("GET", slashDotFeed, true);
+xhr6.onreadystatechange = function(resp) {
+  if (xhr6.readyState == 4) {
+      var data = xhr6.responseText;
+      console.log(data);
+      var today = new Date();
+      var todayNews = [];
+      
+      $(data).find("story").each(function () {
+        var el = $(this);
+        
+        var title = el.find("title").text();
+        var link = el.find("url").text();
+        var date = el.find("time").text();
+        var image = getSlashdotIcon(el);
+          
+        todayNews.push({
+            "title" : title,
+            "link" : link,
+            "image" : image,
+            "date" : date
+        });    
+    });
+      
+    var slashDot = "";
+    if (todayNews.length == 0) {
+        slashDot = '<div class="extension--row news--row text--center">No news for today.</div>'
+    }
+    else {
+        todayNews.forEach(function(entry) {
+        slashDot += '<a href="' + entry.link + '" target="_blank">' +
+                '<div class="extension--row news--row hvr-push">' +
+                '<div class="extension--cell"><img class="slashdot--icon" src="' + entry.image + '"/></div>' +
+                    '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
+                '<div class=news--hour>' + entry.date + '</div></div>' +
+            '</a><hr class="news--row--separator">';
+        
+        });
+    }
+
+    slashDot = '<div class="news--table">' +
+              slashDot +
+              '</div>';
+    $('#tab-4').append(slashDot); 
+  }
+};
+xhr6.send();
