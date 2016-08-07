@@ -36,15 +36,20 @@ var mydiv='<div class="parent--container" id="parent-container">' +
         '<div class="news--container>' +
             '<div id="tab-container">' +
                 '<ul class="tabs-menu">' +
-                    '<li class="current first--tab"><a href="#tab-1"><img class="img--tabs" src="'+ chrome.extension.getURL('assets/theguardian.png') + '"/></a></li>' +
-                    '<li class="tab2--li--class"><a href="#tab-2"><img class="img--tabs" src="'+ chrome.extension.getURL('assets/bbc-news.png') + '"/></a></li>' +
-                    '<li class="tab3--li--class"><a href="#tab-3"><img class="img--tabs" src="'+ chrome.extension.getURL('assets/science.png') + '"/></a></li>' +
+                    '<li class="current first--tab"><a href="#tab-1"><img class="img--tabs" src="' + chrome.extension.getURL('assets/theguardian.png') + '"/></a></li>' +
+                    '<li class="tab2--li--class"><a href="#tab-2"><img class="img--tabs" src="'+ 
+                    chrome.extension.getURL('assets/bbc-news.png') + '"/></a></li>' +
+                    '<li><a href="#tab-3"><img class="img--tabs" src="'+ 
+                    chrome.extension.getURL('assets/daily-news.png') + '"/></a></li>' +
+                    '<li class="last--tab"><a href="#tab-4"><img class="img--tabs" src="' + 
+                    chrome.extension.getURL('assets/science.png') + '"/></a></li>' +
                 '</ul>' +
             '</div>' +
             '<div class="tab">' +
                 '<div id="tab-1" class="tab-content"></div>' +
                 '<div id="tab-2" class="tab-content"></div>' +
                 '<div id="tab-3" class="tab-content"></div>' +
+                '<div id="tab-4" class="tab-content"></div>' +
             '</div>' +
         '</div>' +
     '</div>';
@@ -210,7 +215,7 @@ xhr3.onreadystatechange = function(resp) {
     scienceNews = '<div class="news--table">' +
                     scienceNews +
                     '</div>';
-    $('#tab-3').append(scienceNews); 
+    $('#tab-4').append(scienceNews); 
   }
 };
 xhr3.send();
@@ -271,6 +276,57 @@ xhr4.onreadystatechange = function(resp) {
 xhr4.send();
 
 
+// ******************************************************************
+//  Daily News tab
+// ******************************************************************
 
+var slashDot = "https://www.nydailynews.com/cmlink/NYDN.News.World.rss";
+var xhr5 = new XMLHttpRequest();
+xhr5.open("GET", slashDot, true);
+xhr5.onreadystatechange = function(resp) {
+  if (xhr5.readyState == 4) {
+      var data = xhr5.responseText;
+      
+      var today = new Date();
+      var todayNews = [];
+      
+      $(data).find("item").each(function () {
+        var el = $(this);
+        
+        var title = el.find("title").text();
+        var link = findUrl(el.text());
+        var date = new Date(el.find("pubDate").text());
+          
+        if (isRecentNews(date, today)) {
+            todayNews.push({
+                "title" : title,
+                "link" : link,
+                "isNew" : isNew(date, today),
+                "date" : date
+            });    
+        }
+    });
+      
+    var dailyNews = "";
+    if (todayNews.length == 0) {
+        dailyNews = '<div class="extension--row news--row text--center">No news for today.</div>'
+    }
+    else {
+        todayNews.forEach(function(entry) {
+        dailyNews += '<a href="' + entry.link + '" target="_blank">' +
+                '<div class="extension--row news--row hvr-push">' +
+                ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
+                    '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
+                '<div class=news--hour>' + formattedDate(entry.date) + '</div></div>' +
+            '</a><hr class="news--row--separator">';
+        
+        });
+    }
 
-
+    dailyNews = '<div class="news--table">' +
+              dailyNews +
+              '</div>';
+    $('#tab-3').append(dailyNews); 
+  }
+};
+xhr5.send();
