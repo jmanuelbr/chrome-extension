@@ -3,6 +3,7 @@
 // ******************************************************************
 
 var READY = 4; // Request finished and response is ready
+var GBP_EUR_CHART = "http://www.xe.com/currencycharts/?from=GBP&to=EUR";
 var THE_GUARDIAN_FEED = "https://www.theguardian.com/uk/rss";
 var SCIENCE_FEED = "https://rss.sciencedaily.com/top.xml";
 var BCC_NEWS_FEED = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
@@ -80,30 +81,30 @@ $(document).ready(function() {
 // ******************************************************************
 
 var parentDiv='<div class="parent--container" id="parent-container">' +
-        '<div id="currency-table"></div>' +
-        '<div class="news--container>' +
-            '<div id="tab-container">' +
-                '<ul class="tabs-menu">' +
-                    '<li class="current first--tab"><a href="#tab-1"><img class="img--tabs" src="' + chrome.extension.getURL('assets/theguardian.png') + '"/></a></li>' +
-                    '<li><a href="#tab-2"><img class="img--tabs" src="'+ 
-                    chrome.extension.getURL('assets/bbc-news.png') + '"/></a></li>' +
-                    '<li><a href="#tab-3"><img class="img--tabs" src="'+ 
-                    chrome.extension.getURL('assets/daily-news.png') + '"/></a></li>' +
-                    '<li><a href="#tab-4"><img class="img--tabs" src="' +
-                    chrome.extension.getURL('assets/slashdot.png') + '"/></a></li>' +
-                    '<li class="last--tab"><a href="#tab-5"><img class="img--tabs" src="' +
-                    chrome.extension.getURL('assets/science.png') + '"/></a></li>' +
-                '</ul>' +
-            '</div>' +
-            '<div class="tab">' +
-                '<div id="tab-1" class="tab-content"></div>' +
-                '<div id="tab-2" class="tab-content"></div>' +
-                '<div id="tab-3" class="tab-content"></div>' +
-                '<div id="tab-4" class="tab-content"></div>' +
-                '<div id="tab-5" class="tab-content"></div>' +
-            '</div>' +
-        '</div>' +
-    '</div>';
+                '<div id="currency-table"></div>' +
+                '<div class="news--container>' +
+                    '<div id="tab-container">' +
+                        '<ul class="tabs-menu">' +
+                            '<li class="current first--tab"><a href="#tab-1"><img class="img--tabs" src="' + chrome.extension.getURL('assets/theguardian.png') + '"/></a></li>' +
+                            '<li><a href="#tab-2"><img class="img--tabs" src="'+ 
+                            chrome.extension.getURL('assets/bbc-news.png') + '"/></a></li>' +
+                            '<li><a href="#tab-3"><img class="img--tabs" src="'+ 
+                            chrome.extension.getURL('assets/daily-news.png') + '"/></a></li>' +
+                            '<li><a href="#tab-4"><img class="img--tabs" src="' +
+                            chrome.extension.getURL('assets/slashdot.png') + '"/></a></li>' +
+                            '<li class="last--tab"><a href="#tab-5"><img class="img--tabs" src="' +
+                            chrome.extension.getURL('assets/science.png') + '"/></a></li>' +
+                        '</ul>' +
+                    '</div>' +
+                    '<div class="tab">' +
+                        '<div id="tab-1" class="tab-content"></div>' +
+                        '<div id="tab-2" class="tab-content"></div>' +
+                        '<div id="tab-3" class="tab-content"></div>' +
+                        '<div id="tab-4" class="tab-content"></div>' +
+                        '<div id="tab-5" class="tab-content"></div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
 $('body').append(parentDiv);
 
 // ******************************************************************
@@ -119,7 +120,7 @@ xhrCurrency.onreadystatechange = function(resp) {
       var currencyTable = 
            '<div class="extension--table">' +
                 '<div class="extension-row">' +
-                    '<div class="extension--cell"><img class="ukeur--logo--margin"src="' + chrome.extension.getURL('assets/ukeur.jpg') + '" height="16px"/></div>' +
+                    '<div class="extension--cell"><a href="'+ GBP_EUR_CHART +'" target="_blank"><img class="ukeur--logo--margin" src="' + chrome.extension.getURL('assets/ukeur.jpg') + '" height="16px"/></a></div>' +
                     '<div class="extension--cell extenstion--cell--text">' + result.col0 + '</div>' +
                     '<div class="extension--cell extenstion--cell--text currency--value">' + result.col1 + '</div>' +
                     '<div class="extension--cell extenstion--cell--text">' + getDate(result.col2) + '</div>' +
