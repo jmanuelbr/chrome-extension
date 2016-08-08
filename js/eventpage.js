@@ -26,8 +26,15 @@ var isRecentNews = function(date) {
 };
 
 var formattedDate = function(date) {
+    var result = "";
     var partials = date.toString().split(' '); 
-    return partials[0] + ' ' + partials[2] + ' ' + partials[4];
+    if (date.getDay() == TODAY.getDay() && date.getMonth() == TODAY.getMonth()) {
+        result = "Today " + partials[4];
+    }
+    else {
+        result = partials[0] + ' ' + partials[2] + ' ' + partials[4]; 
+    }
+    return result;
 };
 
 var isNew = function(date) {
