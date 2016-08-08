@@ -1,8 +1,57 @@
 // ******************************************************************
+//  Shared functions and constants
+// ******************************************************************
+
+var READY = 4; // Request finished and response is ready
+var THE_GUARDIAN_FEED = "https://www.theguardian.com/uk/rss";
+var SCIENCE_FEED = "https://rss.sciencedaily.com/top.xml";
+var BCC_NEWS_FEED = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
+var DAYLY_NEWS_FEED = "https://www.nydailynews.com/cmlink/NYDN.News.World.rss";
+var SLASHDOT_FEED = "https://slashdot.org/slashdot.xml";
+var TODAY = new Date();
+
+var getDate = function(date) {
+    var dd = TODAY.getDate();
+    var mm = TODAY.getMonth() + 1; //January is 0!
+    var yyyy = TODAY.getFullYear();
+    var result = dd+'/'+mm+'/'+yyyy;
+    return (result == date ? 'Today' : date);
+};
+
+var isRecentNews = function(date) {
+    var twelveHoursAgo = new Date(TODAY.getTime() - (12 * 60 * 60 * 1000));
+    return date > twelveHoursAgo;
+};
+
+var formattedDate = function(date) {
+    var partials = date.toString().split(' '); 
+    return partials[0] + ' ' + partials[2] + ' ' + partials[4];
+}
+
+var isNew = function(date) {
+    var hours = Math.abs(TODAY - date) / 36e5; //60*60*1000
+    return (hours <= 1);
+};
+
+var findUrl = function(text) {
+    var source = (text || '').toString();
+    var url;
+    var matchArray;
+    var regexToken = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g;
+
+    while( (matchArray = regexToken.exec( source )) !== null ) {
+        url = matchArray[0];
+        break;
+    }
+    return url;
+};
+
+
+// ******************************************************************
 //  Responsive hide logic
 // ******************************************************************
 
-window.onresize = t; function t (e) { 
+window.onresize = function() { 
     var screenWidth = $(window).width();
     if (screenWidth < 1050) {
         $("#parent-container").hide();
@@ -31,7 +80,7 @@ $(document).ready(function() {
 //  Parent container
 // ******************************************************************
 
-var mydiv='<div class="parent--container" id="parent-container">' +
+var parentDiv='<div class="parent--container" id="parent-container">' +
         '<div id="currency-table"></div>' +
         '<div class="news--container>' +
             '<div id="tab-container">' +
@@ -56,29 +105,18 @@ var mydiv='<div class="parent--container" id="parent-container">' +
             '</div>' +
         '</div>' +
     '</div>';
-$('body').append(mydiv);
+$('body').append(parentDiv);
 
-
-var getDate = function(date) {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    var today = dd+'/'+mm+'/'+yyyy;
-    return (today == date ? 'Today' : date);
-    
-};
 
 // ******************************************************************
 //  Currency section
 // ******************************************************************
 
-var yahooFinancesUrl = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20csv%20where%20url%3D%22http%3A%2F%2Ffinance.yahoo.com%2Fd%2Fquotes.csv%3Fe%3D.csv%26f%3Dnl1d1t1%26s%3Dgbpeur%3DX%22%3B&format=json&callback=";
-var xhr = new XMLHttpRequest();
-xhr.open("GET", yahooFinancesUrl, true);
-xhr.onreadystatechange = function(resp) {
-  if (xhr.readyState == 4) {
-      var obj = JSON.parse(xhr.responseText);
+var xhrCurrency = new XMLHttpRequest();
+xhrCurrency.open("GET", "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20csv%20where%20url%3D%22http%3A%2F%2Ffinance.yahoo.com%2Fd%2Fquotes.csv%3Fe%3D.csv%26f%3Dnl1d1t1%26s%3Dgbpeur%3DX%22%3B&format=json&callback=", true);
+xhrCurrency.onreadystatechange = function(resp) {
+  if (xhrCurrency.readyState == READY) {
+      var obj = JSON.parse(xhrCurrency.responseText);
       var result = obj.query.results.row;
       var currencyTable = 
            '<div class="extension--table">' +
@@ -94,60 +132,28 @@ xhr.onreadystatechange = function(resp) {
       
   }
 };
-xhr.send();
+xhrCurrency.send();
 
 // ******************************************************************
 //  The Guardian Tab
 // ******************************************************************
 
-var isRecentNews = function(date, today) {
-    var twelveHoursAgo = new Date(today.getTime() - (12 * 60 * 60 * 1000));
-    return date > twelveHoursAgo;
-};
-
-var formattedDate = function(date) {
-    var partials = date.toString().split(' '); 
-    return partials[0] + ' ' + partials[2] + ' ' + partials[4];
-}
-var isNew = function(date, today) {
-    var hours = Math.abs(today - date) / 36e5; //60*60*1000
-    return (hours <= 1);
-};
-
-var findUrl = function(text) {
-    var source = (text || '').toString();
-    var url;
-    var matchArray;
-    var regexToken = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g;
-
-    while( (matchArray = regexToken.exec( source )) !== null ) {
-        url = matchArray[0];
-        break;
-    }
-    return url;
-};
-
-var theGuardianFeed = "https://www.theguardian.com/uk/rss";
-var xhr2 = new XMLHttpRequest();
-xhr2.open("GET", theGuardianFeed, true);
-xhr2.onreadystatechange = function(resp) {
-  if (xhr2.readyState == 4) {
-      var data = xhr2.responseText;
+var xhrTheGuardian = new XMLHttpRequest();
+xhrTheGuardian.open("GET", THE_GUARDIAN_FEED, true);
+xhrTheGuardian.onreadystatechange = function(resp) {
+  if (xhrTheGuardian.readyState == READY) {
+      var data = xhrTheGuardian.responseText;
       var todayNews = [];
-      var today = new Date();
       
       $(data).find("item").each(function () {
         var el = $(this);
-        
-        var title = el.find("title").text();
-        var link = findUrl(el.text());
         var date = new Date(el.find("pubDate").text());
         
-        if (isRecentNews(date, today)) {
+        if (isRecentNews(date)) {
             todayNews.push({
-                "title" : title,
-                "link" : link,
-                "isNew" : isNew(date, today),
+                "title" : el.find("title").text(),
+                "link" : findUrl(el.text()),
+                "isNew" : isNew(date),
                 "date" : date
             });    
         }
@@ -156,45 +162,39 @@ xhr2.onreadystatechange = function(resp) {
     var allNews = "";
     todayNews.forEach(function(entry) {
         allNews += '<a href="' + entry.link + '" target="_blank">' +
-                '<div class="extension--row news--row text-left hvr-push">' +
-                ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
-                    '<div class="extension--cell">'+ entry.title + '</div>' +
-                '<div class=news--hour>' + formattedDate(entry.date) + '</div></div>' +
-            '</a><hr class="news--row--separator">';
-        
+                    '<div class="extension--row news--row text-left hvr-push">' +
+                        ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
+                        '<div class="extension--cell">'+ entry.title + '</div>' +
+                    '<div class=news--hour>' + formattedDate(entry.date) + '</div></div>' +
+                    '</a><hr class="news--row--separator">';
     });
     var allNews = '<div class="news--table">' +
-                    allNews +
-                    '</div>';
+                   allNews +
+                  '</div>';
     $('#tab-1').append(allNews);  
   }
 };
-xhr2.send();
+xhrTheGuardian.send();
 
 // ******************************************************************
 //  Science tab
 // ******************************************************************
 
-var science = "https://rss.sciencedaily.com/top.xml";
-var xhr3 = new XMLHttpRequest();
-xhr3.open("GET", science, true);
-xhr3.onreadystatechange = function(resp) {
-  if (xhr3.readyState == 4) {
-      var data = xhr3.responseText;
-      var today = new Date();
+var xhrScience = new XMLHttpRequest();
+xhrScience.open("GET", SCIENCE_FEED, true);
+xhrScience.onreadystatechange = function(resp) {
+  if (xhrScience.readyState == READY) {
+      var data = xhrScience.responseText;
       var todayNews = [];
       
       $(data).find("item").each(function () {
         var el = $(this);
-        
-        var title = el.find("title").text();
-        var link = findUrl(el.text());
         var date = new Date(el.find("pubDate").text());
-        if (isRecentNews(date, today)) {
+        if (isRecentNews(date)) {
             todayNews.push({
-                "title" : title,
-                "link" : link,
-                "isNew" : isNew(date, today)
+                "title" : el.find("title").text(),
+                "link" : findUrl(el.text()),
+                "isNew" : isNew(date)
             });    
         }
     });
@@ -217,38 +217,32 @@ xhr3.onreadystatechange = function(resp) {
 
     scienceNews = '<div class="news--table">' +
                     scienceNews +
-                    '</div>';
+                  '</div>';
     $('#tab-5').append(scienceNews); 
   }
 };
-xhr3.send();
+xhrScience.send();
 
 // ******************************************************************
 //  BBC tab
 // ******************************************************************
 
-var bbc = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
-var xhr4 = new XMLHttpRequest();
-xhr4.open("GET", bbc, true);
-xhr4.onreadystatechange = function(resp) {
-  if (xhr4.readyState == 4) {
-      var data = xhr4.responseText;
-      
-      var today = new Date();
+var xhrBbc = new XMLHttpRequest();
+xhrBbc.open("GET", BCC_NEWS_FEED, true);
+xhrBbc.onreadystatechange = function(resp) {
+  if (xhrBbc.readyState == READY) {
+      var data = xhrBbc.responseText;
       var todayNews = [];
       
       $(data).find("item").each(function () {
         var el = $(this);
-        
-        var title = el.find("title").text();
-        var link = findUrl(el.text());
         var date = new Date(el.find("pubDate").text());
           
-        if (isRecentNews(date, today)) {
+        if (isRecentNews(date)) {
             todayNews.push({
-                "title" : title,
-                "link" : link,
-                "isNew" : isNew(date, today),
+                "title" : el.find("title").text(),
+                "link" : findUrl(el.text()),
+                "isNew" : isNew(date),
                 "date" : date
             });    
         }
@@ -271,40 +265,34 @@ xhr4.onreadystatechange = function(resp) {
     }
 
     bbcNews = '<div class="news--table">' +
-              bbcNews +
+               bbcNews +
               '</div>';
     $('#tab-2').append(bbcNews); 
   }
 };
-xhr4.send();
+xhrBbc.send();
 
 
 // ******************************************************************
 //  Daily News tab
 // ******************************************************************
 
-var daily = "https://www.nydailynews.com/cmlink/NYDN.News.World.rss";
-var xhr5 = new XMLHttpRequest();
-xhr5.open("GET", daily, true);
-xhr5.onreadystatechange = function(resp) {
-  if (xhr5.readyState == 4) {
-      var data = xhr5.responseText;
-      
-      var today = new Date();
+var xhrDailyNews = new XMLHttpRequest();
+xhrDailyNews.open("GET", DAYLY_NEWS_FEED, true);
+xhrDailyNews.onreadystatechange = function(resp) {
+  if (xhrDailyNews.readyState == READY) {
+      var data = xhrDailyNews.responseText;
       var todayNews = [];
       
       $(data).find("item").each(function () {
         var el = $(this);
-        
-        var title = el.find("title").text();
-        var link = findUrl(el.text());
         var date = new Date(el.find("pubDate").text());
           
-        if (isRecentNews(date, today)) {
+        if (isRecentNews(date)) {
             todayNews.push({
-                "title" : title,
-                "link" : link,
-                "isNew" : isNew(date, today),
+                "title" : el.find("title").text(),
+                "link" : findUrl(el.text()),
+                "isNew" : isNew(date),
                 "date" : date
             });    
         }
@@ -327,12 +315,12 @@ xhr5.onreadystatechange = function(resp) {
     }
 
     dailyNews = '<div class="news--table">' +
-              dailyNews +
-              '</div>';
+                 dailyNews +
+                '</div>';
     $('#tab-3').append(dailyNews); 
   }
 };
-xhr5.send();
+xhrDailyNews.send();
 
 
 // ******************************************************************
@@ -344,29 +332,33 @@ var getSlashdotIcon = function(element) {
     return 'https://a.fsdn.com/sd/topics/' + array[array.length - 2].replace(/\t/g, '').replace(/\W+\./g, "");
 }
 
-var slashDotFeed = "https://slashdot.org/slashdot.xml";
-var xhr6 = new XMLHttpRequest();
-xhr6.open("GET", slashDotFeed, true);
-xhr6.onreadystatechange = function(resp) {
-  if (xhr6.readyState == 4) {
-      var data = xhr6.responseText;
-      console.log(data);
-      var today = new Date();
+var formattedSlashdotDate = function(feedDate) {
+    var arrayDate = feedDate.split(' ');
+    var dateString = arrayDate[0];
+    var hourString = arrayDate[1];
+    var date = new Date(dateString);
+    if (date.getDay() == TODAY.getDay() && date.getMonth() == TODAY.getMonth()) {
+        dateString = "Today";
+    }
+    return dateString + ' ' + hourString;
+}
+
+var xhrSlashdot = new XMLHttpRequest();
+xhrSlashdot.open("GET", SLASHDOT_FEED, true);
+xhrSlashdot.onreadystatechange = function(resp) {
+  if (xhrSlashdot.readyState == READY) {
+      var data = xhrSlashdot.responseText;
       var todayNews = [];
       
       $(data).find("story").each(function () {
         var el = $(this);
-        
-        var title = el.find("title").text();
-        var link = el.find("url").text();
-        var date = el.find("time").text();
-        var image = getSlashdotIcon(el);
           
         todayNews.push({
-            "title" : title,
-            "link" : link,
-            "image" : image,
-            "date" : date
+            "title" : el.find("title").text(),
+            "link" : el.find("url").text(),
+            "image" : getSlashdotIcon(el),
+            "date" : el.find("time").text(),
+            "comments" : el.find("comments").text()
         });    
     });
       
@@ -380,16 +372,16 @@ xhr6.onreadystatechange = function(resp) {
                 '<div class="extension--row news--row hvr-push">' +
                 '<div class="extension--cell"><img class="slashdot--icon" src="' + entry.image + '"/></div>' +
                     '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
-                '<div class=news--hour>' + entry.date + '</div></div>' +
+                '<div class="news--footer"><div class="news--comments" id="news-comments"><img class="news--comments--image"src="'+ chrome.extension.getURL('assets/comments.png') +'"/>' + entry.comments + '</div><div class="news--hour">' + formattedSlashdotDate(entry.date) + '</div></div></div>' +
             '</a><hr class="news--row--separator">';
         
         });
     }
 
     slashDot = '<div class="news--table">' +
-              slashDot +
-              '</div>';
+                slashDot +
+               '</div>';
     $('#tab-4').append(slashDot); 
   }
 };
-xhr6.send();
+xhrSlashdot.send();

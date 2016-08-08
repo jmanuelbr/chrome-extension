@@ -230,3 +230,14 @@ a:active {
 .text--center {
     text-align: center;
 }
+.news--comments {
+    display: inline;
+    float: left;
+    font-size: 70%;
+}
+.news--comments--image {
+    height: 12px;
+    vertical-align: middle;
+    margin-right: 2px;
+    margin-left: 32px;
+}
