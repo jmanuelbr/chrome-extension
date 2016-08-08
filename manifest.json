@@ -4,8 +4,7 @@
   "manifest_version": 2,
   "icons": { "128": "assets/icon.png" },
   "background": {
-    "persistent": false,
-    "scripts": ["js/scripts.js"]
+    "persistent": false
   },
   "permissions": ["http://mysafeinfo.com/*", "https://www.theguardian.com/*", "https://rss.sciencedaily.com/top.xml", "https://feeds.bbci.co.uk/news/rss.xml?edition=uk*", "https://www.nydailynews.com/cmlink/NYDN.News.World.rss", "https://slashdot.org/slashdot.xml"],
   "web_accessible_resources": ["assets/ukeur.jpg", "assets/recent.png", "assets/theguardian.png", "assets/science.png", "assets/bbc-news.png", "assets/daily-news.png", "assets/slashdot.png", "assets/comments.png", "*.ttf"],  

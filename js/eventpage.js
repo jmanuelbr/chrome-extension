@@ -9,6 +9,7 @@ var BCC_NEWS_FEED = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
 var DAYLY_NEWS_FEED = "https://www.nydailynews.com/cmlink/NYDN.News.World.rss";
 var SLASHDOT_FEED = "https://slashdot.org/slashdot.xml";
 var TODAY = new Date();
+var MIN_VIEWPORT_WIDTH = 1050;
 
 var getDate = function(date) {
     var dd = TODAY.getDate();
@@ -26,7 +27,7 @@ var isRecentNews = function(date) {
 var formattedDate = function(date) {
     var partials = date.toString().split(' '); 
     return partials[0] + ' ' + partials[2] + ' ' + partials[4];
-}
+};
 
 var isNew = function(date) {
     var hours = Math.abs(TODAY - date) / 36e5; //60*60*1000
@@ -52,8 +53,7 @@ var findUrl = function(text) {
 // ******************************************************************
 
 window.onresize = function() { 
-    var screenWidth = $(window).width();
-    if (screenWidth < 1050) {
+    if ($(window).width() < MIN_VIEWPORT_WIDTH) {
         $("#parent-container").hide();
     }
     else {
@@ -86,7 +86,7 @@ var parentDiv='<div class="parent--container" id="parent-container">' +
             '<div id="tab-container">' +
                 '<ul class="tabs-menu">' +
                     '<li class="current first--tab"><a href="#tab-1"><img class="img--tabs" src="' + chrome.extension.getURL('assets/theguardian.png') + '"/></a></li>' +
-                    '<li class="tab2--li--class"><a href="#tab-2"><img class="img--tabs" src="'+ 
+                    '<li><a href="#tab-2"><img class="img--tabs" src="'+ 
                     chrome.extension.getURL('assets/bbc-news.png') + '"/></a></li>' +
                     '<li><a href="#tab-3"><img class="img--tabs" src="'+ 
                     chrome.extension.getURL('assets/daily-news.png') + '"/></a></li>' +
@@ -162,7 +162,7 @@ xhrTheGuardian.onreadystatechange = function(resp) {
     var allNews = "";
     todayNews.forEach(function(entry) {
         allNews += '<a href="' + entry.link + '" target="_blank">' +
-                    '<div class="extension--row news--row text-left hvr-push">' +
+                    '<div class="extension--row news--row text-left">' +
                         ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
                         '<div class="extension--cell">'+ entry.title + '</div>' +
                     '<div class=news--hour>' + formattedDate(entry.date) + '</div></div>' +
@@ -206,7 +206,7 @@ xhrScience.onreadystatechange = function(resp) {
     else {
         todayNews.forEach(function(entry) {
         scienceNews += '<a href="' + entry.link + '" target="_blank">' +
-                '<div class="extension--row news--row hvr-push">' +
+                '<div class="extension--row news--row">' +
                 ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
                     '<div class="extension--cell">'+ entry.title + '</div>' +
                 '</div>' +
@@ -255,7 +255,7 @@ xhrBbc.onreadystatechange = function(resp) {
     else {
         todayNews.forEach(function(entry) {
         bbcNews += '<a href="' + entry.link + '" target="_blank">' +
-                '<div class="extension--row news--row hvr-push">' +
+                '<div class="extension--row news--row">' +
                 ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
                     '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
                 '<div class=news--hour>' + formattedDate(entry.date) + '</div></div>' +
@@ -305,7 +305,7 @@ xhrDailyNews.onreadystatechange = function(resp) {
     else {
         todayNews.forEach(function(entry) {
         dailyNews += '<a href="' + entry.link + '" target="_blank">' +
-                '<div class="extension--row news--row hvr-push">' +
+                '<div class="extension--row news--row">' +
                 ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
                     '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
                 '<div class=news--hour>' + formattedDate(entry.date) + '</div></div>' +
@@ -330,7 +330,7 @@ xhrDailyNews.send();
 var getSlashdotIcon = function(element) {
     var array = element.text().split(/\n/); 
     return 'https://a.fsdn.com/sd/topics/' + array[array.length - 2].replace(/\t/g, '').replace(/\W+\./g, "");
-}
+};
 
 var formattedSlashdotDate = function(feedDate) {
     var arrayDate = feedDate.split(' ');
@@ -341,7 +341,7 @@ var formattedSlashdotDate = function(feedDate) {
         dateString = "Today";
     }
     return dateString + ' ' + hourString;
-}
+};
 
 var xhrSlashdot = new XMLHttpRequest();
 xhrSlashdot.open("GET", SLASHDOT_FEED, true);
@@ -369,7 +369,7 @@ xhrSlashdot.onreadystatechange = function(resp) {
     else {
         todayNews.forEach(function(entry) {
         slashDot += '<a href="' + entry.link + '" target="_blank">' +
-                '<div class="extension--row news--row hvr-push">' +
+                '<div class="extension--row news--row">' +
                 '<div class="extension--cell"><img class="slashdot--icon" src="' + entry.image + '"/></div>' +
                     '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
                 '<div class="news--footer"><div class="news--comments" id="news-comments"><img class="news--comments--image"src="'+ chrome.extension.getURL('assets/comments.png') +'"/>' + entry.comments + '</div><div class="news--hour">' + formattedSlashdotDate(entry.date) + '</div></div></div>' +

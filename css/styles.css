@@ -131,18 +131,6 @@ a:active {
     text-decoration: underline !important;
 }
 
-
-
-@keyframes hvr-push {
-  97% {
-    transform: scale(0.97);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
 /* Tabs */
 
 .tabs-menu {
