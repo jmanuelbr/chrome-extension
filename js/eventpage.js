@@ -47,7 +47,6 @@ var findUrl = function(text) {
     return url;
 };
 
-
 // ******************************************************************
 //  Responsive hide logic
 // ******************************************************************
@@ -107,7 +106,6 @@ var parentDiv='<div class="parent--container" id="parent-container">' +
     '</div>';
 $('body').append(parentDiv);
 
-
 // ******************************************************************
 //  Currency section
 // ******************************************************************
@@ -162,11 +160,13 @@ xhrTheGuardian.onreadystatechange = function(resp) {
     var allNews = "";
     todayNews.forEach(function(entry) {
         allNews += '<a href="' + entry.link + '" target="_blank">' +
-                    '<div class="extension--row news--row text-left">' +
-                        ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
-                        '<div class="extension--cell">'+ entry.title + '</div>' +
-                    '<div class=news--hour>' + formattedDate(entry.date) + '</div></div>' +
-                    '</a><hr class="news--row--separator">';
+                        '<div class="extension--row news--row text-left">' +
+                            ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
+                            '<div class="extension--cell">'+ entry.title + '</div>' +
+                            '<div class=news--hour>' + formattedDate(entry.date) + '</div>' + 
+                        '</div>' +
+                    '</a>' +
+                    '<hr class="news--row--separator">';
     });
     var allNews = '<div class="news--table">' +
                    allNews +
@@ -206,11 +206,12 @@ xhrScience.onreadystatechange = function(resp) {
     else {
         todayNews.forEach(function(entry) {
         scienceNews += '<a href="' + entry.link + '" target="_blank">' +
-                '<div class="extension--row news--row">' +
-                ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
-                    '<div class="extension--cell">'+ entry.title + '</div>' +
-                '</div>' +
-            '</a><hr class="news--row--separator">';
+                            '<div class="extension--row news--row">' +
+                                ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
+                                '<div class="extension--cell">'+ entry.title + '</div>' +
+                            '</div>' +
+                        '</a>' + 
+                        '<hr class="news--row--separator">';
         
         });
     }
@@ -255,12 +256,13 @@ xhrBbc.onreadystatechange = function(resp) {
     else {
         todayNews.forEach(function(entry) {
         bbcNews += '<a href="' + entry.link + '" target="_blank">' +
-                '<div class="extension--row news--row">' +
-                ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
-                    '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
-                '<div class=news--hour>' + formattedDate(entry.date) + '</div></div>' +
-            '</a><hr class="news--row--separator">';
-        
+                        '<div class="extension--row news--row">' +
+                            ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
+                            '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
+                            '<div class=news--hour>' + formattedDate(entry.date) + '</div>' + 
+                        '</div>' +
+                   '</a>' + 
+                   '<hr class="news--row--separator">';
         });
     }
 
@@ -271,7 +273,6 @@ xhrBbc.onreadystatechange = function(resp) {
   }
 };
 xhrBbc.send();
-
 
 // ******************************************************************
 //  Daily News tab
@@ -305,12 +306,13 @@ xhrDailyNews.onreadystatechange = function(resp) {
     else {
         todayNews.forEach(function(entry) {
         dailyNews += '<a href="' + entry.link + '" target="_blank">' +
-                '<div class="extension--row news--row">' +
-                ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
-                    '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
-                '<div class=news--hour>' + formattedDate(entry.date) + '</div></div>' +
-            '</a><hr class="news--row--separator">';
-        
+                        '<div class="extension--row news--row">' +
+                            ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
+                            '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
+                            '<div class=news--hour>' + formattedDate(entry.date) + '</div>' + 
+                        '</div>' +
+                     '</a>' + 
+                     '<hr class="news--row--separator">';
         });
     }
 
@@ -321,7 +323,6 @@ xhrDailyNews.onreadystatechange = function(resp) {
   }
 };
 xhrDailyNews.send();
-
 
 // ******************************************************************
 //  Slashdot tab
@@ -369,12 +370,18 @@ xhrSlashdot.onreadystatechange = function(resp) {
     else {
         todayNews.forEach(function(entry) {
         slashDot += '<a href="' + entry.link + '" target="_blank">' +
-                '<div class="extension--row news--row">' +
-                '<div class="extension--cell"><img class="slashdot--icon" src="' + entry.image + '"/></div>' +
-                    '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
-                '<div class="news--footer"><div class="news--comments" id="news-comments"><img class="news--comments--image"src="'+ chrome.extension.getURL('assets/comments.png') +'"/>' + entry.comments + '</div><div class="news--hour">' + formattedSlashdotDate(entry.date) + '</div></div></div>' +
+                        '<div class="extension--row news--row">' +
+                            '<div class="extension--cell"><img class="slashdot--icon" src="' + entry.image + '"/></div>' +
+                            '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
+                            '<div class="news--footer">' + 
+                                '<div class="news--comments" id="news-comments">' + 
+                                    '<img class="news--comments--image"src="'+ chrome.extension.getURL('assets/comments.png') +'"/>' + 
+                                    '<span class="news--comments--number">' + entry.comments + '</span>' + 
+                                '</div>' + 
+                                '<div class="news--hour">' + formattedSlashdotDate(entry.date) + '</div>' + 
+                            '</div>' + 
+                        '</div>' +
             '</a><hr class="news--row--separator">';
-        
         });
     }
 

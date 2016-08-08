@@ -229,3 +229,7 @@ a:active {
     margin-right: 2px;
     margin-left: 32px;
 }
+.news--comments--number {
+    position: relative;
+    top: 1px;
+}
