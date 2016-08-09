@@ -9,6 +9,7 @@ var SCIENCE_FEED = "https://rss.sciencedaily.com/top.xml";
 var BCC_NEWS_FEED = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
 var DAYLY_NEWS_FEED = "https://www.nydailynews.com/cmlink/NYDN.News.World.rss";
 var SLASHDOT_FEED = "https://slashdot.org/slashdot.xml";
+var THE_INDEPENDENT_FEED = "https://www.independent.co.uk/news/uk/rss";
 var TODAY = new Date();
 var MIN_VIEWPORT_WIDTH = 1050;
 
@@ -96,10 +97,12 @@ var parentDiv='<div class="parent--container" id="parent-container">' +
                             '<li><a href="#tab-2"><img class="img--tabs" src="'+ 
                             chrome.extension.getURL('assets/bbc-news.png') + '"/></a></li>' +
                             '<li><a href="#tab-3"><img class="img--tabs" src="'+ 
+                            chrome.extension.getURL('assets/the-independent.png') + '"/></a></li>' +
+                            '<li><a href="#tab-4"><img class="img--tabs" src="'+ 
                             chrome.extension.getURL('assets/daily-news.png') + '"/></a></li>' +
-                            '<li><a href="#tab-4"><img class="img--tabs" src="' +
+                            '<li><a href="#tab-5"><img class="img--tabs" src="' +
                             chrome.extension.getURL('assets/slashdot.png') + '"/></a></li>' +
-                            '<li class="last--tab"><a href="#tab-5"><img class="img--tabs" src="' +
+                            '<li class="last--tab"><a href="#tab-6"><img class="img--tabs" src="' +
                             chrome.extension.getURL('assets/science.png') + '"/></a></li>' +
                         '</ul>' +
                     '</div>' +
@@ -109,6 +112,7 @@ var parentDiv='<div class="parent--container" id="parent-container">' +
                         '<div id="tab-3" class="tab-content"></div>' +
                         '<div id="tab-4" class="tab-content"></div>' +
                         '<div id="tab-5" class="tab-content"></div>' +
+                        '<div id="tab-6" class="tab-content"></div>' +
                     '</div>' +
                 '</div>' +
             '</div>';
@@ -227,7 +231,7 @@ xhrScience.onreadystatechange = function(resp) {
     scienceNews = '<div class="news--table">' +
                     scienceNews +
                   '</div>';
-    $('#tab-5').append(scienceNews); 
+    $('#tab-6').append(scienceNews); 
   }
 };
 xhrScience.send();
@@ -327,7 +331,7 @@ xhrDailyNews.onreadystatechange = function(resp) {
     dailyNews = '<div class="news--table">' +
                  dailyNews +
                 '</div>';
-    $('#tab-3').append(dailyNews); 
+    $('#tab-4').append(dailyNews); 
   }
 };
 xhrDailyNews.send();
@@ -396,7 +400,60 @@ xhrSlashdot.onreadystatechange = function(resp) {
     slashDot = '<div class="news--table">' +
                 slashDot +
                '</div>';
-    $('#tab-4').append(slashDot); 
+    $('#tab-5').append(slashDot); 
   }
 };
 xhrSlashdot.send();
+
+
+// ******************************************************************
+//  The Independent tab
+// ******************************************************************
+
+var xhrTheIndependent = new XMLHttpRequest();
+xhrTheIndependent.open("GET", THE_INDEPENDENT_FEED, true);
+xhrTheIndependent.onreadystatechange = function(resp) {
+  if (xhrTheIndependent.readyState == READY) {
+      var data = xhrTheIndependent.responseText;
+      var todayNews = [];
+      
+      $(data).find("item").each(function () {
+        var el = $(this);
+        var date = new Date(el.find("pubDate").text());
+          
+        if (isRecentNews(date)) {
+            todayNews.push({
+                "title" : el.find("title").text(),
+                "link" : findUrl(el.text()),
+                "isNew" : isNew(date),
+                "date" : date
+            });    
+        }
+    });
+      
+    var theIndependent = "";
+    if (todayNews.length == 0) {
+        theIndependent = '<div class="extension--row news--row text--center">No news for today.</div>'
+    }
+    else {
+        todayNews.forEach(function(entry) {
+        theIndependent += '<a href="' + entry.link + '" target="_blank">' +
+                        '<div class="extension--row news--row">' +
+                            ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
+                            '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
+                            '<div class=news--hour>' + formattedDate(entry.date) + '</div>' + 
+                        '</div>' +
+                   '</a>' + 
+                   '<hr class="news--row--separator">';
+        });
+    }
+
+    theIndependent = '<div class="news--table">' +
+               theIndependent +
+              '</div>';
+    $('#tab-3').append(theIndependent); 
+  }
+};
+xhrTheIndependent.send();
+
+

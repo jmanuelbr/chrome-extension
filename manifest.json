@@ -6,8 +6,8 @@
   "background": {
     "persistent": false
   },
-  "permissions": ["http://mysafeinfo.com/*", "https://www.theguardian.com/*", "https://rss.sciencedaily.com/top.xml", "https://feeds.bbci.co.uk/news/rss.xml?edition=uk*", "https://www.nydailynews.com/cmlink/NYDN.News.World.rss", "https://slashdot.org/slashdot.xml"],
-  "web_accessible_resources": ["assets/ukeur.jpg", "assets/recent.png", "assets/theguardian.png", "assets/science.png", "assets/bbc-news.png", "assets/daily-news.png", "assets/slashdot.png", "assets/comments.png", "*.ttf"],  
+  "permissions": ["http://mysafeinfo.com/*", "https://www.theguardian.com/*", "https://rss.sciencedaily.com/top.xml", "https://feeds.bbci.co.uk/news/rss.xml?edition=uk*", "https://www.nydailynews.com/cmlink/NYDN.News.World.rss", "https://slashdot.org/slashdot.xml", "https://www.independent.co.uk/news/uk/rss"],
+  "web_accessible_resources": ["assets/ukeur.jpg", "assets/recent.png", "assets/theguardian.png", "assets/science.png", "assets/bbc-news.png", "assets/daily-news.png", "assets/slashdot.png", "assets/comments.png", "assets/the-independent.png", "*.ttf"],  
   "browser_action": {
     "default_title": "Jose Extension",
     "default_icon": "assets/icon.png",
