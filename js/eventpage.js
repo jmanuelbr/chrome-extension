@@ -10,6 +10,8 @@ var BCC_NEWS_FEED = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
 var DAYLY_NEWS_FEED = "https://www.nydailynews.com/cmlink/NYDN.News.World.rss";
 var SLASHDOT_FEED = "https://slashdot.org/slashdot.xml";
 var THE_INDEPENDENT_FEED = "https://www.independent.co.uk/news/uk/rss";
+var MARCA_FEED = "https://estaticos.marca.com/rss/portada.xml";
+var REDDIT_FEED = "https://www.reddit.com/r/PS4Deals/new/.xml";
 var TODAY = new Date();
 var MIN_VIEWPORT_WIDTH = 1050;
 
@@ -102,8 +104,12 @@ var parentDiv='<div class="parent--container" id="parent-container">' +
                             chrome.extension.getURL('assets/daily-news.png') + '"/></a></li>' +
                             '<li><a href="#tab-5"><img class="img--tabs" src="' +
                             chrome.extension.getURL('assets/slashdot.png') + '"/></a></li>' +
-                            '<li class="last--tab"><a href="#tab-6"><img class="img--tabs" src="' +
+                            '<li><a href="#tab-6"><img class="img--tabs" src="' +
                             chrome.extension.getURL('assets/science.png') + '"/></a></li>' +
+                            '<li><a href="#tab-7"><img class="img--tabs" src="' +
+                            chrome.extension.getURL('assets/marca.png') + '"/></a></li>' +
+                            '<li class="last--tab"><a href="#tab-8"><img class="img--tabs" src="' +
+                            chrome.extension.getURL('assets/reddit.png') + '"/></a></li>' +
                         '</ul>' +
                     '</div>' +
                     '<div class="tab">' +
@@ -113,6 +119,8 @@ var parentDiv='<div class="parent--container" id="parent-container">' +
                         '<div id="tab-4" class="tab-content"></div>' +
                         '<div id="tab-5" class="tab-content"></div>' +
                         '<div id="tab-6" class="tab-content"></div>' +
+                        '<div id="tab-7" class="tab-content"></div>' +
+                        '<div id="tab-8" class="tab-content"></div>' +
                     '</div>' +
                 '</div>' +
             '</div>';
@@ -456,4 +464,108 @@ xhrTheIndependent.onreadystatechange = function(resp) {
 };
 xhrTheIndependent.send();
 
+
+// ******************************************************************
+//  Marca tab
+// ******************************************************************
+
+var xhrMarca = new XMLHttpRequest();
+xhrMarca.open("GET", MARCA_FEED, true);
+xhrMarca.onreadystatechange = function(resp) {
+  if (xhrMarca.readyState == READY) {
+      var data = xhrMarca.responseText;
+      var todayNews = [];
+      
+      $(data).find("item").each(function () {
+        var el = $(this);
+        var date = new Date(el.find("pubDate").text());
+          
+        if (isRecentNews(date)) {
+            todayNews.push({
+                "title" : el.find("title").text(),
+                "link" : findUrl(el.text()),
+                "isNew" : isNew(date),
+                "date" : date
+            });    
+        }
+    });
+      
+    var marca = "";
+    if (todayNews.length == 0) {
+        marca = '<div class="extension--row news--row text--center">No news for today.</div>'
+    }
+    else {
+        todayNews.forEach(function(entry) {
+        marca += '<a href="' + entry.link + '" target="_blank">' +
+                        '<div class="extension--row news--row">' +
+                            ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
+                            '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
+                            '<div class=news--hour>' + formattedDate(entry.date) + '</div>' + 
+                        '</div>' +
+                   '</a>' + 
+                   '<hr class="news--row--separator">';
+        });
+    }
+
+    marca = '<div class="news--table">' +
+               marca +
+              '</div>';
+    $('#tab-7').append(marca); 
+  }
+};
+xhrMarca.send();
+
+// ******************************************************************
+//  Reddit tab
+// ******************************************************************
+
+var isRedditRecentNews = function(date) {
+    var twelveHoursAgo = new Date(TODAY.getTime() - (24 * 60 * 60 * 1000));
+    return date > twelveHoursAgo;
+};
+
+var xhrReddit = new XMLHttpRequest();
+xhrReddit.open("GET", REDDIT_FEED, true);
+xhrReddit.onreadystatechange = function(resp) {
+  if (xhrReddit.readyState == READY) {
+      var data = xhrReddit.responseText;
+      var todayNews = [];
+      $(data).find("entry").each(function () {
+        var el = $(this);
+        var date = new Date(el.find("updated").text());
+          
+        if (isRedditRecentNews(date)) {
+            todayNews.push({
+                "title" : el.find("title").text(),
+                "link" : findUrl(el.text()),
+                "isNew" : isNew(date),
+                "date" : date
+            });    
+        }
+    });
+      
+    var reddit = "";
+    if (todayNews.length == 0) {
+        reddit = '<div class="extension--row news--row text--center">No news for today.</div>'
+    }
+    else {
+        todayNews.forEach(function(entry) {
+        reddit += '<a href="' + entry.link + '" target="_blank">' +
+                        '<div class="extension--row news--row">' +
+                            ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
+                            '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
+                            '<div class=news--hour>' + formattedDate(entry.date) + '</div>' + 
+                        '</div>' +
+                   '</a>' + 
+                   '<hr class="news--row--separator">';
+        });
+    }
+
+    reddit = '<div class="news--table">' +
+               reddit +
+              '</div>';
+    $('#tab-8').append(reddit); 
+  }
+};
+xhrReddit.send();
 
