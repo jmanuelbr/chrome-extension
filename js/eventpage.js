@@ -520,8 +520,8 @@ xhrMarca.send();
 // ******************************************************************
 
 var isRedditRecentNews = function(date) {
-    var twelveHoursAgo = new Date(TODAY.getTime() - (24 * 60 * 60 * 1000));
-    return date > twelveHoursAgo;
+    var twentyFourHoursAgo = new Date(TODAY.getTime() - (24 * 60 * 60 * 1000));
+    return date > twentyFourHoursAgo;
 };
 
 var xhrReddit = new XMLHttpRequest();
@@ -537,7 +537,7 @@ xhrReddit.onreadystatechange = function(resp) {
         if (isRedditRecentNews(date)) {
             todayNews.push({
                 "title" : el.find("title").text(),
-                "link" : findUrl(el.text()),
+                "link" : el.find("link").attr("href"),
                 "isNew" : isNew(date),
                 "date" : date
             });    
