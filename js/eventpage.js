@@ -1,3 +1,4 @@
+/* global $, chrome, window, document, XMLHttpRequest */
 (function () {
 
     "use strict";
@@ -80,7 +81,7 @@
 
     $(document).ready(function() {
         $('head').append('<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700" />');
-        $(".tabs-menu a").click(function(event) {
+        $(".tabs-menu a").click(function (event) {
             event.preventDefault();
             $(this).parent().addClass("current");
             $(this).parent().siblings().removeClass("current");
@@ -94,7 +95,7 @@
     //  Parent container
     // ******************************************************************
 
-    var parentDiv='<div class="parent--container" id="parent-container">' +
+    var parentDiv = '<div class="parent--container" id="parent-container">' +
                     '<div id="currency-table"></div>' +
                     '<div class="news--container>' +
                         '<div id="tab-container">' +
@@ -136,7 +137,7 @@
 
     var xhrCurrency = new XMLHttpRequest();
     xhrCurrency.open("GET", "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20csv%20where%20url%3D%22http%3A%2F%2Ffinance.yahoo.com%2Fd%2Fquotes.csv%3Fe%3D.csv%26f%3Dnl1d1t1%26s%3Dgbpeur%3DX%22%3B&format=json&callback=", true);
-    xhrCurrency.onreadystatechange = function(resp) {
+    xhrCurrency.onreadystatechange = function() {
       if (xhrCurrency.readyState == READY) {
           var obj = JSON.parse(xhrCurrency.responseText);
           var result = obj.query.results.row;
@@ -162,7 +163,7 @@
 
     var xhrTheGuardian = new XMLHttpRequest();
     xhrTheGuardian.open("GET", THE_GUARDIAN_FEED, true);
-    xhrTheGuardian.onreadystatechange = function(resp) {
+    xhrTheGuardian.onreadystatechange = function() {
       if (xhrTheGuardian.readyState == READY) {
           var data = xhrTheGuardian.responseText;
           var todayNews = [];
@@ -192,7 +193,7 @@
                         '</a>' +
                         '<hr class="news--row--separator">';
         });
-        var allNews = '<div class="news--table">' +
+        allNews = '<div class="news--table">' +
                        allNews +
                       '</div>';
         $('#tab-1').append(allNews);  
@@ -206,7 +207,7 @@
 
     var xhrScience = new XMLHttpRequest();
     xhrScience.open("GET", SCIENCE_FEED, true);
-    xhrScience.onreadystatechange = function(resp) {
+    xhrScience.onreadystatechange = function() {
       if (xhrScience.readyState == READY) {
           var data = xhrScience.responseText;
           var todayNews = [];
@@ -224,8 +225,8 @@
         });
 
         var scienceNews = "";
-        if (todayNews.length == 0) {
-            scienceNews = '<div class="extension--row news--row text--center">No recent news.</div>'
+        if (todayNews.length === 0) {
+            scienceNews = '<div class="extension--row news--row text--center">No recent news.</div>';
         }
         else {
             todayNews.forEach(function(entry) {
@@ -254,7 +255,7 @@
 
     var xhrBbc = new XMLHttpRequest();
     xhrBbc.open("GET", BCC_NEWS_FEED, true);
-    xhrBbc.onreadystatechange = function(resp) {
+    xhrBbc.onreadystatechange = function() {
       if (xhrBbc.readyState == READY) {
           var data = xhrBbc.responseText;
           var todayNews = [];
@@ -274,8 +275,8 @@
         });
 
         var bbcNews = "";
-        if (todayNews.length == 0) {
-            bbcNews = '<div class="extension--row news--row text--center">No news for today.</div>'
+        if (todayNews.length === 0) {
+            bbcNews = '<div class="extension--row news--row text--center">No news for today.</div>';
         }
         else {
             todayNews.forEach(function(entry) {
@@ -304,7 +305,7 @@
 
     var xhrDailyNews = new XMLHttpRequest();
     xhrDailyNews.open("GET", DAYLY_NEWS_FEED, true);
-    xhrDailyNews.onreadystatechange = function(resp) {
+    xhrDailyNews.onreadystatechange = function() {
       if (xhrDailyNews.readyState == READY) {
           var data = xhrDailyNews.responseText;
           var todayNews = [];
@@ -324,8 +325,8 @@
         });
 
         var dailyNews = "";
-        if (todayNews.length == 0) {
-            dailyNews = '<div class="extension--row news--row text--center">No news for today.</div>'
+        if (todayNews.length === 0) {
+            dailyNews = '<div class="extension--row news--row text--center">No news for today.</div>';
         }
         else {
             todayNews.forEach(function(entry) {
@@ -370,7 +371,7 @@
 
     var xhrSlashdot = new XMLHttpRequest();
     xhrSlashdot.open("GET", SLASHDOT_FEED, true);
-    xhrSlashdot.onreadystatechange = function(resp) {
+    xhrSlashdot.onreadystatechange = function() {
       if (xhrSlashdot.readyState == READY) {
           var data = xhrSlashdot.responseText;
           var todayNews = [];
@@ -388,8 +389,8 @@
         });
 
         var slashDot = "";
-        if (todayNews.length == 0) {
-            slashDot = '<div class="extension--row news--row text--center">No news for today.</div>'
+        if (todayNews.length === 0) {
+            slashDot = '<div class="extension--row news--row text--center">No news for today.</div>';
         }
         else {
             todayNews.forEach(function(entry) {
@@ -424,7 +425,7 @@
 
     var xhrTheIndependent = new XMLHttpRequest();
     xhrTheIndependent.open("GET", THE_INDEPENDENT_FEED, true);
-    xhrTheIndependent.onreadystatechange = function(resp) {
+    xhrTheIndependent.onreadystatechange = function() {
       if (xhrTheIndependent.readyState == READY) {
           var data = xhrTheIndependent.responseText;
           var todayNews = [];
@@ -444,8 +445,8 @@
         });
 
         var theIndependent = "";
-        if (todayNews.length == 0) {
-            theIndependent = '<div class="extension--row news--row text--center">No news for today.</div>'
+        if (todayNews.length === 0) {
+            theIndependent = '<div class="extension--row news--row text--center">No news for today.</div>';
         }
         else {
             todayNews.forEach(function(entry) {
@@ -475,7 +476,7 @@
 
     var xhrMarca = new XMLHttpRequest();
     xhrMarca.open("GET", MARCA_FEED, true);
-    xhrMarca.onreadystatechange = function(resp) {
+    xhrMarca.onreadystatechange = function() {
       if (xhrMarca.readyState == READY) {
           var data = xhrMarca.responseText;
           var todayNews = [];
@@ -495,8 +496,8 @@
         });
 
         var marca = "";
-        if (todayNews.length == 0) {
-            marca = '<div class="extension--row news--row text--center">No news for today.</div>'
+        if (todayNews.length === 0) {
+            marca = '<div class="extension--row news--row text--center">No news for today.</div>';
         }
         else {
             todayNews.forEach(function(entry) {
@@ -530,7 +531,7 @@
 
     var xhrReddit = new XMLHttpRequest();
     xhrReddit.open("GET", REDDIT_FEED, true);
-    xhrReddit.onreadystatechange = function(resp) {
+    xhrReddit.onreadystatechange = function() {
       if (xhrReddit.readyState == READY) {
           var data = xhrReddit.responseText;
           var todayNews = [];
@@ -549,8 +550,8 @@
         });
 
         var reddit = "";
-        if (todayNews.length == 0) {
-            reddit = '<div class="extension--row news--row text--center">No news for today.</div>'
+        if (todayNews.length === 0) {
+            reddit = '<div class="extension--row news--row text--center">No news for today.</div>';
         }
         else {
             todayNews.forEach(function(entry) {
