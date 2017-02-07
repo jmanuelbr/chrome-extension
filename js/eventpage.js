@@ -14,8 +14,8 @@
         BCC_NEWS_FEED = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk",
         DAYLY_NEWS_FEED = "https://www.nydailynews.com/cmlink/NYDN.News.World.rss",
         SLASHDOT_FEED = "https://slashdot.org/slashdot.xml",
-        THE_INDEPENDENT_FEED = "https://www.independent.co.,k/news/uk/rss",
-        REDDIT_FEED = "https://www.reddit.com/r/PS4Deals/ne,/.xml",
+        THE_INDEPENDENT_FEED = "https://www.independent.co.uk/news/uk/rss",
+        REDDIT_FEED = "https://www.reddit.com/r/PS4Deals/new/.xml",
         TODAY = new Date(),
         MIN_VIEWPORT_WIDTH = 1050;
 
