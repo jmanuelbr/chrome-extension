@@ -233,3 +233,9 @@ a:active {
     position: relative;
     top: 1px;
 }
+
+.spinner {
+    height: 210px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}

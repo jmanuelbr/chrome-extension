@@ -12,9 +12,7 @@
         THE_GUARDIAN_FEED = "https://www.theguardian.com/uk/rss",
         SCIENCE_FEED = "https://rss.sciencedaily.com/top.xml",
         BCC_NEWS_FEED = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk",
-        DAYLY_NEWS_FEED = "https://www.nydailynews.com/cmlink/NYDN.News.World.rss",
         SLASHDOT_FEED = "https://slashdot.org/slashdot.xml",
-        THE_INDEPENDENT_FEED = "https://www.independent.co.uk/news/uk/rss",
         REDDIT_FEED = "https://www.reddit.com/r/PS4Deals/new/.xml",
         TODAY = new Date(),
         MIN_VIEWPORT_WIDTH = 1050;
@@ -27,9 +25,10 @@
         return (result === date ? 'Today' : date);
     };
 
-    var isRecentNews = function (date) {
-        var twelveHoursAgo = new Date(TODAY.getTime() - (12 * 60 * 60 * 1000));
-        return date > twelveHoursAgo;
+    var isRecentNews = function (date, hours) {
+        var time = (hours?hours:12);
+        var hoursAgo = new Date(TODAY.getTime() - (time * 60 * 60 * 1000));
+        return date > hoursAgo;
     };
 
     var formattedDate = function (date) {
@@ -94,23 +93,21 @@
     //  Parent container
     // ******************************************************************
 
+    var spinner = "'" + chrome.extension.getURL('assets/spinner.gif') + "'";
     var parentDiv = '<div class="parent--container" id="parent-container">' +
                     '<div id="currency-table"></div>' +
                     '<div class="news--container>' +
                         '<div id="tab-container">' +
                             '<ul class="tabs-menu">' +
-                                '<li class="current first--tab"><a href="#tab-1"><img class="img--tabs" src="' + chrome.extension.getURL('assets/theguardian.png') + '"/></a></li>' +
-                                '<li><a href="#tab-2"><img class="img--tabs" src="'+ 
+                                '<li class="current first--tab"><a href="#tab-1"><img class="img--tabs" src="' + 
                                 chrome.extension.getURL('assets/bbc-news.png') + '"/></a></li>' +
+                                '<li><a href="#tab-2"><img class="img--tabs" src="'+ 
+                                chrome.extension.getURL('assets/theguardian.png') + '"/></a></li>' +
                                 '<li><a href="#tab-3"><img class="img--tabs" src="'+ 
-                                chrome.extension.getURL('assets/the-independent.png') + '"/></a></li>' +
-                                '<li><a href="#tab-4"><img class="img--tabs" src="'+ 
-                                chrome.extension.getURL('assets/daily-news.png') + '"/></a></li>' +
-                                '<li><a href="#tab-5"><img class="img--tabs" src="' +
                                 chrome.extension.getURL('assets/slashdot.png') + '"/></a></li>' +
-                                '<li><a href="#tab-6"><img class="img--tabs" src="' +
+                                '<li><a href="#tab-4"><img class="img--tabs" src="' +
                                 chrome.extension.getURL('assets/science.png') + '"/></a></li>' +
-                                '<li class="last--tab"><a href="#tab-7"><img class="img--tabs" src="' +
+                                '<li class="last--tab"><a href="#tab-5"><img class="img--tabs" src="' +
                                 chrome.extension.getURL('assets/reddit.png') + '"/></a></li>' +
                             '</ul>' +
                         '</div>' +
@@ -120,8 +117,6 @@
                             '<div id="tab-3" class="tab-content"></div>' +
                             '<div id="tab-4" class="tab-content"></div>' +
                             '<div id="tab-5" class="tab-content"></div>' +
-                            '<div id="tab-6" class="tab-content"></div>' +
-                            '<div id="tab-7" class="tab-content"></div>' +
                         '</div>' +
                     '</div>' +
                 '</div>';
@@ -152,103 +147,15 @@
         }
     };
     xhrCurrency.send();
-
-    // ******************************************************************
-    //  The Guardian Tab
-    // ******************************************************************
-
-    var xhrTheGuardian = new XMLHttpRequest();
-    xhrTheGuardian.open("GET", THE_GUARDIAN_FEED, true);
-    xhrTheGuardian.onreadystatechange = function() {
-      if (xhrTheGuardian.readyState == READY) {
-          var data = xhrTheGuardian.responseText;
-          var todayNews = [];
-
-          $(data).find("item").each(function () {
-            var el = $(this);
-            var date = new Date(el.find("pubDate").text());
-
-            if (isRecentNews(date)) {
-                todayNews.push({
-                    "title" : el.find("title").text(),
-                    "link" : findUrl(el.text()),
-                    "isNew" : isNew(date),
-                    "date" : date
-                });    
-            }
-        });
-
-        var allNews = "";
-        todayNews.forEach(function(entry) {
-            allNews += '<a href="' + entry.link + '" target="_blank">' +
-                            '<div class="extension--row news--row text-left">' +
-                                ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
-                                '<div class="extension--cell">'+ entry.title + '</div>' +
-                                '<div class=news--hour>' + formattedDate(entry.date) + '</div>' + 
-                            '</div>' +
-                        '</a>' +
-                        '<hr class="news--row--separator">';
-        });
-        allNews = '<div class="news--table">' +
-                       allNews +
-                      '</div>';
-        $('#tab-1').append(allNews);  
-      }
-    };
-    xhrTheGuardian.send();
-
-    // ******************************************************************
-    //  Science tab
-    // ******************************************************************
-
-    var xhrScience = new XMLHttpRequest();
-    xhrScience.open("GET", SCIENCE_FEED, true);
-    xhrScience.onreadystatechange = function() {
-      if (xhrScience.readyState == READY) {
-          var data = xhrScience.responseText;
-          var todayNews = [];
-
-          $(data).find("item").each(function () {
-            var el = $(this);
-            var date = new Date(el.find("pubDate").text());
-            if (isRecentNews(date)) {
-                todayNews.push({
-                    "title" : el.find("title").text(),
-                    "link" : findUrl(el.text()),
-                    "isNew" : isNew(date)
-                });    
-            }
-        });
-
-        var scienceNews = "";
-        if (todayNews.length === 0) {
-            scienceNews = '<div class="extension--row news--row text--center">No recent news.</div>';
-        }
-        else {
-            todayNews.forEach(function(entry) {
-            scienceNews += '<a href="' + entry.link + '" target="_blank">' +
-                                '<div class="extension--row news--row">' +
-                                    ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
-                                    '<div class="extension--cell">'+ entry.title + '</div>' +
-                                '</div>' +
-                            '</a>' + 
-                            '<hr class="news--row--separator">';
-
-            });
-        }
-
-        scienceNews = '<div class="news--table">' +
-                        scienceNews +
-                      '</div>';
-        $('#tab-6').append(scienceNews); 
-      }
-    };
-    xhrScience.send();
-
+    
+    
     // ******************************************************************
     //  BBC tab
     // ******************************************************************
 
+    var bbcNews = '<div id="bbc-content" class="news--table" style="display:none"></div>' +
+                  '<div id="bbc-spinner" class="spinner" style="background-image: url('+spinner+');"></div>';
+    $('#tab-1').append(bbcNews);
     var xhrBbc = new XMLHttpRequest();
     xhrBbc.open("GET", BCC_NEWS_FEED, true);
     xhrBbc.onreadystatechange = function() {
@@ -287,23 +194,25 @@
             });
         }
 
-        bbcNews = '<div class="news--table">' +
-                   bbcNews +
-                  '</div>';
-        $('#tab-2').append(bbcNews); 
+        $('#bbc-content').append(bbcNews);
+        $('#bbc-spinner').hide();   
+        $('#bbc-content').show();  
       }
     };
     xhrBbc.send();
 
     // ******************************************************************
-    //  Daily News tab
+    //  The Guardian Tab
     // ******************************************************************
 
-    var xhrDailyNews = new XMLHttpRequest();
-    xhrDailyNews.open("GET", DAYLY_NEWS_FEED, true);
-    xhrDailyNews.onreadystatechange = function() {
-      if (xhrDailyNews.readyState == READY) {
-          var data = xhrDailyNews.responseText;
+    var theGuardianNews = '<div id="theguardian-content" class="news--table" style="display:none"></div>' +
+                  '<div id="theguardian-spinner" class="spinner" style="background-image: url('+spinner+');"></div>';
+    $('#tab-2').append(theGuardianNews);
+    var xhrTheGuardian = new XMLHttpRequest();
+    xhrTheGuardian.open("GET", THE_GUARDIAN_FEED, true);
+    xhrTheGuardian.onreadystatechange = function() {
+      if (xhrTheGuardian.readyState == READY) {
+          var data = xhrTheGuardian.responseText;
           var todayNews = [];
 
           $(data).find("item").each(function () {
@@ -320,31 +229,25 @@
             }
         });
 
-        var dailyNews = "";
-        if (todayNews.length === 0) {
-            dailyNews = '<div class="extension--row news--row text--center">No news for today.</div>';
-        }
-        else {
-            todayNews.forEach(function(entry) {
-            dailyNews += '<a href="' + entry.link + '" target="_blank">' +
-                            '<div class="extension--row news--row">' +
+        var allNews = "";
+        todayNews.forEach(function(entry) {
+            allNews += '<a href="' + entry.link + '" target="_blank">' +
+                            '<div class="extension--row news--row text-left">' +
                                 ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
-                                '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
+                                '<div class="extension--cell">'+ entry.title + '</div>' +
                                 '<div class=news--hour>' + formattedDate(entry.date) + '</div>' + 
                             '</div>' +
-                         '</a>' + 
-                         '<hr class="news--row--separator">';
-            });
-        }
-
-        dailyNews = '<div class="news--table">' +
-                     dailyNews +
-                    '</div>';
-        $('#tab-4').append(dailyNews); 
+                        '</a>' +
+                        '<hr class="news--row--separator">';
+        });
+          
+        $('#theguardian-content').append(allNews);
+        $('#theguardian-spinner').hide();   
+        $('#theguardian-content').show();  
       }
     };
-    xhrDailyNews.send();
-
+    xhrTheGuardian.send();
+    
     // ******************************************************************
     //  Slashdot tab
     // ******************************************************************
@@ -365,6 +268,10 @@
         return dateString + ' ' + hourString;
     };
 
+    var slashdotNews = '<div id="slashdot-content" class="news--table" style="display:none"></div>' +
+                  '<div id="slashdot-spinner" class="spinner" style="background-image: url('+spinner+');"></div>';
+    $('#tab-3').append(slashdotNews);
+    
     var xhrSlashdot = new XMLHttpRequest();
     xhrSlashdot.open("GET", SLASHDOT_FEED, true);
     xhrSlashdot.onreadystatechange = function() {
@@ -406,31 +313,33 @@
             });
         }
 
-        slashDot = '<div class="news--table">' +
-                    slashDot +
-                   '</div>';
-        $('#tab-5').append(slashDot); 
+        $('#slashdot-content').append(slashDot);
+        $('#slashdot-spinner').hide();   
+        $('#slashdot-content').show(); 
       }
     };
     xhrSlashdot.send();
 
 
     // ******************************************************************
-    //  The Independent tab
+    //  Science tab
     // ******************************************************************
 
-    var xhrTheIndependent = new XMLHttpRequest();
-    xhrTheIndependent.open("GET", THE_INDEPENDENT_FEED, true);
-    xhrTheIndependent.onreadystatechange = function() {
-      if (xhrTheIndependent.readyState == READY) {
-          var data = xhrTheIndependent.responseText;
+    var scienceNews = '<div id="science-content" class="news--table" style="display:none"></div>' +
+                  '<div id="science-spinner" class="spinner" style="background-image: url('+spinner+');"></div>';
+    $('#tab-4').append(scienceNews);
+    
+    var xhrScience = new XMLHttpRequest();
+    xhrScience.open("GET", SCIENCE_FEED, true);
+    xhrScience.onreadystatechange = function() {
+      if (xhrScience.readyState == READY) {
+          var data = xhrScience.responseText;
           var todayNews = [];
 
           $(data).find("item").each(function () {
             var el = $(this);
             var date = new Date(el.find("pubDate").text());
-
-            if (isRecentNews(date)) {
+            if (isRecentNews(date, 24)) {
                 todayNews.push({
                     "title" : el.find("title").text(),
                     "link" : findUrl(el.text()),
@@ -440,39 +349,44 @@
             }
         });
 
-        var theIndependent = "";
+        var scienceNews = "";
         if (todayNews.length === 0) {
-            theIndependent = '<div class="extension--row news--row text--center">No news for today.</div>';
+            scienceNews = '<div class="extension--row news--row text--center">No recent news.</div>';
         }
         else {
             todayNews.forEach(function(entry) {
-            theIndependent += '<a href="' + entry.link + '" target="_blank">' +
-                            '<div class="extension--row news--row">' +
-                                ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
-                                '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
-                                '<div class=news--hour>' + formattedDate(entry.date) + '</div>' + 
-                            '</div>' +
-                       '</a>' + 
-                       '<hr class="news--row--separator">';
+            scienceNews += '<a href="' + entry.link + '" target="_blank">' +
+                                '<div class="extension--row news--row">' +
+                                    ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
+                                    '<div class="extension--cell">'+ entry.title + '</div>' +
+                                    '<div class=news--hour>' + formattedDate(entry.date) + '</div>' + 
+                                '</div>' +
+                            '</a>' + 
+                            '<hr class="news--row--separator">';
+
             });
         }
 
-        theIndependent = '<div class="news--table">' +
-                   theIndependent +
-                  '</div>';
-        $('#tab-3').append(theIndependent); 
+        $('#science-content').append(scienceNews);
+        $('#science-spinner').hide();   
+        $('#science-content').show(); 
       }
     };
-    xhrTheIndependent.send();
+    xhrScience.send();
+
 
     // ******************************************************************
     //  Reddit tab
     // ******************************************************************
 
-    var isRedditRecentNews = function(date) {
-        var twentyFourHoursAgo = new Date(TODAY.getTime() - (24 * 60 * 60 * 1000));
-        return date > twentyFourHoursAgo;
+    var isRecentNews = function (date, hours) {
+        var hoursAgo = (hours?hours:12);
+        return date > hoursAgo;
     };
+    
+    var redditNews = '<div id="reddit-content" class="news--table" style="display:none"></div>' +
+                  '<div id="reddit-spinner" class="spinner" style="background-image: url('+spinner+');"></div>';
+    $('#tab-5').append(redditNews);
 
     var xhrReddit = new XMLHttpRequest();
     xhrReddit.open("GET", REDDIT_FEED, true);
@@ -484,7 +398,7 @@
             var el = $(this);
             var date = new Date(el.find("updated").text());
 
-            if (isRedditRecentNews(date)) {
+            if (isRecentNews(date, 24)) {
                 todayNews.push({
                     "title" : el.find("title").text(),
                     "link" : el.find("link").attr("href"),
@@ -511,10 +425,9 @@
             });
         }
 
-        reddit = '<div class="news--table">' +
-                   reddit +
-                  '</div>';
-        $('#tab-7').append(reddit); 
+        $('#reddit-content').append(reddit);
+        $('#reddit-spinner').hide();   
+        $('#reddit-content').show(); 
       }
     };
     xhrReddit.send();
