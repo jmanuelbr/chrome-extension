@@ -379,11 +379,6 @@
     //  Reddit tab
     // ******************************************************************
 
-    var isRecentNews = function (date, hours) {
-        var hoursAgo = (hours?hours:12);
-        return date > hoursAgo;
-    };
-    
     var redditNews = '<div id="reddit-content" class="news--table" style="display:none"></div>' +
                   '<div id="reddit-spinner" class="spinner" style="background-image: url('+spinner+');"></div>';
     $('#tab-5').append(redditNews);
