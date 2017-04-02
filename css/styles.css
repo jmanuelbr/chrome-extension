@@ -31,6 +31,7 @@
 }
 
 .extension--cell {
+    position: relative;
     display: table-cell;
     padding: 0 4px;
     font-family: "Open Sans";
@@ -51,6 +52,7 @@
 
 .news--row { 
     padding: 3px 0px 3px 0px;
+    text-align: center;
 }
 
 .news--row--separator {
@@ -238,4 +240,21 @@ a:active {
     height: 210px;
     background-size: contain;
     background-repeat: no-repeat;
+}
+
+.thumbnail-img {
+    max-width: 100%;
+    max-height: 126px;
+    margin-top: 10px;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  height: 40px;
+  width: 40px;
+  transition: .5s ease;
+  background-size:cover
+}
+.title {
+    text-align: left;
 }

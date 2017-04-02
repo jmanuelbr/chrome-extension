@@ -7,6 +7,12 @@
     //  Shared functions and constants
     // ******************************************************************
 
+    jQuery.getFeed({
+       url: 'https://feeds.bbci.co.uk/news/rss.xml?edition=uk',
+       success: function(feed) {
+           console.log(feed);
+       }
+   });
     var READY = 4, // Request finished and response is ready
         GBP_EUR_CHART = "http://www.xe.com/currencycharts/?from=GBP&to=EUR",
         THE_GUARDIAN_FEED = "https://www.theguardian.com/uk/rss",
@@ -163,16 +169,25 @@
           var data = xhrBbc.responseText;
           var todayNews = [];
 
-          $(data).find("item").each(function () {
+        $('item', data).each( function(index, value) {
+
             var el = $(this);
             var date = new Date(el.find("pubDate").text());
-
+            var mediaThumbnail = el.find("media\\:thumbnail")[0];
+            var thumbnail;
+            if (typeof mediaThumbnail !== 'undefined') {
+                thumbnail = $(mediaThumbnail).attr('url');
+                if (thumbnail.length > 0) {
+                    thumbnail = thumbnail.replace('http','https');
+                }
+            }
             if (isRecentNews(date)) {
                 todayNews.push({
-                    "title" : el.find("title").text(),
+                    "title" : el.find('title').eq(0).text(),
                     "link" : findUrl(el.text()),
                     "isNew" : isNew(date),
-                    "date" : date
+                    "date" : date,
+                    "thumbnail": thumbnail
                 });    
             }
         });
@@ -185,8 +200,10 @@
             todayNews.forEach(function(entry) {
             bbcNews += '<a href="' + entry.link + '" target="_blank">' +
                             '<div class="extension--row news--row">' +
-                                ((entry.isNew)?('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>'):'') +
-                                '<div class="extension--cell">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
+                                '<div class="extension--cell"><img class="thumbnail-img" src="' + entry.thumbnail + '"/>' + 
+                                ((entry.isNew)?('<div class="overlay" style="background-image: url('+ chrome.extension.getURL('assets/icon-updated.png') +');"></div>'):'') +
+                                // ((entry.isNew)?('<div class="overlay" style="background-image: url('+ chrome.extension.getURL('assets/icon-updated.png') +');"></div>') +
+                                '<div class="title">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div></div>' +
                                 '<div class=news--hour>' + formattedDate(entry.date) + '</div>' + 
                             '</div>' +
                        '</a>' + 
