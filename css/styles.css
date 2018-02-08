@@ -15,6 +15,10 @@
     z-index: 1 !important;
 }
 
+#currency-table {
+    display: none;
+}
+
 .extension--table {
     border: 1px solid #DDD;
     padding: 4px;
