@@ -239,8 +239,8 @@
             bbcNews += '<a href="' + entry.link + '" target="_blank">' +
                             '<div class="extension--row news--row">' +
                                 '<div class="extension--cell"><div class="img--container"><img class="thumbnail--img" src="' + entry.thumbnail + '"/></div>' + 
-                                ((entry.isNew)?('<div class="overlay" style="background-image: url('+ chrome.extension.getURL('assets/icon-updated.png') +');"></div>'):'') +
-                                // ((entry.isNew)?('<div class="overlay" style="background-image: url('+ chrome.extension.getURL('assets/icon-updated.png') +');"></div>') +
+                                ((entry.isNew)?('<div class="overlay" style="background-image: url('+ chrome.extension.getURL('assets/icon-updated.gif') +');"></div>'):'') +
+                                // ((entry.isNew)?('<div class="overlay" style="background-image: url('+ chrome.extension.getURL('assets/icon-updated.gif') +');"></div>') +
                                 '<div class="title">'+ entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div></div>' +
                                 '<div class=news--hour>' + formattedDate(entry.date) + '</div>' + 
                             '</div>' +
