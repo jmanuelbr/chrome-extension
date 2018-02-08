@@ -6,7 +6,7 @@
   "background": {
     "persistent": false
   },
-  "permissions": ["http://mysafeinfo.com/*", "https://www.theguardian.com/*", "https://rss.sciencedaily.com/top.xml", "https://feeds.bbci.co.uk/news/rss.xml?edition=uk*", "https://slashdot.org/slashdot.xml", "https://www.reddit.com/r/PS4Deals/new/.xml*"],
+  "permissions": ["https://www.theguardian.com/*", "https://rss.sciencedaily.com/top.xml", "https://feeds.bbci.co.uk/news/rss.xml?edition=uk*", "https://slashdot.org/slashdot.xml", "https://www.reddit.com/r/PS4Deals/new/.xml*","https://api.darksky.net/"],
   "web_accessible_resources": ["assets/ukeur.jpg", "assets/recent.png", "assets/theguardian.png", "assets/science.png", "assets/bbc-news.png", "assets/slashdot.png", "assets/comments.png", "assets/reddit.png", "assets/spinner.gif", "assets/icon-updated.png", "*.ttf"],  
   "browser_action": {
     "default_title": "Jose Extension",
@@ -20,7 +20,7 @@
     "content_scripts": [
     {
       "matches": ["https://*/?gfe_rd*"],
-      "css": ["css/styles.css"],
+      "css": ["css/styles.css","css/weather.css"],
       "js": [ "js/lib/jquery.js", "js/lib/jquery-feed.js", "js/eventpage.js"]
     }
   ]

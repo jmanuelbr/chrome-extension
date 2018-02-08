@@ -6,13 +6,6 @@
     // ******************************************************************
     //  Shared functions and constants
     // ******************************************************************
-
-    jQuery.getFeed({
-       url: 'https://feeds.bbci.co.uk/news/rss.xml?edition=uk',
-       success: function(feed) {
-           console.log(feed);
-       }
-   });
     var READY = 4, // Request finished and response is ready
         GBP_EUR_CHART = "http://www.xe.com/currencycharts/?from=GBP&to=EUR",
         THE_GUARDIAN_FEED = "https://www.theguardian.com/uk/rss",
@@ -20,6 +13,7 @@
         BCC_NEWS_FEED = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk",
         SLASHDOT_FEED = "https://slashdot.org/slashdot.xml",
         REDDIT_FEED = "https://www.reddit.com/r/PS4Deals/new/.xml",
+        WEATHER_FEED = "https://api.darksky.net/forecast/e9231a0d68ba35226274ad3b5e1f6dc4/51.5177896,0.1085338000000000?callback=?&units=uk",
         TODAY = new Date(),
         MIN_VIEWPORT_WIDTH = 1050;
 
@@ -84,7 +78,11 @@
     // ******************************************************************
 
     $(document).ready(function() {
-        $('head').append('<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700" />');
+        $('head').append(`
+            <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700" />
+            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.css" />
+            <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Dosis:400,300,700" />
+            `);
         $(".tabs-menu a").click(function (event) {
             event.preventDefault();
             $(this).parent().addClass("current");
@@ -100,6 +98,46 @@
     // ******************************************************************
 
     var spinner = "'" + chrome.extension.getURL('assets/spinner.gif') + "'";
+
+    var weatherHtml = `<div class="weather--container">
+            <div class="weather-city ">
+              <div class="container-weather">
+                <div class="weather-city-title ">
+                  <span id="location"> </span>
+                </div>
+                <hr class="weather-hr"/>
+                <div class="weather-city-weather-temperature weather-loader">
+                  <span class="celsius fahrenheit-btn "></span>
+                </div>
+                <div class="weather-city-weather-description">
+                  <span id="icon"></span><br>
+                  <span id="description"></span>
+                </div>
+                <div class="weather-bottom">
+                  <div class="nav-info-weather clearfix">
+                    <div class="add-info">
+                      <ul id="weather-details" class="weather-ul">
+                        <li class="weather-li">
+                         <span id="todayC"> </span>
+                        </li>
+                        <li class="weather-li">
+                          <span id="tomorrowC"> </span>
+                        </li>
+                        <li class="weather-li">
+                          <span id="afterTomorrowC"> </span>
+                        </li>
+                        <li class="weather-li">
+                          <span id="afterAfterTomorrowC"> </span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div><span class="weather-date"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    `;
     var parentDiv = '<div class="parent--container" id="parent-container">' +
                     '<div id="currency-table"></div>' +
                     '<div class="news--container>' +
@@ -124,7 +162,7 @@
                             '<div id="tab-4" class="tab-content"></div>' +
                             '<div id="tab-5" class="tab-content"></div>' +
                         '</div>' +
-                    '</div>' +
+                    weatherHtml + '</div>' + 
                 '</div>';
     $('body').append(parentDiv);
 
@@ -443,5 +481,63 @@
       }
     };
     xhrReddit.send();
+
+
+// ******************************************************************
+//  Weather widget
+// ******************************************************************
+    var latitude;
+    var longitude;
+
+    var xhrWeather = new XMLHttpRequest();
+    xhrWeather.open("GET", WEATHER_FEED, true);
+    xhrWeather.onreadystatechange = function() {
+
+    if (xhrWeather.readyState == READY) {
+        var json = xhrWeather.responseText; 
+        json = json.replace(/^[^(]*\(([\S\s]+)\);?$/, '$1');
+        var data = JSON.parse(json);
+
+        var temp = data.currently.temperature;
+        var celsius = data.currently.temperature.toFixed(1) + "&deg;C";
+        var description = data.currently.summary;
+        var icon = "wi wi-forecast-io-" + data.currently.icon;
+        var wind = " " + data.currently.windSpeed.toFixed(1) + " m/s ";
+        var humidity = " " + (data.currently.humidity * 100).toFixed(0) + " %";
+        
+        $("#location").html("London");
+        $("#icon").html("<i class=\"" + icon + "\">");
+        $("#description").html(description);
+        $("#humidity").html(humidity);
+        $("#wind").html(wind);
+        $(".celsius").html(celsius);
+        $('div').removeClass('weather-loader');
+
+        //today forecast in C
+        var todayMaxTemp = data.daily.data[0].temperatureMax.toFixed(0);
+        var todayMinTemp = data.daily.data[0].temperatureMin.toFixed(0);
+        var todayIcon = "wi wi-forecast-io-" + data.daily.data[0].icon;
+        $("#todayC").html("<br>"+ todayMinTemp + "&deg;/"+ todayMaxTemp +"&deg; <br> <i class=\"" + todayIcon + "\" id=\"smallIcon\">");
+
+        //tomorrow forecast in C
+        var tomorrowMaxTemp = data.daily.data[1].temperatureMax.toFixed(0);
+        var tomorrowMinTemp = data.daily.data[1].temperatureMin.toFixed(0);
+        var tomorrowIcon = "wi wi-forecast-io-" + data.daily.data[1].icon;
+        $("#tomorrowC").html("<br>"+ tomorrowMinTemp + "&deg;/"+ tomorrowMaxTemp +"&deg; <br> <i class=\"" + tomorrowIcon + "\" id=\"smallIcon\">");
+        
+        //after tomorrow forecast in C
+        var afterTomorrowMaxTemp = data.daily.data[2].temperatureMax.toFixed(0);
+        var afterTomorrowMinTemp = data.daily.data[2].temperatureMin.toFixed(0);
+        var afterTomorrowIcon = "wi wi-forecast-io-" + data.daily.data[2].icon;
+        $("#afterTomorrowC").html("<br>"+ afterTomorrowMinTemp + "&deg;/"+ afterTomorrowMaxTemp +"&deg; <br> <i class=\"" + afterTomorrowIcon + "\" id=\"smallIcon\">");
+
+        //after after tomorrow forecast in C
+        var afterAfterTomorrowMaxTemp = data.daily.data[3].temperatureMax.toFixed(0);
+        var afterAfterTomorrowMinTemp = data.daily.data[3].temperatureMin.toFixed(0);
+        var afterAfterTomorrowIcon = "wi wi-forecast-io-" + data.daily.data[3].icon;
+        $("#afterAfterTomorrowC").html("<br>"+ afterAfterTomorrowMinTemp + "&deg;/"+ afterAfterTomorrowMaxTemp +"&deg; <br> <i class=\"" + afterAfterTomorrowIcon + "\" id=\"smallIcon\">");
+        }
+    };
+    xhrWeather.send();
 
 }());
