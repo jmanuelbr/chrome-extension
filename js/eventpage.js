@@ -7,7 +7,7 @@
     //  Shared functions and constants
     // ******************************************************************
     var READY = 4, // Request finished and response is ready
-        GBP_EUR_CHART = "http://www.xe.com/currencycharts/?from=GBP&to=EUR",
+        GBP_EUR_CHART = "https://free.currencyconverterapi.com/api/v5/convert?q=GBP_EUR&compact=y",
         THE_GUARDIAN_FEED = "https://www.theguardian.com/uk/rss",
         SCIENCE_FEED = "https://rss.sciencedaily.com/top.xml",
         BCC_NEWS_FEED = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk",
@@ -171,19 +171,18 @@
     // ******************************************************************
 
     var xhrCurrency = new XMLHttpRequest();
-    xhrCurrency.open("GET", "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20csv%20where%20url%3D%22http%3A%2F%2Ffinance.yahoo.com%2Fd%2Fquotes.csv%3Fe%3D.csv%26f%3Dnl1d1t1%26s%3Dgbpeur%3DX%22%3B&format=json&callback=", true);
+    xhrCurrency.open("GET", GBP_EUR_CHART, true);
     xhrCurrency.onreadystatechange = function() {
       if (xhrCurrency.readyState == READY) {
           var obj = JSON.parse(xhrCurrency.responseText);
-          var result = obj.query.results.row;
+          var jsonResponse = JSON.parse(xhrCurrency.responseText);
+          var currencyRate = jsonResponse.GBP_EUR.val;
           var currencyTable = 
                '<div class="extension--table">' +
                     '<div class="extension-row">' +
-                        '<div class="extension--cell"><a href="'+ GBP_EUR_CHART +'" target="_blank"><img class="ukeur--logo--margin" src="' + chrome.extension.getURL('assets/ukeur.jpg') + '" height="16px"/></a></div>' +
-                        '<div class="extension--cell extenstion--cell--text">' + result.col0 + '</div>' +
-                        '<div class="extension--cell extenstion--cell--text currency--value">' + result.col1 + '</div>' +
-                        '<div class="extension--cell extenstion--cell--text">' + getDate(result.col2) + '</div>' +
-                        '<div class="extension--cell extenstion--cell--text">' + result.col3 + '</div>' +
+                        '<div class="extension--cell"><a href="https://www.xe.com/currencyconverter/convert/?Amount=1&From=GBP&To=EUR" target="_blank"><img class="ukeur--logo--margin" src="' + chrome.extension.getURL('assets/currency-feed.jpg') + '" height="20px"/></a></div>' +
+                        '<div class="extension--cell extenstion--cell--text">GBP/EUR</div>' +
+                        '<div class="extension--cell extenstion--cell--text currency--value">' + currencyRate + '</div>' +
                     '</div>' +
                 '</div>';
           $('#currency-table').append(currencyTable);
