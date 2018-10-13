@@ -31,8 +31,7 @@
         "js/lib/jquery.js", 
         "js/lib/jquery-feed.js", 
         "js/lib/axios.js", 
-        "js/eventpage.js",
-        "js/weather.component.js"
+        "js/eventpage.js"
       ]
     }
   ]
