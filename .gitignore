@@ -1,20 +1,8 @@
 .DS_Store
-*.groovy
 
 # Ignored folders
-target/
 node_modules/
+dist/
 
 .idea/
 *.iml
-
-.vlt
-*.jar
-
-# Eclipse
-.settings/
-.project
-.classpath
-
-# Brackets config
-.brackets.json

@@ -1,0 +1,54 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "amd": true
+  },
+  "globals": {
+    "describe": true,
+    "test": true,
+    "jest": true,
+    "jQuery": true,
+    "$": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "extends": [
+    "plugin:react/recommended"
+  ],
+  "rules": {
+    "no-tabs": 0,
+    "linebreak-style": 0,
+    "semi": [
+      "error",
+      "always"
+    ],
+    "no-unused-vars": 0,
+    "no-console": 0,
+    "react/prop-types": 2,
+    "react/no-deprecated": 2,
+    "react/no-multi-comp": 2,
+    "react/jsx-indent": [4, "tab"],
+    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+    "comma-dangle": 0,
+    "no-underscore-dangle": 0,
+    "class-methods-use-this": 0,
+    "one-var": 0,
+    "arrow-parens": 0,
+    "quote-props": 0,
+    "consistent-return": 0,
+    "func-names": 0,
+    "object-curly-spacing": 0,
+    "space-before-function-paren": 0,
+    "array-callback-return": 0,
+    "max-len": 0,
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0
+  }
+}

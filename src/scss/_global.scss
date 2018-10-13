@@ -1,0 +1,267 @@
+.parent--container {
+    position: absolute;
+    top:0px;
+    left:0;
+    margin: 15px;
+    font-size: 85%;
+    color: #777;
+    width: 267px;
+    max-width: 267px;
+    font-family: "Open Sans";
+    z-index: 999 !important;
+}
+
+#gb {
+    z-index: 1 !important;
+}
+
+.extension--table {
+    border: 1px solid #DDD;
+    padding: 4px;
+    border-radius: 4px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+.extension--row {
+    display: table;
+    box-sizing: border-box;
+    display: block;
+    border-left: 4px solid white;
+}
+
+.extension--cell {
+    position: relative;
+    display: table-cell;
+    padding: 0 4px;
+    font-family: "Open Sans";
+}
+.extenstion--cell--text {
+    text-align: center;
+    position: relative;
+    top: -3px;
+}
+
+.currency--value {
+    font-weight: 600;
+    font-size: 110%;
+}
+.ukeur--logo--margin {
+    margin: 0 1px;
+}
+
+.news--row { 
+    padding: 3px 0px 3px 0px;
+    text-align: center;
+}
+
+.news--row--separator {
+    margin: 0;
+    border-right-style: initial;
+    border-bottom-style: initial;
+    border-left-style: initial;
+    border-right-color: initial;
+    border-bottom-color: initial;
+    border-left-color: initial;
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    border-width: 1px 0px 0px;
+    border-top: 1px solid rgb(238, 238, 238);
+    height: 0px;
+    box-sizing: content-box;
+    display: block;
+}
+
+.news--table {
+    max-height: 450px;
+    margin-top: 2px;
+    overflow-y: scroll;
+    font-size: 115%;
+    padding: 7px 3px 7px 0px;
+    box-sizing: border-box;
+}
+.news--hour {
+    margin: 2px 0 0 0;
+    text-align: right;
+    font-size: 80%;
+}
+
+.news--table::-webkit-scrollbar {
+    width: 6px;
+}
+ 
+.news--table::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 1px solid #CCC;
+}
+
+.is--new {
+    position: relative;
+    top: 4px;
+    height: 16px;
+}
+
+.slashdot--icon {
+    position: relative;
+    top: 10px;
+    height: 20px;   
+}
+
+a:link {
+    color: rgb(119, 119, 119);
+    text-decoration: none;
+}
+
+a:visited {
+    color: #BBB !important;
+    text-decoration: none !important;
+}
+
+a:active {
+    color: #3667bc !important;
+    text-decoration: underline !important;
+}
+
+/* Tabs */
+
+.tabs-menu {
+    margin: 3px 0 0 0;
+    padding-left: 0;
+    height: 25px;
+    clear: both;
+}
+
+.tabs-menu li {
+    height: 25px;
+    line-height: 21px;
+    display: table-cell;
+    margin-right: 0px;
+    background-color: #eee;
+    border-top: 1px solid #d4d4d1;
+    border-right: 1px solid #d4d4d1;
+}
+
+.tabs-menu li.current {
+    position: relative;
+    background-color: #fff;
+    border-bottom: 1px solid #fff;
+    z-index: 5;
+}
+
+.tabs-menu li a {
+    padding: 3px;
+    color: #AAA;
+    text-decoration: none; 
+}
+
+.tabs-menu .current a {
+    color: #2e7da3;
+}
+
+.tab {
+    border: 1px solid #d4d4d1;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+    background-color: #fff;
+    float: left;
+    margin: 3px 0 0 0;
+}
+
+.tab-content {
+    width: 268px;
+    max-width: 268px;
+    display: none;
+}
+
+.news--container {
+    margin-top: 3px;
+}
+
+#tab-container {
+    margin-top: 3px;
+    height: 22px;
+}
+
+#tab-1 {
+ display: table-cell;   
+}
+
+.tabs-menu li {
+    list-style-type: none;
+}
+
+.img--tabs { 
+    position: relative;
+    top: 2px;
+    margin: 2px 3px 0px 3px;
+    height: 19px;
+}
+
+.first--tab {
+    border-top-left-radius: 4px;    
+    border-left: 1px solid #d4d4d1;
+}
+
+.last--tab {
+    border-top-right-radius: 4px;    
+}
+.text--center {
+    text-align: center;
+}
+.news--comments {
+    display: inline;
+    float: left;
+    font-size: 70%;
+}
+.news--comments--image {
+    height: 12px;
+    vertical-align: middle;
+    margin-right: 2px;
+    margin-left: 32px;
+}
+.news--comments--number {
+    position: relative;
+    top: 1px;
+}
+
+.spinner {
+    height: 210px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.thumbnail--img {
+    height: 126px;
+    width: 240px;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    // padding: 6px 0 0 6px;
+}
+
+.thumbnail--img:hover {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+.img--container {
+    overflow: hidden;
+    height: 126px;
+    width: 240px;
+}
+.overlay {
+  position: absolute;
+  top: -2px;
+  height: 40px;
+  width: 40px;
+  transition: .5s ease;
+  background-size:cover;
+  pointer-events: none;
+}
+.title {
+    text-align: left;
+}
