@@ -114,22 +114,21 @@
                 <div class="weather-bottom">
                   <div class="nav-info-weather clearfix">
                     <div class="add-info">
-                      <ul id="weather-details" class="weather-ul">
-                        <li class="weather-li">
+                      <ul id="weather-details">
+                        <li>
                          <span id="todayC"> </span>
                         </li>
-                        <li class="weather-li">
+                        <li>
                           <span id="tomorrowC"> </span>
                         </li>
-                        <li class="weather-li">
+                        <li>
                           <span id="afterTomorrowC"> </span>
                         </li>
-                        <li class="weather-li">
+                        <li>
                           <span id="afterAfterTomorrowC"> </span>
                         </li>
                       </ul>
                     </div>
-                    <div><span class="weather-date"></div>
                   </div>
                 </div>
               </div>
