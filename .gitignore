@@ -2,7 +2,7 @@
 
 # Ignored folders
 node_modules/
-dist/
+build/
 
 .idea/
 *.iml

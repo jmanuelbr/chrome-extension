@@ -20,15 +20,15 @@
     "default_popup": "popup.html"
   },
     "background": {
-    "scripts": ["js/bundle.js"],
+    "scripts": ["js/eventpage.js"],
     "persistent": false
   },
     "content_scripts": [
     {
       "matches": ["https://*/?gfe_rd*","https://www.google.com/"],
-      "css": ["css/styles.css","css/weather.css"],
+      "css": ["css/styles.css"],
       "js": [
-        "js/bundle.js"
+        "js/eventpage.js"
       ]
     }
   ]
