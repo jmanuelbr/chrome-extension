@@ -175,12 +175,14 @@
             var jsonResponse = JSON.parse(xhrCurrency.responseText);
             var currencyRate = jsonResponse.GBP_EUR.val;
             var currencyTable =
-                '<div class="extension--table">' +
-                '<div>' +
-                '<div class="extension--cell"><a href="https://www.xe.com/currencyconverter/convert/?Amount=1&From=GBP&To=EUR" target="_blank"><img class="ukeur--logo--margin" src="' + chrome.extension.getURL('assets/currency-feed.png') + '" height="20px"/></a></div>' +
-                '<div class="extension--cell extenstion--cell--text">GBP/EUR</div>' +
-                '<div class="extension--cell extenstion--cell--text currency--value">' + currencyRate + '</div>' +
+                '<div class="widget-table">' +
+                '<div class="currency-image">' +
+                    '<a href="https://www.xe.com/currencyconverter/convert/?Amount=1&From=GBP&To=EUR" target="_blank">' +
+                        '<img class="ukeur--logo--margin" src="' + chrome.extension.getURL('assets/currency-feed.png') + '" height="20px"/>' +
+                    '</a>' +
                 '</div>' +
+                '<div class="currency-text">GBP/EUR</div>' +
+                '<div class="currency-text currency-value">' + currencyRate + '</div>' +
                 '</div>';
             $('#currency-table').append(currencyTable);
 

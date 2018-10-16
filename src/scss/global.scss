@@ -14,7 +14,7 @@
     max-width: 267px;
     font-family: $font-stack;
     z-index: 99999 !important;
-    .extension--table {
+    .widget-table {
         border: 1px solid #DDD;
         padding: 4px;
         border-radius: 4px;
@@ -25,12 +25,12 @@
             display: table-cell;
             padding: 0 4px;
             font-family: "Open Sans";
-            .extenstion--cell--text {
+            .currency-text {
                 text-align: center;
                 position: relative;
                 top: -3px;
             }
-            .currency--value {
+            .currency-value {
                 font-weight: 600;
                 font-size: 110%;
             }

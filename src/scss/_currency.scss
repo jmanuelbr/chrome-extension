@@ -2,27 +2,31 @@
 @import 'variables';
 
 .currency-section {
-	.extension--table {
-        border: 1px solid #DDD;
+	font-family: $font-stack;
+	.widget-table {
+        border: 1px solid $white-color;
         padding: 4px;
         border-radius: 4px;
         margin-top: 5px;
         box-sizing: border-box;
-        .extension--cell {
-            position: relative;
-            display: table-cell;
-            padding: 0 4px;
-            font-family: "Open Sans";
-            .extenstion--cell--text {
+        height: 30px;
+        div {
+        	float: left;
+        }
+        .currency-image {
+        	margin-right: 8px;
+        }
+        .currency-text {
                 text-align: center;
                 position: relative;
-                top: -3px;
+                top: 3px;
+                padding-right: 8px;
             }
-            .currency--value {
-                font-weight: 600;
-                font-size: 110%;
-            }
+        .currency-value {
+        		top: 2px;
+            font-weight: 600;
+            font-size: 110%;
         }
-    }
+}
 
 }
