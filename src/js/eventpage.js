@@ -136,7 +136,7 @@
         </div>
     `;
     var parentDiv = '<div class="parent-widget-container" id="parent-container">' +
-        '<div id="currency-table"></div>' +
+        '<div class="currency-section" id="currency-table"></div>' +
         '<div class="news--container>' +
         '<div id="tab-container">' +
         '<ul class="tabs-menu">' +

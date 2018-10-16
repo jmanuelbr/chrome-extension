@@ -1,6 +1,7 @@
 @charset 'UTF-8';
 @import 'variables';
 @import 'weather';
+@import 'currency';
 
 .parent-widget-container {
     position: absolute;
@@ -29,7 +30,6 @@
                 position: relative;
                 top: -3px;
             }
-
             .currency--value {
                 font-weight: 600;
                 font-size: 110%;
