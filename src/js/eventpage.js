@@ -135,7 +135,7 @@
             </div>
         </div>
     `;
-    var parentDiv = '<div class="parent--container" id="parent-container">' +
+    var parentDiv = '<div class="parent-widget-container" id="parent-container">' +
         '<div id="currency-table"></div>' +
         '<div class="news--container>' +
         '<div id="tab-container">' +
@@ -176,7 +176,7 @@
             var currencyRate = jsonResponse.GBP_EUR.val;
             var currencyTable =
                 '<div class="extension--table">' +
-                '<div class="extension-row">' +
+                '<div>' +
                 '<div class="extension--cell"><a href="https://www.xe.com/currencyconverter/convert/?Amount=1&From=GBP&To=EUR" target="_blank"><img class="ukeur--logo--margin" src="' + chrome.extension.getURL('assets/currency-feed.png') + '" height="20px"/></a></div>' +
                 '<div class="extension--cell extenstion--cell--text">GBP/EUR</div>' +
                 '<div class="extension--cell extenstion--cell--text currency--value">' + currencyRate + '</div>' +
@@ -233,9 +233,8 @@
                 todayNews.forEach(function(entry) {
                     bbcNews += '<a href="' + entry.link + '" target="_blank">' +
                         '<div class="extension--row news--row">' +
-                        '<div class="extension--cell"><div class="img--container"><img class="thumbnail--img" src="' + entry.thumbnail + '"/></div>' +
+                        '<div class="extension--cell-news"><div class="img--container"><img class="thumbnail--img" src="' + entry.thumbnail + '"/></div>' +
                         ((entry.isNew) ? ('<div class="overlay" style="background-image: url(' + chrome.extension.getURL('assets/icon-updated.gif') + ');"></div>') : '') +
-                        // ((entry.isNew)?('<div class="overlay" style="background-image: url('+ chrome.extension.getURL('assets/icon-updated.gif') +');"></div>') +
                         '<div class="title">' + entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div></div>' +
                         '<div class=news--hour>' + formattedDate(entry.date) + '</div>' +
                         '</div>' +
@@ -283,8 +282,8 @@
             todayNews.forEach(function(entry) {
                 allNews += '<a href="' + entry.link + '" target="_blank">' +
                     '<div class="extension--row news--row text-left">' +
-                    ((entry.isNew) ? ('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>') : '') +
-                    '<div class="extension--cell">' + entry.title + '</div>' +
+                    ((entry.isNew) ? ('<div class="extension--cell-news"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>') : '') +
+                    '<div class="extension--cell-news">' + entry.title + '</div>' +
                     '<div class=news--hour>' + formattedDate(entry.date) + '</div>' +
                     '</div>' +
                     '</a>' +
@@ -348,8 +347,8 @@
                 todayNews.forEach(function(entry) {
                     slashDot += '<a href="' + entry.link + '" target="_blank">' +
                         '<div class="extension--row news--row">' +
-                        '<div class="extension--cell"><img class="slashdot--icon" src="' + entry.image + '"/></div>' +
-                        '<div class="extension--cell">' + entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
+                        '<div class="extension--cell-news"><img class="slashdot--icon" src="' + entry.image + '"/></div>' +
+                        '<div class="extension--cell-news">' + entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
                         '<div class="news--footer">' +
                         '<div class="news--comments" id="news-comments">' +
                         '<img class="news--comments--image"src="' + chrome.extension.getURL('assets/comments.png') + '"/>' +
@@ -405,8 +404,8 @@
                 todayNews.forEach(function(entry) {
                     scienceNews += '<a href="' + entry.link + '" target="_blank">' +
                         '<div class="extension--row news--row">' +
-                        ((entry.isNew) ? ('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>') : '') +
-                        '<div class="extension--cell">' + entry.title + '</div>' +
+                        ((entry.isNew) ? ('<div class="extension--cell-news"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>') : '') +
+                        '<div class="extension--cell-news">' + entry.title + '</div>' +
                         '<div class=news--hour>' + formattedDate(entry.date) + '</div>' +
                         '</div>' +
                         '</a>' +
@@ -458,8 +457,8 @@
                 todayNews.forEach(function(entry) {
                     reddit += '<a href="' + entry.link + '" target="_blank">' +
                         '<div class="extension--row news--row">' +
-                        ((entry.isNew) ? ('<div class="extension--cell"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>') : '') +
-                        '<div class="extension--cell">' + entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
+                        ((entry.isNew) ? ('<div class="extension--cell-news"><img class="is--new" src="' + chrome.extension.getURL('assets/recent.png') + '" height="16px"/></div>') : '') +
+                        '<div class="extension--cell-news">' + entry.title.replace("<![CDATA[", "").replace("]]>", "") + '</div>' +
                         '<div class=news--hour>' + formattedDate(entry.date) + '</div>' +
                         '</div>' +
                         '</a>' +
