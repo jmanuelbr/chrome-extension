@@ -11,39 +11,43 @@
     border-color: rgb(212, 212, 209);
     border-image: initial;
     margin: 3px 0px 0px;
-}
-.weather-city {
-  padding: 0px;
+    .weather-city {
+      padding: 0px;
+      .container-weather {
+        margin: 0 auto;
+        padding: 0;
+        width: 100%;
+        height: 200px;
+        background-size: cover;
+        border-radius: 3px;
+        position: relative;
+        background: rgba(255, 255, 255, 0.05);
+        .weather-city-title,
+        .weather-city-weather-temperature,
+        .weather-city-weather-description,
+        .weather-city-weather-icon {
+          box-sizing: border-box;
+          font-family: 'Dosis', sans-serif;
+          font-weight: bold;
+          text-align: center;
+          color: #323D54;
+          margin: auto;
+          display: block;
+        }
+        .weather-city-title {
+          font-size: 2em;
+          padding-top: 5px;
+        }
+
+      }
+    }
 }
 
-.container-weather {
-  margin: 0 auto;
-  padding: 0;
-  width: 100%;
-  height: 200px;
-  background-size: cover;
-  border-radius: 3px;
-  position: relative;
-  background: rgba(255, 255, 255, 0.05);
-}
 
-.weather-city-title,
-.weather-city-weather-temperature,
-.weather-city-weather-description,
-.weather-city-weather-icon {
-  box-sizing: border-box;
-  font-family: 'Dosis', sans-serif;
-  font-weight: bold;
-  text-align: center;
-  color: #323D54;
-  margin: auto;
-  display: block;
-}
 
-.weather-city-title {
-  font-size: 2em;
-  padding-top: 5px;
-}
+
+
+
 
 .weather-hr {
   border: 0;
