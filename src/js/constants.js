@@ -1,0 +1,12 @@
+// ******************************************************************
+//  Shared functions and constants
+// ******************************************************************
+
+export const READY = 4; // Request finished and response is ready
+export const GBP_EUR_CHART = "https://free.currencyconverterapi.com/api/v5/convert?q=GBP_EUR&compact=y";
+export const THE_GUARDIAN_FEED = "https://www.theguardian.com/uk/rss";
+export const SCIENCE_FEED = "https://rss.sciencedaily.com/top.xml";
+export const BCC_NEWS_FEED = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
+export const SLASHDOT_FEED = "https://slashdot.org/slashdot.xml";
+export const REDDIT_FEED = "https://www.reddit.com/r/PS4Deals/new/.xml";
+export const MIN_VIEWPORT_WIDTH = 1050;
