@@ -1,71 +1,72 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
- 
+
+var path = require("path");
+
 module.exports = {
     entry: './src/js/eventpage.js',
     output: {
-        path: './build/js',
-        filename: 'eventpage.js'
-    },
-    externals: {
-        "ramda": "R"
+        path: path.resolve(__dirname, "build/js"),
+        filename: "eventpage.js",
+        publicPath: "/build"
     },
     module: {
-        loaders: [
-            {
+        rules: [{
                 enforce: "pre",
                 test: /\.js$/,
-                exclude: [/node_modules/,/third-party/,/build/],
-                loader: "eslint-loader"
+                exclude: [/node_modules/, /third-party/, /build/],
+                use: "eslint-loader"
             },
             {
                 test: /\.js$/,
-                loader: 'babel-loader'
+                use: {
+                    loader: "babel-loader",
+                    options: { presets: ["es2015"] }
+                }
             },
             {
-                test: /\.(sa|sc|c)ss$/,
-                loaders: [
+                test: /\.scss$/,
+                use: [
                     {
-						loader: 'file-loader',
-						options: {
-							name: 'css/[name].blocks.css',
-						}
-					},
-                    "style-loader", "css-loader", "sass-loader"]
-                }
-
+                        loader: MiniCssExtractPlugin.loader
+                    },
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'sass-loader'
+                    }
+                ]
+            }
         ]
     },
-    devtool: 'source-map',
     plugins: [
-
-        new CopyWebpackPlugin([
-            {
-              from: 'src/assets',
-              to: '../assets',
-              toType: 'dir'
-            }
-          ]),
-          new CopyWebpackPlugin([
-            {
-              from: 'src/chrome-extension.iml',
-              to: '../chrome-extension.iml',
-              toType: 'file'
-            }
-          ]),
-          new CopyWebpackPlugin([
-            {
-              from: 'src/manifest.json',
-              to: '../manifest.json',
-              toType: 'file'
-            }
-          ]),
-          new CopyWebpackPlugin([
-            {
-              from: 'src/popup.html',
-              to: '../popup.html',
-              toType: 'file'
-            }
-          ])
-      ]
+        new CopyWebpackPlugin([{
+            from: 'src/assets',
+            to: '../assets',
+            toType: 'dir'
+        }]),
+        new CopyWebpackPlugin([{
+            from: 'src/chrome-extension.iml',
+            to: '../chrome-extension.iml',
+            toType: 'file'
+        }]),
+        new CopyWebpackPlugin([{
+            from: 'src/manifest.json',
+            to: '../manifest.json',
+            toType: 'file'
+        }]),
+        new CopyWebpackPlugin([{
+            from: 'src/popup.html',
+            to: '../popup.html',
+            toType: 'file'
+        }]),
+        new MiniCssExtractPlugin({
+            // Options similar to the same options in webpackOptions.output
+            // both options are optional
+            filename: "../css/styles.css",
+            chunkFilename: "[id].css"
+        })
+    ]
 };

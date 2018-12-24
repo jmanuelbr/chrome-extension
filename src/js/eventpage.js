@@ -2,6 +2,7 @@ import axios from 'axios';
 import $ from 'jquery';
 import * as CONSTANTS from './constants';
 import { formattedDate } from './helper';
+require('../scss/global.scss');
 
 const TODAY = new Date();
 /* global $, chrome, window, document, XMLHttpRequest */
