@@ -20,7 +20,7 @@
     "default_popup": "popup.html"
   },
     "background": {
-    "scripts": ["js/third-party/axios.js", "js/third-party/jquery.js", "js/eventpage.js"],
+    "scripts": ["js/eventpage.js"],
     "persistent": false
   },
     "content_scripts": [
@@ -28,8 +28,6 @@
       "matches": ["https://*/?gfe_rd*","https://www.google.com/"],
       "css": ["css/styles.css"],
       "js": [
-        "js/third-party/axios.js",
-        "js/third-party/jquery.js",
         "js/eventpage.js"
       ]
     }

@@ -28,13 +28,6 @@ module.exports = {
           ]),
           new CopyWebpackPlugin([
             {
-              from: 'src/js/third-party',
-              to: 'third-party',
-              toType: 'dir'
-            }
-          ]),
-          new CopyWebpackPlugin([
-            {
               from: 'src/chrome-extension.iml',
               to: '../chrome-extension.iml',
               toType: 'file'
