@@ -1,3 +1,5 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+ 
 module.exports = {
     entry: './src/js/eventpage.js',
     output: {
@@ -15,5 +17,42 @@ module.exports = {
             }
         ]
     },
-    devtool: 'source-map'
+    devtool: 'source-map',
+    plugins: [
+        new CopyWebpackPlugin([
+            {
+              from: 'src/assets',
+              to: '../assets',
+              toType: 'dir'
+            }
+          ]),
+          new CopyWebpackPlugin([
+            {
+              from: 'src/js/third-party',
+              to: 'third-party',
+              toType: 'dir'
+            }
+          ]),
+          new CopyWebpackPlugin([
+            {
+              from: 'src/chrome-extension.iml',
+              to: '../chrome-extension.iml',
+              toType: 'file'
+            }
+          ]),
+          new CopyWebpackPlugin([
+            {
+              from: 'src/manifest.json',
+              to: '../manifest.json',
+              toType: 'file'
+            }
+          ]),
+          new CopyWebpackPlugin([
+            {
+              from: 'src/popup.html',
+              to: '../popup.html',
+              toType: 'file'
+            }
+          ])
+      ]
 };
