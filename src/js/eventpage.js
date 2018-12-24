@@ -6,7 +6,7 @@
     // ******************************************************************
     //  Shared functions and constants
     // ******************************************************************
-    var READY = 4, // Request finished and response is ready
+    const READY = 4, // Request finished and response is ready
         GBP_EUR_CHART = "https://free.currencyconverterapi.com/api/v5/convert?q=GBP_EUR&compact=y",
         THE_GUARDIAN_FEED = "https://www.theguardian.com/uk/rss",
         SCIENCE_FEED = "https://rss.sciencedaily.com/top.xml",
@@ -16,23 +16,23 @@
         TODAY = new Date(),
         MIN_VIEWPORT_WIDTH = 1050;
 
-    var getDate = function(date) {
-        var dd = TODAY.getDate();
-        var mm = TODAY.getMonth() + 1; //January is 0!
-        var yyyy = TODAY.getFullYear();
-        var result = dd + '/' + mm + '/' + yyyy;
+    const getDate = function(date) {
+        const dd = TODAY.getDate();
+        const mm = TODAY.getMonth() + 1; //January is 0!
+        const yyyy = TODAY.getFullYear();
+        const result = dd + '/' + mm + '/' + yyyy;
         return (result === date ? 'Today' : date);
     };
 
-    var isRecentNews = function(date, hours) {
-        var time = (hours ? hours : 12);
-        var hoursAgo = new Date(TODAY.getTime() - (time * 60 * 60 * 1000));
+    const isRecentNews = function(date, hours) {
+        const time = (hours ? hours : 12);
+        const hoursAgo = new Date(TODAY.getTime() - (time * 60 * 60 * 1000));
         return date > hoursAgo;
     };
 
-    var formattedDate = function(date) {
-        var result = "";
-        var partials = date.toString().split(' ');
+    const formattedDate = function(date) {
+        let result = "";
+        const partials = date.toString().split(' ');
         if (date.getDay() === TODAY.getDay() && date.getMonth() === TODAY.getMonth()) {
             result = "Today " + partials[4];
         } else {
@@ -41,16 +41,16 @@
         return result;
     };
 
-    var isNew = function(date) {
-        var hours = Math.abs(TODAY - date) / 36e5; //60*60*1000
+    const isNew = function(date) {
+        const hours = Math.abs(TODAY - date) / 36e5; //60*60*1000
         return (hours <= 1);
     };
 
-    var findUrl = function(text) {
-        var source = (text || '').toString();
-        var url;
-        var matchArray;
-        var regexToken = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g;
+    const findUrl = function(text) {
+        const source = (text || '').toString();
+        let url;
+        let matchArray;
+        const regexToken = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g;
 
         while ((matchArray = regexToken.exec(source)) !== null) {
             url = matchArray[0];
@@ -85,7 +85,7 @@
             event.preventDefault();
             $(this).parent().addClass("current");
             $(this).parent().siblings().removeClass("current");
-            var tab = $(this).attr("href");
+            const tab = $(this).attr("href");
             $(".tab-content").not(tab).css("display", "none");
             $(tab).fadeIn();
         });
@@ -95,9 +95,9 @@
     //  Parent container
     // ******************************************************************
 
-    var spinner = "'" + chrome.extension.getURL('assets/spinner.gif') + "'";
+    const spinner = "'" + chrome.extension.getURL('assets/spinner.gif') + "'";
 
-    var weatherHtml = `<div class="weather--container">
+    const weatherHtml = `<div class="weather--container">
             <div class="weather-city ">
               <div class="container-weather">
                 <div class="weather-city-title ">
@@ -135,7 +135,7 @@
             </div>
         </div>
     `;
-    var parentDiv = '<div class="parent-widget-container" id="parent-container">' +
+    const parentDiv = '<div class="parent-widget-container" id="parent-container">' +
         '<div class="currency-section" id="currency-table"></div>' +
         '<div class="news--container>' +
         '<div id="tab-container">' +
@@ -167,14 +167,14 @@
     //  Currency section
     // ******************************************************************
 
-    var xhrCurrency = new XMLHttpRequest();
+    const xhrCurrency = new XMLHttpRequest();
     xhrCurrency.open("GET", GBP_EUR_CHART, true);
     xhrCurrency.onreadystatechange = function() {
         if (xhrCurrency.readyState == READY) {
-            var obj = JSON.parse(xhrCurrency.responseText);
-            var jsonResponse = JSON.parse(xhrCurrency.responseText);
-            var currencyRate = jsonResponse.GBP_EUR.val;
-            var currencyTable =
+            const obj = JSON.parse(xhrCurrency.responseText);
+            const jsonResponse = JSON.parse(xhrCurrency.responseText);
+            const currencyRate = jsonResponse.GBP_EUR.val;
+            const currencyTable =
                 '<div class="widget-table">' +
                 '<div class="currency-image">' +
                     '<a href="https://www.xe.com/currencyconverter/convert/?Amount=1&From=GBP&To=EUR" target="_blank">' +
@@ -195,22 +195,22 @@
     //  BBC tab
     // ******************************************************************
 
-    var bbcNews = '<div id="bbc-content" class="news--table" style="display:none"></div>' +
+    let bbcNews = '<div id="bbc-content" class="news--table" style="display:none"></div>' +
         '<div id="bbc-spinner" class="spinner" style="background-image: url(' + spinner + ');"></div>';
     $('#tab-1').append(bbcNews);
-    var xhrBbc = new XMLHttpRequest();
+    const xhrBbc = new XMLHttpRequest();
     xhrBbc.open("GET", BCC_NEWS_FEED, true);
     xhrBbc.onreadystatechange = function() {
         if (xhrBbc.readyState == READY) {
-            var data = xhrBbc.responseText;
-            var todayNews = [];
+            const data = xhrBbc.responseText;
+            const todayNews = [];
 
             $('item', data).each(function(index, value) {
 
-                var el = $(this);
-                var date = new Date(el.find("pubDate").text());
-                var mediaThumbnail = el.find("media\\:thumbnail")[0];
-                var thumbnail;
+                const el = $(this);
+                const date = new Date(el.find("pubDate").text());
+                const mediaThumbnail = el.find("media\\:thumbnail")[0];
+                let thumbnail;
                 if (typeof mediaThumbnail !== 'undefined') {
                     thumbnail = $(mediaThumbnail).attr('url');
                     if (thumbnail.length > 0) {
@@ -228,7 +228,7 @@
                 }
             });
 
-            var bbcNews = "";
+            let bbcNews = "";
             if (todayNews.length === 0) {
                 bbcNews = '<div class="extension--row news--row text--center">No news for today.</div>';
             } else {
@@ -256,19 +256,19 @@
     //  The Guardian Tab
     // ******************************************************************
 
-    var theGuardianNews = '<div id="theguardian-content" class="news--table" style="display:none"></div>' +
+    let theGuardianNews = '<div id="theguardian-content" class="news--table" style="display:none"></div>' +
         '<div id="theguardian-spinner" class="spinner" style="background-image: url(' + spinner + ');"></div>';
     $('#tab-2').append(theGuardianNews);
-    var xhrTheGuardian = new XMLHttpRequest();
+    const xhrTheGuardian = new XMLHttpRequest();
     xhrTheGuardian.open("GET", THE_GUARDIAN_FEED, true);
     xhrTheGuardian.onreadystatechange = function() {
         if (xhrTheGuardian.readyState == READY) {
-            var data = xhrTheGuardian.responseText;
-            var todayNews = [];
+            const data = xhrTheGuardian.responseText;
+            const todayNews = [];
 
             $(data).find("item").each(function() {
-                var el = $(this);
-                var date = new Date(el.find("pubDate").text());
+                const el = $(this);
+                const date = new Date(el.find("pubDate").text());
 
                 if (isRecentNews(date)) {
                     todayNews.push({
@@ -280,7 +280,7 @@
                 }
             });
 
-            var allNews = "";
+            let allNews = "";
             todayNews.forEach(function(entry) {
                 allNews += '<a href="' + entry.link + '" target="_blank">' +
                     '<div class="extension--row news--row text-left">' +
@@ -303,35 +303,35 @@
     //  Slashdot tab
     // ******************************************************************
 
-    var getSlashdotIcon = function(element) {
-        var array = element.text().split(/\n/);
+    const getSlashdotIcon = function(element) {
+        const array = element.text().split(/\n/);
         return 'https://a.fsdn.com/sd/topics/' + array[array.length - 2].replace(/\t/g, '').replace(/\W+\./g, "");
     };
 
-    var formattedSlashdotDate = function(feedDate) {
-        var arrayDate = feedDate.split(' ');
-        var dateString = arrayDate[0];
-        var hourString = arrayDate[1];
-        var date = new Date(dateString);
+    const formattedSlashdotDate = function(feedDate) {
+        const arrayDate = feedDate.split(' ');
+        let dateString = arrayDate[0];
+        const hourString = arrayDate[1];
+        const date = new Date(dateString);
         if (date.getDay() == TODAY.getDay() && date.getMonth() == TODAY.getMonth()) {
             dateString = "Today";
         }
         return dateString + ' ' + hourString;
     };
 
-    var slashdotNews = '<div id="slashdot-content" class="news--table" style="display:none"></div>' +
+    let slashdotNews = '<div id="slashdot-content" class="news--table" style="display:none"></div>' +
         '<div id="slashdot-spinner" class="spinner" style="background-image: url(' + spinner + ');"></div>';
     $('#tab-3').append(slashdotNews);
 
-    var xhrSlashdot = new XMLHttpRequest();
+    const xhrSlashdot = new XMLHttpRequest();
     xhrSlashdot.open("GET", SLASHDOT_FEED, true);
     xhrSlashdot.onreadystatechange = function() {
         if (xhrSlashdot.readyState == READY) {
-            var data = xhrSlashdot.responseText;
-            var todayNews = [];
+            const data = xhrSlashdot.responseText;
+            const todayNews = [];
 
             $(data).find("story").each(function() {
-                var el = $(this);
+                const el = $(this);
 
                 todayNews.push({
                     "title": el.find("title").text(),
@@ -342,7 +342,7 @@
                 });
             });
 
-            var slashDot = "";
+            let slashDot = "";
             if (todayNews.length === 0) {
                 slashDot = '<div class="extension--row news--row text--center">No news for today.</div>';
             } else {
@@ -375,20 +375,20 @@
     //  Science tab
     // ******************************************************************
 
-    var scienceNews = '<div id="science-content" class="news--table" style="display:none"></div>' +
+    let scienceNews = '<div id="science-content" class="news--table" style="display:none"></div>' +
         '<div id="science-spinner" class="spinner" style="background-image: url(' + spinner + ');"></div>';
     $('#tab-4').append(scienceNews);
 
-    var xhrScience = new XMLHttpRequest();
+    const xhrScience = new XMLHttpRequest();
     xhrScience.open("GET", SCIENCE_FEED, true);
     xhrScience.onreadystatechange = function() {
         if (xhrScience.readyState == READY) {
-            var data = xhrScience.responseText;
-            var todayNews = [];
+            const data = xhrScience.responseText;
+            const todayNews = [];
 
             $(data).find("item").each(function() {
-                var el = $(this);
-                var date = new Date(el.find("pubDate").text());
+                const el = $(this);
+                const date = new Date(el.find("pubDate").text());
                 if (isRecentNews(date, 24)) {
                     todayNews.push({
                         "title": el.find("title").text(),
@@ -399,7 +399,7 @@
                 }
             });
 
-            var scienceNews = "";
+            let scienceNews = "";
             if (todayNews.length === 0) {
                 scienceNews = '<div class="extension--row news--row text--center">No recent news.</div>';
             } else {
@@ -428,19 +428,19 @@
     //  Reddit tab
     // ******************************************************************
 
-    var redditNews = '<div id="reddit-content" class="news--table" style="display:none"></div>' +
+    let redditNews = '<div id="reddit-content" class="news--table" style="display:none"></div>' +
         '<div id="reddit-spinner" class="spinner" style="background-image: url(' + spinner + ');"></div>';
     $('#tab-5').append(redditNews);
 
-    var xhrReddit = new XMLHttpRequest();
+    const xhrReddit = new XMLHttpRequest();
     xhrReddit.open("GET", REDDIT_FEED, true);
     xhrReddit.onreadystatechange = function() {
         if (xhrReddit.readyState == READY) {
-            var data = xhrReddit.responseText;
-            var todayNews = [];
+            const data = xhrReddit.responseText;
+            const todayNews = [];
             $(data).find("entry").each(function() {
-                var el = $(this);
-                var date = new Date(el.find("updated").text());
+                const el = $(this);
+                const date = new Date(el.find("updated").text());
 
                 if (isRecentNews(date, 24)) {
                     todayNews.push({
@@ -452,7 +452,7 @@
                 }
             });
 
-            var reddit = "";
+            let reddit = "";
             if (todayNews.length === 0) {
                 reddit = '<div class="extension--row news--row text--center">No news for today.</div>';
             } else {
@@ -490,12 +490,12 @@
                 let data = response.data;
                 const json = data.replace(/^[^(]*\(([\S\s]+)\);?$/, '$1');
                 data = JSON.parse(json);
-                var temp = data.currently.temperature;
-                var celsius = data.currently.temperature.toFixed(1) + "&deg;C";
-                var description = data.currently.summary;
-                var icon = "wi wi-forecast-io-" + data.currently.icon;
-                var wind = " " + data.currently.windSpeed.toFixed(1) + " m/s ";
-                var humidity = " " + (data.currently.humidity * 100).toFixed(0) + " %";
+                const temp = data.currently.temperature;
+                const celsius = data.currently.temperature.toFixed(1) + "&deg;C";
+                const description = data.currently.summary;
+                const icon = "wi wi-forecast-io-" + data.currently.icon;
+                const wind = " " + data.currently.windSpeed.toFixed(1) + " m/s ";
+                const humidity = " " + (data.currently.humidity * 100).toFixed(0) + " %";
 
                 $("#location").html("London");
                 $("#icon").html("<i class=\"" + icon + "\">");
@@ -506,27 +506,27 @@
                 $('div').removeClass('weather-loader');
 
                 //today forecast in C
-                var todayMaxTemp = data.daily.data[0].temperatureMax.toFixed(0);
-                var todayMinTemp = data.daily.data[0].temperatureMin.toFixed(0);
-                var todayIcon = "wi wi-forecast-io-" + data.daily.data[0].icon;
+                const todayMaxTemp = data.daily.data[0].temperatureMax.toFixed(0);
+                const todayMinTemp = data.daily.data[0].temperatureMin.toFixed(0);
+                const todayIcon = "wi wi-forecast-io-" + data.daily.data[0].icon;
                 $("#todayC").html("<br>" + todayMinTemp + "&deg;/" + todayMaxTemp + "&deg; <br> <i class=\"" + todayIcon + "\" id=\"smallIcon\">");
 
                 //tomorrow forecast in C
-                var tomorrowMaxTemp = data.daily.data[1].temperatureMax.toFixed(0);
-                var tomorrowMinTemp = data.daily.data[1].temperatureMin.toFixed(0);
-                var tomorrowIcon = "wi wi-forecast-io-" + data.daily.data[1].icon;
+                const tomorrowMaxTemp = data.daily.data[1].temperatureMax.toFixed(0);
+                const tomorrowMinTemp = data.daily.data[1].temperatureMin.toFixed(0);
+                const tomorrowIcon = "wi wi-forecast-io-" + data.daily.data[1].icon;
                 $("#tomorrowC").html("<br>" + tomorrowMinTemp + "&deg;/" + tomorrowMaxTemp + "&deg; <br> <i class=\"" + tomorrowIcon + "\" id=\"smallIcon\">");
 
                 //after tomorrow forecast in C
-                var afterTomorrowMaxTemp = data.daily.data[2].temperatureMax.toFixed(0);
-                var afterTomorrowMinTemp = data.daily.data[2].temperatureMin.toFixed(0);
-                var afterTomorrowIcon = "wi wi-forecast-io-" + data.daily.data[2].icon;
+                const afterTomorrowMaxTemp = data.daily.data[2].temperatureMax.toFixed(0);
+                const afterTomorrowMinTemp = data.daily.data[2].temperatureMin.toFixed(0);
+                const afterTomorrowIcon = "wi wi-forecast-io-" + data.daily.data[2].icon;
                 $("#afterTomorrowC").html("<br>" + afterTomorrowMinTemp + "&deg;/" + afterTomorrowMaxTemp + "&deg; <br> <i class=\"" + afterTomorrowIcon + "\" id=\"smallIcon\">");
 
                 //after after tomorrow forecast in C
-                var afterAfterTomorrowMaxTemp = data.daily.data[3].temperatureMax.toFixed(0);
-                var afterAfterTomorrowMinTemp = data.daily.data[3].temperatureMin.toFixed(0);
-                var afterAfterTomorrowIcon = "wi wi-forecast-io-" + data.daily.data[3].icon;
+                const afterAfterTomorrowMaxTemp = data.daily.data[3].temperatureMax.toFixed(0);
+                const afterAfterTomorrowMinTemp = data.daily.data[3].temperatureMin.toFixed(0);
+                const afterAfterTomorrowIcon = "wi wi-forecast-io-" + data.daily.data[3].icon;
                 $("#afterAfterTomorrowC").html("<br>" + afterAfterTomorrowMinTemp + "&deg;/" + afterAfterTomorrowMaxTemp + "&deg; <br> <i class=\"" + afterAfterTomorrowIcon + "\" id=\"smallIcon\">");
             })
             .catch((error) => {
