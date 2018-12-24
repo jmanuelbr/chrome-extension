@@ -1,5 +1,5 @@
-import axios from './third-party/axios';
-import $ from './third-party/jquery';
+import axios from 'axios';
+import $ from 'jquery';
 import * as CONSTANTS from './constants';
 import { formattedDate } from './helper';
 

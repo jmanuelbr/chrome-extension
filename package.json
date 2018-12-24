@@ -27,6 +27,8 @@
     "babel-register": "^6.22.0",
     "copy-webpack-plugin": "^4.6.0",
     "css-loader": "^1.0.0",
+    "eslint": "^5.11.0",
+    "eslint-loader": "^2.1.1",
     "eslint-plugin-react": "^7.11.1",
     "expect.js": "^0.3.1",
     "mocha": "latest",
@@ -37,7 +39,9 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
-    "ramda": "latest",
-    "lodash": "^4.17.11"
+    "axios": "^0.18.0",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.11",
+    "ramda": "latest"
   }
 }
