@@ -5,9 +5,12 @@ import * as CONSTANTS from './constants';
 import { formattedDate, isRecentNews, findUrl, isNew } from './helper';
 import { weatherHtml, weatherRequest } from './components/weather';
 import { currencyWidget, currencyRequest } from './components/currency';
+
 require('../scss/global.scss');
 
-const TODAY = new Date();
+import React from "react";
+import ReactDOM from "react-dom";
+
 
 // ******************************************************************
 //  Responsive hide logic
@@ -49,8 +52,9 @@ const spinner = "'" + chrome.extension.getURL('assets/spinner.gif') + "'";
 
 
 const parentDiv = '<div class="parent-widget-container" id="parent-container">' +
+    '<div id="chromeApp"></div>' +
     currencyWidget +
-    '<div class="news--container>' +
+    '<div class="news--container">' +
     '<div id="tab-container">' +
     '<ul class="tabs-menu">' +
     '<li class="current first--tab"><a href="#tab-1"><img class="img--tabs" src="' +
@@ -364,3 +368,12 @@ xhrReddit.send();
 
 currencyRequest();
 weatherRequest();
+
+const Index = () => {
+    return <div>Hello React!</div>;
+  };
+  
+  ReactDOM.render(<Index />, document.getElementById("chromeApp"));
+
+
+const TODAY = new Date();
