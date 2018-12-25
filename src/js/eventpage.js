@@ -1,35 +1,12 @@
-import axios from 'axios';
 import $ from 'jquery';
 import * as CONSTANTS from './constants';
-import { formattedDate } from './helper';
+import { formattedDate, isRecentNews, findUrl, isNew } from './helper';
+import { weatherHtml, weatherRequest } from './components/weather';
 require('../scss/global.scss');
+
 
 const TODAY = new Date();
 /* global $, chrome, window, document, XMLHttpRequest */
-
-const isRecentNews = function(date, hours) {
-    const time = (hours ? hours : 12);
-    const hoursAgo = new Date(TODAY.getTime() - (time * 60 * 60 * 1000));
-    return date > hoursAgo;
-};
-
-const isNew = function(date) {
-    const hours = Math.abs(TODAY - date) / 36e5; //60*60*1000
-    return (hours <= 1);
-};
-
-const findUrl = function(text) {
-    const source = (text || '').toString();
-    let url;
-    let matchArray;
-    const regexToken = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g;
-
-    while ((matchArray = regexToken.exec(source)) !== null) {
-        url = matchArray[0];
-        break;
-    }
-    return url;
-};
 
 // ******************************************************************
 //  Responsive hide logic
@@ -69,44 +46,7 @@ $(document).ready(function() {
 
 const spinner = "'" + chrome.extension.getURL('assets/spinner.gif') + "'";
 
-const weatherHtml = `<div class="weather--container">
-        <div class="weather-city ">
-            <div class="container-weather">
-            <div class="weather-city-title ">
-                <span id="location"> </span>
-            </div>
-            <hr class="weather-hr"/>
-            <div class="weather-city-weather-temperature weather-loader">
-                <span class="celsius fahrenheit-btn "></span>
-            </div>
-            <div class="weather-city-weather-description">
-                <span id="icon"></span><br>
-                <span id="description"></span>
-            </div>
-            <div class="weather-bottom">
-                <div class="nav-info-weather clearfix">
-                <div class="add-info">
-                    <ul id="weather-details">
-                    <li>
-                        <span id="todayC"> </span>
-                    </li>
-                    <li>
-                        <span id="tomorrowC"> </span>
-                    </li>
-                    <li>
-                        <span id="afterTomorrowC"> </span>
-                    </li>
-                    <li>
-                        <span id="afterAfterTomorrowC"> </span>
-                    </li>
-                    </ul>
-                </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-`;
+
 const parentDiv = '<div class="parent-widget-container" id="parent-container">' +
     '<div class="currency-section" id="currency-table"></div>' +
     '<div class="news--container>' +
@@ -451,58 +391,4 @@ xhrReddit.send();
 // ******************************************************************
 //  Shared functions and constants
 // ******************************************************************
-const WEATHER_FEED = "https://api.darksky.net/forecast/e9231a0d68ba35226274ad3b5e1f6dc4/51.5177896,0.1085338000000000?callback=?&units=uk";
-
-// ******************************************************************
-//  Weather widget
-// ******************************************************************
-
-const weatherRequest = () => {
-    axios.get(WEATHER_FEED).then(function(response) {
-            let data = response.data;
-            const json = data.replace(/^[^(]*\(([\S\s]+)\);?$/, '$1');
-            data = JSON.parse(json);
-            const temp = data.currently.temperature;
-            const celsius = data.currently.temperature.toFixed(1) + "&deg;C";
-            const description = data.currently.summary;
-            const icon = "wi wi-forecast-io-" + data.currently.icon;
-            const wind = " " + data.currently.windSpeed.toFixed(1) + " m/s ";
-            const humidity = " " + (data.currently.humidity * 100).toFixed(0) + " %";
-
-            $("#location").html("London");
-            $("#icon").html("<i class=\"" + icon + "\">");
-            $("#description").html(description);
-            $("#humidity").html(humidity);
-            $("#wind").html(wind);
-            $(".celsius").html(celsius);
-            $('div').removeClass('weather-loader');
-
-            //today forecast in C
-            const todayMaxTemp = data.daily.data[0].temperatureMax.toFixed(0);
-            const todayMinTemp = data.daily.data[0].temperatureMin.toFixed(0);
-            const todayIcon = "wi wi-forecast-io-" + data.daily.data[0].icon;
-            $("#todayC").html("<br>" + todayMinTemp + "&deg;/" + todayMaxTemp + "&deg; <br> <i class=\"" + todayIcon + "\" id=\"smallIcon\">");
-
-            //tomorrow forecast in C
-            const tomorrowMaxTemp = data.daily.data[1].temperatureMax.toFixed(0);
-            const tomorrowMinTemp = data.daily.data[1].temperatureMin.toFixed(0);
-            const tomorrowIcon = "wi wi-forecast-io-" + data.daily.data[1].icon;
-            $("#tomorrowC").html("<br>" + tomorrowMinTemp + "&deg;/" + tomorrowMaxTemp + "&deg; <br> <i class=\"" + tomorrowIcon + "\" id=\"smallIcon\">");
-
-            //after tomorrow forecast in C
-            const afterTomorrowMaxTemp = data.daily.data[2].temperatureMax.toFixed(0);
-            const afterTomorrowMinTemp = data.daily.data[2].temperatureMin.toFixed(0);
-            const afterTomorrowIcon = "wi wi-forecast-io-" + data.daily.data[2].icon;
-            $("#afterTomorrowC").html("<br>" + afterTomorrowMinTemp + "&deg;/" + afterTomorrowMaxTemp + "&deg; <br> <i class=\"" + afterTomorrowIcon + "\" id=\"smallIcon\">");
-
-            //after after tomorrow forecast in C
-            const afterAfterTomorrowMaxTemp = data.daily.data[3].temperatureMax.toFixed(0);
-            const afterAfterTomorrowMinTemp = data.daily.data[3].temperatureMin.toFixed(0);
-            const afterAfterTomorrowIcon = "wi wi-forecast-io-" + data.daily.data[3].icon;
-            $("#afterAfterTomorrowC").html("<br>" + afterAfterTomorrowMinTemp + "&deg;/" + afterAfterTomorrowMaxTemp + "&deg; <br> <i class=\"" + afterAfterTomorrowIcon + "\" id=\"smallIcon\">");
-        })
-        .catch((error) => {
-            console.log('Error fetching ', WEATHER_FEED, error);
-        });
-};
 weatherRequest();

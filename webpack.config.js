@@ -1,6 +1,6 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
+const WebpackNotifierPlugin = require('webpack-notifier');
 
 var path = require("path");
 
@@ -15,7 +15,7 @@ module.exports = {
         rules: [{
                 enforce: "pre",
                 test: /\.js$/,
-                exclude: [/node_modules/, /third-party/, /build/],
+                exclude: [/node_modules/, /build/],
                 use: "eslint-loader"
             },
             {
@@ -67,6 +67,17 @@ module.exports = {
             // both options are optional
             filename: "../css/styles.css",
             chunkFilename: "[id].css"
+        }),
+        new WebpackNotifierPlugin({
+            title: 'Webpack Making Noise',
+            skipFirstNotification: true,
+            contentImage: path.join(__dirname, 'webpack/webpack-notification.jpg'),
+            excludeWarnings: true
         })
-    ]
+    ],
+    watchOptions: {                  
+        ignored: ['build/**/*.js', 'node_modules'],
+        aggregateTimeout: 300
+      }
+      
 };
