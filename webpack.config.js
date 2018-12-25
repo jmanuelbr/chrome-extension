@@ -26,6 +26,14 @@ module.exports = {
                 }
             },
             {
+                test: /\.jsx?$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                query: {
+                  presets: ['es2015', 'react']
+                }
+              },
+            {
                 test: /\.scss$/,
                 use: [
                     {
@@ -41,6 +49,10 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        modules: [__dirname, 'src/js', 'node_modules'],
+        extensions: ['*', '.js', '.jsx'],
+      },
     plugins: [
         new CopyWebpackPlugin([{
             from: 'src/assets',

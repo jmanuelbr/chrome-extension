@@ -4,12 +4,13 @@ import $ from 'jquery';
 import * as CONSTANTS from './constants';
 import { formattedDate, isRecentNews, findUrl, isNew } from './helper';
 import { weatherHtml, weatherRequest } from './components/weather';
-import { currencyWidget, currencyRequest } from './components/currency';
 
 require('../scss/global.scss');
 
-import React from "react";
+import React, { Component } from 'react';
 import ReactDOM from "react-dom";
+
+import CurrencyWidget from './components/currencyWidget';
 
 
 // ******************************************************************
@@ -51,9 +52,9 @@ $(document).ready(function() {
 const spinner = "'" + chrome.extension.getURL('assets/spinner.gif') + "'";
 
 
-const parentDiv = '<div class="parent-widget-container" id="parent-container">' +
-    '<div id="chromeApp"></div>' +
-    currencyWidget +
+const parentDiv = 
+    '<div class="parent-widget-container" id="parent-container">' +
+    '<div id="chromeApp" class="chrome-app"></div>' +
     '<div class="news--container">' +
     '<div id="tab-container">' +
     '<ul class="tabs-menu">' +
@@ -366,14 +367,10 @@ xhrReddit.onreadystatechange = function() {
 xhrReddit.send();
 
 
-currencyRequest();
 weatherRequest();
 
-const Index = () => {
-    return <div>Hello React!</div>;
-  };
   
-  ReactDOM.render(<Index />, document.getElementById("chromeApp"));
+ReactDOM.render(<CurrencyWidget />, document.getElementById("chromeApp"));
 
 
 const TODAY = new Date();
