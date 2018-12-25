@@ -1,12 +1,13 @@
+/* global $, chrome, window, document, XMLHttpRequest */
+
 import $ from 'jquery';
 import * as CONSTANTS from './constants';
 import { formattedDate, isRecentNews, findUrl, isNew } from './helper';
 import { weatherHtml, weatherRequest } from './components/weather';
+import { currencyWidget, currencyRequest } from './components/currency';
 require('../scss/global.scss');
 
-
 const TODAY = new Date();
-/* global $, chrome, window, document, XMLHttpRequest */
 
 // ******************************************************************
 //  Responsive hide logic
@@ -48,7 +49,7 @@ const spinner = "'" + chrome.extension.getURL('assets/spinner.gif') + "'";
 
 
 const parentDiv = '<div class="parent-widget-container" id="parent-container">' +
-    '<div class="currency-section" id="currency-table"></div>' +
+    currencyWidget +
     '<div class="news--container>' +
     '<div id="tab-container">' +
     '<ul class="tabs-menu">' +
@@ -74,33 +75,6 @@ const parentDiv = '<div class="parent-widget-container" id="parent-container">' 
     weatherHtml + '</div>' +
     '</div>';
 $('body').append(parentDiv);
-
-// ******************************************************************
-//  Currency section
-// ******************************************************************
-
-const xhrCurrency = new XMLHttpRequest();
-xhrCurrency.open("GET", CONSTANTS.GBP_EUR_CHART, true);
-xhrCurrency.onreadystatechange = function() {
-    if (xhrCurrency.readyState == CONSTANTS.READY) {
-        const obj = JSON.parse(xhrCurrency.responseText);
-        const jsonResponse = JSON.parse(xhrCurrency.responseText);
-        const currencyRate = jsonResponse.GBP_EUR.val;
-        const currencyTable =
-            '<div class="widget-table">' +
-            '<div class="currency-image">' +
-                '<a href="https://www.xe.com/currencyconverter/convert/?Amount=1&From=GBP&To=EUR" target="_blank">' +
-                    '<img class="ukeur--logo--margin" src="' + chrome.extension.getURL('assets/currency-feed.png') + '" height="20px"/>' +
-                '</a>' +
-            '</div>' +
-            '<div class="currency-text">GBP/EUR</div>' +
-            '<div class="currency-text currency-value">' + currencyRate + '</div>' +
-            '</div>';
-        $('#currency-table').append(currencyTable);
-
-    }
-};
-xhrCurrency.send();
 
 
 // ******************************************************************
@@ -388,7 +362,5 @@ xhrReddit.onreadystatechange = function() {
 xhrReddit.send();
 
 
-// ******************************************************************
-//  Shared functions and constants
-// ******************************************************************
+currencyRequest();
 weatherRequest();
