@@ -3,6 +3,13 @@
     border: 1px solid lightgrey;
     border-radius: 4px;
 }
+
+.lichess {
+    iframe {
+        border: 1px solid white;
+        padding: 19px;
+    }
+}
 .Tabs {
     position: relative;
     display: inline-block;

@@ -9,11 +9,13 @@
     "https://feeds.bbci.co.uk/news/rss.xml?edition=uk*", 
     "https://slashdot.org/slashdot.xml", 
     "https://www.reddit.com/r/PS4Deals/new/.xml*",
-    "https://api.darksky.net/forecast/*"],
+    "https://api.darksky.net/forecast/*",
+    "https://lichess.org/*"],
   "web_accessible_resources": [
     "assets/*",
     "js/*",
-    "*.ttf"],  
+    "*.ttf",
+    "https://lichess.org/*"],  
   "browser_action": {
     "default_title": "Jose Extension",
     "default_icon": "assets/icon.png",

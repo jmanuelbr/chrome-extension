@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CurrencyWidget from './currencyWidget';
 import Tabs from './tabs.component';
 import BbcWidget from './bbc.component';
+import LichessWidget from './lichess.component';
 
 export default class App extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ export default class App extends Component {
             cTab: 'Tab C',
             dTab: 'Tab D',
             eTab: 'Tab E',
-            fTab: 'Tab F',
+            fTab: <LichessWidget/>,
           };
         const bbcImage = chrome.runtime.getURL('../assets/bbc-news.png');
         const theGuardianImage = chrome.runtime.getURL('../assets/theguardian.png');
@@ -42,7 +43,6 @@ export default class App extends Component {
                         <img src={redditImage} key="eTab"/>
                         <img src={lichessImage} key="fTab"/>
                     </Tabs>
-                    <h2>Content</h2>
                     <p>{content[this.state.active]}</p>
                 </div>
             </div>

@@ -41,7 +41,7 @@ class Tabs extends Component {
   }
 
   render() {
-    console.log(JSON.stringify(this.state, null, 2));
+    // console.log(JSON.stringify(this.state, null, 2));
     return (
       <div
         className="Tabs"

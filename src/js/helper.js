@@ -34,3 +34,19 @@ export const isNew = function(date) {
     const hours = Math.abs(TODAY - date) / 36e5; //60*60*1000
     return (hours <= 1);
 };
+
+export const parseFeed = function(jsonData) {
+    let jsonObject = JSON.parse(jsonData);
+    let response = "";
+    Object.values(jsonObject.elements).map((element) => {
+        if (element.name === "rss") {
+            Object.values(element.elements).map((rssFeedItem) => {
+                if (rssFeedItem.name === "item") {
+                    response = rssFeedItem.elements;
+                }
+            });
+        }
+    });
+    // response = jsonObject.declaration.attributes.version;
+    return response;
+};
