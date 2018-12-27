@@ -12,6 +12,8 @@ import ReactDOM from "react-dom";
 
 import CurrencyWidget from './components/currencyWidget';
 
+import App from './components/app.component';
+
 
 // ******************************************************************
 //  Responsive hide logic
@@ -370,7 +372,7 @@ xhrReddit.send();
 weatherRequest();
 
   
-ReactDOM.render(<CurrencyWidget />, document.getElementById("chromeApp"));
+ReactDOM.render(<App />, document.getElementById("chromeApp"));
 
 
 const TODAY = new Date();
