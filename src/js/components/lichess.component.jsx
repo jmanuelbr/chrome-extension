@@ -15,7 +15,7 @@ export default class LichessWidget extends Component {
             render: function() {
               return(         
                 <div>          
-                  <iframe src={this.props.src} height={this.props.height} width={this.props.width} frameborder="0"/>         
+                  <iframe src={this.props.src} height={this.props.height} width={this.props.width}/>         
                 </div>
               )
             }
@@ -23,7 +23,7 @@ export default class LichessWidget extends Component {
 
         return (
             <div className="lichess">
-                <Iframe src="https://lichess.org/tv/frame?bg=auto&theme=auto" height="267" width="224"/>
+                <Iframe src="https://lichess.org/tv/frame" height="267" width="224"/>
             </div>
         );
     }

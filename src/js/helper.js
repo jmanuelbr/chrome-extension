@@ -37,16 +37,55 @@ export const isNew = function(date) {
 
 export const parseFeed = function(jsonData) {
     let jsonObject = JSON.parse(jsonData);
-    let response = "";
+    let list = [];
     Object.values(jsonObject.elements).map((element) => {
         if (element.name === "rss") {
-            Object.values(element.elements).map((rssFeedItem) => {
+            Object.values(element.elements[0].elements).map((rssFeedItem) => {
                 if (rssFeedItem.name === "item") {
-                    response = rssFeedItem.elements;
+                    list.push(rssFeedItem);
                 }
             });
         }
     });
-    // response = jsonObject.declaration.attributes.version;
-    return response;
+    return list;
 };
+
+export const getArticles = function(jsonData) {
+    jsonData = parseFeed(jsonData);
+    var list = [];
+    Object.values(jsonData).map(element => {
+        var article = {};
+        Object.values(element.elements).map(property => {
+            console.log('property', property);
+            switch(property.name) { 
+                case "title": { 
+                    article.title = property.elements[0].cdata;
+                    break; 
+                } 
+                case "description": { 
+                    article.description = property.elements[0].cdata;
+                    break; 
+                } 
+                case "link": { 
+                    article.link = property.elements[0].text;
+                    break; 
+                } 
+                case "pubDate": { 
+                    article.pubdate = property.elements[0].text;
+                    break; 
+                } 
+                case "media:thumbnail": {
+                    article.thumbnail = property.attributes.url;
+                    break; 
+                } 
+                default: { 
+                // Do nothing
+                break; 
+                } 
+            }
+        });
+        list.push(article);
+    });
+    return list;
+};
+

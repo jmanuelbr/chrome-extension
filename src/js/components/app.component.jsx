@@ -43,7 +43,9 @@ export default class App extends Component {
                         <img src={redditImage} key="eTab"/>
                         <img src={lichessImage} key="fTab"/>
                     </Tabs>
-                    <p>{content[this.state.active]}</p>
+                    <div className="tab-container">
+                        {content[this.state.active]}
+                    </div>    
                 </div>
             </div>
         )
