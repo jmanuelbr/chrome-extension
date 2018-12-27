@@ -3,6 +3,7 @@ import CurrencyWidget from './currencyWidget';
 import Tabs from './tabs.component';
 import BbcWidget from './bbc.component';
 import LichessWidget from './lichess.component';
+import TheGuardianWidget from './theguardian.component';
 
 export default class App extends Component {
     constructor(props) {
@@ -14,7 +15,7 @@ export default class App extends Component {
 
         const content = {
             aTab: <BbcWidget/>,
-            bTab: 'Tab B',
+            bTab: <TheGuardianWidget/>,
             cTab: 'Tab C',
             dTab: 'Tab D',
             eTab: 'Tab E',

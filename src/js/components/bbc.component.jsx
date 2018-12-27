@@ -6,39 +6,78 @@ import Article from './article.component';
 import _map from 'lodash/map';
 
 export default class BbcWidget extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.state = {
-			articles: 'No news today :('
-		};
-      }
-    
-      componentDidMount() {
+            articles: 'No news today :('
+        };
+    }
+
+    getArticles = function (jsonData) {
+        jsonData = HELPER.parseFeed(jsonData);
+        var list = [];
+        Object.values(jsonData).map(element => {
+            var article = {};
+            Object.values(element.elements).map(property => {
+                switch (property.name) {
+                    case "title": {
+                        article.title = property.elements[0].cdata;
+                        break;
+                    }
+                    case "description": {
+                        article.description = property.elements[0].cdata;
+                        break;
+                    }
+                    case "link": {
+                        article.link = property.elements[0].text;
+                        break;
+                    }
+                    case "pubDate": {
+                        article.date = property.elements[0].text;
+                        break;
+                    }
+                    case "media:thumbnail": {
+                        article.thumbnail = property.attributes.url;
+                        break;
+                    }
+                    default: {
+                        // Do nothing
+                        break;
+                    }
+                }
+            });
+            list.push(article);
+        });
+        return list;
+    };
+
+    componentDidMount() {
         const self = this;
         var convert = require('xml-js');
-        axios.get(CONSTANTS.BCC_NEWS_FEED).then(function(response) {
-            var jsonData = convert.xml2json(response.data, {compact: false, spaces: 4});
+        axios.get(CONSTANTS.BCC_NEWS_FEED).then(function (response) {
+            var jsonData = convert.xml2json(response.data, { compact: false, spaces: 4 });
             self.setState(state => {
-                state.articles = HELPER.getArticles(jsonData);
+                state.articles = self.getArticles(jsonData);
                 return state;
-              });
+            });
         })
         .catch((error) => {
             console.log('Error fetching BBC news feed data', error);
         });
-	
-	}
+    }
+
     render() {
         return (
-            <div className="bbc-news">
-                { _map(this.state.articles, (article, i) => (
-                    <Article 
+            <div className="news-feed-container">
+                {_map(this.state.articles, (article, i) => (
+                    <Article
                         key={i}
                         title={article.title}
                         description={article.description}
                         link={article.link}
                         thumbnail={article.thumbnail}
-                       />
+                        date={article.date}
+                    />
                 ))}
             </div>
         );
