@@ -24,13 +24,6 @@
         border: 1px solid #CCC;
     }
 }
-
-.lichess {
-    iframe {
-        border: 1px solid white;
-        padding: 19px;
-    }
-}
 .Tabs {
     position: relative;
     display: inline-block;
@@ -49,7 +42,7 @@
     }
   }
   
-  .Tabs__Tab:hover, .Tabs__Tab--active {
+  .Tabs__Tab:hover {
     background: rgb(234, 244, 255);
     color: white;
   }
