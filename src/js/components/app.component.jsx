@@ -1,33 +1,26 @@
 import React, { Component } from 'react';
-import CurrencyWidget from './currencyWidget';
 import Tabs from './tabs.component';
 import BbcWidget from './bbc.component';
 import LichessWidget from './lichess.component';
 import TheGuardianWidget from './theguardian.component';
+import CurrencyWidget from './currency.component';
+import _map from 'lodash/map';
 
 export default class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {active: 'aTab'};
+        this.state = {active: 0};
       }
 
     render() {
-
-        const content = {
-            aTab: <BbcWidget/>,
-            bTab: <TheGuardianWidget/>,
-            cTab: 'Tab C',
-            dTab: 'Tab D',
-            eTab: 'Tab E',
-            fTab: <LichessWidget/>,
-          };
-        const bbcImage = chrome.runtime.getURL('../assets/bbc-news.png');
-        const theGuardianImage = chrome.runtime.getURL('../assets/theguardian.png');
-        const slashdotImage = chrome.runtime.getURL('../assets/slashdot.png');
-        const scienceImage = chrome.runtime.getURL('../assets/science.png');
-        const redditImage = chrome.runtime.getURL('../assets/reddit.png');
-        const lichessImage = chrome.runtime.getURL('../assets/lichess.png');
-
+        const tabsContent = [
+            { "widget": <BbcWidget/>, "icon": chrome.runtime.getURL('../assets/bbc-news.png')},
+            { "widget": <TheGuardianWidget/>, "icon": chrome.runtime.getURL('../assets/theguardian.png')},
+            { "widget": 'Slashdot Widget', "icon": chrome.runtime.getURL('../assets/slashdot.png')},
+            { "widget": 'Science Widget', "icon": chrome.runtime.getURL('../assets/science.png')},
+            { "widget": 'Reddit Widget', "icon": chrome.runtime.getURL('../assets/reddit.png')},
+            { "widget": <LichessWidget/>, "icon": chrome.runtime.getURL('../assets/lichess.png')}
+        ];
         return(
 
             <div>
@@ -37,16 +30,15 @@ export default class App extends Component {
                         active={this.state.active}
                         onChange={active => this.setState({active})}
                         >
-                        <img src={bbcImage} key="aTab"/>
-                        <img src={theGuardianImage} key="bTab"/>
-                        <img src={slashdotImage} key="cTab"/>
-                        <img src={scienceImage} key="dTab"/>
-                        <img src={redditImage} key="eTab"/>
-                        <img src={lichessImage} key="fTab"/>
+                        {_map(tabsContent, (tabContent, i) => (
+                            <img src={tabContent.icon} key={i}/>
+                        ))}
                     </Tabs>
-                    <div className="tab-container">
-                        {content[this.state.active]}
-                    </div>    
+                        {_map(tabsContent, (tabContent, i) => (
+                            <div className="tab-container" key={i} style={{'display': (this.state.active == i) ? 'block' : 'none' }}>
+                                { tabContent.widget }
+                            </div> 
+                        ))}
                 </div>
             </div>
         )

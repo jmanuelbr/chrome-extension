@@ -10,7 +10,7 @@ require('../scss/global.scss');
 import React, { Component } from 'react';
 import ReactDOM from "react-dom";
 
-import CurrencyWidget from './components/currencyWidget';
+import CurrencyWidget from './components/currency.component';
 
 import App from './components/app.component';
 
