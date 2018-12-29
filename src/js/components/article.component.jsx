@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import * as HELPER from '../helper';
 
 export default class Article extends Component {
     constructor (props) {

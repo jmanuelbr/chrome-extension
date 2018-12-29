@@ -5,6 +5,7 @@
 @import 'tabs';
 @import 'article';
 @import 'lichess';
+@import 'reddit';
 
 .parent-widget-container {
     position: absolute;
@@ -123,7 +124,7 @@ a:link {
 }
 
 a:visited {
-    color: #BBB !important;
+    color:#9b9999 !important;
     text-decoration: none !important;
 }
 

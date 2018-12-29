@@ -8,6 +8,9 @@ export default class LichessWidget extends Component {
         };
     };
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return false;
+    }
 
     render() {
 

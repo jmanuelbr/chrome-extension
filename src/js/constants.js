@@ -8,5 +8,5 @@ export const THE_GUARDIAN_FEED = "https://www.theguardian.com/uk/rss";
 export const SCIENCE_FEED = "https://rss.sciencedaily.com/top.xml";
 export const BCC_NEWS_FEED = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
 export const SLASHDOT_FEED = "https://slashdot.org/slashdot.xml";
-export const REDDIT_FEED = "https://www.reddit.com/r/PS4Deals/new/.xml";
+export const REDDIT_FEED = "https://www.reddit.com/r/chess/top/.json?t=day";
 export const MIN_VIEWPORT_WIDTH = 1050;
