@@ -11,7 +11,7 @@ export default class CurrencyWidget extends Component {
       }
       componentDidMount() {
         let self = this;
-		// axios.get(CONSTANTS.GBP_EUR_CHART).then(function(response) {
+		// axios.get(CONSTANTS.CURRENCY_FEED).then(function(response) {
         //     const currencyRate = response.data.GBP_EUR.val;
         //     self.setState(state => {
         //         state.currencyRate = currencyRate;
@@ -23,14 +23,14 @@ export default class CurrencyWidget extends Component {
         // });
 	}
     render() {
-        const image = chrome.runtime.getURL("../../assets/currency-feed.png");
+        const image = chrome.runtime.getURL("../assets/currency-feed.png");
         const currencyRate = this.state.currencyRate;
         
         return (
             <div className="currency-section">
                 <div className='widget-table'>
                     <div className="currency-image">
-                        <a href="https://www.xe.com/currencyconverter/convert/?Amount=1&From=GBP&To=EUR" target="_blank">
+                        <a href={CONSTANTS.CURRENCY_URL} target="_blank">
                             <img className="ukeur--logo--margin" src={image} height="20px"/>
                         </a>
                     </div>

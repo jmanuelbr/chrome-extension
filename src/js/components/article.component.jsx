@@ -6,7 +6,6 @@ export default class Article extends Component {
       }
 
     render() {
-        let date = this.props.date;
         return (
             <div className="article">
                 <a href={ this.props.link } target="_blank">
@@ -15,7 +14,6 @@ export default class Article extends Component {
                     </div>
                     <p className="title">
                         { this.props.title }
-                        {/* <span className="pub-date">{ date }</span> */}
                     </p>
                 </a>
             </div>

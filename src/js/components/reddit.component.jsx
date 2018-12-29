@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as CONSTANTS from '../constants';
-import * as HELPER from '../helper';
 import RedditArticle from './reddit-article.component';
 import _map from 'lodash/map';
 
@@ -24,7 +23,6 @@ export default class RedditWidget extends Component {
     componentDidMount() {
         const self = this;
         axios.get(CONSTANTS.REDDIT_FEED).then(function (response) {
-            console.log(response);
             self.setState(state => {
                 state.articles = self.getArticles(response.data.data.children);
                 return state;

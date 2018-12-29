@@ -3,6 +3,7 @@
     .title {
         font-family: "Open Sans";
         font-size: 1.1em;
+        display: inline-block;
         margin: 0px;
         border-bottom: 1px solid lightgray;
         padding-bottom: 5px;
@@ -10,6 +11,35 @@
     }
     .votes {
         float: left;
+        padding-right: 10px;
+        ul {
+            list-style-type: none;
+            li {
+
+                padding-bottom: 4px;
+                img {
+                    width: 20px;
+                    vertical-align: middle;
+                }
+                span {
+                    font-size: 0.9rem;
+                }
+                .score-counter {
+                    padding-left: 3px;
+                    font-weight: 800;   
+                    position: relative;
+                    top: 4px;
+                    left: 1px;   
+                }
+                .comments-counter {
+                    padding-left: 3px;
+                    font-weight: 800;
+                    position: relative;
+                    top: -1px;
+                    left: 1px;
+                }
+            }
+        }
     }
     .thumbnail-container {
         overflow: hidden;

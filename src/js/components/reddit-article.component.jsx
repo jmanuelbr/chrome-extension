@@ -5,32 +5,34 @@ export default class RedditArticle extends Component {
     constructor (props) {
         super(props);
     }
-    getThumbnail(thumbnail) {
-        if (_isEmpty(thumbnail)) {
-            thumbnail = chrome.runtime.getURL('../assets/reddit-article.png');
-        }
-        return thumbnail;
-    }
-
 
     render() {
-        if (this.props.article.thumbnail === "self" || this.props.article.thumbnail === "spoiler") {
+        if(this.props.article.thumbnail.match(/^(self|spoiler|default)$/)) {
             this.props.article.thumbnail = chrome.runtime.getURL('../assets/reddit-article.png');
         }
+        const article = this.props.article;
         return (
             <div className="reddit-article">
-                <a href={ this.props.article.url } target="_blank">
+                <a href={ 'https://www.reddit.com/' + article.permalink } target="_blank">
                     <div className="votes">
-                    Up: {this.props.article.ups}
-                    Down: {this.props.article.downs}
+                    <ul>
+                        <li>
+                            <img src={chrome.runtime.getURL('../assets/reddit-score.png')}/> 
+                            <span className='score-counter'>{article.score}</span>    
+                        </li>
+                        <li>
+                            <img src={chrome.runtime.getURL('../assets/reddit-comments.png')}/> 
+                            <span className='comments-counter'>{article.num_comments}</span>
+                        </li>
+                    </ul>
                     </div>
                     <div className="thumbnail-container">
-                        <img src={ this.props.article.thumbnail } 
-                            height={this.props.article.thumbnail_height} 
-                            width={this.props.article.thumbnail_width}/>
+                        <img src={ article.thumbnail } 
+                            height={article.thumbnail_height} 
+                            width={article.thumbnail_width}/>
                     </div>
                     <p className="title">
-                        { this.props.article.title }
+                        { article.title }
                     </p>
                 </a>
             </div>
