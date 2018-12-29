@@ -5,6 +5,8 @@ import LichessWidget from './lichess.component';
 import TheGuardianWidget from './theguardian.component';
 import CurrencyWidget from './currency.component';
 import RedditWidget from './reddit.component';
+import EldiarioWidget from './eldiario.component';
+import ElpaisWidget from './elpais.component';
 import _map from 'lodash/map';
 
 export default class App extends Component {
@@ -17,8 +19,9 @@ export default class App extends Component {
         const tabsContent = [
             { "widget": <BbcWidget/>, "icon": chrome.runtime.getURL('../assets/bbc-news.png')},
             { "widget": <TheGuardianWidget/>, "icon": chrome.runtime.getURL('../assets/theguardian.png')},
+            { "widget": <EldiarioWidget/>, "icon": chrome.runtime.getURL('../assets/eldiario.png')},
+            { "widget": <ElpaisWidget/>, "icon": chrome.runtime.getURL('../assets/elpais.png')},
             { "widget": 'Slashdot Widget', "icon": chrome.runtime.getURL('../assets/slashdot.png')},
-            { "widget": 'Science Widget', "icon": chrome.runtime.getURL('../assets/science.png')},
             { "widget": <RedditWidget/>, "icon": chrome.runtime.getURL('../assets/reddit.png')},
             { "widget": <LichessWidget/>, "icon": chrome.runtime.getURL('../assets/lichess.png')}
         ];
