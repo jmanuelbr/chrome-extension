@@ -37,7 +37,9 @@ export default class ElpaisWidget extends Component {
                         break;
                     }
                     case "enclosure": {
-                        article.thumbnail = property.attributes.url;
+                        if (property.attributes.type == "image/jpeg") {
+                            article.thumbnail = property.attributes.url;
+                        }
                         break;
                     }
                     default: {
@@ -72,11 +74,7 @@ export default class ElpaisWidget extends Component {
                 {_map(this.state.articles, (article, i) => (
                     <Article
                         key={i}
-                        title={article.title}
-                        description={article.description}
-                        link={article.link}
-                        thumbnail={article.thumbnail}
-                        date={article.date}
+                        articleData={article}
                     />
                 ))}
             </div>

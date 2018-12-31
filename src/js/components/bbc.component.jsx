@@ -72,11 +72,7 @@ export default class BbcWidget extends Component {
                 {_map(this.state.articles, (article, i) => (
                     <Article
                         key={i}
-                        title={article.title}
-                        description={article.description}
-                        link={article.link}
-                        thumbnail={article.thumbnail}
-                        date={article.date}
+                        articleData={article}
                     />
                 ))}
             </div>

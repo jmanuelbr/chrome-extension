@@ -39,7 +39,7 @@ export default class RedditWidget extends Component {
                 {_map(this.state.articles, (article, i) => (
                     <RedditArticle
                         key={i}
-                        article={article}
+                        articleData={article}
                     />
                 ))}
             </div>

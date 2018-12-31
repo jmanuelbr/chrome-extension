@@ -40,6 +40,4 @@ export default class CurrencyWidget extends Component {
             </div>
         );
     }
-
-    
 }

@@ -70,14 +70,10 @@ export default class TheGuardianWidget extends Component {
     render() {
         return (
             <div className="news-feed-container">
-                { _map(this.state.articles, (article, i) => (
+                {_map(this.state.articles, (article, i) => (
                     <Article 
                         key={i}
-                        title={article.title}
-                        description={article.description}
-                        link={article.link}
-                        thumbnail={article.thumbnail}
-                        date={article.date}
+                        articleData={article}
                        />
                 ))}
             </div>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import _isEmpty from 'lodash/isEmpty';
 
 export default class RedditArticle extends Component {
     constructor (props) {
@@ -7,32 +6,33 @@ export default class RedditArticle extends Component {
     }
 
     render() {
-        if(this.props.article.thumbnail.match(/^(self|spoiler|default)$/)) {
-            this.props.article.thumbnail = chrome.runtime.getURL('../assets/reddit-article.png');
+        if(this.props.articleData.thumbnail.match(/^(self|spoiler|default)$/)) {
+            this.props.articleData.thumbnail = chrome.runtime.getURL('../assets/reddit-article.png');
         }
-        const article = this.props.article;
+        // const article = this.props.article;
+        const {permalink, score, num_comments, thumbnail, thumbnail_height, thumbnail_width, title} = this.props.articleData;
         return (
             <div className="reddit-article">
-                <a href={ 'https://www.reddit.com/' + article.permalink } target="_blank">
+                <a href={'https://www.reddit.com/' + permalink} target="_blank">
                     <div className="votes">
                     <ul>
                         <li>
                             <img src={chrome.runtime.getURL('../assets/reddit-score.png')}/> 
-                            <span className='score-counter'>{article.score}</span>    
+                            <span className='score-counter'>{score}</span>    
                         </li>
                         <li>
                             <img src={chrome.runtime.getURL('../assets/reddit-comments.png')}/> 
-                            <span className='comments-counter'>{article.num_comments}</span>
+                            <span className='comments-counter'>{num_comments}</span>
                         </li>
                     </ul>
                     </div>
                     <div className="thumbnail-container">
-                        <img src={ article.thumbnail } 
-                            height={article.thumbnail_height} 
-                            width={article.thumbnail_width}/>
+                        <img src={thumbnail} 
+                            height={thumbnail_height} 
+                            width={thumbnail_width}/>
                     </div>
                     <p className="title">
-                        { article.title }
+                        {title}
                     </p>
                 </a>
             </div>
