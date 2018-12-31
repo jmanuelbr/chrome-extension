@@ -23,7 +23,7 @@ export default class CurrencyWidget extends Component {
         // });
 	}
     render() {
-        const image = chrome.runtime.getURL("../assets/currency-feed.png");
+        const image = chrome.runtime.getURL("../assets/currency.png");
         const currencyRate = this.state.currencyRate;
         
         return (

@@ -21,7 +21,7 @@ export default class RedditArticle extends Component {
                             <span className='score-counter'>{score}</span>    
                         </li>
                         <li>
-                            <img src={chrome.runtime.getURL('../assets/reddit-comments.png')}/> 
+                            <img src={chrome.runtime.getURL('../assets/comments.png')}/> 
                             <span className='comments-counter'>{num_comments}</span>
                         </li>
                     </ul>

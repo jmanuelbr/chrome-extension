@@ -29,7 +29,7 @@ export default class SlashdotArticle extends Component {
                             </li>
                             <li>
                                 <img className="comments-icon" 
-                                     src={chrome.runtime.getURL('../assets/reddit-comments.png')}/>
+                                     src={chrome.runtime.getURL('../assets/comments.png')}/>
                                 <span className="comments-counter">{comments}</span>
                             </li>
                         </ul>

@@ -14,16 +14,18 @@
         	float: left;
         }
         .currency-image {
-        	margin-right: 8px;
+            height: 22px;
+            margin: 0;
         }
         .currency-text {
                 text-align: center;
                 position: relative;
                 top: 3px;
                 padding-right: 8px;
+                padding-left: 4px;
         }
         .currency-value {
-        		top: 2px;
+            top: 2px;
             font-weight: 600;
             font-size: 110%;
         }
