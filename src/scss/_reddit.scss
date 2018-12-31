@@ -15,7 +15,6 @@
         ul {
             list-style-type: none;
             li {
-
                 padding-bottom: 4px;
                 img {
                     width: 20px;
@@ -44,6 +43,7 @@
     .thumbnail-container {
         overflow: hidden;
         img {
+            max-width: 183px;
             overflow: hidden;
             -webkit-transform: scale(1);
             transform: scale(1);
