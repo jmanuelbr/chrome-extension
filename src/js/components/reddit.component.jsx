@@ -3,12 +3,14 @@ import axios from 'axios';
 import * as CONSTANTS from '../constants';
 import RedditArticle from './reddit-article.component';
 import _map from 'lodash/map';
+import Loader from './loader.component';
 
 export default class RedditWidget extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            articles: null
+            articles: [],
+            contentReady: false
         };
     }
 
@@ -25,6 +27,7 @@ export default class RedditWidget extends Component {
         axios.get(CONSTANTS.REDDIT_FEED).then(function (response) {
             self.setState(state => {
                 state.articles = self.getArticles(response.data.data.children);
+                state.contentReady = true;
                 return state;
             });
         })
@@ -34,15 +37,22 @@ export default class RedditWidget extends Component {
     }
 
     render() {
-        return (
-            <div className="news-feed-container">
-                {_map(this.state.articles, (article, i) => (
-                    <RedditArticle
-                        key={i}
-                        articleData={article}
-                    />
-                ))}
-            </div>
-        );
+        if (!this.state.contentReady) {
+            return (
+                <Loader/>
+            );
+        }
+        else {
+            return (
+                <div className="news-feed-container">
+                    {_map(this.state.articles, (article, i) => (
+                        <RedditArticle
+                            key={i}
+                            articleData={article}
+                        />
+                    ))}
+                </div>
+            );
+        }
     }
 }

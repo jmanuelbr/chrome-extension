@@ -1,4 +1,9 @@
 .article {
+    a {
+        &:hover{
+            text-decoration: none;
+        }
+    }
     padding: 10px 10px 0 10px;
     .title {
         font-family: "Open Sans";

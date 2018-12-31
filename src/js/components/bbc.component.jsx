@@ -4,12 +4,14 @@ import * as CONSTANTS from '../constants';
 import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';
+import Loader from './loader.component';
 
 export default class BbcWidget extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            articles: 'No news today :('
+            articles: 'No news today :(',
+            contentReady: false
         };
     }
 
@@ -58,6 +60,7 @@ export default class BbcWidget extends Component {
             var jsonData = convert.xml2json(response.data, { compact: false, spaces: 4 });
             self.setState(state => {
                 state.articles = self.getArticles(jsonData);
+                state.contentReady = true;
                 return state;
             });
         })
@@ -66,7 +69,7 @@ export default class BbcWidget extends Component {
         });
     }
 
-    render() {
+    renderComponent() {
         return (
             <div className="news-feed-container">
                 {_map(this.state.articles, (article, i) => (
@@ -77,5 +80,25 @@ export default class BbcWidget extends Component {
                 ))}
             </div>
         );
+    }
+
+    render() {
+        if (!this.state.contentReady) {
+            return (
+                <Loader/>
+            );
+        }
+        else {
+            return(
+                <div className="news-feed-container">
+                    {_map(this.state.articles, (article, i) => (
+                        <Article
+                            key={i}
+                            articleData={article}
+                        />
+                    ))}
+                </div>
+            );
+        }
     }
 }
