@@ -13,5 +13,6 @@ export const REDDIT_FEED = "https://www.reddit.com/r/chess/top/.json?t=day";
 export const EL_DIARIO_FEED = "https://www.eldiario.es/rss/";
 export const EL_PAIS_FEED = "https://ep00.epimg.net/rss/tags/ultimas_noticias.xml";
 export const VEINTE_MINUTOS_FEED = "https://www.20minutos.es/rss/";
+export const WEATHER_FEED = "https://api.darksky.net/forecast/e9231a0d68ba35226274ad3b5e1f6dc4/51.5177896,0.1085338000000000?callback=?&units=uk";
 
 export const MIN_VIEWPORT_WIDTH = 1050;

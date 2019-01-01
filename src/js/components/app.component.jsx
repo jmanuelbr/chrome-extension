@@ -8,6 +8,7 @@ import RedditWidget from './reddit.component';
 import EldiarioWidget from './eldiario.component';
 import ElpaisWidget from './elpais.component';
 import SlashdotWidget from './slashdot.component';
+import WeatherWidget from './weather.component'; 
 import _map from 'lodash/map';
 
 export default class App extends Component {
@@ -30,6 +31,7 @@ export default class App extends Component {
 
             <div>
                 <CurrencyWidget/>
+                <WeatherWidget/>
                 <div className="tabs-section">
                     <Tabs
                         active={this.state.active}
