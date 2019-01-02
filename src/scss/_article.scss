@@ -21,12 +21,11 @@
     padding: 10px 10px 0 10px;
     .title {
         font-family: $font-stack;
-        font-size: 1.1em;
+        font-size: 1.16em;
         color: dimgrey;
         margin: 0px;
         border-bottom: 1px solid lightgray;
-        padding-bottom: 5px;
-        padding-top: 3px;
+        padding: 8px 0;
     }
     .thumbnail-container {
         overflow: hidden;

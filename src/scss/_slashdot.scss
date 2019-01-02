@@ -17,12 +17,11 @@
     .title {
         display: inline-block;
         font-family: $font-stack;
-        font-size: 1.1em;
+        font-size: 1.16em;
         color: dimgrey;
         margin: 0px;
         border-bottom: 1px solid lightgray;
-        padding-bottom: 5px;
-        padding-top: 3px;
+        padding: 8px 0;
     }
     .thumbnail-container {
         float: left;
@@ -44,6 +43,7 @@
     .info {
         float: left;
         padding: 5px 0 0 10px;
+        color: dimgrey;
         ul {
             list-style-type: none;
             .section-title {
@@ -55,6 +55,7 @@
                     vertical-align: middle;
                 }
                 .comments-counter {
+                    font-size: 0.9rem;
                     padding-left: 3px;
                     font-weight: 800;
                 } 
