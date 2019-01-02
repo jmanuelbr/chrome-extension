@@ -1,8 +1,23 @@
+@import 'variables';
+
+@keyframes zoominout {
+    0% {
+        transform: scale(1,1);
+    }
+    50% {
+        transform: scale(1.1,1.1);
+    }
+    100% {
+        transform: scale(1,1);
+    }
+}
+
 .reddit-article {
     padding: 10px 10px 0 10px;
     .title {
-        font-family: "Open Sans";
+        font-family: $font-stack;
         font-size: 1.1em;
+        color: dimgrey;
         display: inline-block;
         margin: 0px;
         border-bottom: 1px solid lightgray;
@@ -51,8 +66,7 @@
             transition: .3s ease-in-out;
     
             &:hover {
-                -webkit-transform: scale(1.1);
-                transform: scale(1.1);
+                animation: zoominout 0.5s 1;
             }
         }
     }

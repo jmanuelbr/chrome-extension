@@ -1,3 +1,5 @@
+@import 'variables';
+
 .weather-section {
     height: 57px;
     border: solid 1px lightgray;
@@ -27,16 +29,16 @@
     .first {
         background-position: -14px -23px !important;
     }
-    .partly-cloudy-night {
+    .cloudy {
         background-position: -87px -23px !important;
     }
     .third {
         background-position: -172px -23px !important;
     }
-    .forth {
+    .clear-day {
         background-position: -253px -23px !important;
     }
-    .fifth {
+    .snow {
         background-position: -333px -23px !important;
     }
     
@@ -44,16 +46,16 @@
     
     
     
-    .six {
+    .rain {
         background-position: -14px -90px !important;
     }
     .partly-cloudy-day {
         background-position: -91px  -90px !important;
     }
-    .eight {
+    .partly-cloudy-night {
         background-position: -172px -90px !important;
     }
-    .nine {
+    .clear-night {
         background-position: -253px -90px !important;
     }
     .ten {
@@ -76,7 +78,7 @@
     .fourteeen {
         background-position: -253px -165px !important;
     }
-    .fithteen {
+    .sleet {
         background-position: -333px -165px !important;
     }
     
@@ -90,10 +92,10 @@
     .seventeen {
         background-position: -87px  -227px !important;
     }
-    .eighteen {
+    .fog {
         background-position: -172px -227px !important;
     }
-    .nineteen {
+    .wind {
         background-position: -253px -227px !important;
     }
     .twelve {

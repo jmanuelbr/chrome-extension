@@ -11,16 +11,16 @@ export default class CurrencyWidget extends Component {
       }
       componentDidMount() {
         let self = this;
-		// axios.get(CONSTANTS.CURRENCY_FEED).then(function(response) {
-        //     const currencyRate = response.data.GBP_EUR.val;
-        //     self.setState(state => {
-        //         state.currencyRate = currencyRate;
-        //         return state;
-        //       });
-        // })
-        // .catch((error) => {
-        //     console.log('Error fetching currency feed data', error);
-        // });
+		axios.get(CONSTANTS.CURRENCY_FEED).then(function(response) {
+            const currencyRate = response.data.GBP_EUR.val;
+            self.setState(state => {
+                state.currencyRate = currencyRate;
+                return state;
+              });
+        })
+        .catch((error) => {
+            console.log('Error fetching currency feed data', error);
+        });
 	}
     render() {
         const image = chrome.runtime.getURL("../assets/currency.png");

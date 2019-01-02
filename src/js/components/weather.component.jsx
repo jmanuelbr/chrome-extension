@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as CONSTANTS from '../constants';
-import * as HELPER from '../helper';
-import Article from './article.component';
 import _map from 'lodash/map';
 import Loader from './loader.component';
 
@@ -11,7 +9,7 @@ export default class WeatherWidget extends Component {
         super(props);
         this.state = {
             contentReady: false,
-            mocks: true
+            mocks: false
         };
     }
 

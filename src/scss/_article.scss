@@ -1,3 +1,17 @@
+@import 'variables';
+
+@keyframes zoominout {
+    0% {
+        transform: scale(1,1);
+    }
+    50% {
+        transform: scale(1.1,1.1);
+    }
+    100% {
+        transform: scale(1,1);
+    }
+}
+
 .article {
     a {
         &:hover{
@@ -6,8 +20,9 @@
     }
     padding: 10px 10px 0 10px;
     .title {
-        font-family: "Open Sans";
+        font-family: $font-stack;
         font-size: 1.1em;
+        color: dimgrey;
         margin: 0px;
         border-bottom: 1px solid lightgray;
         padding-bottom: 5px;
@@ -21,16 +36,12 @@
             height: 138px;
             width: 245px;
             overflow: hidden;
-            -webkit-transform: scale(1);
             transform: scale(1);
-            -webkit-transition: .3s ease-in-out;
             transition: .3s ease-in-out;
     
             &:hover {
-                -webkit-transform: scale(1.1);
-                transform: scale(1.1);
+                animation: zoominout 0.5s 1;
             }
         }
     }
-    
 }
