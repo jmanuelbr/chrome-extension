@@ -6,8 +6,7 @@ export default class Article extends Component {
     }
 
     render() {
-        // TODO: implement description and d
-        const {title, description, link, thumbnail, date} = this.props.articleData;
+        const {title, link, thumbnail} = this.props.articleData;
         return (
             <div className="article">
                 <a href={link} target="_blank">

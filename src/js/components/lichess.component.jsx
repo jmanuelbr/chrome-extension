@@ -4,7 +4,7 @@ export default class LichessWidget extends Component {
     constructor (props) {
         super(props);
         this.state = {
-			content: 'Ouch! Could not load Lichess data'
+			    content: 'Ouch! Could not load Lichess data'
         };
     };
 
@@ -30,8 +30,6 @@ export default class LichessWidget extends Component {
             </div>
         );
     }
-
-    
 }
 
 

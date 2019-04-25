@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import * as CONSTANTS from '../constants';
 
 export default class CurrencyWidget extends Component {
@@ -11,16 +10,7 @@ export default class CurrencyWidget extends Component {
       }
       componentDidMount() {
         let self = this;
-		// axios.get(CONSTANTS.CURRENCY_FEED).then(function(response) {
-        //     const currencyRate = response.data.GBP_EUR.val;
-        //     self.setState(state => {
-        //         state.currencyRate = currencyRate;
-        //         return state;
-        //       });
-        // })
-        // .catch((error) => {
-        //     console.log('Error fetching currency feed data', error);
-        // });
+		// TODO: We need some work on this
 	}
     render() {
         const image = chrome.runtime.getURL("../assets/currency.png");

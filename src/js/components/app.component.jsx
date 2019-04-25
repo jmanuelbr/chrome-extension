@@ -15,7 +15,7 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {active: 0};
-      }
+    }
 
     render() {
         const tabsContent = [

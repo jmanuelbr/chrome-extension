@@ -14,7 +14,6 @@ export default class SlashdotArticle extends Component {
 
     render() {
         let {title, link, thumbnail, comments, section} = this.props.articleData;
-        // console.log('section', section);
         section = this.capitalizeFirstLetter(section);
         return (
             <div className="slashdot-article">
