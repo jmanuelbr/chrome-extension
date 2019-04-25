@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import * as CONSTANTS from '../constants';
 import RedditArticle from './reddit-article.component';
 import _map from 'lodash/map';
-import Loader from './loader.component';
+import LoaderTabs from './loader-tabs.component';
 
 export default class RedditWidget extends Component {
     constructor(props) {
@@ -39,7 +37,7 @@ export default class RedditWidget extends Component {
     render() {
         if (!this.state.contentReady) {
             return (
-                <Loader/>
+                <LoaderTabs/>
             );
         }
         else {
