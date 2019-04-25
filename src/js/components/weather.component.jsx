@@ -29,7 +29,6 @@ export default class WeatherWidget extends Component {
                 let data = response.data;
                 const json = data.replace(/^[^(]*\(([\S\s]+)\);?$/, '$1');
                 data = JSON.parse(json);
-                console.log('data', data);
                 self.setState(state => {
                     state.data = data;
                     state.contentReady = true;

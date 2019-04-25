@@ -22,18 +22,18 @@ export default class RedditWidget extends Component {
         return list;
     }
 
-    componentDidMount() {
+    processData = function(feedData) {
         const self = this;
-        axios.get(CONSTANTS.REDDIT_FEED).then(function (response) {
-            self.setState(state => {
-                state.articles = self.getArticles(response.data.data.children);
-                state.contentReady = true;
-                return state;
-            });
-        })
-        .catch((error) => {
-            console.log('Error fetching Reddit feed data', error);
+        self.setState(state => {
+            state.articles = self.getArticles(feedData.data.children);
+            state.contentReady = true;
+            return state;
         });
+    }
+
+    componentDidMount() {
+        chrome.runtime.sendMessage(
+            {contentScriptQuery: "fetchContent", itemId: "reddit"}, feedData => this.processData(feedData));
     }
 
     render() {

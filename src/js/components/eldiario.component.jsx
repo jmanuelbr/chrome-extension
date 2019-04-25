@@ -53,20 +53,20 @@ export default class EldiarioWidget extends Component {
         return list;
     };
 
-    componentDidMount() {
+    processData = function(feedData) {
         const self = this;
         var convert = require('xml-js');
-        axios.get(CONSTANTS.EL_DIARIO_FEED).then(function (response) {
-            var jsonData = convert.xml2json(response.data, { compact: false, spaces: 4 });
-            self.setState(state => {
-                state.articles = self.getArticles(jsonData);
-                state.contentReady = true;
-                return state;
-            });
-        })
-        .catch((error) => {
-            console.log('Error fetching Eldirio news feed data', error);
+        var jsonData = convert.xml2json(feedData, { compact: false, spaces: 4 });
+        self.setState(state => {
+            state.articles = self.getArticles(jsonData);
+            state.contentReady = true;
+            return state;
         });
+    }
+
+    componentDidMount() {
+        chrome.runtime.sendMessage(
+            {contentScriptQuery: "fetchContent", itemId: "eldiario"}, feedData => this.processData(feedData));
     }
 
     render() {

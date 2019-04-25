@@ -71,6 +71,11 @@ module.exports = {
             to: '../popup.html',
             toType: 'file'
         }]),
+        new CopyWebpackPlugin([{
+            from: 'src/js/background.js',
+            to: '../js/background.js',
+            toType: 'file'
+        }]),
         new MiniCssExtractPlugin({
             // Options similar to the same options in webpackOptions.output
             // both options are optional

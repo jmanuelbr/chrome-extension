@@ -54,22 +54,23 @@ export default class TheGuardianWidget extends Component {
         });
         return list;
     };
-    
-    componentDidMount() {
+
+    processData = function(feedData) {
         const self = this;
         var convert = require('xml-js');
-        axios.get(CONSTANTS.THE_GUARDIAN_FEED).then(function(response) {
-            var jsonData = convert.xml2json(response.data, {compact: false, spaces: 4});
-            self.setState(state => {
-                state.articles = self.getArticles(jsonData);
-                state.contentReady = true;
-                return state;
-              });
-        })
-        .catch((error) => {
-            console.log('Error fetching The Guardian news feed data', error);
+        var jsonData = convert.xml2json(feedData, {compact: false, spaces: 4});
+        self.setState(state => {
+            state.articles = self.getArticles(jsonData);
+            state.contentReady = true;
+            return state;
         });
-	}
+    }
+    
+    componentDidMount() {
+        chrome.runtime.sendMessage(
+            {contentScriptQuery: "fetchContent", itemId: "theguardian"}, feedData => this.processData(feedData));
+    }
+    
     render() {
         if (!this.state.contentReady) {
             return (
