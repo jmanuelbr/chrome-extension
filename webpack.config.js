@@ -57,18 +57,8 @@ module.exports = {
             toType: 'dir'
         }]),
         new CopyWebpackPlugin([{
-            from: 'src/chrome-extension.iml',
-            to: '../chrome-extension.iml',
-            toType: 'file'
-        }]),
-        new CopyWebpackPlugin([{
             from: 'src/manifest.json',
             to: '../manifest.json',
-            toType: 'file'
-        }]),
-        new CopyWebpackPlugin([{
-            from: 'src/popup.html',
-            to: '../popup.html',
             toType: 'file'
         }]),
         new CopyWebpackPlugin([{
