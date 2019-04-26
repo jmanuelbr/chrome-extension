@@ -5,10 +5,10 @@ const WebpackNotifierPlugin = require('webpack-notifier');
 var path = require("path");
 
 module.exports = {
-    entry: './src/js/eventpage.js',
+    entry: './src/js/content.js',
     output: {
         path: path.resolve(__dirname, "build/js"),
-        filename: "eventpage.js",
+        filename: "content.js",
         publicPath: "/build"
     },
     module: {
