@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as CONSTANTS from '../constants';
+import axios from 'axios';
 
 export default class CurrencyWidget extends Component {
     constructor (props) {
@@ -8,9 +9,18 @@ export default class CurrencyWidget extends Component {
 			currencyRate: 'N/A'
 		};
       }
+
+    processData = function(feedData) {
+        const self = this;
+        self.setState(state => {
+            state.currencyRate = feedData.currency[0].value;
+            return state;
+            });
+    }
+
       componentDidMount() {
-        let self = this;
-		// TODO: We need some work on this
+        chrome.runtime.sendMessage(
+            {contentScriptQuery: "fetchCurrency"}, feedData => this.processData(feedData));
 	}
     render() {
         const image = chrome.runtime.getURL("../assets/currency.png");

@@ -44,4 +44,17 @@ chrome.runtime.onMessage.addListener(
 
         return true;  // Will respond asynchronously.
       }
+      else if (request.contentScriptQuery == "fetchCurrency") {
+        let xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() { 
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                sendResponse(JSON.parse(xmlHttp.response));
+            }
+        }
+        xmlHttp.open("GET", "https://currencydatafeed.com/api/data.php?token=94c9yjpmdt1fvsa8icoj&currency=GBP/EUR", true); // make the request async
+        xmlHttp.send(null);
+
+        return true;  // Will respond asynchronously.
+        
+      }
     });
