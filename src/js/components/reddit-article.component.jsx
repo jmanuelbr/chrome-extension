@@ -31,8 +31,9 @@ export default class RedditArticle extends Component {
                             height={thumbnail_height} 
                             width={thumbnail_width}/>
                     </div>
-                    <p className="title">
-                        {title}
+                    <p 
+                        className="title" 
+                        dangerouslySetInnerHTML={{ __html: title }}>
                     </p>
                 </a>
             </div>

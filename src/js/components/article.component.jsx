@@ -13,8 +13,9 @@ export default class Article extends Component {
                     <div className="thumbnail-container">
                         <img src={thumbnail}/>
                     </div>
-                    <p className="title">
-                        {title}
+                    <p 
+                        className="title"
+                        dangerouslySetInnerHTML={{ __html: title }}>
                     </p>
                 </a>
             </div>
