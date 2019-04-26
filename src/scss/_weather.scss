@@ -1,6 +1,13 @@
 @import 'variables';
 
 .weather-section {
+    a {
+        text-decoration: none;
+        &:link,&:visited,&:hover {
+            color: dimgrey;
+        }
+    }
+
     height: 57px;
     border: solid 1px lightgray;
     border-radius: 4px;
@@ -14,7 +21,7 @@
         .real {
             font-size: 3em;
             position: relative;
-            top: 5px;
+            top: 10px;
             .celsius{
                 font-size: 0.5em;
                 position: relative;

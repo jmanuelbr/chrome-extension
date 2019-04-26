@@ -1685,19 +1685,22 @@ export default class WeatherWidget extends Component {
                 width: '56px'
             }
             return(
-                <div className="weather-section">
-                    <div style={imageStyle} className={'weather-icon ' + weather.currently.icon}></div>
-                    <div className="summary">
-                        {/* <div className="text">{weather.currently.summary}</div> */}
-                        <span className="real">{parseInt(weather.currently.temperature) } <span className="celsius">°C</span></span>
-                        {/* <span className="apparent">{weather.currently.apparentTemperature}</span> */}
+                    <div className="weather-section">
+                        <a href="https://www.google.com/search?q=london+forecast" target="_blank">
+                            <div style={imageStyle} className={'weather-icon ' + weather.currently.icon}></div>
+                            <div className="summary">
+                                {/* <div className="text">{weather.currently.summary}</div> */}
+                                <span className="real">{parseInt(weather.currently.temperature) } <span className="celsius">°C</span></span>
+                                {/* <span className="apparent">{weather.currently.apparentTemperature}</span> */}
+                            </div>
+                            {/* <div className="other">
+                                <div className="windspeed">Wind: {weather.currently.windSpeed} km/h</div>
+                                <div className="precip-probability">Wind: {weather.currently.precipProbability}%</div>
+                                <div className="precip-intensity">Wind: {weather.currently.precipIntensity}%</div>
+                            </div> */}
+                        </a>
                     </div>
-                    {/* <div className="other">
-                        <div className="windspeed">Wind: {weather.currently.windSpeed} km/h</div>
-                        <div className="precip-probability">Wind: {weather.currently.precipProbability}%</div>
-                        <div className="precip-intensity">Wind: {weather.currently.precipIntensity}%</div>
-                    </div> */}
-                </div>
+                
             );
         }
     }
