@@ -9,7 +9,7 @@ export default class WeatherWidget extends Component {
         super(props);
         this.state = {
             contentReady: false,
-            mocks: false
+            mocks: true
         };
     }
 
@@ -1685,35 +1685,36 @@ export default class WeatherWidget extends Component {
                 width: '56px'
             }
             return(
-                    <div className="weather-section">
-                        
-                        <a href="https://www.google.com/search?q=london+forecast" target="_blank">
-                            <div style={imageStyle} className={'weather-icon ' + weather.currently.icon}></div>
-                            <div className="summary">
-                                {/* <div className="text">{weather.currently.summary}</div> */}
-                                <div className="real">
-                                    {parseInt(weather.currently.temperature) } <span className="celsius">°C</span>
-                                </div>
-                                <div className="apparent">
-                                    Feel <b>{weather.currently.apparentTemperature}</b> <span className="celsius">°C</span>
-                                </div>
+                <React.Fragment>
+                <div className="current">
+                    <a href="https://www.google.com/search?q=london+forecast" target="_blank">
+                        <div style={imageStyle} className={'weather-icon ' + weather.currently.icon}></div>
+                        <div className="summary">
+                            {/* <div className="text">{weather.currently.summary}</div> */}
+                            <div className="real">
+                                {parseInt(weather.currently.temperature) } <span className="celsius">°C</span>
                             </div>
-                            {/* <div className="other">
-                                <div className="windspeed">Wind: {weather.currently.windSpeed} km/h</div>
-                                <div className="precip-probability">Wind: {weather.currently.precipProbability}%</div>
-                                <div className="precip-intensity">Wind: {weather.currently.precipIntensity}%</div>
-                            </div> */}
-                            <div className="wind">
-                                <img 
-                                    src={chrome.runtime.getURL('../assets/wind-arrow.png')}
-                                    style={{transform: `rotate(${weather.currently.windBearing}deg)`}}/>
-                                <div className="label">
-                                    {weather.currently.windSpeed} km/h
-                                </div>
+                            <div className="apparent">
+                                Feel <b>{weather.currently.apparentTemperature}</b> <span className="celsius">°C</span>
                             </div>
-                        </a>
-                    </div>
-                
+                        </div>
+                        {/* <div className="other">
+                            <div className="windspeed">Wind: {weather.currently.windSpeed} km/h</div>
+                            <div className="precip-probability">Wind: {weather.currently.precipProbability}%</div>
+                            <div className="precip-intensity">Wind: {weather.currently.precipIntensity}%</div>
+                        </div> */}
+                        <div className="wind">
+                            <img 
+                                src={chrome.runtime.getURL('../assets/wind-arrow.png')}
+                                style={{transform: `rotate(${weather.currently.windBearing}deg)`}}/>
+                            <div className="label">
+                                {weather.currently.windSpeed} km/h
+                            </div>
+                        </div>
+                        <button type="button">Next days</button>
+                    </a>
+                </div>  
+                </React.Fragment>    
             );
         }
     }

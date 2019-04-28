@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import CreateReactClass from "create-react-class";
+
+
 
 export default class LichessWidget extends Component {
     constructor (props) {
@@ -13,8 +16,7 @@ export default class LichessWidget extends Component {
     }
 
     render() {
-
-        let Iframe = React.createClass({     
+        let Iframe = CreateReactClass({     
             render: function() {
               return(         
                 <div>          
