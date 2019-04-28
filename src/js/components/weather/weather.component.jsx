@@ -1686,18 +1686,31 @@ export default class WeatherWidget extends Component {
             }
             return(
                     <div className="weather-section">
+                        
                         <a href="https://www.google.com/search?q=london+forecast" target="_blank">
                             <div style={imageStyle} className={'weather-icon ' + weather.currently.icon}></div>
                             <div className="summary">
                                 {/* <div className="text">{weather.currently.summary}</div> */}
-                                <span className="real">{parseInt(weather.currently.temperature) } <span className="celsius">°C</span></span>
-                                {/* <span className="apparent">{weather.currently.apparentTemperature}</span> */}
+                                <div className="real">
+                                    {parseInt(weather.currently.temperature) } <span className="celsius">°C</span>
+                                </div>
+                                <div className="apparent">
+                                    Feel <b>{weather.currently.apparentTemperature}</b> <span className="celsius">°C</span>
+                                </div>
                             </div>
                             {/* <div className="other">
                                 <div className="windspeed">Wind: {weather.currently.windSpeed} km/h</div>
                                 <div className="precip-probability">Wind: {weather.currently.precipProbability}%</div>
                                 <div className="precip-intensity">Wind: {weather.currently.precipIntensity}%</div>
                             </div> */}
+                            <div className="wind">
+                                <img 
+                                    src={chrome.runtime.getURL('../assets/wind-arrow.png')}
+                                    style={{transform: `rotate(${weather.currently.windBearing}deg)`}}/>
+                                <div className="label">
+                                    {weather.currently.windSpeed} km/h
+                                </div>
+                            </div>
                         </a>
                     </div>
                 
