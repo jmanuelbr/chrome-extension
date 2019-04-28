@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';
-import LoaderTabs from './loader-tabs.component';
+import LoaderTabs from './loader/loader-tabs.component';
 
 export default class TheGuardianWidget extends Component {
     constructor (props) {

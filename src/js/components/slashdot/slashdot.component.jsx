@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SlashdotArticle from './slashdot-article.component';
 import _orderBy from 'lodash/orderBy';
 import _map from 'lodash/map';
-import LoaderTabs from './loader-tabs.component';
+import LoaderTabs from '../loader/loader-tabs.component';
 
 export default class SlashdotWidget extends Component {
     constructor(props) {

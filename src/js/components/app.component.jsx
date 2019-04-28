@@ -4,11 +4,11 @@ import BbcWidget from './bbc.component';
 import LichessWidget from './lichess.component';
 import TheGuardianWidget from './theguardian.component';
 import CurrencyWidget from './currency.component';
-import RedditWidget from './reddit.component';
+import RedditWidget from './reddit/reddit.component';
 import EldiarioWidget from './eldiario.component';
 import ElpaisWidget from './elpais.component';
-import SlashdotWidget from './slashdot.component';
-import WeatherWidget from './weather.component'; 
+import SlashdotWidget from './slashdot/slashdot.component';
+import WeatherWidget from './weather/weather.component'; 
 import _map from 'lodash/map';
 
 export default class App extends Component {

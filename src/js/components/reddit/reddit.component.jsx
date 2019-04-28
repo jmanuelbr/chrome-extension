@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import RedditArticle from './reddit-article.component';
 import _map from 'lodash/map';
-import LoaderTabs from './loader-tabs.component';
+import LoaderTabs from '../loader/loader-tabs.component';
 
 export default class RedditWidget extends Component {
     constructor(props) {

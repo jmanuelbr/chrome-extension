@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import * as CONSTANTS from '../constants';
+import * as CONSTANTS from '../../constants';
 import _map from 'lodash/map';
-import Loader from './loader.component';
+import Loader from '../loader/loader.component';
 
 export default class WeatherWidget extends Component {
     constructor(props) {
