@@ -10,7 +10,7 @@ export default class WeatherWidget extends Component {
         super(props);
         this.state = {
             contentReady: false,
-            mocks: true,
+            mocks: false,
             nextDaysVisible: true
         };
 
@@ -1706,7 +1706,7 @@ export default class WeatherWidget extends Component {
                                     {parseInt(weather.currently.temperature) } <span className="celsius">°C</span>
                                 </div>
                                 <div className="apparent">
-                                    Feel <b>{weather.currently.apparentTemperature}</b> <span className="celsius">°C</span>
+                                    Feel <b>{Math.round(weather.currently.apparentTemperature*10)/10}</b> <span className="celsius">°C</span>
                                 </div>
                             </div>
                             <div className="wind-current">
