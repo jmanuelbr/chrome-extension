@@ -11,7 +11,7 @@ export default class WeatherWidget extends Component {
         this.state = {
             contentReady: false,
             mocks: false,
-            nextDaysVisible: true
+            nextDaysVisible: false
         };
 
         this.toggleNextDays = this.toggleNextDays.bind(this);
@@ -1712,9 +1712,11 @@ export default class WeatherWidget extends Component {
                             <div className="wind-current">
                                 <img 
                                     src={chrome.runtime.getURL('../assets/wind-arrow.png')}
-                                    style={{transform: `rotate(${weather.currently.windBearing}deg)`}}/>
+                                    // TODO check this 180 value, probably not correct :-/
+                                    style={{transform: `rotate(${weather.currently.windBearing + 180}deg)`}}/>
+
                                 <div className="label">
-                                    {weather.currently.windSpeed} km/h
+                                    {Math.round(weather.currently.windSpeed)} km/h
                                 </div>
                             </div>
                             <button 

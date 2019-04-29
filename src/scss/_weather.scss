@@ -13,17 +13,58 @@
             width: 50px;
             height: 57px;
             float: left;
-            .day-name{
+            .weather-icon-small {
+                position: relative;
+                left: 9px;
+            }
+            .cloudy {
+                background-position: -67px -21px !important;
+            }
+            .third {
+                background-position: -124px -21px !important;
+            }
+            .clear-day {
+                background-position: -180px -21px !important;
+            }
+            .snow {
+                background-position: -236px -21px !important;
+            }
+            .clear-night{
+                background-position: -182px -69px !important;
+            }
+            .rain {
+                background-position: -12px -68px !important;
+            }
+            .sleet {
+                background-position: -236px -122px !important;
+            }
+            .wind {
+                background-position: -182px -163px !important;
+            }
+            .fog {
+                background-position: -125px -163px !important;
+            }
+            .partly-cloudy-day {
+                background-position: -70px -65px !important;
+            }
+            .partly-cloudy-night {
+                background-position: -126px -68px !important;
+            }
+            .day-name {
                 text-align: center;
-                font-size: 0.9em;
+                height: 10px;
+                font-size: 0.84em;
             }
             .temperature {
                 text-align: center;
+                font-size: 0.96em;
                 .high {
                     color: lightcoral;
+                    font-weight: 501;
                 }
                 .low {
-                    color: mediumslateblue;
+                    color: rgb(115, 139, 204);
+                    font-weight: 501;
                 }
             }
             .celsius {
@@ -52,12 +93,13 @@
     .daysWeekButton {
         outline: none;
         padding: 0;
-        position: relative;
         border: 1px solid transparent;
-        top: 4px;
         width: 49px;
         height: 49px;
-        left: 18px;
+        position: absolute;
+        top: 43px;
+        left: 213px;
+        cursor: pointer;
         img {
             width: 40px;
         }
@@ -70,6 +112,7 @@
     .summary {
         float: left;
         margin-left: 11px;
+        width: 70px;
         .real {
             position: relative;
             top: 2px;
@@ -101,9 +144,6 @@
     .cloudy {
         background-position: -87px -23px !important;
     }
-    .third {
-        background-position: -172px -23px !important;
-    }
     .clear-day {
         background-position: -253px -23px !important;
     }
@@ -122,29 +162,8 @@
     .clear-night {
         background-position: -253px -90px !important;
     }
-    .ten {
-        background-position: -333px -90px !important;
-    }
-    .eleven {
-        background-position: -14px -165px !important;
-    }
-    .twelve {
-        background-position: -87px  -165px !important;
-    }
-    .threteen {
-        background-position: -172px -165px !important;
-    }
-    .fourteeen {
-        background-position: -253px -165px !important;
-    }
     .sleet {
         background-position: -333px -165px !important;
-    }
-    .sixteen {
-        background-position: -14px -227px !important;
-    }
-    .seventeen {
-        background-position: -87px  -227px !important;
     }
     .fog {
         background-position: -172px -227px !important;
@@ -152,12 +171,9 @@
     .wind {
         background-position: -253px -227px !important;
     }
-    .twelve {
-        background-position: -333px -227px !important;
-    }
+
     .wind-current {
         float: left;
-        margin-left: 15px;
         position: relative;
         top: 2px;
         .label {
