@@ -1712,9 +1712,7 @@ export default class WeatherWidget extends Component {
                             <div className="wind-current">
                                 <img 
                                     src={chrome.runtime.getURL('../assets/wind-arrow.png')}
-                                    // TODO check this 180 value, probably not correct :-/
-                                    style={{transform: `rotate(${weather.currently.windBearing + 180}deg)`}}/>
-
+                                    style={{transform: `rotate(${weather.currently.windBearing}deg)`}}/>
                                 <div className="label">
                                     {Math.round(weather.currently.windSpeed)} km/h
                                 </div>

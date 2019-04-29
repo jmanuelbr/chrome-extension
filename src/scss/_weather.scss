@@ -30,7 +30,7 @@
                 background-position: -236px -21px !important;
             }
             .clear-night{
-                background-position: -182px -69px !important;
+                background-position: -180px -21px !important;
             }
             .rain {
                 background-position: -12px -68px !important;
@@ -48,7 +48,7 @@
                 background-position: -70px -65px !important;
             }
             .partly-cloudy-night {
-                background-position: -126px -68px !important;
+                background-position: -70px -65px !important;
             }
             .day-name {
                 text-align: center;
@@ -113,6 +113,7 @@
         float: left;
         margin-left: 11px;
         width: 70px;
+        text-align: center;
         .real {
             position: relative;
             top: 2px;
@@ -176,6 +177,8 @@
         float: left;
         position: relative;
         top: 2px;
+        width: 64px;
+        text-align: center;
         .label {
             position: relative;
             top: 5px;
@@ -184,7 +187,6 @@
             width: 32px;
             position: relative;
             top: 3px;
-            left: 8px;
         }
     } 
       
