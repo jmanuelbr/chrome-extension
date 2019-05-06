@@ -1,18 +1,64 @@
 @import 'variables';
 
-.next-days {
-    position: relative;
-    width: 400px;
-    top: -59px;
+.today-hours-panel {
     border: solid 1px lightgrey;
-    height: 57px;
-    left: 269px;
     border-radius: 4px;
-    .next-days-scroll {
+    height: 109px;
+    width: 569px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    position: absolute;
+    top: 38px;
+    left: 270px;
+    display: none;
+    canvas {
+        border-left: 1px solid lightgray;
+        border-bottom: 1px solid lightgray;
+        position: relative;
+        left: 20px;
+        height: 90px;
+        width: 1078px;
+        background-color: blanchedalmond;
+    }
+    .hours {
+        position: relative;
+        left: 20px;
+        width: 1078px;
+        .hour {
+            text-align: center;
+            margin-right: 3px;
+            float: left;
+            width: 19px;
+        }
+    }
+    .temperature-meter {
+        position: relative;
+        top: -103px;
+        left: 2px;
+        .temperature {
+            padding: 3px 0;
+            width: 16px;
+        }
+    }
+}
+
+.next-days {
+    position: absolute;
+    top: 38px;
+    left: 270px;
+    border: solid 1px lightgrey;
+    width: 400px;
+    height: 57px;
+    border-radius: 4px;
+    .next-days-panel {
         .day {
             width: 50px;
             height: 57px;
             float: left;
+            background: transparent;
+            &:hover {
+                background: rgb(234, 244, 255);
+            }            
             .weather-icon-small {
                 position: relative;
                 left: 9px;
@@ -24,7 +70,7 @@
                 background-position: -124px -21px !important;
             }
             .clear-day {
-                background-position: -180px -21px !important;
+                background-position: -180px -20px !important;
             }
             .snow {
                 background-position: -236px -21px !important;

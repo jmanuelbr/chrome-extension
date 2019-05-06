@@ -3,53 +3,63 @@ import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';
 import LoaderTabs from './loader/loader-tabs.component';
+import Error from './error.component';
+import _isEmpty from 'lodash/isEmpty';
 
 export default class TheGuardianWidget extends Component {
     constructor (props) {
         super(props);
         this.state = {
             articles: 'No news today :(',
-            contentReady: false
+            contentReady: false,
+            error: false
 		};
       }
 
     getArticles = function(jsonData) {
         jsonData = HELPER.parseFeed(jsonData);
         var list = [];
-        Object.values(jsonData).map(element => {
-            var article = {};
-            Object.values(element.elements).map(property => {
-                switch(property.name) { 
-                    case "title": { 
-                        article.title = property.elements[0].text;
+        try {
+            Object.values(jsonData).map(element => {
+                var article = {};
+                Object.values(element.elements).map(property => {
+                    switch(property.name) { 
+                        case "title": { 
+                            article.title = property.elements[0].text;
+                            break; 
+                        } 
+                        case "description": { 
+                            article.description = property.elements[0].text;
+                            break; 
+                        } 
+                        case "link": { 
+                            article.link = property.elements[0].text;
+                            break; 
+                        } 
+                        case "pubDate": {
+                            article.date = property.elements[0].text;
+                            break; 
+                        } 
+                        case "media:content": {
+                            if (property.attributes.width === "460") {
+                                article.thumbnail = property.attributes.url;   
+                            }
+                            break; 
+                        } 
+                        default: { 
+                        // Do nothing
                         break; 
-                    } 
-                    case "description": { 
-                        article.description = property.elements[0].text;
-                        break; 
-                    } 
-                    case "link": { 
-                        article.link = property.elements[0].text;
-                        break; 
-                    } 
-                    case "pubDate": {
-                        article.date = property.elements[0].text;
-                        break; 
-                    } 
-                    case "media:content": {
-                        if (property.attributes.width === "460") {
-                            article.thumbnail = property.attributes.url;   
-                        }
-                        break; 
-                    } 
-                    default: { 
-                    // Do nothing
-                    break; 
-                    } 
-                }
+                        } 
+                    }
+                });
+                list.push(article);
             });
-            list.push(article);
-        });
+        }
+        catch (exception) {
+            console.log('EXCEPTION', exception);
+            list = [];
+        }
+
         return list;
     };
 
@@ -60,6 +70,9 @@ export default class TheGuardianWidget extends Component {
         self.setState(state => {
             state.articles = self.getArticles(jsonData);
             state.contentReady = true;
+            if (_isEmpty(state.articles)) {
+                state.error = true;
+            }
             return state;
         });
     }
@@ -73,6 +86,11 @@ export default class TheGuardianWidget extends Component {
         if (!this.state.contentReady) {
             return (
                 <LoaderTabs/>
+            );
+        }
+        else if (this.state.error) {
+            return (
+                <Error/>
             );
         }
         else {

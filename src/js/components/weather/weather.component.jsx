@@ -4,6 +4,7 @@ import * as CONSTANTS from '../../constants';
 import _map from 'lodash/map';
 import Loader from '../loader/loader.component';
 import WeatherNextDays from './weather-next-days.component';
+import WeatherToday from './weather-today.component';
 
 export default class WeatherWidget extends Component {
     constructor(props) {
@@ -1727,6 +1728,11 @@ export default class WeatherWidget extends Component {
                     <div className="next-days" style={{visibility: `${this.state.nextDaysVisible ? 'visible': 'hidden'}`}}>
                         <WeatherNextDays
                             dailyData={weather.daily}    
+                        />
+                    </div>
+                    <div className="today-weather">
+                        <WeatherToday
+                            todayData={weather.hourly}    
                         />
                     </div>
                 </React.Fragment>    

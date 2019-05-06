@@ -3,58 +3,70 @@ import SlashdotArticle from './slashdot-article.component';
 import _orderBy from 'lodash/orderBy';
 import _map from 'lodash/map';
 import LoaderTabs from '../loader/loader-tabs.component';
+import Error from '../error.component';
+import _isEmpty from 'lodash/isEmpty';
 
 export default class SlashdotWidget extends Component {
     constructor(props) {
         super(props);
         this.state = {
             articles: 'No news today :(',
-            contentReady: false
+            contentReady: false,
+            error: false
         };
     }
 
     getArticles = function (jsonData) {
         jsonData = JSON.parse(jsonData);
-        var list = [];
-        Object.values(jsonData.elements).map(element => {
-            Object.values(element.elements).map(property => {
-                var article = {};
-                Object.values(property.elements).map(prop => {
-                    switch (prop.name) {
-                        case "title": {
-                            article.title = prop.elements[0].text;
-                            break;
+        let list = [];
+        let orderedArticles = [];
+        try {
+            Object.values(jsonData.elements).map(element => {
+                Object.values(element.elements).map(property => {
+                    var article = {};
+                    Object.values(property.elements).map(prop => {
+                        switch (prop.name) {
+                            case "title": {
+                                article.title = prop.elements[0].text;
+                                break;
+                            }
+                            case "url": {
+                                article.link = prop.elements[0].text;
+                                break;
+                            }
+                            case "time": {
+                                article.date = prop.elements[0].text;
+                                break;
+                            }
+                            case "image": {
+                                article.thumbnail = 'https://a.fsdn.com/sd/topics/' + prop.elements[0].text;
+                                break;
+                            }
+                            case "comments": {
+                                article.comments = Number(prop.elements[0].text);
+                                break;
+                            }
+                            case "section": {
+                                article.section = prop.elements[0].text;
+                                break;
+                            }
+                            default: {
+                                // Do nothing
+                                break;
+                            }
                         }
-                        case "url": {
-                            article.link = prop.elements[0].text;
-                            break;
-                        }
-                        case "time": {
-                            article.date = prop.elements[0].text;
-                            break;
-                        }
-                        case "image": {
-                            article.thumbnail = 'https://a.fsdn.com/sd/topics/' + prop.elements[0].text;
-                            break;
-                        }
-                        case "comments": {
-                            article.comments = Number(prop.elements[0].text);
-                            break;
-                        }
-                        case "section": {
-                            article.section = prop.elements[0].text;
-                            break;
-                        }
-                        default: {
-                            // Do nothing
-                            break;
-                        }
-                    }
+                    });
+                    list.push(article);
                 });
-                list.push(article);
             });
-        });
-        let orderedArticles = _orderBy(list, ['comments'],['desc'])
+            orderedArticles = _orderBy(list, ['comments'],['desc']);
+        }
+        catch (exception) {
+            console.log('EXCEPTION', exception);
+            orderedArticles = [];
+        }
+
+        
         return orderedArticles;
     };
 
@@ -65,6 +77,9 @@ export default class SlashdotWidget extends Component {
         self.setState(state => {
             state.articles = self.getArticles(jsonData);
             state.contentReady = true;
+            if (_isEmpty(state.articles)) {
+                state.error = true;
+            }
             return state;
         });
     }
@@ -78,6 +93,11 @@ export default class SlashdotWidget extends Component {
         if (!this.state.contentReady) {
             return (
                 <LoaderTabs/>
+            );
+        }
+        else if (this.state.error) {
+            return (
+                <Error/>
             );
         }
         else {

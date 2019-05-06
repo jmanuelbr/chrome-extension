@@ -8,7 +8,7 @@ export default class WeatherNextDays extends Component {
     render() {
         const nextDaysArray = this.props.dailyData.data;
         return(
-            <div className="next-days-scroll">
+            <div className="next-days-panel">
                 {nextDaysArray.map((dayData, key) =>
                     <WeatherNextDayItem
                         dayData={dayData}

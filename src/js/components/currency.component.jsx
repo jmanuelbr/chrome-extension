@@ -15,7 +15,7 @@ export default class CurrencyWidget extends Component {
         self.setState(state => {
             state.currencyRate = feedData.currency[0].value;
             return state;
-            });
+        });
     }
 
       componentDidMount() {
