@@ -1,21 +1,28 @@
 import React, { Component } from 'react';
 import * as CONSTANTS from '../constants';
-import axios from 'axios';
 
 export default class CurrencyWidget extends Component {
     constructor (props) {
         super(props);
         this.state = {
-			currencyRate: 'N/A'
+            currencyRate: 'N/A',
+            error: false
 		};
       }
 
     processData = function(feedData) {
         const self = this;
-        self.setState(state => {
-            state.currencyRate = feedData.currency[0].value;
-            return state;
-        });
+        try {
+            self.setState(state => {
+                if (feedData.currency !== undefined) {
+                    state.currencyRate = feedData.currency[0].value;
+                }
+                return state;
+            });
+        } 
+        catch (exception) {
+            console.log('EXCEPTION', exception);
+        }
     }
 
       componentDidMount() {

@@ -10,6 +10,7 @@
 @import 'weather';
 @import 'loader-tabs';
 @import 'error';
+@import 'tfl';
 
 .parent-widget-container {
     position: absolute;
@@ -18,8 +19,7 @@
     margin: 15px;
     font-size: 85%;
     color: #777;
-    width: 267px;
-    max-width: 267px;
+    width: 268px;
     font-family: $font-stack;
     z-index: 99999 !important;
     background-color: transparent;

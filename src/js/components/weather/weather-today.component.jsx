@@ -14,11 +14,11 @@ export default class WeatherToday extends Component {
     }
 
     drawDots() {
-        console.log('Drawing dot');
+        // console.log('Drawing dot');
         const todayArray = this.props.todayData.data;
         let offset = 3;
         todayArray.map((hourData, key) => {
-            console.log('hourData', hourData);
+            // console.log('hourData', hourData);
             this.state.canvasCtx.fillRect(offset,0,1,1);
             offset +=7;
         });

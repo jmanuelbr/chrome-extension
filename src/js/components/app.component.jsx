@@ -9,6 +9,7 @@ import EldiarioWidget from './eldiario.component';
 import ElpaisWidget from './elpais.component';
 import SlashdotWidget from './slashdot/slashdot.component';
 import WeatherWidget from './weather/weather.component'; 
+import TflWidget from './tfl/tfl.component';
 import _map from 'lodash/map';
 
 export default class App extends Component {
@@ -25,6 +26,7 @@ export default class App extends Component {
             { "widget": <ElpaisWidget/>, "icon": chrome.runtime.getURL('../assets/elpais.png')},
             { "widget": <SlashdotWidget/>, "icon": chrome.runtime.getURL('../assets/slashdot.png')},
             { "widget": <RedditWidget/>, "icon": chrome.runtime.getURL('../assets/reddit.png')},
+            { "widget": <TflWidget/>, "icon": chrome.runtime.getURL('../assets/tfl.png')},
             { "widget": <LichessWidget/>, "icon": chrome.runtime.getURL('../assets/lichess.png')}
         ];
         return(

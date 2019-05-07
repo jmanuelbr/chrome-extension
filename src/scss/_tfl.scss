@@ -1,0 +1,94 @@
+.tfl-container {
+    padding: 0 10px;
+    .tfl-tube-container {
+        width: 100%;
+        display: inline-block;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        .name {
+            background-color: coral;
+            color: white;
+            text-align: center;
+            width: 50%;
+            float: left;
+            font-weight: 501;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .status {
+            width: 50%;
+            float: left;
+            .disruption {
+                .reason {
+                    .title {
+                        padding-left: 5px;
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+    }
+    .tfl-bus-container {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        display: inline-block;
+        .bus-stop-title {
+            padding-bottom: 10px;
+            .bus-stop-letter {
+                &::after {
+                    content: "\00a0 ";
+                }
+                &::before {
+                    content: " \00a0";
+                }
+                // float: left;
+                font-weight: 501;
+                background: rgb(181,38,38);
+                color: white;
+                border-radius: 3px;
+            }
+            .bus-stop-name {
+                padding: 5px 0;
+                font-size: 1.08em;
+                font-weight: 501;
+                margin-left: 5px;
+            }
+
+        }
+        .bus-left,.bus-right {
+            width: 50%;
+            // display: inline-block;
+            display: block;
+            float: left;
+            .bus {
+                display: inline-block;
+                width: 100%;
+                line-height: 16px;
+                padding: 2px 0;
+                img {
+                    width: 15px;
+                    float: left;
+                }
+                .lineName {
+                    float: left;
+                    font-weight: 501;
+                    background: rgb(181,38,38);
+                    color: white;
+                    margin-left: 5px;
+                    border-radius: 3px;
+                    &::after {
+                        content: "\00a0 ";
+                    }
+                    &::before {
+                        content: " \00a0";
+                    }
+                }
+                .expected-arrival {
+                    margin-left: 5px;
+                    float: left;
+                }
+            }
+        }
+        
+    }
+}

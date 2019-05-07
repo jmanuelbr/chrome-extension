@@ -2,7 +2,8 @@
 @import 'variables';
 
 .currency-section {
-	font-family: $font-stack;
+    font-family: $font-stack;
+    background-color: white;
 	.widget-table {
         border: 1px solid $white-color;
         padding: 4px;
