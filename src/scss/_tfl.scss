@@ -32,6 +32,12 @@
         padding-top: 5px;
         padding-bottom: 5px;
         display: inline-block;
+        a {
+            &:link,&:visited,&:hover,&:active {
+                color: dimgrey;
+                text-decoration: none;
+            }
+        }
         .bus-stop-title {
             padding-bottom: 10px;
             .bus-stop-letter {
@@ -41,7 +47,6 @@
                 &::before {
                     content: " \00a0";
                 }
-                // float: left;
                 font-weight: 501;
                 background: rgb(181,38,38);
                 color: white;
@@ -50,14 +55,13 @@
             .bus-stop-name {
                 padding: 5px 0;
                 font-size: 1.08em;
-                font-weight: 501;
+                font-weight: 600;
                 margin-left: 5px;
             }
 
         }
         .bus-left,.bus-right {
             width: 50%;
-            // display: inline-block;
             display: block;
             float: left;
             .bus {
@@ -89,6 +93,5 @@
                 }
             }
         }
-        
     }
 }

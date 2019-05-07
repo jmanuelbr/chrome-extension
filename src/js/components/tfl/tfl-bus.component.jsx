@@ -61,14 +61,14 @@ export default class TflBus extends Component {
             return (
                 <div className="tfl-bus-container">
                     <div className="bus-stop-title">
-                        <span className="bus-stop-letter"> G</span>
-                        <span className="bus-stop-name">Seven Sisters Road / Parkhurst Road</span>
+                        <a href="https://tfl.gov.uk/bus/stop/490008296G/seven-sisters-road-parkhurst-road?" target="_blank">
+                            <span className="bus-stop-letter"> G</span>
+                            <span className="bus-stop-name">Seven Sisters Road / Parkhurst Road</span>
+                        </a>
                     </div>
                     <div className="bus-left">
                         {_map(this.state.busDataLeft, (bus, i) => {    
                             const timeToStation = Math.round(bus.timeToStation/60);
-                            // const currentDate = new Date();
-                            // let diffMinutes = Date.daysBetween(currentDate.getTime(), bus.arrivalMillis);
                             return (
                                 <div className="bus" key={i}>
                                     <img src={chrome.runtime.getURL('../assets/bus.png')}/> 
@@ -81,8 +81,6 @@ export default class TflBus extends Component {
                     </div>
                     <div className="bus-right">
                         {_map(this.state.busDataRight, (bus, i) => {   
-                            // const currentDate = new Date();
-                            // let diffMinutes = Date.daysBetween(currentDate.getTime(), bus.arrivalMillis);
                             const timeToStation = Math.round(bus.timeToStation/60);
                             return (
                                 <div className="bus" key={i}>
