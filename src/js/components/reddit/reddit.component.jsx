@@ -4,9 +4,10 @@ import _map from 'lodash/map';
 import LoaderTabs from '../loader/loader-tabs.component';
 import Error from '../error.component';
 import _isEmpty from 'lodash/isEmpty';
+import { connect } from 'react-redux';
+import { getMockData } from '../../mocks/reddit.mocks';
 
-
-export default class RedditWidget extends Component {
+export class RedditWidget extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,8 +46,13 @@ export default class RedditWidget extends Component {
     }
 
     componentDidMount() {
-        chrome.runtime.sendMessage(
-            {contentScriptQuery: "fetchContent", itemId: "reddit"}, feedData => this.processData(feedData));
+        if (this.props.mocksEnabled) {
+            this.processData(getMockData())
+        }
+        else {
+            chrome.runtime.sendMessage(
+                {contentScriptQuery: "fetchContent", itemId: "reddit"}, feedData => this.processData(feedData));
+        }
     }
 
     render() {
@@ -74,3 +80,11 @@ export default class RedditWidget extends Component {
         }
     }
 }
+
+function mapStateToProps(state) {
+	return {
+		mocksEnabled: state.configuration.mocksEnabled
+	};
+}
+
+export default connect(mapStateToProps)(RedditWidget);

@@ -5,8 +5,10 @@ import _map from 'lodash/map';
 import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
 import _isEmpty from 'lodash/isEmpty';
+import { connect } from 'react-redux';
+import { getMockData } from '../mocks/bbc.mocks';
 
-export default class BbcWidget extends Component {
+export class BbcWidget extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -75,9 +77,15 @@ export default class BbcWidget extends Component {
     }
 
     componentDidMount() {
-        chrome.runtime.sendMessage(
-            {contentScriptQuery: "fetchContent", itemId: "bbc"}, feedData => this.processData(feedData));
-        
+        let feedData = '';
+        if (this.props.mocksEnabled) {
+            feedData = getMockData();
+            this.processData(feedData)
+        }
+        else {
+            chrome.runtime.sendMessage(
+                {contentScriptQuery: "fetchContent", itemId: "bbc"}, feedData => this.processData(feedData));
+        }
     }
 
     renderComponent() {
@@ -118,3 +126,10 @@ export default class BbcWidget extends Component {
         }
     }
 }
+function mapStateToProps(state) {
+	return {
+		mocksEnabled: state.configuration.mocksEnabled
+	};
+}
+
+export default connect(mapStateToProps)(BbcWidget);
