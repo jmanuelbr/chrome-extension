@@ -1,0 +1,1 @@
+export const MOCKS_ENABLED = 'mocks_enabled';

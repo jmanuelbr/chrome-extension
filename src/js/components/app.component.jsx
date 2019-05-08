@@ -11,6 +11,7 @@ import SlashdotWidget from './slashdot/slashdot.component';
 import WeatherWidget from './weather/weather.component'; 
 import TflWidget from './tfl/tfl.component';
 import _map from 'lodash/map';
+import { connect, Provider } from 'react-redux';
 
 export default class App extends Component {
     constructor(props) {
@@ -30,28 +31,29 @@ export default class App extends Component {
             { "widget": <LichessWidget/>, "icon": chrome.runtime.getURL('../assets/lichess.png')}
         ];
         return(
-
-            <div>
-                <CurrencyWidget/>
-                <WeatherWidget/>
-                <div className="tabs-section">
-                    <Tabs
-                        active={this.state.active}
-                        onChange={active => this.setState({active})}
-                        >
-                        {_map(tabsContent, (tabContent, i) => (
-                            <img src={tabContent.icon} key={i}/>
-                        ))}
-                    </Tabs>
-                        {_map(tabsContent, (tabContent, i) => (
-                            <div className="tab-container" 
-                                key={i} 
-                                style={{'display': (this.state.active == i) ? 'block' : 'none' }}>
-                                {tabContent.widget}
-                            </div> 
-                        ))}
+            <Provider store={ this.props.store }>
+                <div>
+                    <CurrencyWidget/>
+                    <WeatherWidget/>
+                    <div className="tabs-section">
+                        <Tabs
+                            active={this.state.active}
+                            onChange={active => this.setState({active})}
+                            >
+                            {_map(tabsContent, (tabContent, i) => (
+                                <img src={tabContent.icon} key={i}/>
+                            ))}
+                        </Tabs>
+                            {_map(tabsContent, (tabContent, i) => (
+                                <div className="tab-container" 
+                                    key={i} 
+                                    style={{'display': (this.state.active == i) ? 'block' : 'none' }}>
+                                    {tabContent.widget}
+                                </div> 
+                            ))}
+                    </div>
                 </div>
-            </div>
+            </Provider>
         )
     }
 }

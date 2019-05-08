@@ -10,6 +10,9 @@ import ReactDOM from "react-dom";
 
 import App from './components/app.component';
 
+import reduxThunk from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux';
+import reducers from './reducers';
 
 // ******************************************************************
 //  Responsive hide logic
@@ -53,4 +56,14 @@ const parentDiv =
     '</div>';
 $('body').append(parentDiv);
 
-ReactDOM.render(<App />, document.getElementById("chromeApp"));
+
+// ******************************************************************
+// Redux Store
+// ******************************************************************
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+	reducers,
+	composeEnhancers(applyMiddleware(reduxThunk))
+);
+
+ReactDOM.render(<App store={store}/>, document.getElementById("chromeApp"));
