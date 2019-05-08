@@ -57,7 +57,7 @@ chrome.runtime.onMessage.addListener(
                     sendResponse(JSON.parse(xmlHttp.response));
                 }
             }
-            xmlHttp.open("GET", "https://currencydatafeed.com/api/data.php?token=94c9yjpmdt1fvsa8icoj&currency=GBP/EUR", true); // make the request async
+            xmlHttp.open("GET", "https://currencydatafeed.com/api/data.php?token=k4210va9efvcx39ck4pd&currency=GBP/EUR", true); // make the request async
             xmlHttp.send(null);
 
             return true;  // Will respond asynchronously.
