@@ -7,22 +7,23 @@ import Error from './error.component';
 import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../mocks/theguardian.mocks';
+import { FETCH_CONTENT } from '../actions/types';
 
 
 export class TheGuardianWidget extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            articles: 'No news today :(',
+            articles: [],
             contentReady: false,
             error: false
 		};
       }
 
     getArticles = function(jsonData) {
-        jsonData = HELPER.parseFeed(jsonData);
         var list = [];
         try {
+            jsonData = HELPER.parseFeed(jsonData);
             Object.values(jsonData).map(element => {
                 var article = {};
                 Object.values(element.elements).map(property => {
@@ -86,7 +87,8 @@ export class TheGuardianWidget extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                {contentScriptQuery: "fetchContent", itemId: "theguardian"}, feedData => this.processData(feedData));
+                { contentScriptQuery: FETCH_CONTENT, itemId: "theguardian" }, 
+                feedData => this.processData(feedData));
         }
     }
     

@@ -7,6 +7,7 @@ import Error from '../error.component';
 import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../../mocks/slashdot.mocks';
+import { FETCH_CONTENT } from '../../actions/types';
 
 export class SlashdotWidget extends Component {
     constructor(props) {
@@ -19,10 +20,10 @@ export class SlashdotWidget extends Component {
     }
 
     getArticles = function (jsonData) {
-        jsonData = JSON.parse(jsonData);
-        let list = [];
         let orderedArticles = [];
         try {
+            let list = [];
+            jsonData = JSON.parse(jsonData);
             Object.values(jsonData.elements).map(element => {
                 Object.values(element.elements).map(property => {
                     var article = {};
@@ -92,7 +93,8 @@ export class SlashdotWidget extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                {contentScriptQuery: "fetchContent", itemId: "slashdot"}, feedData => this.processData(feedData));
+                { contentScriptQuery: FETCH_CONTENT, itemId: "slashdot" }, 
+                feedData => this.processData(feedData));
         }
     }
 

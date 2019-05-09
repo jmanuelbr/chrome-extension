@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as CONSTANTS from '../constants';
+import { FETCH_CURRENCY } from '../actions/types';
 
 export default class CurrencyWidget extends Component {
     constructor (props) {
@@ -11,23 +12,24 @@ export default class CurrencyWidget extends Component {
       }
 
     processData = function(feedData) {
-        const self = this;
-        try {
-            self.setState(state => {
-                if (feedData.currency !== undefined) {
-                    state.currencyRate = feedData.currency[0].value;
-                }
-                return state;
-            });
-        } 
-        catch (exception) {
-            console.log('EXCEPTION', exception);
-        }
+        this.setState(state => {
+            try {
+                state.currencyRate = feedData.currency[0].value;
+            }
+            catch(exception) {
+                state.currencyRate = "¯\\_(ツ)_/¯";
+                console.log('EXCEPTION', exception);
+            }
+            return state;
+        });
+       
     }
 
       componentDidMount() {
+        // TODO: implement mocks for this
         chrome.runtime.sendMessage(
-            {contentScriptQuery: "fetchCurrency"}, feedData => this.processData(feedData));
+            { contentScriptQuery: FETCH_CURRENCY }, 
+            feedData => this.processData(feedData));
 	}
     render() {
         const image = chrome.runtime.getURL("../assets/currency.png");

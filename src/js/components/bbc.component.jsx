@@ -7,6 +7,7 @@ import Error from './error.component';
 import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../mocks/bbc.mocks';
+import { FETCH_CONTENT } from '../actions/types';
 
 export class BbcWidget extends Component {
     constructor(props) {
@@ -19,9 +20,9 @@ export class BbcWidget extends Component {
     }
 
     getArticles = function (jsonData) {
-        jsonData = HELPER.parseFeed(jsonData);
         var list = [];
         try {
+            jsonData = HELPER.parseFeed(jsonData);
             Object.values(jsonData).map(element => {
                 var article = {};
                 Object.values(element.elements).map(property => {
@@ -77,14 +78,13 @@ export class BbcWidget extends Component {
     }
 
     componentDidMount() {
-        let feedData = '';
         if (this.props.mocksEnabled) {
-            feedData = getMockData();
-            this.processData(feedData)
+            this.processData(getMockData());
         }
         else {
             chrome.runtime.sendMessage(
-                {contentScriptQuery: "fetchContent", itemId: "bbc"}, feedData => this.processData(feedData));
+                { contentScriptQuery: FETCH_CONTENT, itemId: "bbc" }, 
+                feedData => this.processData(feedData));
         }
     }
 

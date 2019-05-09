@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import _map from 'lodash/map';
+import _orderBy from 'lodash/orderBy';
 import LoaderTabs from '../loader/loader-tabs.component';
 import Error from '../error.component';
+import { connect } from 'react-redux';
+import { getMockData } from '../../mocks/tfl-bus.mocks';
+import { FETCH_CONTENT } from '../../actions/types';
 
-export default class TflBus extends Component {
+export class TflBus extends Component {
     constructor (props) {
         super(props);
         this.MAX_BUSES = 5;
@@ -15,20 +19,11 @@ export default class TflBus extends Component {
         };
     }
 
-    processBusData = function(feedData) {
+    processData = function(feedData) {
         const self = this;
         try {
             self.setState(state => {
-                function compare(a, b) {
-                    if ( a.timeToStation < b.timeToStation ){
-                        return -1;
-                    }
-                    if ( a.timeToStation > b.timeToStation ){
-                        return 1;
-                    }
-                    return 0;
-                }
-                const sortedList = feedData.sort(compare);
+                const sortedList = _orderBy(feedData, ['timeToStation'],['asc']);
                 state.busDataLeft = sortedList.slice(0, this.MAX_BUSES);
                 state.busDataRight = sortedList.slice(this.MAX_BUSES, this.MAX_BUSES*2);
                 state.contentReady = true;
@@ -42,8 +37,14 @@ export default class TflBus extends Component {
     }
 
     componentDidMount() {
-        chrome.runtime.sendMessage(
-            {contentScriptQuery: "fetchContent", itemId: "tfl-bus"}, feedData => this.processBusData(feedData));
+        if (this.props.mocksEnabled) {
+            this.processData(getMockData())
+        }
+        else {
+            chrome.runtime.sendMessage(
+                { contentScriptQuery: FETCH_CONTENT, itemId: "tfl-bus" }, 
+                feedData => this.processData(feedData));
+        }
     }
 
     render() {
@@ -96,3 +97,10 @@ export default class TflBus extends Component {
         }
     }    
 }
+function mapStateToProps(state) {
+	return {
+		mocksEnabled: state.configuration.mocksEnabled
+	};
+}
+
+export default connect(mapStateToProps)(TflBus);

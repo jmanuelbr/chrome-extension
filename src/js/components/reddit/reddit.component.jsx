@@ -6,6 +6,7 @@ import Error from '../error.component';
 import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../../mocks/reddit.mocks';
+import { FETCH_CONTENT } from '../../actions/types';
 
 export class RedditWidget extends Component {
     constructor(props) {
@@ -22,7 +23,7 @@ export class RedditWidget extends Component {
             const data = feedData.data.children;
             var list = [];
             Object.values(data).map(element => {
-                list.push(element.data);
+                    list.push(element.data);   
             })
         }
         catch (exception) {
@@ -51,7 +52,8 @@ export class RedditWidget extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                {contentScriptQuery: "fetchContent", itemId: "reddit"}, feedData => this.processData(feedData));
+                { contentScriptQuery: FETCH_CONTENT, itemId: "reddit" }, 
+                feedData => this.processData(feedData));
         }
     }
 

@@ -3,8 +3,12 @@ import TflStatus from './tfl-status.component';
 import _map from 'lodash/map';
 import LoaderTabs from '../loader/loader-tabs.component';
 import Error from '../error.component';
+import { connect } from 'react-redux';
+import { getMockData } from '../../mocks/tfl-tube.mocks';
+import { FETCH_CONTENT } from '../../actions/types';
 
-export default class TflTube extends Component {
+
+export class TflTube extends Component {
     constructor (props) {
         super(props);
         this.state = {
@@ -14,7 +18,7 @@ export default class TflTube extends Component {
         };
     }
 
-    processTubeData = function(feedData) {
+    processData = function(feedData) {
         const self = this;
         try {
             self.setState(state => {
@@ -30,8 +34,14 @@ export default class TflTube extends Component {
     }
 
     componentDidMount() {
-        chrome.runtime.sendMessage(
-            {contentScriptQuery: "fetchContent", itemId: "tfl-tube"}, feedData => this.processTubeData(feedData));
+        if (this.props.mocksEnabled) {
+            this.processData(getMockData())
+        }
+        else {
+            chrome.runtime.sendMessage(
+                { contentScriptQuery: FETCH_CONTENT, itemId: "tfl-tube" }, 
+                feedData => this.processData(feedData));
+        }
     }
 
 
@@ -67,3 +77,10 @@ export default class TflTube extends Component {
         }
     }    
 }
+function mapStateToProps(state) {
+	return {
+		mocksEnabled: state.configuration.mocksEnabled
+	};
+}
+
+export default connect(mapStateToProps)(TflTube);

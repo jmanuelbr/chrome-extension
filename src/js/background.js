@@ -50,7 +50,7 @@ chrome.runtime.onMessage.addListener(
 
             return true;  // Will respond asynchronously.
         }
-        else if (request.contentScriptQuery == "fetchCurrency") {
+        else if (request.contentScriptQuery == FETCH_CURRENCY) {
             let xmlHttp = new XMLHttpRequest();
             xmlHttp.onreadystatechange = function() { 
                 if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {

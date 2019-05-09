@@ -7,6 +7,7 @@ import Error from './error.component';
 import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../mocks/elpais.mocks';
+import { FETCH_CONTENT } from '../actions/types';
 
 export class ElpaisWidget extends Component {
     constructor(props) {
@@ -19,39 +20,44 @@ export class ElpaisWidget extends Component {
     }
 
     getArticles = function (jsonData) {
-        jsonData = HELPER.parseFeed(jsonData);
         var list = [];
         try {
+            jsonData = HELPER.parseFeed(jsonData);
             Object.values(jsonData).map(element => {
                 var article = {};
                 Object.values(element.elements).map(property => {
-                    switch (property.name) {
-                        case "title": {
-                            article.title = property.elements[0].cdata;
-                            break;
-                        }
-                        case "description": {
-                            article.description = property.elements[0].cdata;
-                            break;
-                        }
-                        case "link": {
-                            article.link = property.elements[0].cdata;
-                            break;
-                        }
-                        case "pubDate": {
-                            article.date = property.elements[0].cdata;
-                            break;
-                        }
-                        case "enclosure": {
-                            if (property.attributes.type == "image/jpeg") {
-                                article.thumbnail = property.attributes.url;
+                    try {
+                        switch (property.name) {
+                            case "title": {
+                                article.title = property.elements[0].cdata;
+                                break;
                             }
-                            break;
+                            case "description": {
+                                article.description = property.elements[0].cdata;
+                                break;
+                            }
+                            case "link": {
+                                article.link = property.elements[0].cdata;
+                                break;
+                            }
+                            case "pubDate": {
+                                article.date = property.elements[0].cdata;
+                                break;
+                            }
+                            case "enclosure": {
+                                if (property.attributes.type == "image/jpeg") {
+                                    article.thumbnail = property.attributes.url;
+                                }
+                                break;
+                            }
+                            default: {
+                                // Do nothing
+                                break;
+                            }
                         }
-                        default: {
-                            // Do nothing
-                            break;
-                        }
+                    }
+                    catch (exception) {
+                        // Do nothing
                     }
                 });
                 list.push(article);
@@ -84,7 +90,8 @@ export class ElpaisWidget extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                {contentScriptQuery: "fetchContent", itemId: "elpais"}, feedData => this.processData(feedData));
+                { contentScriptQuery: FETCH_CONTENT, itemId: "elpais" }, 
+                feedData => this.processData(feedData));
         }
     }
 
