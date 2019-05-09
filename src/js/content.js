@@ -1,15 +1,9 @@
-/* global $, chrome, window, document, XMLHttpRequest */
-
-import $ from 'jquery';
-import * as CONSTANTS from './constants';
-
+/* global chrome, window, document, XMLHttpRequest */
 require('../scss/global.scss');
-
+import * as CONSTANTS from './constants';
 import React from 'react';
 import ReactDOM from "react-dom";
-
 import App from './components/app.component';
-
 import reduxThunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 import reducers from './reducers';
@@ -19,42 +13,33 @@ import reducers from './reducers';
 // ******************************************************************
 
 window.onresize = function() {
-    if ($(window).width() < CONSTANTS.MIN_VIEWPORT_WIDTH) {
-        $("#parent-container").hide();
+    const app = document.getElementById("chromeApp");   
+    if (document.body.clientWidth < CONSTANTS.MIN_VIEWPORT_WIDTH) {
+        app.style.display = 'none';
     } else {
-        $("#parent-container").show();
+        app.style.display = 'block';
     }
 };
-
-// ******************************************************************
-//  Tabs
-// ******************************************************************
-
-$(document).ready(function() {
-    $('head').append(`
-        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700" />
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.css" />
-        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Dosis:400,300,700" />
-        `);
-    $(".tabs-menu a").click(function(event) {
-        event.preventDefault();
-        $(this).parent().addClass("current");
-        $(this).parent().siblings().removeClass("current");
-        const tab = $(this).attr("href");
-        $(".tab-content").not(tab).css("display", "none");
-        $(tab).fadeIn();
-    });
-});
 
 // ******************************************************************
 //  Parent container
 // ******************************************************************
 
-const parentDiv = 
-    '<div class="parent-widget-container" id="parent-container">' +
-    '<div id="chromeApp" class="chrome-app"></div>' +
+function ready(callback) {
+    // in case the document is already rendered
+    if (document.readyState!='loading') callback();
+    else if (document.addEventListener) document.addEventListener('DOMContentLoaded', callback);
+}
+
+ready(function(){
+    document.head.innerHTML += `<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700" />`;
+});
+
+const appContainter = 
+    '<div id="chromeApp" class="parent-widget-container">' +
     '</div>';
-$('body').append(parentDiv);
+document.body.innerHTML += appContainter;
+
 
 
 // ******************************************************************

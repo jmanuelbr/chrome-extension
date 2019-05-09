@@ -61,16 +61,12 @@
     "webpack-notifier": "^1.7.0"
   },
   "dependencies": {
-    "autoprefixer": "^7.2.5",
     "axios": "^0.18.0",
     "classnames": "2.2.6",
     "create-react-class": "^15.6.3",
-    "jquery": "^3.3.1",
     "lodash": "^4.17.11",
     "prop-types": "15.7.2",
-    "ramda": "latest",
     "react": "16.8.6",
-    "react-dock": "^0.2.3",
     "react-redux": "7.0.3",
     "redux": "4.0.1",
     "redux-thunk": "2.3.0",

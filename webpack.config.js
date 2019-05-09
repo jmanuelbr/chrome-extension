@@ -5,10 +5,13 @@ const WebpackNotifierPlugin = require('webpack-notifier');
 var path = require("path");
 
 module.exports = {
-    entry: './src/js/content.js',
+    entry: {
+        content: "./src/js/content.js",
+        background: "./src/js/background.js"
+    },
     output: {
         path: path.resolve(__dirname, "build/js"),
-        filename: "content.js",
+        filename: "[name].js",
         publicPath: "/build"
     },
     module: {
@@ -59,11 +62,6 @@ module.exports = {
         new CopyWebpackPlugin([{
             from: 'src/manifest.json',
             to: '../manifest.json',
-            toType: 'file'
-        }]),
-        new CopyWebpackPlugin([{
-            from: 'src/js/background.js',
-            to: '../js/background.js',
             toType: 'file'
         }]),
         new MiniCssExtractPlugin({

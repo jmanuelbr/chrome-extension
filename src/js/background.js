@@ -1,9 +1,9 @@
-chrome.runtime.onMessage.addListener(
+import { FETCH_CONTENT, FETCH_CURRENCY } from './actions/types';
 
+chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
-        if (request.contentScriptQuery == "fetchContent") {
-        
-            let url = '';
+        if (request.contentScriptQuery == FETCH_CONTENT) {
+            let url = "";
             switch(request.itemId) {
                 case "bbc":
                     url = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
@@ -30,7 +30,8 @@ chrome.runtime.onMessage.addListener(
                     url = "https://api.tfl.gov.uk/StopPoint/490008296G/arrivals";
                 break;
                 default:
-                    url = ""
+                    url = "";
+                break;
             }
 
             let xmlHttp = new XMLHttpRequest();
@@ -42,9 +43,8 @@ chrome.runtime.onMessage.addListener(
                     else {
                         sendResponse(xmlHttp.responseText);
                     }
-                
                 }
-            }
+            };
             xmlHttp.open("GET", url, true); // make the request async
             xmlHttp.send(null);
 
@@ -56,7 +56,7 @@ chrome.runtime.onMessage.addListener(
                 if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
                     sendResponse(JSON.parse(xmlHttp.response));
                 }
-            }
+            };
             xmlHttp.open("GET", "https://currencydatafeed.com/api/data.php?token=k4210va9efvcx39ck4pd&currency=GBP/EUR", true); // make the request async
             xmlHttp.send(null);
 
