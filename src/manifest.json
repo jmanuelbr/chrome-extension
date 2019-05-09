@@ -1,25 +1,16 @@
 {
-  "name": "JoseB Chrome Extension",
-  "version": "2.1.0",
+  "name": "Jose Chrome Extension",
+  "description": "¯\\_(ツ)_/¯",
+  "version": "2.2.0",
   "manifest_version": 3,
   "icons": { "128": "assets/icon.png" },
-  "permissions": [
-    "https://www.theguardian.com/*", 
-    "https://rss.sciencedaily.com/top.xml", 
-    "https://feeds.bbci.co.uk/news/rss.xml?edition=uk*", 
-    "https://slashdot.org/slashdot.xml", 
-    "https://www.reddit.com/r/PS4Deals/new/.xml*",
-    "https://api.darksky.net/forecast/*",
-    "https://lichess.org/*"],
   "web_accessible_resources": [
     "assets/*",
     "js/*",
-    "*.ttf",
     "https://lichess.org/*"],  
   "browser_action": {
     "default_title": "Jose Extension",
-    "default_icon": "assets/icon.png",
-    "default_popup": "popup.html"
+    "default_icon": "assets/icon.png"
   },
     "background": {
     "scripts": ["js/background.js"],
@@ -33,5 +24,4 @@
     }
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
-
 }
