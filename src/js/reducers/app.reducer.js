@@ -3,7 +3,7 @@ import {
 } from '../actions/types';
 
 const INITIAL_STATE = {
-	mocksEnabled: true,
+	mocksEnabled: false,
 };
 
 export default (state = INITIAL_STATE, action) => {

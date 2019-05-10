@@ -24,6 +24,7 @@
         .radio {
             display: inline-block;
             .inner-radio {
+                cursor: pointer;
                 display: inline-block;
                 margin: 5px;
                 padding: 0 9px 0 5px;
@@ -32,6 +33,7 @@
                     display: inline-block;
                     font-size: 1.3em;
                     line-height: 43px;
+                    user-select: none; 
                 }
                 img {
                     width: 24px;
