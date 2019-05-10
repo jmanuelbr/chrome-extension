@@ -68,6 +68,8 @@
     "redux": "4.0.1",
     "redux-thunk": "2.3.0",
     "react-dom": "16.8.6",
-    "xml-js": "^1.6.8"
+    "xml-js": "^1.6.8",
+    "react-chartist": "0.13.3",
+    "chartist": "0.11.0"
   }
 }

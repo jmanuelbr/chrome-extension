@@ -3,41 +3,38 @@
 .today-hours-panel {
     border: solid 1px lightgrey;
     border-radius: 4px;
-    height: 109px;
-    width: 569px;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    height: 253px;
+    background-color: white;
+    width: 740px;
     position: absolute;
     top: 38px;
-    left: 270px;
+    left: 271px;
     display: none;
-    canvas {
-        border-left: 1px solid lightgray;
-        border-bottom: 1px solid lightgray;
-        position: relative;
-        left: 20px;
-        height: 90px;
-        width: 1078px;
-        background-color: blanchedalmond;
-    }
-    .hours {
-        position: relative;
-        left: 20px;
-        width: 1078px;
-        .hour {
-            text-align: center;
-            margin-right: 3px;
-            float: left;
-            width: 19px;
+    .select-option {
+        .radio {
+            display: inline;
         }
     }
-    .temperature-meter {
-        position: relative;
-        top: -103px;
-        left: 2px;
-        .temperature {
-            padding: 3px 0;
-            width: 16px;
+    .temperatures {
+        overflow-x: scroll;
+        overflow-y: hidden;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        .ct-chart {
+            width: 1269px;
+            height: 200px;
+            svg {
+                position: relative;
+                top: 1px;
+            }
+            .ct-series-a .ct-line,
+            .ct-series-a .ct-point {
+                stroke: blue;
+            }
+            .ct-series-a .ct-area {
+                fill: blue;
+            }
         }
     }
 }
@@ -50,6 +47,7 @@
     width: 400px;
     height: 57px;
     border-radius: 4px;
+    background-color: white;
     .next-days-panel {
         .day {
             width: 50px;
