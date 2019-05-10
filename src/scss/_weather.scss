@@ -9,20 +9,58 @@
     position: absolute;
     top: 38px;
     left: 271px;
-    display: none;
+    display: block;
+    .rain {
+        position: relative;
+        background: lightcyan;
+        top: -214px;
+    }
+    .wind {
+        position: relative;
+        top: -250px;
+        background: coral;
+    }
     .select-option {
         .radio {
-            display: inline;
+            display: inline-block;
+            .inner-radio {
+                display: inline-block;
+                margin: 5px;
+                padding: 0 9px 0 5px;
+                border: solid 1px transparent;
+                .text {
+                    display: inline-block;
+                    font-size: 1.3em;
+                    line-height: 43px;
+                }
+                img {
+                    width: 24px;
+                    position: relative;
+                    top: 6px;
+                    margin-right: 5px;
+                }
+            }
+            
+            
+            input[type="radio"] {
+                display: none;
+                &:checked+div {
+                    background: #F4F4F4;
+                    border: solid 1px lightgrey;
+                    border-radius: 4px;
+                }
+            }
         }
     }
-    .temperatures {
+    .temperature {
         overflow-x: scroll;
         overflow-y: hidden;
+        display: block;
         &::-webkit-scrollbar {
             display: none;
         }
         .ct-chart {
-            width: 1269px;
+            width: 1569px;
             height: 200px;
             svg {
                 position: relative;
@@ -47,7 +85,7 @@
     width: 400px;
     height: 57px;
     border-radius: 4px;
-    background-color: white;
+    background-color: white;    
     .next-days-panel {
         .day {
             width: 50px;

@@ -14,6 +14,7 @@ export default class WeatherToday extends Component {
 
     }
 
+
     onDrawHandler(data) {
         if (data.type === 'point') {
             let fillColour = 'black';
@@ -53,6 +54,9 @@ export default class WeatherToday extends Component {
       };
 
     render() {
+        const hidden = {'visibility': 'hidden'};
+        const visible = {'visibility': 'visible'};
+
         Array.prototype.updateNullDays = function(hoursAdded) {
             for (var i = 0; i < hoursAdded-1; i++) {
                 this[i] = null;
@@ -107,7 +111,6 @@ export default class WeatherToday extends Component {
           };
        
           var type = 'Line';
-       
           return (
             <div className="today-hours-panel">
                 <div className="select-option">
@@ -116,7 +119,12 @@ export default class WeatherToday extends Component {
                             <input type="radio" value="temperature" 
                                 checked={this.state.selectedOption === 'temperature'} 
                                 onChange={this.handleOptionChange} />
-                            Temperature
+                            <div className="inner-radio">
+                                <img src={chrome.runtime.getURL('../assets/temperature-button.png')}/>
+                                <div className="text">
+                                    Temperature
+                                </div>
+                            </div>
                         </label>
                     </div>
                     <div className="radio">
@@ -124,7 +132,13 @@ export default class WeatherToday extends Component {
                             <input type="radio" value="rain" 
                                 checked={this.state.selectedOption === 'rain'} 
                                 onChange={this.handleOptionChange} />
-                            Rain
+                                
+                            <div className="inner-radio">
+                                <img src={chrome.runtime.getURL('../assets/rain-button.png')}/>
+                                <div className="text">
+                                    Rain
+                                </div>
+                            </div>
                         </label>
                     </div>
                     <div className="radio">
@@ -132,11 +146,16 @@ export default class WeatherToday extends Component {
                             <input type="radio" value="wind" 
                                 checked={this.state.selectedOption === 'wind'} 
                                 onChange={this.handleOptionChange} />
-                            Wind
+                            <div className="inner-radio">
+                                <img src={chrome.runtime.getURL('../assets/wind-button.png')}/>
+                                <div className="text">
+                                    Wind
+                                </div>
+                            </div>
                         </label>
                     </div>
                 </div>
-                <div className="temperatures">
+                <div className="temperature" style={this.state.selectedOption === "temperature"? visible: hidden}>
                     <ChartistGraph 
                         data={data} 
                         options={options} 
@@ -144,6 +163,12 @@ export default class WeatherToday extends Component {
                         listener={{
                             draw: e => this.onDrawHandler(e)
                         }}/>
+                </div>
+                <div className="rain" style={this.state.selectedOption === "rain"? visible: hidden}>
+                    <h2>Rains</h2>
+                </div>
+                <div className="wind" style={this.state.selectedOption === "wind"? visible: hidden}>
+                    <h2>Winds</h2>
                 </div>
             </div>
           )
