@@ -19,42 +19,21 @@ export default class WeatherToday extends Component {
           (data.value.x + ', ' + data.value.y) :
           data.value.y || data.value.x;
   
-        data.group.elem('text', {
+        var element = data.group.elem('text', {
           x: position.x,
           y: position.y -10, // Y offset
           style: 'text-anchor: middle'
         }, 'ct-label').text(Math.round(value) + "°");
+        element.animate({
+            opacity: {
+                begin: 200,
+                dur: 500,
+                from: 0,
+                to: 1,
+                easing: 'easeOutQuart'
+            }
+        });
       }
-
-    drawSmallDot(data) {
-        let fillColour = 'black';
-        switch (data.seriesIndex) { 
-            case 0: {
-                fillColour = 'blue';
-                break;
-            }
-            case 1: {
-                fillColour = '#F05A50';
-                break;
-            }
-            case 2: {
-                fillColour = '#F4C63E';
-                break;
-            }
-            default: {
-                // Do nothing
-                break;
-            }
-        }
-        var point = new Chartist.Svg('circle', {
-            cx: data.x,
-            cy: data.y,
-            r:  4,
-            fill: fillColour
-        }, 'ct-slice');
-
-        data.element.replace(point);
-    }
 
     labelPositionCalculation = {
         point: function(data) {
@@ -74,10 +53,34 @@ export default class WeatherToday extends Component {
       };
 
     onDrawHandler(data) {
-        if (data.type === 'point') {
+        if(data.type === 'point') {
+            var circle = new Chartist.Svg('circle', {
+              cx: [data.x], cy:[data.y],
+            }, 'ct-circle');
             var positonCalculator = this.labelPositionCalculation[data.type];
             this.addLabel(positonCalculator(data), data);
-            this.drawSmallDot(data);
+
+            circle.animate({
+                opacity: {
+                    begin: 200,
+                    dur: 500,
+                    from: 0,
+                    to: 1,
+                    easing: 'easeOutQuart'
+                }
+            });
+            data.element.replace(circle);
+        }
+        if(data.type === 'line' || data.type === 'area') {
+            data.element.animate({
+              d: {
+                begin: data.index,
+                dur: 600,
+                from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
+                to: data.path.clone().stringify(),
+                easing: Chartist.Svg.Easing.easeOutQuint
+              }
+            });
         }
     }
 

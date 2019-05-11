@@ -77,12 +77,20 @@
                 position: relative;
                 top: 1px;
             }
-            .ct-series-a .ct-line,
-            .ct-series-a .ct-point {
-                stroke: blue;
+            .ct-series.ct-series-a {
+                .ct-area { fill: blue; }
+                .ct-line { stroke: blue; stroke-width: 3px; }
+                .ct-circle{fill:blue;stroke-width:2;stroke:white;r:5}
             }
-            .ct-series-a .ct-area {
-                fill: blue;
+            .ct-series.ct-series-b {
+                .ct-area { fill: #f05b4f; }
+                .ct-line { stroke: #f05b4f; stroke-width: 3px; }
+                .ct-circle{fill:#f05b4f;stroke-width:2;stroke:white;r:5}
+            }
+            .ct-series.ct-series-c {
+                .ct-area { fill: #FBBC03; }
+                .ct-line { stroke: #FBBC03; stroke-width: 3px; }
+                .ct-circle{fill:#FBBC03;stroke-width:2;stroke:white;r:5}
             }
         }
     }
