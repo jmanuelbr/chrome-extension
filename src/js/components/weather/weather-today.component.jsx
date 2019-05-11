@@ -11,46 +11,6 @@ export default class WeatherToday extends Component {
             isComponentVisible: this.props.visibility
         };
         this.handleOptionChange = this.handleOptionChange.bind(this);
-
-        this.defaultOptions = {
-            labelClass: 'ct-label',
-            labelOffset: {
-              x: 0,
-              y: -10
-            },
-            textAnchor: 'middle',
-            align: 'center',
-            labelInterpolationFnc: Chartist.noop
-          };
-
-          this.labelPositionCalculation = {
-            point: function(data) {
-              return {
-                x: data.x,
-                y: data.y
-              };
-            },
-            bar: {
-              left: function(data) {
-                return {
-                  x: data.x1,
-                  y: data.y1
-                };
-              },
-              center: function(data) {
-                return {
-                  x: data.x1 + (data.x2 - data.x1) / 2,
-                  y: data.y1
-                };
-              },
-              right: function(data) {
-                return {
-                  x: data.x2,
-                  y: data.y1
-                };
-              }
-            }
-          };
     }
 
     addLabel(position, data) {
@@ -60,47 +20,64 @@ export default class WeatherToday extends Component {
           data.value.y || data.value.x;
   
         data.group.elem('text', {
-          x: position.x + this.defaultOptions.labelOffset.x,
-          y: position.y + this.defaultOptions.labelOffset.y,
-          style: 'text-anchor: ' + this.defaultOptions.textAnchor
-        }, this.defaultOptions.labelClass).text(Math.round(value));
+          x: position.x,
+          y: position.y -10, // Y offset
+          style: 'text-anchor: middle'
+        }, 'ct-label').text(Math.round(value) + "°");
       }
+
+    drawSmallDot(data) {
+        let fillColour = 'black';
+        switch (data.seriesIndex) { 
+            case 0: {
+                fillColour = 'blue';
+                break;
+            }
+            case 1: {
+                fillColour = '#F05A50';
+                break;
+            }
+            case 2: {
+                fillColour = '#F4C63E';
+                break;
+            }
+            default: {
+                // Do nothing
+                break;
+            }
+        }
+        var point = new Chartist.Svg('circle', {
+            cx: data.x,
+            cy: data.y,
+            r:  4,
+            fill: fillColour
+        }, 'ct-slice');
+
+        data.element.replace(point);
+    }
+
+    labelPositionCalculation = {
+        point: function(data) {
+          return {
+            x: data.x,
+            y: data.y
+          };
+        },
+        bar: {
+          center: function(data) {
+            return {
+              x: data.x1 + (data.x2 - data.x1) / 2,
+              y: data.y1
+            };
+          }
+        }
+      };
 
     onDrawHandler(data) {
         if (data.type === 'point') {
-
-            var positonCalculator = this.labelPositionCalculation[data.type] && this.labelPositionCalculation[data.type][this.defaultOptions.align] || this.labelPositionCalculation[data.type];
-            if (positonCalculator) {
-                this.addLabel(positonCalculator(data), data);
-            }
-
-            // let fillColour = 'black';
-            // switch (data.seriesIndex) { 
-            //     case 0: {
-            //         fillColour = 'blue';
-            //         break;
-            //     }
-            //     case 1: {
-            //         fillColour = '#F05A50';
-            //         break;
-            //     }
-            //     case 2: {
-            //         fillColour = '#F4C63E';
-            //         break;
-            //     }
-            //     default: {
-            //         // Do nothing
-            //         break;
-            //     }
-            // }
-            // var point = new Chartist.Svg('circle', {
-            //   cx: data.x,
-            //   cy: data.y,
-            //   r:  4,
-            //   fill: fillColour
-            // }, 'ct-slice');
-        
-            // data.element.replace(point);
+            var positonCalculator = this.labelPositionCalculation[data.type];
+            this.addLabel(positonCalculator(data), data);
+            this.drawSmallDot(data);
         }
     }
 
@@ -141,7 +118,6 @@ export default class WeatherToday extends Component {
             }
         });
  
-        // asdf
         var data = {
             labels: hoursList,
             series: seriesList
@@ -166,7 +142,6 @@ export default class WeatherToday extends Component {
           };
        
           var type = 'Line';
-
 
           return (
             <div className={'today-hours-panel ' + this.visibilityClass} id="today-hours-id">
