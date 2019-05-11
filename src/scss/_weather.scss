@@ -1,5 +1,12 @@
 @import 'variables';
 
+.widgetHidden {
+    display: none;
+}
+.widgetVisible {
+    display: block;
+}
+
 .today-hours-panel {
     border: solid 1px lightgrey;
     border-radius: 4px;
@@ -14,11 +21,13 @@
         position: relative;
         background: lightcyan;
         top: -214px;
+        height: 197px;
     }
     .wind {
         position: relative;
-        top: -250px;
+        top: -424px;
         background: coral;
+        height: 197px;
     }
     .select-option {
         .radio {
@@ -173,6 +182,20 @@
     margin-top: 3px;
     .weather-icon {
         float: left;
+        margin-right: 5px;
+    }
+    .today-summary {
+        cursor: pointer;
+        display: inline-block;
+        border: 1px solid transparent;
+        padding-bottom: 5px;
+        position: relative;
+        top: -1px;
+        max-height: 52px;
+        &:hover {
+            border: 1px solid lightgray;
+            background-color: rgb(244,244,244);
+        }
     }
     .daysWeekButton {
         outline: none;
@@ -182,7 +205,7 @@
         height: 49px;
         position: absolute;
         top: 43px;
-        left: 213px;
+        left: 214px;
         background-color: white;
         cursor: pointer;
         img {
@@ -196,24 +219,29 @@
     }
     .summary {
         float: left;
-        margin-left: 11px;
+        margin: 0 5px;
         width: 70px;
         text-align: center;
         .real {
+            user-select: none;
             position: relative;
-            top: 2px;
             font-size: 3.2em;
+            line-height: 33px;
+            padding-top: 4px;
             .celsius{
+                user-select: none;
                 font-size: 0.5em;
                 position: relative;
-                top: -11px;
-                left: -8px;
+                top: -12px;
+                left: -9px;
             }
         }
         .apparent {
+            user-select: none;
             position: relative;
-            top: 1px;
+            line-height: 10px;
             .celsius {
+                user-select: none;
                 font-size: 0.7em;
                 position: relative;
                 top: -2px;
@@ -259,16 +287,21 @@
     }
 
     .wind-current {
+        user-select: none;
         float: left;
         position: relative;
         top: 2px;
-        width: 64px;
+        width: 55px;
         text-align: center;
+        margin-left: 5px;
         .label {
+            user-select: none;
             position: relative;
-            top: 5px;
+            line-height: 10px;
+            top: 7px;
         }
         img {
+            user-select: none;
             width: 32px;
             position: relative;
             top: 3px;

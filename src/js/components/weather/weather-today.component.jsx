@@ -5,45 +5,102 @@ import Chartist from 'chartist';
 export default class WeatherToday extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            selectedOption: 'temperature'
+            selectedOption: 'temperature',
+            isComponentVisible: this.props.visibility
         };
         this.handleOptionChange = this.handleOptionChange.bind(this);
-    }
-    componentDidMount() {
 
+        this.defaultOptions = {
+            labelClass: 'ct-label',
+            labelOffset: {
+              x: 0,
+              y: -10
+            },
+            textAnchor: 'middle',
+            align: 'center',
+            labelInterpolationFnc: Chartist.noop
+          };
+
+          this.labelPositionCalculation = {
+            point: function(data) {
+              return {
+                x: data.x,
+                y: data.y
+              };
+            },
+            bar: {
+              left: function(data) {
+                return {
+                  x: data.x1,
+                  y: data.y1
+                };
+              },
+              center: function(data) {
+                return {
+                  x: data.x1 + (data.x2 - data.x1) / 2,
+                  y: data.y1
+                };
+              },
+              right: function(data) {
+                return {
+                  x: data.x2,
+                  y: data.y1
+                };
+              }
+            }
+          };
     }
 
+    addLabel(position, data) {
+        // if x and y exist concat them otherwise output only the existing value
+        var value = data.value.x !== undefined && data.value.y ?
+          (data.value.x + ', ' + data.value.y) :
+          data.value.y || data.value.x;
+  
+        data.group.elem('text', {
+          x: position.x + this.defaultOptions.labelOffset.x,
+          y: position.y + this.defaultOptions.labelOffset.y,
+          style: 'text-anchor: ' + this.defaultOptions.textAnchor
+        }, this.defaultOptions.labelClass).text(Math.round(value));
+      }
 
     onDrawHandler(data) {
         if (data.type === 'point') {
-            let fillColour = 'black';
-            switch (data.seriesIndex) {
-                case 0: {
-                    fillColour = 'blue';
-                    break;
-                }
-                case 1: {
-                    fillColour = '#F05A50';
-                    break;
-                }
-                case 2: {
-                    fillColour = '#F4C63E';
-                    break;
-                }
-                default: {
-                    // Do nothing
-                    break;
-                }
+
+            var positonCalculator = this.labelPositionCalculation[data.type] && this.labelPositionCalculation[data.type][this.defaultOptions.align] || this.labelPositionCalculation[data.type];
+            if (positonCalculator) {
+                this.addLabel(positonCalculator(data), data);
             }
-            var point = new Chartist.Svg('circle', {
-              cx: data.x,
-              cy: data.y,
-              r:  4,
-              fill: fillColour
-            }, 'ct-slice');
+
+            // let fillColour = 'black';
+            // switch (data.seriesIndex) { 
+            //     case 0: {
+            //         fillColour = 'blue';
+            //         break;
+            //     }
+            //     case 1: {
+            //         fillColour = '#F05A50';
+            //         break;
+            //     }
+            //     case 2: {
+            //         fillColour = '#F4C63E';
+            //         break;
+            //     }
+            //     default: {
+            //         // Do nothing
+            //         break;
+            //     }
+            // }
+            // var point = new Chartist.Svg('circle', {
+            //   cx: data.x,
+            //   cy: data.y,
+            //   r:  4,
+            //   fill: fillColour
+            // }, 'ct-slice');
         
-            data.element.replace(point);
+            // data.element.replace(point);
         }
     }
 
@@ -54,9 +111,6 @@ export default class WeatherToday extends Component {
       };
 
     render() {
-        const hidden = {'visibility': 'hidden'};
-        const visible = {'visibility': 'visible'};
-
         Array.prototype.updateNullDays = function(hoursAdded) {
             for (var i = 0; i < hoursAdded-1; i++) {
                 this[i] = null;
@@ -87,6 +141,7 @@ export default class WeatherToday extends Component {
             }
         });
  
+        // asdf
         var data = {
             labels: hoursList,
             series: seriesList
@@ -111,8 +166,10 @@ export default class WeatherToday extends Component {
           };
        
           var type = 'Line';
+
+
           return (
-            <div className="today-hours-panel">
+            <div className={'today-hours-panel ' + this.visibilityClass} id="today-hours-id">
                 <div className="select-option">
                     <div className="radio">
                         <label>
@@ -155,7 +212,7 @@ export default class WeatherToday extends Component {
                         </label>
                     </div>
                 </div>
-                <div className="temperature" style={this.state.selectedOption === "temperature"? visible: hidden}>
+                <div className="temperature" style={{'visibility': (this.props.visibility && this.state.selectedOption === "temperature")? 'visible': 'hidden'}}>
                     <ChartistGraph 
                         data={data} 
                         options={options} 
@@ -164,10 +221,10 @@ export default class WeatherToday extends Component {
                             draw: e => this.onDrawHandler(e)
                         }}/>
                 </div>
-                <div className="rain" style={this.state.selectedOption === "rain"? visible: hidden}>
+                <div className="rain" style={{'visibility': (this.props.visibility && this.state.selectedOption === "rain")? 'visible': 'hidden'}}>
                     <h2>Rains</h2>
                 </div>
-                <div className="wind" style={this.state.selectedOption === "wind"? visible: hidden}>
+                <div className="wind" style={{'visibility': (this.props.visibility && this.state.selectedOption === "wind")? 'visible': 'hidden'}}>
                     <h2>Winds</h2>
                 </div>
             </div>
