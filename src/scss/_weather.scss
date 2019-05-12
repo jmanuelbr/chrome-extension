@@ -17,12 +17,6 @@
     top: 38px;
     left: 271px;
     display: block;
-    .rain {
-        position: relative;
-        background: lightcyan;
-        top: -214px;
-        height: 197px;
-    }
     .wind {
         position: relative;
         top: -424px;
@@ -91,6 +85,44 @@
                 .ct-area { fill: #FBBC03; }
                 .ct-line { stroke: #FBBC03; stroke-width: 3px; }
                 .ct-circle{fill:#FBBC03;stroke-width:2;stroke:white;r:5}
+            }
+        }
+    }
+    .rain {
+        position: relative;
+        height: 197px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        display: block;
+        top: -200px;
+        background-color: white;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        .ct-chart {
+            width: 2000px;
+            height: 200px;
+            svg {
+                position: relative;
+                top: 1px;
+            }
+            .ct-series.ct-series-a {
+                .ct-area { fill: blue; }
+                .ct-line { stroke: blue; stroke-width: 3px; }
+                .ct-bar { stroke: blue; stroke-width: 20px; }
+
+            }
+            .ct-series.ct-series-b {
+                .ct-area { fill: #f05b4f; }
+                .ct-line { stroke: #f05b4f; stroke-width: 3px; }
+                .ct-bar { stroke: #f05b4f; stroke-width: 20px; }
+
+            }
+            .ct-series.ct-series-c {
+                .ct-area { fill: #FBBC03; }
+                .ct-line { stroke: #FBBC03; stroke-width: 3px; }
+                .ct-bar { stroke: #FBBC03; stroke-width: 20px; }
+
             }
         }
     }

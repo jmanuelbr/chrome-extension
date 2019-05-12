@@ -13,17 +13,31 @@ export default class WeatherToday extends Component {
         this.handleOptionChange = this.handleOptionChange.bind(this);
     }
 
-    addLabel(position, data) {
+    addLabel(position, data, type) {
+        var symbol = '';
+        var offset = 0;
+        if (type === "temperature") {
+            symbol = '°';
+            offset = 10;
+        }
+        else if (type === "rain") {
+            symbol = '%';
+            offset = 5;
+        }
+
         // if x and y exist concat them otherwise output only the existing value
         var value = data.value.x !== undefined && data.value.y ?
           (data.value.x + ', ' + data.value.y) :
           data.value.y || data.value.x;
   
+        if (type === "rain" && value === undefined) {
+            value = 0;
+        }  
         var element = data.group.elem('text', {
           x: position.x,
-          y: position.y -10, // Y offset
+          y: position.y - offset, // Y offset
           style: 'text-anchor: middle'
-        }, 'ct-label').text(Math.round(value) + "°");
+        }, 'ct-label').text(Math.round(value) + symbol);
         element.animate({
             opacity: {
                 begin: 200,
@@ -58,7 +72,7 @@ export default class WeatherToday extends Component {
               cx: [data.x], cy:[data.y],
             }, 'ct-circle');
             var positonCalculator = this.labelPositionCalculation[data.type];
-            this.addLabel(positonCalculator(data), data);
+            this.addLabel(positonCalculator(data), data, 'temperature');
 
             circle.animate({
                 opacity: {
@@ -82,44 +96,90 @@ export default class WeatherToday extends Component {
               }
             });
         }
+        if(data.type == 'bar') {
+            var positonCalculator = function(data) {
+                return {
+                  x: data.x1 + (data.x2 - data.x1) / 2,
+                  y: data.y2
+                };
+              }
+            
+            data.element.animate({
+                y2: {
+                    dur: 260,
+                    from: data.y1,
+                    to: data.y2
+                }
+            });
+            this.addLabel(positonCalculator(data), data, 'rain');
+        }
     }
 
     handleOptionChange(changeEvent) {
         this.setState({
-          selectedOption: changeEvent.target.value
+            selectedOption: changeEvent.target.value
         });
-      };
+    };
+    pushNullsToSerie(array, numNulls) {
+        for (var i = 0; i < numNulls; i++) {
+            array.push(null);
+        }
+    }
 
     render() {
         Array.prototype.updateNullDays = function(hoursAdded) {
             for (var i = 0; i < hoursAdded-1; i++) {
                 this[i] = null;
             }
-          };
+        };
+
+        Array.prototype.updateNullDaysRain = function(hoursAdded) {
+            for (var i = 0; i < hoursAdded; i++) {
+                this[i] = null;
+            }
+        };
 
         let hoursList = []; // X axe labels
-        let temperatureList = []; // Y axe labels
+        let temperatureList = []; // Y axe labels temperature
+        let rainList = [];
         let allTemperatureList = []; // Useful to calculate max and min temperature for Y axe
         const todayArray = this.props.todayData.data;
         let seriesList =[]; // Array of arrays for all given days
+        let seriesListRain = [];
         let numHoursAdded = 0;
         let nullDays = [];
+        let nullDaysRain = [];
         const todayArrayLength = todayArray.length -1 ;
         todayArray.map((hourData, key) => {
             const hour = new Date(hourData.time*1000).getHours();
+            const rain = Math.round(hourData.precipProbability*100);
             temperatureList.push(hourData.temperature);
+            rainList.push(rain);
             hoursList.push(hour + "h");
             allTemperatureList.push(hourData.temperature);
             numHoursAdded++;
             if (hour == 0 || key == todayArrayLength) {
                 // break each day into 1 section to depict them in different colors
                 seriesList.push(nullDays.concat(temperatureList));
+                var rainListPreNulls = nullDaysRain.concat(rainList);
+                this.pushNullsToSerie(rainListPreNulls, todayArray.length - numHoursAdded);
+                seriesListRain.push(rainListPreNulls);
+                rainListPreNulls = [];
+                
                 nullDays.updateNullDays(numHoursAdded);
+                nullDaysRain.updateNullDaysRain(numHoursAdded);
                 const lastElement = temperatureList[temperatureList.length - 1];
                 temperatureList = [];
+                rainList = [];
                 temperatureList.push(lastElement);
             }
         });
+
+
+        var rainData = {
+            labels: hoursList,
+            series: seriesListRain
+        }
  
         var data = {
             labels: hoursList,
@@ -129,22 +189,27 @@ export default class WeatherToday extends Component {
           const maxTemperature = Math.round(Math.max(...allTemperatureList)) + 1;
           const minTemperature = Math.round(Math.min(...allTemperatureList));
 
+
           var options = {
             high: maxTemperature,
             low: (minTemperature < 0 ? minTemperature : 0),
-            axisX: {
-              labelInterpolationFnc: function(value, index) {
-                return index % 2 === 0 ? value : null;
-              }
-            },
             showArea: true,
             showPoint: true,
             chartPadding: {
                 left: -10
               }
           };
-       
-          var type = 'Line';
+
+          var rainOptions = {
+            high: 100,
+            low: 0,
+            chartPadding: {
+                left: -10
+              },
+            stackBars: true
+          };
+
+          
 
           return (
             <div className={'today-hours-panel ' + this.visibilityClass} id="today-hours-id">
@@ -194,13 +259,19 @@ export default class WeatherToday extends Component {
                     <ChartistGraph 
                         data={data} 
                         options={options} 
-                        type={type} 
+                        type={'Line'} 
                         listener={{
                             draw: e => this.onDrawHandler(e)
                         }}/>
                 </div>
                 <div className="rain" style={{'visibility': (this.props.visibility && this.state.selectedOption === "rain")? 'visible': 'hidden'}}>
-                    <h2>Rains</h2>
+                    <ChartistGraph 
+                        data={rainData} 
+                        options={rainOptions} 
+                        type={'Bar'} 
+                        listener={{
+                            draw: e => this.onDrawHandler(e)
+                        }}/>
                 </div>
                 <div className="wind" style={{'visibility': (this.props.visibility && this.state.selectedOption === "wind")? 'visible': 'hidden'}}>
                     <h2>Winds</h2>
