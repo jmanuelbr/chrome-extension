@@ -55,65 +55,68 @@ export default class WeatherToday extends Component {
 
     labelPositionCalculation = {
         point: function(data) {
-            return {
-                x: data.x,
-                y: data.y
-            };
+          return {
+            x: data.x,
+            y: data.y
+          };
         },
         bar: {
-            center: function(data) {
-                return {
-                    x: data.x1 + (data.x2 - data.x1) / 2,
-                    y: data.y1
-                };
+          center: function(data) {
+            return {
+              x: data.x1 + (data.x2 - data.x1) / 2,
+              y: data.y1
+            };
+          }
+        }
+      };
+
+        onDrawHandlerWind(data) {
+            if (data.type === 'point') {
+                
+                var positonCalculator = this.labelPositionCalculation[data.type];
+                var meta = Chartist.deserialize(data.meta);
+                
+
+                let imgSize = '';
+                const value = data.series[data.index].value;
+                if (value <= 6) {
+                    imgSize = 15;
+                }
+                else if (value > 6 && value <= 10) {
+                    imgSize = 20;
+                }
+                else if (value > 10 && value <= 15) {
+                    imgSize = 25;
+                }
+                else if (value > 15) {
+                    imgSize = 32;
+                }
+                const transOriginX = data.x - imgSize/2;
+                const transOriginY = data.y - imgSize/2;
+                const transformStr = transOriginX + 'px ' + transOriginY + 'px';
+                const rotateStr = "rotate(" + meta.windBearing + "," + imgSize/2 + "," + imgSize/2 + ")";
+                var imageElement = new Chartist.Svg('image', {
+                    height: imgSize,
+                    width: imgSize,
+                    x: data.x - (imgSize / 2),
+                    y: data.y - (imgSize / 2),
+                    'xlink:href': meta.imageUrl,
+                    ['transform-origin']: transformStr,
+                    transform: rotateStr
+                });
+                imageElement.animate({
+                    opacity: {
+                        begin: meta.delayIncrement,
+                        dur: 500,
+                        from: 0,
+                        to: 1,
+                        easing: 'easeOutQuart'
+                    }
+                });
+                this.addLabel(positonCalculator(data), data, 'wind', meta.delayIncrement,imgSize);
+                data.element.replace(imageElement);
             }
         }
-    };
-
-    onDrawHandlerWind(data) {
-        var positonCalculator = this.labelPositionCalculation[data.type];
-        var meta = Chartist.deserialize(data.meta);
-        
-
-        let imgSize = '';
-        const value = data.series[data.index].value;
-        if (value <= 6) {
-            imgSize = 15;
-        }
-        else if (value > 6 && value <= 10) {
-            imgSize = 20;
-        }
-        else if (value > 10 && value <= 15) {
-            imgSize = 25;
-        }
-        else if (value > 15) {
-            imgSize = 32;
-        }
-        const transOriginX = data.x - imgSize/2;
-        const transOriginY = data.y - imgSize/2;
-        const transformStr = transOriginX + 'px ' + transOriginY + 'px';
-        const rotateStr = "rotate(" + meta.windBearing + "," + imgSize/2 + "," + imgSize/2 + ")";
-        var imageElement = new Chartist.Svg('image', {
-            height: imgSize,
-            width: imgSize,
-            x: data.x - (imgSize / 2),
-            y: data.y - (imgSize / 2),
-            'xlink:href': meta.imageUrl,
-            ['transform-origin']: transformStr,
-            transform: rotateStr
-        });
-        imageElement.animate({
-            opacity: {
-                begin: meta.delayIncrement,
-                dur: 500,
-                from: 0,
-                to: 1,
-                easing: 'easeOutQuart'
-            }
-        });
-        this.addLabel(positonCalculator(data), data, 'wind', meta.delayIncrement,imgSize);
-        data.element.replace(imageElement);
-    }
 
       onDrawHandler(data) {
         if(data.type === 'point') {
@@ -209,7 +212,7 @@ export default class WeatherToday extends Component {
         let nullDaysRain = [];
         let nullDaysWind = [];
         const todayArrayLength = todayArray.length -1 ;
-        let delayIncrement = 200;
+        let delayIncrement = 50;
         let series = 0;
         todayArray.map((hourData, key) => {
             const hour = new Date(hourData.time*1000).getHours();
