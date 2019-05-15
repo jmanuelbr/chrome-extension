@@ -17,12 +17,6 @@
     top: 38px;
     left: 271px;
     display: block;
-    .wind {
-        position: relative;
-        top: -424px;
-        background: coral;
-        height: 197px;
-    }
     .select-option {
         .radio {
             display: inline-block;
@@ -123,6 +117,24 @@
                 .ct-line { stroke: #FBBC03; stroke-width: 3px; }
                 .ct-bar { stroke: #FBBC03; stroke-width: 20px; }
 
+            }
+        }
+    }
+    .wind {
+        position: relative;
+        top: -424px;
+        height: 197px;
+        top: -397px;
+        background-color: white;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        display: block;
+        .ct-chart {
+            width: 2000px;
+            height: 200px;
+            svg {
+                position: relative;
+                top: 1px;
             }
         }
     }
@@ -299,7 +311,7 @@
         background-position: -87px -23px !important;
     }
     .clear-day {
-        background-position: -253px -23px !important;
+        background-position: -251px -23px !important;
     }
     .snow {
         background-position: -333px -23px !important;

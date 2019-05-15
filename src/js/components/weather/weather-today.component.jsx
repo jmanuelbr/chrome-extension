@@ -13,7 +13,7 @@ export default class WeatherToday extends Component {
         this.handleOptionChange = this.handleOptionChange.bind(this);
     }
 
-    addLabel(position, data, type) {
+    addLabel(position, data, type, delayIncrement, imgSize) {
         var symbol = '';
         var offset = 0;
         if (type === "temperature") {
@@ -23,6 +23,10 @@ export default class WeatherToday extends Component {
         else if (type === "rain") {
             symbol = '%';
             offset = 5;
+        }
+        else if (type === "wind") {
+            symbol = 'kmh';
+            offset = 5 + (imgSize/2);
         }
 
         // if x and y exist concat them otherwise output only the existing value
@@ -40,7 +44,7 @@ export default class WeatherToday extends Component {
         }, 'ct-label').text(Math.round(value) + symbol);
         element.animate({
             opacity: {
-                begin: 200,
+                begin: (delayIncrement !== undefined ? delayIncrement : 200),
                 dur: 500,
                 from: 0,
                 to: 1,
@@ -51,22 +55,67 @@ export default class WeatherToday extends Component {
 
     labelPositionCalculation = {
         point: function(data) {
-          return {
-            x: data.x,
-            y: data.y
-          };
+            return {
+                x: data.x,
+                y: data.y
+            };
         },
         bar: {
-          center: function(data) {
-            return {
-              x: data.x1 + (data.x2 - data.x1) / 2,
-              y: data.y1
-            };
-          }
+            center: function(data) {
+                return {
+                    x: data.x1 + (data.x2 - data.x1) / 2,
+                    y: data.y1
+                };
+            }
         }
-      };
+    };
 
-    onDrawHandler(data) {
+    onDrawHandlerWind(data) {
+        var positonCalculator = this.labelPositionCalculation[data.type];
+        var meta = Chartist.deserialize(data.meta);
+        
+
+        let imgSize = '';
+        const value = data.series[data.index].value;
+        if (value <= 6) {
+            imgSize = 15;
+        }
+        else if (value > 6 && value <= 10) {
+            imgSize = 20;
+        }
+        else if (value > 10 && value <= 15) {
+            imgSize = 25;
+        }
+        else if (value > 15) {
+            imgSize = 32;
+        }
+        const transOriginX = data.x - imgSize/2;
+        const transOriginY = data.y - imgSize/2;
+        const transformStr = transOriginX + 'px ' + transOriginY + 'px';
+        const rotateStr = "rotate(" + meta.windBearing + "," + imgSize/2 + "," + imgSize/2 + ")";
+        var imageElement = new Chartist.Svg('image', {
+            height: imgSize,
+            width: imgSize,
+            x: data.x - (imgSize / 2),
+            y: data.y - (imgSize / 2),
+            'xlink:href': meta.imageUrl,
+            ['transform-origin']: transformStr,
+            transform: rotateStr
+        });
+        imageElement.animate({
+            opacity: {
+                begin: meta.delayIncrement,
+                dur: 500,
+                from: 0,
+                to: 1,
+                easing: 'easeOutQuart'
+            }
+        });
+        this.addLabel(positonCalculator(data), data, 'wind', meta.delayIncrement,imgSize);
+        data.element.replace(imageElement);
+    }
+
+      onDrawHandler(data) {
         if(data.type === 'point') {
             var circle = new Chartist.Svg('circle', {
               cx: [data.x], cy:[data.y],
@@ -139,28 +188,52 @@ export default class WeatherToday extends Component {
             }
         };
 
+        Array.prototype.updateNullDaysWind = function(hoursAdded) {
+            for (var i = 0; i < hoursAdded; i++) {
+                this[i] = null;
+            }
+        };
+
         let hoursList = []; // X axe labels
         let temperatureList = []; // Y axe labels temperature
+        let windList = [];
         let rainList = [];
         let allTemperatureList = []; // Useful to calculate max and min temperature for Y axe
+        let allWindList = [];
         const todayArray = this.props.todayData.data;
         let seriesList =[]; // Array of arrays for all given days
         let seriesListRain = [];
+        let seriesListWind = [];
         let numHoursAdded = 0;
         let nullDays = [];
         let nullDaysRain = [];
+        let nullDaysWind = [];
         const todayArrayLength = todayArray.length -1 ;
+        let delayIncrement = 200;
+        let series = 0;
         todayArray.map((hourData, key) => {
             const hour = new Date(hourData.time*1000).getHours();
             const rain = Math.round(hourData.precipProbability*100);
             temperatureList.push(hourData.temperature);
+            windList.push({
+                value: Math.round(hourData.windSpeed),
+                meta: {
+                    imageUrl: chrome.runtime.getURL('../assets/wind-arrow-serie' + series + '.png'),
+                    windBearing: hourData.windBearing,
+                    delayIncrement: delayIncrement
+                  }
+            })
+            delayIncrement += 15;
             rainList.push(rain);
             hoursList.push(hour + "h");
             allTemperatureList.push(hourData.temperature);
+            allWindList.push(hourData.windSpeed);
             numHoursAdded++;
             if (hour == 0 || key == todayArrayLength) {
+                series++;
                 // break each day into 1 section to depict them in different colors
                 seriesList.push(nullDays.concat(temperatureList));
+                seriesListWind.push(nullDaysWind.concat(windList));
                 var rainListPreNulls = nullDaysRain.concat(rainList);
                 this.pushNullsToSerie(rainListPreNulls, todayArray.length - numHoursAdded);
                 seriesListRain.push(rainListPreNulls);
@@ -168,17 +241,24 @@ export default class WeatherToday extends Component {
                 
                 nullDays.updateNullDays(numHoursAdded);
                 nullDaysRain.updateNullDaysRain(numHoursAdded);
+                nullDaysWind.updateNullDaysWind(numHoursAdded);
+
                 const lastElement = temperatureList[temperatureList.length - 1];
                 temperatureList = [];
                 rainList = [];
+                windList = [];
                 temperatureList.push(lastElement);
             }
         });
 
-
         var rainData = {
             labels: hoursList,
             series: seriesListRain
+        }
+
+        var windData = {
+            labels: hoursList,
+            series: seriesListWind
         }
  
         var data = {
@@ -189,6 +269,7 @@ export default class WeatherToday extends Component {
           const maxTemperature = Math.round(Math.max(...allTemperatureList)) + 1;
           const minTemperature = Math.round(Math.min(...allTemperatureList));
 
+          const maxWind = Math.round(Math.max(...allTemperatureList)) + 1;
 
           var options = {
             high: maxTemperature,
@@ -208,6 +289,18 @@ export default class WeatherToday extends Component {
               },
             stackBars: true
           };
+
+          var windOptions = {
+            high: maxWind,
+            low: 0,
+            showPoint: true,
+            showLine: false,
+            chartPadding: {
+                left: -10
+              }
+          };
+
+          
 
           
 
@@ -274,7 +367,14 @@ export default class WeatherToday extends Component {
                         }}/>
                 </div>
                 <div className="wind" style={{'visibility': (this.props.visibility && this.state.selectedOption === "wind")? 'visible': 'hidden'}}>
-                    <h2>Winds</h2>
+                    <ChartistGraph 
+                        data={windData} 
+                        options={windOptions} 
+                        type={'Line'}
+                        listener={{
+                            draw: e => this.onDrawHandlerWind(e)
+                        }}
+                        />
                 </div>
             </div>
           )
