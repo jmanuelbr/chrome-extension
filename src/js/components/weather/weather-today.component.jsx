@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ChartistGraph from 'react-chartist';
 import Chartist from 'chartist';
+import WeatherTemperatureChart from './charts/weather-temperature-chart.componet';
+import WeatherRainChart from './charts/weather-rain-chart.component';
 
 export default class WeatherToday extends Component {
     constructor(props) {
@@ -179,6 +181,7 @@ export default class WeatherToday extends Component {
     }
 
     render() {
+        const todayData = this.props.todayData.data;
         Array.prototype.updateNullDays = function(hoursAdded) {
             for (var i = 0; i < hoursAdded-1; i++) {
                 this[i] = null;
@@ -352,22 +355,28 @@ export default class WeatherToday extends Component {
                     </div>
                 </div>
                 <div className="temperature" style={{'visibility': (this.props.visibility && this.state.selectedOption === "temperature")? 'visible': 'hidden'}}>
-                    <ChartistGraph 
+                    {/* <ChartistGraph 
                         data={data} 
                         options={options} 
                         type={'Line'} 
                         listener={{
                             draw: e => this.onDrawHandler(e)
-                        }}/>
+                        }}/> */}
+                    <WeatherTemperatureChart
+                        data={todayData}
+                    />
                 </div>
                 <div className="rain" style={{'visibility': (this.props.visibility && this.state.selectedOption === "rain")? 'visible': 'hidden'}}>
-                    <ChartistGraph 
+                    <WeatherRainChart
+                        data={todayData}
+                    />
+                    {/* <ChartistGraph 
                         data={rainData} 
                         options={rainOptions} 
                         type={'Bar'} 
                         listener={{
                             draw: e => this.onDrawHandler(e)
-                        }}/>
+                        }}/> */}
                 </div>
                 <div className="wind" style={{'visibility': (this.props.visibility && this.state.selectedOption === "wind")? 'visible': 'hidden'}}>
                     <ChartistGraph 
