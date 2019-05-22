@@ -5,7 +5,6 @@ import ChartistGraph from 'react-chartist';
 export default class WeatherRainChart extends Component {
     constructor (props) {
         super(props);
-
         this.state = {
             data: {
                 labels: [],
@@ -26,15 +25,17 @@ export default class WeatherRainChart extends Component {
         let value = data.value.x !== undefined && data.value.y ?
             (data.value.x + ', ' + data.value.y) :
             data.value.y || data.value.x;
-   
+
         if (value === undefined) {
             value = 0;
         }  
+        
         let element = data.group.elem('text', {
           x: position.x,
           y: position.y - 5, // Y offset
           style: 'text-anchor: middle'
         }, 'ct-label').text(Math.round(value) + '%');
+
         element.animate({
             opacity: {
                 begin: 50,
@@ -53,7 +54,7 @@ export default class WeatherRainChart extends Component {
                     x: data.x1 + (data.x2 - data.x1) / 2,
                     y: data.y2
                 };
-            }
+            };
             data.element.animate({
                 y2: {
                     dur: 260,
@@ -66,8 +67,8 @@ export default class WeatherRainChart extends Component {
     }
 
     componentDidMount() {
-        Array.prototype.updateNullDaysRain = function(hoursAdded) {
-            for (var i = 0; i < hoursAdded; i++) {
+        Array.prototype.updateNullDays = function(hoursAdded) {
+            for (let i = 0; i < hoursAdded; i++) {
                 this[i] = null;
             }
         };
@@ -75,9 +76,9 @@ export default class WeatherRainChart extends Component {
         const todayArray = this.props.data;
         let hoursList = []; // X axe labels
         let rainList = [];
-        let seriesListRain = [];
+        let seriesList = [];
         let numHoursAdded = 0;
-        let nullDaysRain = [];
+        let nullDays = [];
         const todayArrayLength = todayArray.length -1 ;
 
         todayArray.map((hourData, key) => {
@@ -88,11 +89,10 @@ export default class WeatherRainChart extends Component {
             numHoursAdded++;
             if (hour == 0 || key == todayArrayLength) {
                 // break each day into 1 section to depict them in different colors
-                var rainListPreNulls = nullDaysRain.concat(rainList);
+                const rainListPreNulls = nullDays.concat(rainList);
                 this.pushNullsToSerie(rainListPreNulls, todayArray.length - numHoursAdded);
-                seriesListRain.push(rainListPreNulls);
-                rainListPreNulls = [];
-                nullDaysRain.updateNullDaysRain(numHoursAdded);
+                seriesList.push(rainListPreNulls);
+                nullDays.updateNullDays(numHoursAdded);
                 rainList = [];
             }
         });
@@ -104,11 +104,11 @@ export default class WeatherRainChart extends Component {
                 left: -10
               },
             stackBars: true
-          };
+        };
 
         this.setState(state => {
             state.data.labels = hoursList;
-            state.data.series = seriesListRain;
+            state.data.series = seriesList;
             state.options = options;
             return state;
         });
@@ -123,6 +123,6 @@ export default class WeatherRainChart extends Component {
                 listener={{
                 draw: e => this.onDrawHandler(e)
             }}/>
-        )
+        );
     }    
 }

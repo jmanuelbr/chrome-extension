@@ -6,7 +6,6 @@ import Chartist from 'chartist';
 export default class WeatherTemperatureChart extends Component {
     constructor (props) {
         super(props);
-
         this.state = {
             data: {
                 labels: [],
@@ -27,6 +26,7 @@ export default class WeatherTemperatureChart extends Component {
           y: position.y - 10, // Y offset
           style: 'text-anchor: middle'
         }, 'ct-label').text(Math.round(value) + '°');
+        
         element.animate({
             opacity: {
                 begin: 50,
@@ -79,7 +79,7 @@ export default class WeatherTemperatureChart extends Component {
     componentDidMount() {
         const todayArray = this.props.data;
         Array.prototype.updateNullDays = function(hoursAdded) {
-            for (var i = 0; i < hoursAdded - 1; i++) {
+            for (let i = 0; i < hoursAdded - 1; i++) {
                 this[i] = null;
             }
         };
@@ -110,7 +110,7 @@ export default class WeatherTemperatureChart extends Component {
 
         const maxTemperature = Math.round(Math.max(...allTemperatureList)) + 1;
         const minTemperature = Math.round(Math.min(...allTemperatureList));
-        var options = {
+        const options = {
             high: maxTemperature,
             low: (minTemperature < 0 ? minTemperature : 0),
             showArea: true,
@@ -137,6 +137,6 @@ export default class WeatherTemperatureChart extends Component {
             listener={{
                 draw: e => this.onDrawHandler(e)
             }}/>
-       )
+       );
     }    
 }
