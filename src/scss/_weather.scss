@@ -1,364 +1,408 @@
-@import 'variables';
+@import "variables";
 
 .widgetHidden {
-    display: none;
+  display: none;
 }
 .widgetVisible {
-    display: block;
+  display: block;
 }
 
 .today-hours-panel {
-    border: solid 1px lightgrey;
-    border-radius: 4px;
-    height: 253px;
-    background-color: white;
-    width: 740px;
-    position: absolute;
-    top: 38px;
-    left: 271px;
+  border: solid 1px lightgrey;
+  border-radius: 4px;
+  height: 253px;
+  background-color: white;
+  width: 740px;
+  position: absolute;
+  top: 38px;
+  left: 271px;
+  display: block;
+  .select-option {
+    .radio {
+      display: inline-block;
+      .inner-radio {
+        cursor: pointer;
+        display: inline-block;
+        margin: 5px;
+        padding: 0 9px 0 5px;
+        border: solid 1px transparent;
+        .text {
+          display: inline-block;
+          font-size: 1.3em;
+          line-height: 43px;
+          user-select: none;
+        }
+        img {
+          width: 24px;
+          position: relative;
+          top: 6px;
+          margin-right: 5px;
+        }
+      }
+
+      input[type="radio"] {
+        display: none;
+        &:checked + div {
+          background: #f4f4f4;
+          border: solid 1px lightgrey;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+  .temperature {
+    overflow-x: scroll;
+    overflow-y: hidden;
     display: block;
-    .select-option {
-        .radio {
-            display: inline-block;
-            .inner-radio {
-                cursor: pointer;
-                display: inline-block;
-                margin: 5px;
-                padding: 0 9px 0 5px;
-                border: solid 1px transparent;
-                .text {
-                    display: inline-block;
-                    font-size: 1.3em;
-                    line-height: 43px;
-                    user-select: none; 
-                }
-                img {
-                    width: 24px;
-                    position: relative;
-                    top: 6px;
-                    margin-right: 5px;
-                }
-            }
-            
-            
-            input[type="radio"] {
-                display: none;
-                &:checked+div {
-                    background: #F4F4F4;
-                    border: solid 1px lightgrey;
-                    border-radius: 4px;
-                }
-            }
-        }
-    }
-    .temperature {
-        overflow-x: scroll;
-        overflow-y: hidden;
-        display: block;
-        &::-webkit-scrollbar {
-            display: none;
-        }
-        .ct-chart {
-            width: 2000px;
-            height: 200px;
-            svg {
-                position: relative;
-                top: 1px;
-            }
-            .ct-series.ct-series-a {
-                .ct-area { fill: blue; }
-                .ct-line { stroke: blue; stroke-width: 3px; }
-                .ct-circle{fill:blue;stroke-width:2;stroke:white;r:5}
-            }
-            .ct-series.ct-series-b {
-                .ct-area { fill: #f05b4f; }
-                .ct-line { stroke: #f05b4f; stroke-width: 3px; }
-                .ct-circle{fill:#f05b4f;stroke-width:2;stroke:white;r:5}
-            }
-            .ct-series.ct-series-c {
-                .ct-area { fill: #FBBC03; }
-                .ct-line { stroke: #FBBC03; stroke-width: 3px; }
-                .ct-circle{fill:#FBBC03;stroke-width:2;stroke:white;r:5}
-            }
-        }
-    }
-    .rain {
+    .ct-chart {
+      width: 2000px;
+      height: 200px;
+      svg {
         position: relative;
-        height: 197px;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        display: block;
-        top: -200px;
-        background-color: white;
-        &::-webkit-scrollbar {
-            display: none;
+        top: 1px;
+      }
+      .ct-series.ct-series-a {
+        .ct-area {
+          fill: blue;
         }
-        .ct-chart {
-            width: 2000px;
-            height: 200px;
-            svg {
-                position: relative;
-                top: 1px;
-            }
-            .ct-series.ct-series-a {
-                .ct-area { fill: blue; }
-                .ct-line { stroke: blue; stroke-width: 3px; }
-                .ct-bar { stroke: blue; stroke-width: 20px; }
-
-            }
-            .ct-series.ct-series-b {
-                .ct-area { fill: #f05b4f; }
-                .ct-line { stroke: #f05b4f; stroke-width: 3px; }
-                .ct-bar { stroke: #f05b4f; stroke-width: 20px; }
-
-            }
-            .ct-series.ct-series-c {
-                .ct-area { fill: #FBBC03; }
-                .ct-line { stroke: #FBBC03; stroke-width: 3px; }
-                .ct-bar { stroke: #FBBC03; stroke-width: 20px; }
-
-            }
+        .ct-line {
+          stroke: blue;
+          stroke-width: 3px;
         }
+        .ct-circle {
+          fill: blue;
+          stroke-width: 2;
+          stroke: white;
+          r: 5;
+        }
+      }
+      .ct-series.ct-series-b {
+        .ct-area {
+          fill: #f05b4f;
+        }
+        .ct-line {
+          stroke: #f05b4f;
+          stroke-width: 3px;
+        }
+        .ct-circle {
+          fill: #f05b4f;
+          stroke-width: 2;
+          stroke: white;
+          r: 5;
+        }
+      }
+      .ct-series.ct-series-c {
+        .ct-area {
+          fill: #fbbc03;
+        }
+        .ct-line {
+          stroke: #fbbc03;
+          stroke-width: 3px;
+        }
+        .ct-circle {
+          fill: #fbbc03;
+          stroke-width: 2;
+          stroke: white;
+          r: 5;
+        }
+      }
     }
-    .wind {
+  }
+  .rain {
+    position: relative;
+    height: 197px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: block;
+    top: -200px;
+    background-color: white;
+    .ct-chart {
+      width: 2000px;
+      height: 200px;
+      svg {
         position: relative;
-        top: -424px;
-        height: 197px;
-        top: -397px;
-        background-color: white;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        display: block;
-        .ct-chart {
-            width: 2000px;
-            height: 200px;
-            svg {
-                position: relative;
-                top: 1px;
-            }
+        top: 1px;
+      }
+      .ct-series.ct-series-a {
+        .ct-area {
+          fill: blue;
         }
+        .ct-line {
+          stroke: blue;
+          stroke-width: 3px;
+        }
+        .ct-bar {
+          stroke: blue;
+          stroke-width: 20px;
+        }
+      }
+      .ct-series.ct-series-b {
+        .ct-area {
+          fill: #f05b4f;
+        }
+        .ct-line {
+          stroke: #f05b4f;
+          stroke-width: 3px;
+        }
+        .ct-bar {
+          stroke: #f05b4f;
+          stroke-width: 20px;
+        }
+      }
+      .ct-series.ct-series-c {
+        .ct-area {
+          fill: #fbbc03;
+        }
+        .ct-line {
+          stroke: #fbbc03;
+          stroke-width: 3px;
+        }
+        .ct-bar {
+          stroke: #fbbc03;
+          stroke-width: 20px;
+        }
+      }
     }
+  }
+  .wind {
+    position: relative;
+    top: -424px;
+    height: 197px;
+    top: -397px;
+    background-color: white;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: block;
+    .ct-chart {
+      width: 2000px;
+      height: 200px;
+      svg {
+        position: relative;
+        top: 1px;
+      }
+    }
+  }
 }
 
 .next-days {
-    position: absolute;
-    top: 38px;
-    left: 270px;
-    border: solid 1px lightgrey;
-    width: 400px;
-    height: 57px;
-    border-radius: 4px;
-    background-color: white;    
-    .next-days-panel {
-        .day {
-            width: 50px;
-            height: 57px;
-            float: left;
-            background: transparent;
-            &:hover {
-                background: rgb(234, 244, 255);
-            }            
-            .weather-icon-small {
-                position: relative;
-                left: 9px;
-            }
-            .cloudy {
-                background-position: -67px -21px !important;
-            }
-            .third {
-                background-position: -124px -21px !important;
-            }
-            .clear-day {
-                background-position: -180px -20px !important;
-            }
-            .snow {
-                background-position: -236px -21px !important;
-            }
-            .clear-night{
-                background-position: -180px -21px !important;
-            }
-            .rain {
-                background-position: -12px -68px !important;
-            }
-            .sleet {
-                background-position: -236px -122px !important;
-            }
-            .wind {
-                background-position: -182px -163px !important;
-            }
-            .fog {
-                background-position: -125px -163px !important;
-            }
-            .partly-cloudy-day {
-                background-position: -70px -65px !important;
-            }
-            .partly-cloudy-night {
-                background-position: -70px -65px !important;
-            }
-            .day-name {
-                text-align: center;
-                height: 10px;
-                font-size: 0.84em;
-            }
-            .temperature {
-                text-align: center;
-                font-size: 0.96em;
-                .high {
-                    color: lightcoral;
-                    font-weight: 501;
-                }
-                .low {
-                    color: rgb(115, 139, 204);
-                    font-weight: 501;
-                }
-            }
-            .celsius {
-                font-size: 0.7em;
-                position: relative;
-                top: -2px;
-            }
+  position: absolute;
+  top: 38px;
+  left: 270px;
+  border: solid 1px lightgrey;
+  width: 400px;
+  height: 57px;
+  border-radius: 4px;
+  background-color: white;
+  .next-days-panel {
+    .day {
+      width: 50px;
+      height: 57px;
+      float: left;
+      background: transparent;
+      &:hover {
+        background: rgb(234, 244, 255);
+      }
+      .weather-icon-small {
+        position: relative;
+        left: 9px;
+      }
+      .cloudy {
+        background-position: -67px -21px !important;
+      }
+      .third {
+        background-position: -124px -21px !important;
+      }
+      .clear-day {
+        background-position: -180px -20px !important;
+      }
+      .snow {
+        background-position: -236px -21px !important;
+      }
+      .clear-night {
+        background-position: -180px -21px !important;
+      }
+      .rain {
+        background-position: -12px -68px !important;
+      }
+      .sleet {
+        background-position: -236px -122px !important;
+      }
+      .wind {
+        background-position: -182px -163px !important;
+      }
+      .fog {
+        background-position: -125px -163px !important;
+      }
+      .partly-cloudy-day {
+        background-position: -70px -65px !important;
+      }
+      .partly-cloudy-night {
+        background-position: -70px -65px !important;
+      }
+      .day-name {
+        text-align: center;
+        height: 10px;
+        font-size: 0.84em;
+      }
+      .temperature {
+        text-align: center;
+        font-size: 0.96em;
+        .high {
+          color: lightcoral;
+          font-weight: 501;
         }
+        .low {
+          color: rgb(115, 139, 204);
+          font-weight: 501;
+        }
+      }
+      .celsius {
+        font-size: 0.7em;
+        position: relative;
+        top: -2px;
+      }
     }
+  }
 }
 
 .current {
-    a {
-        text-decoration: none;
-        &:link,&:visited,&:hover {
-            color: dimgrey;
-        }
+  a {
+    text-decoration: none;
+    &:link,
+    &:visited,
+    &:hover {
+      color: dimgrey;
     }
-    height: 57px;
-    border: solid 1px lightgray;
-    border-radius: 4px;
-    margin-top: 3px;
-    .weather-icon {
-        float: left;
-        margin-right: 5px;
+  }
+  height: 57px;
+  border: solid 1px lightgray;
+  border-radius: 4px;
+  margin-top: 3px;
+  .weather-icon {
+    float: left;
+    margin-right: 5px;
+  }
+  .today-summary {
+    cursor: pointer;
+    display: inline-block;
+    border: 1px solid transparent;
+    padding-bottom: 5px;
+    position: relative;
+    top: -1px;
+    max-height: 52px;
+    &:hover {
+      border: 1px solid lightgray;
+      background-color: rgb(244, 244, 244);
     }
-    .today-summary {
-        cursor: pointer;
-        display: inline-block;
-        border: 1px solid transparent;
-        padding-bottom: 5px;
-        position: relative;
-        top: -1px;
-        max-height: 52px;
-        &:hover {
-            border: 1px solid lightgray;
-            background-color: rgb(244,244,244);
-        }
+  }
+  .daysWeekButton {
+    outline: none;
+    padding: 0;
+    border: 1px solid transparent;
+    width: 49px;
+    height: 49px;
+    position: absolute;
+    top: 43px;
+    left: 214px;
+    background-color: white;
+    cursor: pointer;
+    img {
+      width: 40px;
     }
-    .daysWeekButton {
-        outline: none;
-        padding: 0;
-        border: 1px solid transparent;
-        width: 49px;
-        height: 49px;
-        position: absolute;
-        top: 43px;
-        left: 214px;
-        background-color: white;
-        cursor: pointer;
-        img {
-            width: 40px;
-        }
-        &:hover {
-            border: 1px solid lightgray;
-            background-color: rgb(244,244,244);
-            border-radius: 3px;
-        }
+    &:hover {
+      border: 1px solid lightgray;
+      background-color: rgb(244, 244, 244);
+      border-radius: 3px;
     }
-    .summary {
-        float: left;
-        margin: 0 5px;
-        width: 70px;
-        text-align: center;
-        .real {
-            user-select: none;
-            position: relative;
-            font-size: 3.2em;
-            line-height: 33px;
-            padding-top: 4px;
-            .celsius{
-                user-select: none;
-                font-size: 0.5em;
-                position: relative;
-                top: -12px;
-                left: -9px;
-            }
-        }
-        .apparent {
-            user-select: none;
-            position: relative;
-            line-height: 10px;
-            .celsius {
-                user-select: none;
-                font-size: 0.7em;
-                position: relative;
-                top: -2px;
-                left: -2px;
-            }
-        }
-    }
-    .other {
-        display: inline-block;
-    }
-    .first {
-        background-position: -14px -23px !important;
-    }
-    .cloudy {
-        background-position: -87px -23px !important;
-    }
-    .clear-day {
-        background-position: -251px -23px !important;
-    }
-    .snow {
-        background-position: -333px -23px !important;
-    }
-    .rain {
-        background-position: -14px -90px !important;
-    }
-    .partly-cloudy-day {
-        background-position: -91px  -90px !important;
-    }
-    .partly-cloudy-night {
-        background-position: -172px -90px !important;
-    }
-    .clear-night {
-        background-position: -253px -90px !important;
-    }
-    .sleet {
-        background-position: -333px -165px !important;
-    }
-    .fog {
-        background-position: -172px -227px !important;
-    }
-    .wind {
-        background-position: -253px -227px !important;
-    }
-
-    .wind-current {
+  }
+  .summary {
+    float: left;
+    margin: 0 5px;
+    width: 70px;
+    text-align: center;
+    .real {
+      user-select: none;
+      position: relative;
+      font-size: 3.2em;
+      line-height: 33px;
+      padding-top: 4px;
+      .celsius {
         user-select: none;
-        float: left;
+        font-size: 0.5em;
         position: relative;
-        top: 2px;
-        width: 55px;
-        text-align: center;
-        margin-left: 5px;
-        .label {
-            user-select: none;
-            position: relative;
-            line-height: 10px;
-            top: 7px;
-        }
-        img {
-            user-select: none;
-            width: 32px;
-            position: relative;
-            top: 3px;
-        }
-    } 
-      
-}
+        top: -12px;
+        left: -9px;
+      }
+    }
+    .apparent {
+      user-select: none;
+      position: relative;
+      line-height: 10px;
+      .celsius {
+        user-select: none;
+        font-size: 0.7em;
+        position: relative;
+        top: -2px;
+        left: -2px;
+      }
+    }
+  }
+  .other {
+    display: inline-block;
+  }
+  .first {
+    background-position: -14px -23px !important;
+  }
+  .cloudy {
+    background-position: -87px -23px !important;
+  }
+  .clear-day {
+    background-position: -251px -23px !important;
+  }
+  .snow {
+    background-position: -333px -23px !important;
+  }
+  .rain {
+    background-position: -14px -90px !important;
+  }
+  .partly-cloudy-day {
+    background-position: -91px -90px !important;
+  }
+  .partly-cloudy-night {
+    background-position: -172px -90px !important;
+  }
+  .clear-night {
+    background-position: -253px -90px !important;
+  }
+  .sleet {
+    background-position: -333px -165px !important;
+  }
+  .fog {
+    background-position: -172px -227px !important;
+  }
+  .wind {
+    background-position: -253px -227px !important;
+  }
 
+  .wind-current {
+    user-select: none;
+    float: left;
+    position: relative;
+    top: 2px;
+    width: 55px;
+    text-align: center;
+    margin-left: 5px;
+    .label {
+      user-select: none;
+      position: relative;
+      line-height: 10px;
+      top: 7px;
+    }
+    img {
+      user-select: none;
+      width: 32px;
+      position: relative;
+      top: 3px;
+    }
+  }
+}

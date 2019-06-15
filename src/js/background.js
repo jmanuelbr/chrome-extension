@@ -31,6 +31,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       case "tfl-bus":
         url = "https://api.tfl.gov.uk/StopPoint/490008296G/arrivals";
         break;
+      case "weather":
+        url =
+          "https://api.darksky.net/forecast/e9231a0d68ba35226274ad3b5e1f6dc4/51.5177896,0.1085338000000000?units=ca";
+        break;
       default:
         url = "";
         break;
@@ -42,7 +46,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (
           request.itemId === "reddit" ||
           request.itemId === "tfl-tube" ||
-          request.itemId === "tfl-bus"
+          request.itemId === "tfl-bus" ||
+          request.itemId === "weather"
         ) {
           sendResponse(JSON.parse(xmlHttp.response));
         } else {
