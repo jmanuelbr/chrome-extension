@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Tabs from "./tabs.component";
-import BbcWidget from "./bbc.component";
+// import BbcWidget from "./bbc.component";
+import CnnWidget from "./cnn.component";
 import LichessWidget from "./lichess.component";
 import TheGuardianWidget from "./theguardian.component";
 import CurrencyWidget from "./currency.component";
@@ -22,9 +23,13 @@ export default class App extends Component {
 
   render() {
     const tabsContent = [
+      // {
+      //   widget: <BbcWidget />,
+      //   icon: chrome.runtime.getURL("../assets/bbc-news.png")
+      // },
       {
-        widget: <BbcWidget />,
-        icon: chrome.runtime.getURL("../assets/bbc-news.png")
+        widget: <CnnWidget />,
+        icon: chrome.runtime.getURL("../assets/cnn.png")
       },
       {
         widget: <TheGuardianWidget />,

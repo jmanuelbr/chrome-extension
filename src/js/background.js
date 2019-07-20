@@ -4,8 +4,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.contentScriptQuery == FETCH_CONTENT) {
     let url = "";
     switch (request.itemId) {
-      case "bbc":
-        url = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
+      // case "bbc":
+      //   url = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
+      //   break;
+      case "cnn":
+        url = "http://rss.cnn.com/rss/edition.rss";
         break;
       case "theguardian":
         url = "https://www.theguardian.com/uk/rss";
@@ -39,6 +42,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         url = "";
         break;
     }
+
+    // if (request.itemId == "cnn") {
+    //   fetch(url, {
+    //     method: 'GET'
+    // })
+    // .then((res) => {
+    //     console.log('CNN', res);
+    //     sendResponse(JSON.parse(res));
+    // });
+    // }
 
     let xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function() {
