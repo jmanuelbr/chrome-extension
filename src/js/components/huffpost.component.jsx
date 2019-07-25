@@ -9,17 +9,17 @@ import { connect } from 'react-redux';
 import { getMockData } from '../mocks/huffpost.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 
-export class HuffpostWidget extends Component {
+export class HuffPostWidget extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            articles: 'No news today :(',
+            articles: [],
             contentReady: false,
             error: false
         };
     }
 
-    getArticles = function (jsonData) {
+    getArticles = (jsonData) => {
         var list = [];
         try {
             jsonData = HELPER.parseFeed(jsonData);
@@ -63,7 +63,7 @@ export class HuffpostWidget extends Component {
         return list;
     };
 
-    processData = function(feedData) {
+    processData = (feedData) => {
         const self = this;
         var convert = require('xml-js');
         var jsonData = convert.xml2json(feedData, { compact: false, spaces: 4 });
@@ -77,7 +77,7 @@ export class HuffpostWidget extends Component {
         });
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         if (this.props.mocksEnabled) {
             this.processData(getMockData());
         }
@@ -88,20 +88,7 @@ export class HuffpostWidget extends Component {
         }
     }
 
-    renderComponent() {
-        return (
-            <div className="news-feed-container">
-                {_map(this.state.articles, (article, i) => (
-                    <Article
-                        key={i}
-                        articleData={article}
-                    />
-                ))}
-            </div>
-        );
-    }
-
-    render() {
+    render = () => {
         if (!this.state.contentReady) {
             return (
                 <LoaderTabs/>
@@ -126,10 +113,11 @@ export class HuffpostWidget extends Component {
         }
     }
 }
+
 function mapStateToProps(state) {
 	return {
 		mocksEnabled: state.configuration.mocksEnabled
 	};
 }
 
-export default connect(mapStateToProps)(HuffpostWidget);
+export default connect(mapStateToProps)(HuffPostWidget);
