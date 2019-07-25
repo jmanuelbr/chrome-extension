@@ -4,8 +4,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.contentScriptQuery == FETCH_CONTENT) {
     let url = "";
     switch (request.itemId) {
-      case "bbc":
-        url = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
+      // case "bbc":
+      //   url = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
+      //   break;
+      case "huffpost":
+        url = "https://www.huffpost.com/section/world-news/feed";
         break;
       case "theguardian":
         url = "https://www.theguardian.com/uk/rss";

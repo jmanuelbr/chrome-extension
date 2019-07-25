@@ -13,6 +13,7 @@ import TflWidget from "./tfl/tfl.component";
 import _map from "lodash/map";
 import { Provider } from "react-redux";
 import { ElMundoWidget } from "./elmundo.component";
+import { HuffpostWidget } from "./huffpost.component";
 
 export default class App extends Component {
   constructor(props) {
@@ -22,13 +23,17 @@ export default class App extends Component {
 
   render() {
     const tabsContent = [
-      {
-        widget: <BbcWidget />,
-        icon: chrome.runtime.getURL("../assets/bbc-news.png")
-      },
+      // {
+      //   widget: <BbcWidget />,
+      //   icon: chrome.runtime.getURL("../assets/bbc-news.png")
+      // },
       {
         widget: <TheGuardianWidget />,
         icon: chrome.runtime.getURL("../assets/theguardian.png")
+      },
+      {
+        widget: <HuffpostWidget />,
+        icon: chrome.runtime.getURL("../assets/huffpost.png")
       },
       // { "widget": <EldiarioWidget/>, "icon": chrome.runtime.getURL('../assets/eldiario.png')},
       {
