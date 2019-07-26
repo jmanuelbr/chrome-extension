@@ -18,8 +18,11 @@
             padding: 0 3px;
         }
         .status {
-            width: 50%;
             float: left;
+            width: 43%;
+            position: relative;
+            top: 2px;
+            left: 4px;
             .disruption {
                 .reason {
                     .title {
