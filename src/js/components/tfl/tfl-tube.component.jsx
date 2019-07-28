@@ -49,7 +49,7 @@ export class TflTube extends Component {
         let showIcon = true;
         if (lineStatuses !== undefined) {
             if (lineStatuses.length === 1 && 
-                lineStatuses[0].statusSeverity === "Good Service") {
+                lineStatuses[0].statusSeverityDescription === "Good Service") {
                     showIcon = false;
             }
         }
