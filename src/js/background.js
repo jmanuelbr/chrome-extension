@@ -7,6 +7,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       // case "bbc":
       //   url = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
       //   break;
+      case "currency":
+        url =
+          "http://spreadsheets.google.com/feeds/list/0Av2v4lMxiJ1AdE9laEZJdzhmMzdmcW90VWNfUTYtM2c/5/public/basic?alt=json";
+        break;
       case "huffpost":
         url = "https://www.huffpost.com/section/world-news/feed";
         break;
@@ -50,6 +54,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
           request.itemId === "reddit" ||
           request.itemId === "tfl-tube" ||
           request.itemId === "tfl-bus" ||
+          request.itemId === "currency" ||
           request.itemId === "weather"
         ) {
           sendResponse(JSON.parse(xmlHttp.response));
