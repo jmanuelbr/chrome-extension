@@ -1,66 +1,66 @@
-@import 'variables';
+@import "variables";
 
 @keyframes zoominout {
-    0% {
-        transform: scale(1,1);
-    }
-    50% {
-        transform: scale(1.1,1.1);
-    }
-    100% {
-        transform: scale(1,1);
-    }
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.1, 1.1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
 }
 
 .slashdot-article {
-    padding: 10px 10px 0 10px;
-    .title {
-        display: inline-block;
-        font-family: $font-stack;
-        font-size: 1.16em;
-        color: dimgrey;
-        margin: 0px;
-        border-bottom: 1px solid lightgray;
-        padding: 8px 0;
+  padding: 10px 10px 0 10px;
+  .title {
+    display: inline-block;
+    font-family: $font-stack;
+    font-size: 1.16em;
+    color: dimgrey;
+    margin: 0px;
+    border-bottom: 1px solid lightgray;
+    padding: 8px 0;
+    width: 250px;
+  }
+  .thumbnail-container {
+    float: left;
+    overflow: hidden;
+    img {
+      height: 50px;
+      width: 50px;
+      overflow: hidden;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      -webkit-transition: 0.3s ease-in-out;
+      transition: 0.3s ease-in-out;
+
+      &:hover {
+        animation: zoominout 0.5s 1;
+      }
     }
-    .thumbnail-container {
-        float: left;
-        overflow: hidden;
-        img {
-            height: 50px;
-            width: 50px;
-            overflow: hidden;
-            -webkit-transform: scale(1);
-            transform: scale(1);
-            -webkit-transition: .3s ease-in-out;
-            transition: .3s ease-in-out;
-    
-            &:hover {
-                animation: zoominout 0.5s 1;
-            }
+  }
+  .info {
+    float: left;
+    padding: 5px 0 0 10px;
+    color: dimgrey;
+    ul {
+      list-style-type: none;
+      .section-title {
+        margin-bottom: 4px;
+      }
+      li {
+        .comments-icon {
+          width: 20px;
+          vertical-align: middle;
         }
-    }
-    .info {
-        float: left;
-        padding: 5px 0 0 10px;
-        color: dimgrey;
-        ul {
-            list-style-type: none;
-            .section-title {
-                margin-bottom: 4px;
-            }
-            li {
-                .comments-icon {
-                    width: 20px;
-                    vertical-align: middle;
-                }
-                .comments-counter {
-                    font-size: 0.9rem;
-                    padding-left: 3px;
-                    font-weight: 800;
-                } 
-            }
+        .comments-counter {
+          font-size: 0.9rem;
+          padding-left: 3px;
+          font-weight: 800;
         }
+      }
     }
-    
+  }
 }
