@@ -20,8 +20,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       // case "eldiario":
       //     url = "https://www.eldiario.es/rss/";
       // break;
-      case "elmundo":
-        url = "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml";
+      // case "elmundo":
+      //   url = "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml";
+      //   break;
+      case "as":
+        url = "https://as.com/rss/tags/ultimas_noticias.xml";
         break;
       case "elpais":
         url = "https://ep00.epimg.net/rss/tags/ultimas_noticias.xml";

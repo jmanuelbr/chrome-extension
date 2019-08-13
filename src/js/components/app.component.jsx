@@ -10,8 +10,9 @@ import WeatherWidget from "./weather/weather.component";
 import TflWidget from "./tfl/tfl.component";
 import _map from "lodash/map";
 import { Provider } from "react-redux";
-import ElMundoWidget from "./elmundo.component";
+// import ElMundoWidget from "./elmundo.component";
 import HuffPostWidget from "./huffpost.component";
+import AsWidget from "./as.component";
 // import BbcWidget from "./bbc.component";
 //import EldiarioWidget from "./eldiario.component";
 
@@ -35,9 +36,13 @@ export default class App extends Component {
         widget: <ElpaisWidget />,
         icon: chrome.runtime.getURL("../assets/elpais.png")
       },
+      // {
+      //   widget: <ElMundoWidget />,
+      //   icon: chrome.runtime.getURL("../assets/elmundo.png")
+      // },
       {
-        widget: <ElMundoWidget />,
-        icon: chrome.runtime.getURL("../assets/elmundo.png")
+        widget: <AsWidget />,
+        icon: chrome.runtime.getURL("../assets/as.png")
       },
       {
         widget: <SlashdotWidget />,
