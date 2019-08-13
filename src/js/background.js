@@ -41,6 +41,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       case "tfl-bus":
         url = "https://api.tfl.gov.uk/StopPoint/490008296G/arrivals";
         break;
+      case "tfl-train":
+          const today = new Date(); 
+          if (today.getHours() > 10 && today.getHours() < 23) {
+            // From Shenfield to Stratford
+            url = "https://api.tfl.gov.uk/journey/journeyresults/1006448/to/1000226";
+          }
+          else{
+            // From Stratford to Shenfield
+            url = "https://api.tfl.gov.uk/journey/journeyresults/1000226/to/1006448";
+          }
+          break;  
       case "weather":
         url =
           "https://api.darksky.net/forecast/e9231a0d68ba35226274ad3b5e1f6dc4/51.5177896,0.1085338000000000?units=ca";
@@ -57,6 +68,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
           request.itemId === "reddit" ||
           request.itemId === "tfl-tube" ||
           request.itemId === "tfl-bus" ||
+          request.itemId === "tfl-train" ||
           request.itemId === "currency" ||
           request.itemId === "weather"
         ) {

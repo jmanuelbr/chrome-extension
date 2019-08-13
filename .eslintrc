@@ -35,7 +35,7 @@
     "react/no-deprecated": 2,
     "react/no-multi-comp": 2,
     "react/jsx-indent": [4, "tab"],
-    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "comma-dangle": 0,
     "no-underscore-dangle": 0,
     "class-methods-use-this": 0,
