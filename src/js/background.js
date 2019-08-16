@@ -45,11 +45,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
           const today = new Date(); 
           if (today.getHours() > 10 && today.getHours() < 23) {
             // From Shenfield to Stratford
-            url = "https://api.tfl.gov.uk/journey/journeyresults/1006448/to/1000226";
+            url = "https://api.tfl.gov.uk/journey/journeyresults/1006448/to/1000226?app_id=7a545d8e&app_key=a126ea9826d6227c33bebc86df0fd87f";
           }
           else{
-            // From Stratford to Shenfield
-            url = "https://api.tfl.gov.uk/journey/journeyresults/1000226/to/1006448";
+            // From Stratford to Shenfield ok
+            url = "https://api.tfl.gov.uk/journey/journeyresults/1000226/to/1006448?app_id=7a545d8e&app_key=a126ea9826d6227c33bebc86df0fd87f";
           }
           break;  
       case "weather":

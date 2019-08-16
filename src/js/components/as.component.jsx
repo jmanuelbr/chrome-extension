@@ -18,6 +18,12 @@ export class AsWidget extends Component {
             error: false
         };
     }
+    getCddata = (property) => {
+        if (property.elements !== undefined && property.elements[0] !== undefined) {
+            return property.elements[0].cdata;
+        }
+        return "";
+    }
 
     getArticles = (jsonData) => {
         var list = [];
@@ -28,22 +34,23 @@ export class AsWidget extends Component {
                 Object.values(element.elements).map(property => {
                     switch (property.name) {
                         case "title": {
-                            article.title = property.elements[0].cdata;
+                            article.title = this.getCddata(property);
                             break;
                         }
                         case "description": {
-                            article.description = property.elements[0].cdata;
+                            article.description = this.getCddata(property);
                             break;
                         }
                         case "link": {
-                            article.link = property.elements[0].cdata;
+                            article.link = this.getCddata(property);
                             break;
                         }
                         case "pubDate": {
-                            article.date = property.elements[0].cdata;
+                            article.date = this.getCddata(property);
                             break;
                         }
                         case "enclosure": {
+                            console.log('enclosure', property.attributes.url);
                             if (property.attributes.type == "image/jpeg" &&
                                 property.attributes.url.indexOf("miniatura") > 0) {
                                 article.thumbnail = property.attributes.url;
@@ -56,6 +63,7 @@ export class AsWidget extends Component {
                             break;
                         }
                     }
+
                 });
                 list.push(article);
             });
