@@ -50,7 +50,6 @@ export class AsWidget extends Component {
                             break;
                         }
                         case "enclosure": {
-                            console.log('enclosure', property.attributes.url);
                             if (property.attributes.type == "image/jpeg" &&
                                 property.attributes.url.indexOf("miniatura") > 0) {
                                 article.thumbnail = property.attributes.url;

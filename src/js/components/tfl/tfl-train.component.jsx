@@ -14,7 +14,8 @@ export class TflTrain extends Component {
         this.state = {
             contentReady: false,
             trainData: {},
-            error: false
+            error: false,
+            showInfo: false
         };
     }
 
@@ -44,9 +45,18 @@ export class TflTrain extends Component {
             this.processData(getMockData())
         }
         else {
-            chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "tfl-train" }, 
-                feedData => this.processData(feedData));
+            const today = new Date();
+            if (today.getDay() < 6) {
+                // E.g. all workdays Mon to Fri
+                const self = this;
+                self.setState(state => {
+                    state.showInfo = true;
+                    return state;
+                });
+                chrome.runtime.sendMessage(
+                    { contentScriptQuery: FETCH_CONTENT, itemId: "tfl-train" }, 
+                    feedData => this.processData(feedData));
+            }
         }
     }
 
@@ -80,7 +90,7 @@ export class TflTrain extends Component {
                 <Error/>
             );
         }
-        else {
+        else if (this.state.showInfo) {
             return (
                 <div className="tfl-train-container">
                     <div className="header">
@@ -111,6 +121,9 @@ export class TflTrain extends Component {
                     {this.displayDisruptions()}
                 </div>
             );
+        }
+        else {
+            return null;
         }
     }    
 }
