@@ -15,7 +15,7 @@ export class TflTrain extends Component {
             contentReady: false,
             trainData: {},
             error: false,
-            showInfo: false
+            showInfo: true
         };
     }
 
@@ -48,14 +48,16 @@ export class TflTrain extends Component {
             const today = new Date();
             if (today.getDay() < 6) {
                 // E.g. all workdays Mon to Fri
-                const self = this;
-                self.setState(state => {
-                    state.showInfo = true;
-                    return state;
-                });
                 chrome.runtime.sendMessage(
                     { contentScriptQuery: FETCH_CONTENT, itemId: "tfl-train" }, 
                     feedData => this.processData(feedData));
+            }
+            else {
+                const self = this;
+                self.setState(state => {
+                    state.showInfo = false;
+                    return state;
+                });
             }
         }
     }

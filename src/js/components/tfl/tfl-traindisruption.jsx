@@ -7,14 +7,17 @@ export default class TflTrainDisruption extends Component {
 
     render() {
         return (
-            <div className="train-disruption">
-                <div className="category">
-                    {this.props.data.category}
+            <React.Fragment>
+                <div className="train-disruption">
+                    <div className="category">
+                        {this.props.data.category}
+                    </div>
+                    <div className="description">
+                        {this.props.data.description}
+                    </div>
                 </div>
-                <div className="description">
-                    {this.props.data.description}
-                </div>
-            </div>
+                <hr/>
+            </React.Fragment>
         );
     }    
 }

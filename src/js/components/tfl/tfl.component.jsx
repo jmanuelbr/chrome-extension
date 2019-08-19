@@ -16,7 +16,6 @@ export default class TflWidget extends Component {
         return (
             <div className="tfl-container">
                 <TflTrain/>
-                <hr/> 
                 <TflTube/>
                 <hr/>
                 <TflBus/>
