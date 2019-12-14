@@ -35,8 +35,11 @@ export class TflTrain extends Component {
         return state;
       });
     } catch (exception) {
-      state.error = true;
-      return state;
+      self.setState(state => {
+        state.contentReady = true;
+        state.error = true;
+        return state;
+      });
     }
   };
 
@@ -54,6 +57,7 @@ export class TflTrain extends Component {
       } else {
         const self = this;
         self.setState(state => {
+          state.contentReady = true;
           state.showInfo = false;
           return state;
         });
