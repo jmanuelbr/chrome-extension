@@ -18,12 +18,6 @@ export class AsWidget extends Component {
             error: false
         };
     }
-    getCddata = (property) => {
-        if (property.elements !== undefined && property.elements[0] !== undefined) {
-            return property.elements[0].cdata;
-        }
-        return "";
-    }
 
     getArticles = (jsonData) => {
         var list = [];
@@ -34,19 +28,19 @@ export class AsWidget extends Component {
                 Object.values(element.elements).map(property => {
                     switch (property.name) {
                         case "title": {
-                            article.title = this.getCddata(property);
+                            article.title = HELPER.getDataFromProperty(property);
                             break;
                         }
                         case "description": {
-                            article.description = this.getCddata(property);
+                            article.description = HELPER.getDataFromProperty(property);
                             break;
                         }
                         case "link": {
-                            article.link = this.getCddata(property);
+                            article.link = HELPER.getDataFromProperty(property);
                             break;
                         }
                         case "pubDate": {
-                            article.date = this.getCddata(property);
+                            article.date = HELPER.getDataFromProperty(property);
                             break;
                         }
                         case "enclosure": {

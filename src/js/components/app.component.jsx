@@ -10,11 +10,12 @@ import WeatherWidget from "./weather/weather.component";
 import TflWidget from "./tfl/tfl.component";
 import _map from "lodash/map";
 import { Provider } from "react-redux";
-// import ElMundoWidget from "./elmundo.component";
 import HuffPostWidget from "./huffpost.component";
-import AsWidget from "./as.component";
+import ContractorUKWidget from "./contractor-uk.component";
+// import AsWidget from "./as.component";
 // import BbcWidget from "./bbc.component";
-//import EldiarioWidget from "./eldiario.component";
+// import EldiarioWidget from "./eldiario.component";
+// import ElMundoWidget from "./elmundo.component";
 
 export default class App extends Component {
   constructor(props) {
@@ -36,13 +37,9 @@ export default class App extends Component {
         widget: <ElpaisWidget />,
         icon: chrome.runtime.getURL("../assets/elpais.png")
       },
-      // {
-      //   widget: <ElMundoWidget />,
-      //   icon: chrome.runtime.getURL("../assets/elmundo.png")
-      // },
       {
-        widget: <AsWidget />,
-        icon: chrome.runtime.getURL("../assets/as.png")
+        widget: <ContractorUKWidget />,
+        icon: chrome.runtime.getURL("../assets/contractor-uk.png")
       },
       {
         widget: <SlashdotWidget />,
@@ -64,7 +61,18 @@ export default class App extends Component {
       //   widget: <BbcWidget />,
       //   icon: chrome.runtime.getURL("../assets/bbc-news.png")
       // },
-      // { "widget": <EldiarioWidget/>, "icon": chrome.runtime.getURL('../assets/eldiario.png')},
+      // { 
+      //   "widget": <EldiarioWidget/>, 
+      //   "icon": chrome.runtime.getURL('../assets/eldiario.png')
+      // },
+      // {
+      //   widget: <ElMundoWidget />,
+      //   icon: chrome.runtime.getURL("../assets/elmundo.png")
+      // },
+      // {
+      //   widget: <AsWidget />,
+      //   icon: chrome.runtime.getURL("../assets/as.png")
+      // },
     ];
     return (
       <Provider store={this.props.store}>
