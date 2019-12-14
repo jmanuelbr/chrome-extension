@@ -14,6 +14,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       case "huffpost":
         url = "https://www.huffpost.com/section/world-news/feed";
         break;
+      case "contractor-uk":
+        url = "https://www.contractoruk.com/forums/external.php?type=RSS2&forumids=4";
+        break;
       case "theguardian":
         url = "https://www.theguardian.com/uk/rss";
         break;
@@ -23,9 +26,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       // case "elmundo":
       //   url = "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml";
       //   break;
-      case "as":
-        url = "https://as.com/rss/tags/ultimas_noticias.xml";
-        break;
+      // case "as":
+      //   url = "https://as.com/rss/tags/ultimas_noticias.xml";
+      //   break;
       case "elpais":
         url = "https://ep00.epimg.net/rss/tags/ultimas_noticias.xml";
         break;
