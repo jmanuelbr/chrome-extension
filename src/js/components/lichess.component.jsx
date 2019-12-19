@@ -22,7 +22,7 @@ export default class LichessWidget extends Component {
                 <div>          
                   <iframe src={this.props.src} height={this.props.height} width={this.props.width}/>         
                 </div>
-              )
+              );
             }
           });
 

@@ -5,12 +5,23 @@ export default class TflDisruption extends Component {
         super(props);
     }
 
+    renderIcon(statusSeverityDescription) {
+        const icon = (statusSeverityDescription.includes("Suspended")) ?
+            chrome.runtime.getURL("../../../assets/alert.png") :
+            chrome.runtime.getURL("../../../assets/warning.png");
+        if (this.props.showicon) {
+            return (
+                <img className="icon" src={icon} />
+            )
+        }
+    }
+
     render() {
-        const {disuption, statusSeverityDescription, reason} = this.props.status;
+        const {statusSeverityDescription, reason} = this.props.status;
         return (
             <div className="disruption">
-                
                 <div className="reason">
+                    {this.renderIcon(statusSeverityDescription)}
                     <div className="title">
                         {statusSeverityDescription}
                     </div>

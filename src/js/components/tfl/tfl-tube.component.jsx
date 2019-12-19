@@ -44,10 +44,16 @@ export class TflTube extends Component {
         }
     }
 
-
     render() {
-        const {disuption, statusSeverityDescription, reason} = this.state.tubeData;
-
+        const {lineStatuses} = this.state.tubeData;
+        let showIcon = true;
+        if (lineStatuses !== undefined) {
+            if (lineStatuses.length === 1 && 
+                lineStatuses[0].statusSeverityDescription === "Good Service") {
+                    showIcon = false;
+            }
+        }
+        const statusClass = (showIcon) ? "multiple-status" : "status";
         if (!this.state.contentReady) {
             return (
                 <LoaderTabs/>
@@ -64,11 +70,12 @@ export class TflTube extends Component {
                     <div className="name">
                         {this.state.tubeData.name}
                     </div>
-                    <div className="status">
-                        {_map(this.state.tubeData.lineStatuses, (status, i) => (
+                    <div className={statusClass}>
+                        {_map(lineStatuses, (status, i) => (
                             <TflStatus
                                 key={i}
                                 status={status}
+                                showicon={showIcon}
                             />
                         ))}
                     </div>

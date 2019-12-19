@@ -28,19 +28,19 @@ export class EldiarioWidget extends Component {
                 Object.values(element.elements).map(property => {
                     switch (property.name) {
                         case "title": {
-                            article.title = property.elements[0].cdata;
+                            article.title = HELPER.getDataFromProperty(property);
                             break;
                         }
                         case "description": {
-                            article.description = property.elements[0].cdata;
+                            article.description = HELPER.getDataFromProperty(property);
                             break;
                         }
                         case "link": {
-                            article.link = property.elements[0].cdata;
+                            article.link = HELPER.getDataFromProperty(property);
                             break;
                         }
                         case "pubDate": {
-                            article.date = property.elements[0].cdata;
+                            article.date = HELPER.getDataFromProperty(property);
                             break;
                         }
                         case "enclosure": {

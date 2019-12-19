@@ -65,14 +65,12 @@ module.exports = {
             toType: 'file'
         }]),
         new MiniCssExtractPlugin({
-            // Options similar to the same options in webpackOptions.output
-            // both options are optional
             filename: "../css/styles.css",
             chunkFilename: "[id].css"
         }),
         new WebpackNotifierPlugin({
             title: 'Webpack Making Noise',
-            skipFirstNotification: true,
+            skipFirstNotification: false,
             contentImage: path.join(__dirname, 'webpack/webpack-notification.jpg'),
             excludeWarnings: true
         })

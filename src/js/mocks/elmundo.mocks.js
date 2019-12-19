@@ -35,7 +35,7 @@ export function getMockData() {
             <item>
                 <title>
                     <![CDATA[
-    Bildu reclama Pamplona a cambio de entregar el Gobierno de Navarra al PSOE
+    MOCKS Bildu reclama Pamplona a cambio de entregar el Gobierno de Navarra al PSOE
     ]]>
                 </title>
                 <description>

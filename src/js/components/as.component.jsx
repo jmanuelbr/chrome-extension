@@ -6,59 +6,57 @@ import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
 import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
-import { getMockData } from '../mocks/elpais.mocks';
+import { getMockData } from '../mocks/as.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 
-export class ElpaisWidget extends Component {
+export class AsWidget extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            articles: 'No news today :(',
+            articles: [],
             contentReady: false,
             error: false
         };
     }
 
-    getArticles = function (jsonData) {
+    getArticles = (jsonData) => {
         var list = [];
         try {
             jsonData = HELPER.parseFeed(jsonData);
             Object.values(jsonData).map(element => {
                 var article = {};
                 Object.values(element.elements).map(property => {
-                    try {
-                        switch (property.name) {
-                            case "title": {
-                                article.title = HELPER.getDataFromProperty(property);
-                                break;
+                    switch (property.name) {
+                        case "title": {
+                            article.title = HELPER.getDataFromProperty(property);
+                            break;
+                        }
+                        case "description": {
+                            article.description = HELPER.getDataFromProperty(property);
+                            break;
+                        }
+                        case "link": {
+                            article.link = HELPER.getDataFromProperty(property);
+                            break;
+                        }
+                        case "pubDate": {
+                            article.date = HELPER.getDataFromProperty(property);
+                            break;
+                        }
+                        case "enclosure": {
+                            if (property.attributes.type == "image/jpeg" &&
+                                property.attributes.url.indexOf("miniatura") > 0) {
+                                article.thumbnail = property.attributes.url;
                             }
-                            case "description": {
-                                article.description = HELPER.getDataFromProperty(property);
-                                break;
-                            }
-                            case "link": {
-                                article.link = HELPER.getDataFromProperty(property);
-                                break;
-                            }
-                            case "pubDate": {
-                                article.date = HELPER.getDataFromProperty(property);
-                                break;
-                            }
-                            case "enclosure": {
-                                if (property.attributes.type == "image/jpeg") {
-                                    article.thumbnail = property.attributes.url;
-                                }
-                                break;
-                            }
-                            default: {
-                                // Do nothing
-                                break;
-                            }
+                            article.thumbnail = property.attributes.url;
+                            break;
+                        }
+                        default: {
+                            // Do nothing
+                            break;
                         }
                     }
-                    catch (exception) {
-                        // Do nothing
-                    }
+
                 });
                 list.push(article);
             });
@@ -70,7 +68,7 @@ export class ElpaisWidget extends Component {
         return list;
     };
 
-    processData = function(feedData) {
+    processData = (feedData) => {
         const self = this;
         var convert = require('xml-js');
         var jsonData = convert.xml2json(feedData, { compact: false, spaces: 4 });
@@ -84,18 +82,18 @@ export class ElpaisWidget extends Component {
         });
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
         if (this.props.mocksEnabled) {
-            this.processData(getMockData())
+            this.processData(getMockData());
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "elpais" }, 
+                { contentScriptQuery: FETCH_CONTENT, itemId: "as" }, 
                 feedData => this.processData(feedData));
         }
     }
 
-    render() {
+    render = () => {
         if (!this.state.contentReady) {
             return (
                 <LoaderTabs/>
@@ -107,7 +105,7 @@ export class ElpaisWidget extends Component {
             );
         }
         else {
-            return (
+            return(
                 <div className="news-feed-container">
                     {_map(this.state.articles, (article, i) => (
                         <Article
@@ -120,10 +118,11 @@ export class ElpaisWidget extends Component {
         }
     }
 }
+
 function mapStateToProps(state) {
 	return {
 		mocksEnabled: state.configuration.mocksEnabled
 	};
 }
 
-export default connect(mapStateToProps)(ElpaisWidget);
+export default connect(mapStateToProps)(AsWidget);

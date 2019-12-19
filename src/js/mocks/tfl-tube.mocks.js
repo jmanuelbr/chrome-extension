@@ -1,6 +1,139 @@
 export function getMockData() {
     const data = `
-    [{\"$type\":\"Tfl.Api.Presentation.Entities.Line, Tfl.Api.Presentation.Entities\",\"id\":\"london-overground\",\"name\":\"London Overground\",\"modeName\":\"overground\",\"disruptions\":[],\"created\":\"2019-05-03T20:35:52.003Z\",\"modified\":\"2019-05-03T20:35:52.003Z\",\"lineStatuses\":[{\"$type\":\"Tfl.Api.Presentation.Entities.LineStatus, Tfl.Api.Presentation.Entities\",\"id\":0,\"lineId\":\"london-overground\",\"statusSeverity\":7,\"statusSeverityDescription\":\"Reduced Service\",\"reason\":\"MOCKS LONDON OVERGROUND: Until further notice, reduced service between Gospel Oak and Barking. A temporary timetable is in place, with four car trains running every 30 minutes. Supplementary bus services will also run. Tuesday 7, Wednesday 8, Thursday 9 and Friday 10 May, the 2325 train from Gospel Oak to Barking will not run and the last departure will be at 2248\",\"created\":\"0001-01-01T00:00:00\",\"validityPeriods\":[{\"$type\":\"Tfl.Api.Presentation.Entities.ValidityPeriod, Tfl.Api.Presentation.Entities\",\"fromDate\":\"2019-03-13T08:44:00Z\",\"toDate\":\"2019-08-25T01:29:00Z\",\"isNow\":false}],\"disruption\":{\"$type\":\"Tfl.Api.Presentation.Entities.Disruption, Tfl.Api.Presentation.Entities\",\"category\":\"Information\",\"categoryDescription\":\"Information\",\"description\":\"LONDON OVERGROUND: Until further notice, reduced service between Gospel Oak and Barking. A temporary timetable is in place, with four car trains running every 30 minutes. Supplementary bus services will also run. Tuesday 7, Wednesday 8, Thursday 9 and Friday 10 May, the 2325 train from Gospel Oak to Barking will not run and the last departure will be at 2248\",\"additionalInfo\":\"For train times see the <a href=\\\"http:\/\/content.tfl.gov.uk\/gospel-oak-to-barking-temporary-timetable-march-2019.pdf?5\\\">temporary timetable<\/a>.\u00A0<a href=\\\"http:\/\/content.tfl.gov.uk\/gospel-oak-to-barking-supplementary-bus-service-timetable-23-march-2019.pdf\\\">Supplementary buses<\/a>\u00A0will run every 30 minutes. Service J: Hampstead Heath - Gospel Oak \u2013 Upper Holloway\/Archway - Crouch Hill (Hornsey Road) \u2013 Finsbury Park. Service T: Walthamstow Central \u2013 Leyton Midland Road - Leytonstone High Road \u2013 Leytonstone (Tube).For more information and travel options, visit <a href=\\\"https:\/\/tfl.gov.uk\/modes\/london-overground\/gospel-oak-to-barking-improvements?cid=gospel-oak-barking-trains\\\">tfl.gov.uk\/gospel-oak-barking-trains<\/a>\",\"created\":\"2019-03-13T08:44:00Z\",\"affectedRoutes\":[],\"affectedStops\":[],\"closureText\":\"reducedService\"}}],\"routeSections\":[],\"serviceTypes\":[{\"$type\":\"Tfl.Api.Presentation.Entities.LineServiceTypeInfo, Tfl.Api.Presentation.Entities\",\"name\":\"Regular\",\"uri\":\"\/Line\/Route?ids=London Overground&serviceTypes=Regular\"},{\"$type\":\"Tfl.Api.Presentation.Entities.LineServiceTypeInfo, Tfl.Api.Presentation.Entities\",\"name\":\"Night\",\"uri\":\"\/Line\/Route?ids=London Overground&serviceTypes=Night\"}],\"crowding\":{\"$type\":\"Tfl.Api.Presentation.Entities.Crowding, Tfl.Api.Presentation.Entities\"}}]`;
+    [
+{
+    "$type": "Tfl.Api.Presentation.Entities.Line, Tfl.Api.Presentation.Entities",
+    "id": "london-overground",
+    "name": "London Overground",
+    "modeName": "overground",
+    "disruptions": [],
+    "created": "2019-07-23T12:19:31.533Z",
+    "modified": "2019-07-23T12:19:31.533Z",
+    "lineStatuses": [
+    {
+        "$type": "Tfl.Api.Presentation.Entities.LineStatus, Tfl.Api.Presentation.Entities",
+        "id": 0,
+        "lineId": "london-overground",
+        "statusSeverity": 7,
+        "statusSeverityDescription": "Reduced Service",
+        "reason": "A reduced service will operate on TfL Rail services between Liverpool Street and Shenfield and all London Overground services. Network Rail have introduced temporary speed restrictions because of the high temperatures forecast for Thursday 25 July. Please allow extra time for your journey",
+        "created": "0001-01-01T00:00:00",
+        "validityPeriods": [
+        {
+            "$type": "Tfl.Api.Presentation.Entities.ValidityPeriod, Tfl.Api.Presentation.Entities",
+            "fromDate": "2019-07-25T08:30:00Z",
+            "toDate": "2019-07-26T01:29:00Z",
+            "isNow": false
+        }],
+        "disruption":
+        {
+            "$type": "Tfl.Api.Presentation.Entities.Disruption, Tfl.Api.Presentation.Entities",
+            "category": "Information",
+            "categoryDescription": "Information",
+            "description": "A reduced service will operate on TfL Rail services between Liverpool Street and Shenfield and all London Overground services. Network Rail have introduced temporary speed restrictions because of the high temperatures forecast for Thursday 25 July. Please allow extra time for your journey",
+            "created": "2019-07-25T08:30:00Z",
+            "affectedRoutes": [],
+            "affectedStops": [],
+            "closureText": "reducedService"
+        }
+    },
+    {
+        "$type": "Tfl.Api.Presentation.Entities.LineStatus, Tfl.Api.Presentation.Entities",
+        "id": 0,
+        "lineId": "london-overground",
+        "statusSeverity": 9,
+        "statusSeverityDescription": "Minor Delays",
+        "reason": "No service between Edmonton Green and Cheshunt. MINOR DELAYS Liverpool Street to Chingford / Enfield Town and Stratford to Richmond / Clapham Junction due to heat related temporary speed restrictions. Tickets will be accepted on London Underground services via any reasonable route. GOOD SERVICE on all other routes. ",
+        "created": "0001-01-01T00:00:00",
+        "validityPeriods": [
+        {
+            "$type": "Tfl.Api.Presentation.Entities.ValidityPeriod, Tfl.Api.Presentation.Entities",
+            "fromDate": "2019-07-25T07:59:14Z",
+            "toDate": "2019-07-26T01:29:00Z",
+            "isNow": true
+        }],
+        "disruption":
+        {
+            "$type": "Tfl.Api.Presentation.Entities.Disruption, Tfl.Api.Presentation.Entities",
+            "category": "RealTime",
+            "categoryDescription": "RealTime",
+            "description": "No service between Edmonton Green and Cheshunt. MINOR DELAYS Liverpool Street to Chingford / Enfield Town and Stratford to Richmond / Clapham Junction due to heat related temporary speed restrictions. Tickets will be accepted on London Underground services via any reasonable route. GOOD SERVICE on all other routes. ",
+            "affectedRoutes": [],
+            "affectedStops": [],
+            "closureText": "minorDelays"
+        }
+    },
+    {
+        "$type": "Tfl.Api.Presentation.Entities.LineStatus, Tfl.Api.Presentation.Entities",
+        "id": 0,
+        "lineId": "london-overground",
+        "statusSeverity": 3,
+        "statusSeverityDescription": "Part Suspended",
+        "reason": "No service between Edmonton Green and Cheshunt. MINOR DELAYS Liverpool Street to Chingford / Enfield Town and Stratford to Richmond / Clapham Junction due to heat related temporary speed restrictions. Tickets will be accepted on London Underground services via any reasonable route. GOOD SERVICE on all other routes.",
+        "created": "0001-01-01T00:00:00",
+        "validityPeriods": [
+        {
+            "$type": "Tfl.Api.Presentation.Entities.ValidityPeriod, Tfl.Api.Presentation.Entities",
+            "fromDate": "2019-07-25T07:59:00Z",
+            "toDate": "2019-07-25T13:59:00Z",
+            "isNow": true
+        }],
+        "disruption":
+        {
+            "$type": "Tfl.Api.Presentation.Entities.Disruption, Tfl.Api.Presentation.Entities",
+            "category": "RealTime",
+            "categoryDescription": "RealTime",
+            "description": "No service between Edmonton Green and Cheshunt. MINOR DELAYS Liverpool Street to Chingford / Enfield Town and Stratford to Richmond / Clapham Junction due to heat related temporary speed restrictions. Tickets will be accepted on London Underground services via any reasonable route. GOOD SERVICE on all other routes.",
+            "created": "2019-07-25T10:45:00Z",
+            "affectedRoutes": [],
+            "affectedStops": [],
+            "closureText": "partSuspended"
+        }
+    },
+    {
+        "$type": "Tfl.Api.Presentation.Entities.LineStatus, Tfl.Api.Presentation.Entities",
+        "id": 0,
+        "lineId": "london-overground",
+        "statusSeverity": 9,
+        "statusSeverityDescription": "Minor Delays",
+        "reason": "London Overground: No service between Edmonton Green and Cheshunt. MINOR DELAYS Liverpool Street to Chingford / Enfield Town and Stratford to Richmond / Clapham Junction due to heat related temporary speed restrictions. Tickets will be accepted on London Underground services via any reasonable route. GOOD SERVICE on all other routes. ",
+        "created": "0001-01-01T00:00:00",
+        "validityPeriods": [
+        {
+            "$type": "Tfl.Api.Presentation.Entities.ValidityPeriod, Tfl.Api.Presentation.Entities",
+            "fromDate": "2019-07-25T05:09:56Z",
+            "toDate": "2019-07-26T01:29:00Z",
+            "isNow": true
+        }],
+        "disruption":
+        {
+            "$type": "Tfl.Api.Presentation.Entities.Disruption, Tfl.Api.Presentation.Entities",
+            "category": "RealTime",
+            "categoryDescription": "RealTime",
+            "description": "London Overground: No service between Edmonton Green and Cheshunt. MINOR DELAYS Liverpool Street to Chingford / Enfield Town and Stratford to Richmond / Clapham Junction due to heat related temporary speed restrictions. Tickets will be accepted on London Underground services via any reasonable route. GOOD SERVICE on all other routes. ",
+            "affectedRoutes": [],
+            "affectedStops": [],
+            "closureText": "minorDelays"
+        }
+    }],
+    "routeSections": [],
+    "serviceTypes": [
+    {
+        "$type": "Tfl.Api.Presentation.Entities.LineServiceTypeInfo, Tfl.Api.Presentation.Entities",
+        "name": "Regular",
+        "uri": "/Line/Route?ids=London Overground&serviceTypes=Regular"
+    },
+    {
+        "$type": "Tfl.Api.Presentation.Entities.LineServiceTypeInfo, Tfl.Api.Presentation.Entities",
+        "name": "Night",
+        "uri": "/Line/Route?ids=London Overground&serviceTypes=Night"
+    }],
+    "crowding":
+    {
+        "$type": "Tfl.Api.Presentation.Entities.Crowding, Tfl.Api.Presentation.Entities"
+    }
+}]
+    `;
     return JSON.parse(data);
 }
 

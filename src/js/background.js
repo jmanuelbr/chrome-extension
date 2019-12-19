@@ -4,8 +4,18 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.contentScriptQuery == FETCH_CONTENT) {
     let url = "";
     switch (request.itemId) {
-      case "bbc":
-        url = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
+      // case "bbc":
+      //   url = "https://feeds.bbci.co.uk/news/rss.xml?edition=uk";
+      //   break;
+      case "currency":
+        url =
+          "http://spreadsheets.google.com/feeds/list/0Av2v4lMxiJ1AdE9laEZJdzhmMzdmcW90VWNfUTYtM2c/5/public/basic?alt=json";
+        break;
+      case "huffpost":
+        url = "https://www.huffpost.com/section/world-news/feed";
+        break;
+      case "contractor-uk":
+        url = "https://www.contractoruk.com/forums/external.php?type=RSS2&forumids=4";
         break;
       case "theguardian":
         url = "https://www.theguardian.com/uk/rss";
@@ -13,9 +23,12 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       // case "eldiario":
       //     url = "https://www.eldiario.es/rss/";
       // break;
-      case "elmundo":
-        url = "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml";
-        break;
+      // case "elmundo":
+      //   url = "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml";
+      //   break;
+      // case "as":
+      //   url = "https://as.com/rss/tags/ultimas_noticias.xml";
+      //   break;
       case "elpais":
         url = "https://ep00.epimg.net/rss/tags/ultimas_noticias.xml";
         break;
@@ -31,6 +44,17 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
       case "tfl-bus":
         url = "https://api.tfl.gov.uk/StopPoint/490008296G/arrivals";
         break;
+      case "tfl-train":
+          const today = new Date(); 
+          if (today.getHours() > 10 && today.getHours() < 23) {
+            // From Shenfield to Stratford
+            url = "https://api.tfl.gov.uk/journey/journeyresults/1006448/to/1000226?app_id=7a545d8e&app_key=a126ea9826d6227c33bebc86df0fd87f";
+          }
+          else{
+            // From Stratford to Shenfield ok
+            url = "https://api.tfl.gov.uk/journey/journeyresults/1000226/to/1006448?app_id=7a545d8e&app_key=a126ea9826d6227c33bebc86df0fd87f";
+          }
+          break;  
       case "weather":
         url =
           "https://api.darksky.net/forecast/e9231a0d68ba35226274ad3b5e1f6dc4/51.5177896,0.1085338000000000?units=ca";
@@ -47,6 +71,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
           request.itemId === "reddit" ||
           request.itemId === "tfl-tube" ||
           request.itemId === "tfl-bus" ||
+          request.itemId === "tfl-train" ||
+          request.itemId === "currency" ||
           request.itemId === "weather"
         ) {
           sendResponse(JSON.parse(xmlHttp.response));
