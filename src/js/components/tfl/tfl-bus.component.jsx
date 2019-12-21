@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import _map from 'lodash/map';
 import _orderBy from 'lodash/orderBy';
 import LoaderTabs from '../loader/loader-tabs.component';
@@ -6,14 +6,15 @@ import Error from '../error.component';
 import { connect } from 'react-redux';
 import { getMockData } from '../../mocks/tfl-bus.mocks';
 import { FETCH_CONTENT } from '../../actions/types';
+import AbstractWidget from '../abstract-widget.component';
 
-export class TflBus extends Component {
+class TflBus extends AbstractWidget {
     constructor (props) {
         super(props);
         this.PROPERTIES = {
             feedUrl: "https://api.tfl.gov.uk/StopPoint/490008296G/arrivals",
             needsJsonParse: true
-        }
+        };
         this.MAX_BUSES = 5;
         this.state = {
             contentReady: false,
@@ -23,7 +24,8 @@ export class TflBus extends Component {
         };
     }
 
-    processData = function(feedData) {
+    // Overrides
+    processData(feedData) {
         const self = this;
         try {
             self.setState(state => {
@@ -42,7 +44,7 @@ export class TflBus extends Component {
 
     componentDidMount() {
         if (this.props.mocksEnabled) {
-            this.processData(getMockData())
+            this.processData(getMockData());
         }
         else {
             chrome.runtime.sendMessage(
@@ -66,7 +68,7 @@ export class TflBus extends Component {
             return (
                 <div className="tfl-bus-container">
                     <div className="bus-stop-title">
-                        <a href="https://tfl.gov.uk/bus/stop/490008296G/seven-sisters-road-parkhurst-road?" target="_blank">
+                        <a href="https://tfl.gov.uk/bus/stop/490008296G/seven-sisters-road-parkhurst-road?" target="_blank" rel="noopener noreferrer">
                             <span className="bus-stop-letter"> G</span>
                             <span className="bus-stop-name">Seven Sisters Road / Parkhurst Road</span>
                         </a>
@@ -80,7 +82,7 @@ export class TflBus extends Component {
                                     <div className="lineName">{bus.lineName}</div>
                                     <div className="expected-arrival">{timeToStation > 0 ? `${timeToStation} min`: 'Due'}</div>
                                 </div>
-                            )
+                            );
                         })}
 
                     </div>
@@ -93,7 +95,7 @@ export class TflBus extends Component {
                                     <div className="lineName">{bus.lineName}</div>
                                     <div className="expected-arrival">{timeToStation > 0 ? `${timeToStation} min`: 'Due'}</div>
                                 </div>
-                            )
+                            );
                         })}
                     </div>
                 </div>

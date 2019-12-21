@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';
@@ -8,13 +8,14 @@ import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../mocks/huffpost.mocks';
 import { FETCH_CONTENT } from '../actions/types';
+import AbstractWidget from './abstract-widget.component';
 
-export class HuffPostWidget extends Component {
+export class HuffPostWidget extends AbstractWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
             feedUrl: "https://www.huffpost.com/section/world-news/feed"
-        }
+        };
         this.state = {
             articles: [],
             contentReady: false,
@@ -22,7 +23,7 @@ export class HuffPostWidget extends Component {
         };
     }
 
-    getArticles = (jsonData) => {
+    getArticles(jsonData) {
         var list = [];
         try {
             jsonData = HELPER.parseFeed(jsonData);
@@ -66,21 +67,7 @@ export class HuffPostWidget extends Component {
         return list;
     };
 
-    processData = (feedData) => {
-        const self = this;
-        var convert = require('xml-js');
-        var jsonData = convert.xml2json(feedData, { compact: false, spaces: 4 });
-        self.setState(state => {
-            state.articles = self.getArticles(jsonData);
-            if (_isEmpty(state.articles)) {
-                state.error = true;
-            }
-            state.contentReady = true;
-            return state;
-        });
-    }
-
-    componentDidMount = () => {
+    componentDidMount() {
         if (this.props.mocksEnabled) {
             this.processData(getMockData());
         }
@@ -91,7 +78,7 @@ export class HuffPostWidget extends Component {
         }
     }
 
-    render = () => {
+    render() {
         if (!this.state.contentReady) {
             return (
                 <LoaderTabs/>

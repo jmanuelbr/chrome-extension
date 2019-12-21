@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';
@@ -8,14 +8,14 @@ import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../mocks/contractor-uk.mocks';
 import { FETCH_CONTENT } from '../actions/types';
+import AbstractWidget from './abstract-widget.component';
 
-
-export class ContractorUKWidget extends Component {
+class ContractorUKWidget extends AbstractWidget {
     constructor (props) {
         super(props);
         this.PROPERTIES = {
             feedUrl: "https://www.contractoruk.com/forums/external.php?type=RSS2&forumids=4"
-        }
+        };
         this.state = {
             articles: [],
             contentReady: false,
@@ -23,7 +23,7 @@ export class ContractorUKWidget extends Component {
 		};
     }
 
-    getArticles = (jsonData) => {
+    getArticles(jsonData) {
         var list = [];
         try {
             jsonData = HELPER.parseFeed(jsonData);
@@ -75,7 +75,7 @@ export class ContractorUKWidget extends Component {
         return list;
     };
 
-    processData = function(feedData) {
+    processData(feedData) {
         const self = this;
         try {
             var convert = require('xml-js');
@@ -102,7 +102,7 @@ export class ContractorUKWidget extends Component {
     
     componentDidMount() {
         if (this.props.mocksEnabled) {
-            this.processData(getMockData())
+            this.processData(getMockData());
         }
         else {
             chrome.runtime.sendMessage(
@@ -138,7 +138,7 @@ export class ContractorUKWidget extends Component {
                                 articleData={article}
                                 css={css}
                             />
-                        )
+                        );
                     }
                     )}
                 </div>

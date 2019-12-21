@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import RedditArticle from './reddit-article.component';
 import _map from 'lodash/map';
 import LoaderTabs from '../loader/loader-tabs.component';
@@ -7,8 +7,9 @@ import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../../mocks/reddit.mocks';
 import { FETCH_CONTENT } from '../../actions/types';
+import AbstractWidget from '../abstract-widget.component';
 
-export class RedditWidget extends Component {
+class RedditWidget extends AbstractWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
@@ -28,7 +29,7 @@ export class RedditWidget extends Component {
             var list = [];
             Object.values(data).map(element => {
                     list.push(element.data);   
-            })
+            });
         }
         catch (exception) {
             console.log('EXCEPTION', exception);
@@ -38,7 +39,8 @@ export class RedditWidget extends Component {
         return list;
     }
 
-    processData = function(feedData) {
+    // Overrides
+    processData(feedData) {
         const self = this;
         self.setState(state => {
             state.articles = self.getArticles(feedData);
@@ -52,7 +54,7 @@ export class RedditWidget extends Component {
 
     componentDidMount() {
         if (this.props.mocksEnabled) {
-            this.processData(getMockData())
+            this.processData(getMockData());
         }
         else {
             chrome.runtime.sendMessage(

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';
@@ -8,13 +8,14 @@ import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../mocks/elpais.mocks';
 import { FETCH_CONTENT } from '../actions/types';
+import AbstractWidget from './abstract-widget.component';
 
-export class ElpaisWidget extends Component {
+class ElpaisWidget extends AbstractWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
             feedUrl: "https://ep00.epimg.net/rss/tags/ultimas_noticias.xml"
-        }
+        };
         this.state = {
             articles: 'No news today :(',
             contentReady: false,
@@ -22,7 +23,7 @@ export class ElpaisWidget extends Component {
         };
     }
 
-    getArticles = function (jsonData) {
+    getArticles(jsonData) {
         var list = [];
         try {
             jsonData = HELPER.parseFeed(jsonData);
@@ -73,23 +74,9 @@ export class ElpaisWidget extends Component {
         return list;
     };
 
-    processData = function(feedData) {
-        const self = this;
-        var convert = require('xml-js');
-        var jsonData = convert.xml2json(feedData, { compact: false, spaces: 4 });
-        self.setState(state => {
-            state.articles = self.getArticles(jsonData);
-            if (_isEmpty(state.articles)) {
-                state.error = true;
-            }
-            state.contentReady = true;
-            return state;
-        });
-    }
-
     componentDidMount() {
         if (this.props.mocksEnabled) {
-            this.processData(getMockData())
+            this.processData(getMockData());
         }
         else {
             chrome.runtime.sendMessage(

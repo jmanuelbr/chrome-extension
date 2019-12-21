@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TflStatus from './tfl-status.component';
 import _map from 'lodash/map';
 import LoaderTabs from '../loader/loader-tabs.component';
@@ -6,15 +6,16 @@ import Error from '../error.component';
 import { connect } from 'react-redux';
 import { getMockData } from '../../mocks/tfl-tube.mocks';
 import { FETCH_CONTENT } from '../../actions/types';
+import AbstractWidget from '../abstract-widget.component';
 
 
-export class TflTube extends Component {
+class TflTube extends AbstractWidget {
     constructor (props) {
         super(props);
         this.PROPERTIES = {
             feedUrl: "https://api.tfl.gov.uk/line/mode/overground/status",
             needsJsonParse: true
-        }
+        };
         this.state = {
             contentReady: false,
             tubeData: {},
@@ -22,7 +23,8 @@ export class TflTube extends Component {
         };
     }
 
-    processData = function(feedData) {
+    // Overrides 
+    processData(feedData) {
         const self = this;
         try {
             self.setState(state => {
@@ -39,7 +41,7 @@ export class TflTube extends Component {
 
     componentDidMount() {
         if (this.props.mocksEnabled) {
-            this.processData(getMockData())
+            this.processData(getMockData());
         }
         else {
             chrome.runtime.sendMessage(
