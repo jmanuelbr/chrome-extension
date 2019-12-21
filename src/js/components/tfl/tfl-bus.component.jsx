@@ -10,6 +10,10 @@ import { FETCH_CONTENT } from '../../actions/types';
 export class TflBus extends Component {
     constructor (props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://api.tfl.gov.uk/StopPoint/490008296G/arrivals",
+            needsJsonParse: true
+        }
         this.MAX_BUSES = 5;
         this.state = {
             contentReady: false,
@@ -42,7 +46,7 @@ export class TflBus extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "tfl-bus" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }

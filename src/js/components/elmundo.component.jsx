@@ -12,6 +12,9 @@ import { FETCH_CONTENT } from "../actions/types";
 export class ElMundoWidget extends Component {
   constructor(props) {
     super(props);
+    this.PROPERTIES = {
+      feedUrl: "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml"
+  }
     this.state = {
       articles: "No news today :(",
       contentReady: false,
@@ -86,9 +89,8 @@ export class ElMundoWidget extends Component {
       this.processData(getMockData());
     } else {
       chrome.runtime.sendMessage(
-        { contentScriptQuery: FETCH_CONTENT, itemId: "elmundo" },
-        feedData => this.processData(feedData)
-      );
+        { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
+        feedData => this.processData(feedData));
     }
   }
 

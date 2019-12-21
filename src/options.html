@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Extension Options</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+
+    <div class="container" style="margin-top: 18px;">
+        <div class="row">
+            <h1>Jose's Extension Config</h1>
+        </div>
+        <div class="row">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">DarkSky API Token</span>
+                </div>
+                <input type="text" aria-label="DarkSky API Token" class="form-control" id="darksky-api-token">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Latitude</span>
+                </div>
+                <input type="text" aria-label="Latitude" class="form-control" id="darksky-latitude">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Longitude</span>
+                </div>
+                <input type="text" aria-label="Longitude" class="form-control" id="darksky-longitude">
+            </div>
+
+        </div>
+        <div class="row">
+            <div id="status"></div>
+            <button id="save">Save</button>
+        </div>
+    </div>
+
+    
+
+    <script src="js/options.js"></script>
+</body>
+
+</html>

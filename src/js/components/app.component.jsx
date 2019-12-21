@@ -12,6 +12,7 @@ import _map from "lodash/map";
 import { Provider } from "react-redux";
 import HuffPostWidget from "./huffpost.component";
 import ContractorUKWidget from "./contractor-uk.component";
+import { OPEN_OPTIONS_PAGE } from "../actions/types";
 // import AsWidget from "./as.component";
 // import BbcWidget from "./bbc.component";
 // import EldiarioWidget from "./eldiario.component";
@@ -74,9 +75,21 @@ export default class App extends Component {
       //   icon: chrome.runtime.getURL("../assets/as.png")
       // },
     ];
+
+    this.openOptionsPage = () => {
+      chrome.runtime.sendMessage(
+        { contentScriptQuery: OPEN_OPTIONS_PAGE }, 
+        null);
+    };
+    
     return (
       <Provider store={this.props.store}>
         <div>
+          <button className="options-button" onClick={this.openOptionsPage}>
+              <img
+                src={chrome.runtime.getURL("../assets/options.png")}
+              />
+          </button>
           <CurrencyWidget />
           <WeatherWidget />
           <div className="tabs-section">

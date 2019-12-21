@@ -11,6 +11,10 @@ import { FETCH_CONTENT } from '../../actions/types';
 export class TflTube extends Component {
     constructor (props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://api.tfl.gov.uk/line/mode/overground/status",
+            needsJsonParse: true
+        }
         this.state = {
             contentReady: false,
             tubeData: {},
@@ -39,7 +43,7 @@ export class TflTube extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "tfl-tube" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }

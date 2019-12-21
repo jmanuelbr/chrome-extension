@@ -1,0 +1,23 @@
+.options-button {
+    position: absolute;
+    height: 21px;
+    left: 239px;
+    width: 23px;
+    top: 10px;
+    border-radius: 3px;
+    outline: none;
+    padding: 0;
+    border: 1px solid transparent;
+    background-color: white;
+    cursor: pointer;
+    &:hover {
+      border: 1px solid lightgray;
+      background-color: rgb(244, 244, 244);
+      border-radius: 3px;
+    }
+    img {
+        width: 16px;
+        position: relative;
+        top: 1px;
+    }
+}

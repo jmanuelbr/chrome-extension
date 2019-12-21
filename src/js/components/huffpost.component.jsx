@@ -12,6 +12,9 @@ import { FETCH_CONTENT } from '../actions/types';
 export class HuffPostWidget extends Component {
     constructor(props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://www.huffpost.com/section/world-news/feed"
+        }
         this.state = {
             articles: [],
             contentReady: false,
@@ -83,7 +86,7 @@ export class HuffPostWidget extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "huffpost" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }

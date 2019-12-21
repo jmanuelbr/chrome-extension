@@ -12,6 +12,9 @@ import { FETCH_CONTENT } from '../actions/types';
 export class BbcWidget extends Component {
     constructor(props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://feeds.bbci.co.uk/news/rss.xml?edition=uk"
+        }
         this.state = {
             articles: 'No news today :(',
             contentReady: false,
@@ -83,7 +86,7 @@ export class BbcWidget extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "bbc" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }

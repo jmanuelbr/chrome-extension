@@ -11,6 +11,10 @@ import { FETCH_CONTENT } from '../../actions/types';
 export class RedditWidget extends Component {
     constructor(props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://www.reddit.com/r/chess/top/.json?t=day",
+            needsJsonParse: true
+        }
         this.state = {
             articles: [],
             contentReady: false,
@@ -52,7 +56,7 @@ export class RedditWidget extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "reddit" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }

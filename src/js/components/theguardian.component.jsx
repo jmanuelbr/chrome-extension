@@ -13,6 +13,9 @@ import { FETCH_CONTENT } from '../actions/types';
 export class TheGuardianWidget extends Component {
     constructor (props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://www.theguardian.com/uk/rss"
+        }
         this.state = {
             articles: [],
             contentReady: false,
@@ -87,7 +90,7 @@ export class TheGuardianWidget extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "theguardian" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }

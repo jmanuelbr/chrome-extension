@@ -12,6 +12,9 @@ import { FETCH_CONTENT } from '../../actions/types';
 export class SlashdotWidget extends Component {
     constructor(props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://slashdot.org/slashdot.xml"
+        }
         this.state = {
             articles: 'No news today :(',
             contentReady: false,
@@ -93,7 +96,7 @@ export class SlashdotWidget extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "slashdot" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }

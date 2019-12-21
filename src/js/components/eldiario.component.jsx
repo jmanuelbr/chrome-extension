@@ -12,6 +12,9 @@ import { FETCH_CONTENT } from '../actions/types';
 export class EldiarioWidget extends Component {
     constructor(props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://www.eldiario.es/rss"
+        }
         this.state = {
             articles: 'No news today :(',
             contentReady: false,
@@ -83,7 +86,7 @@ export class EldiarioWidget extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "eldiario" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }

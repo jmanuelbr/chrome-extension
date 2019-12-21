@@ -12,6 +12,9 @@ import { FETCH_CONTENT } from '../actions/types';
 export class ElpaisWidget extends Component {
     constructor(props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://ep00.epimg.net/rss/tags/ultimas_noticias.xml"
+        }
         this.state = {
             articles: 'No news today :(',
             contentReady: false,
@@ -90,7 +93,7 @@ export class ElpaisWidget extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "elpais" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }

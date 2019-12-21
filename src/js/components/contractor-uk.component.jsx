@@ -13,6 +13,9 @@ import { FETCH_CONTENT } from '../actions/types';
 export class ContractorUKWidget extends Component {
     constructor (props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://www.contractoruk.com/forums/external.php?type=RSS2&forumids=4"
+        }
         this.state = {
             articles: [],
             contentReady: false,
@@ -103,7 +106,7 @@ export class ContractorUKWidget extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "contractor-uk" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }

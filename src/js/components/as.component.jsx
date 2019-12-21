@@ -12,6 +12,9 @@ import { FETCH_CONTENT } from '../actions/types';
 export class AsWidget extends Component {
     constructor(props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://as.com/rss/tags/ultimas_noticias.xml"
+        }
         this.state = {
             articles: [],
             contentReady: false,
@@ -88,7 +91,7 @@ export class AsWidget extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "as" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }

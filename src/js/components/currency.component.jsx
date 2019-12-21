@@ -7,6 +7,10 @@ import { FETCH_CONTENT } from "../actions/types";
 export class CurrencyWidget extends Component {
   constructor(props) {
     super(props);
+    this.PROPERTIES = {
+      feedUrl: "http://spreadsheets.google.com/feeds/list/0Av2v4lMxiJ1AdE9laEZJdzhmMzdmcW90VWNfUTYtM2c/5/public/basic?alt=json",
+      needsJsonParse: true
+    }
     this.state = {
       currencyRate: "N/A",
       error: false
@@ -41,9 +45,8 @@ export class CurrencyWidget extends Component {
       this.processData(getMockData());
     } else {
       chrome.runtime.sendMessage(
-        { contentScriptQuery: FETCH_CONTENT, itemId: "currency" },
-        feedData => this.processData(feedData)
-      );
+        { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
+        feedData => this.processData(feedData));
     }
   }
 

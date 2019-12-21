@@ -11,6 +11,10 @@ import { FETCH_CONTENT } from "../../actions/types";
 export class WeatherWidget extends Component {
   constructor(props) {
     super(props);
+    this.PROPERTIES = {
+      feedUrl: "https://api.darksky.net/forecast/e9231a0d68ba35226274ad3b5e1f6dc4/51.5177896,0.1085338000000000?units=ca",
+      needsJsonParse: true
+  }
     this.state = {
       data: {},
       contentReady: false,
@@ -41,9 +45,8 @@ export class WeatherWidget extends Component {
       this.processData(data);
     } else {
       chrome.runtime.sendMessage(
-        { contentScriptQuery: FETCH_CONTENT, itemId: "weather" },
-        feedData => this.processData(feedData)
-      );
+        { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
+        feedData => this.processData(feedData));
     }
   }
 
