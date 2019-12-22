@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';
@@ -8,8 +8,9 @@ import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../mocks/eldiario.mocks';
 import { FETCH_CONTENT } from '../actions/types';
+import AbstractWidget from './abstract-widget.component';
 
-export class EldiarioWidget extends Component {
+export class EldiarioWidget extends AbstractWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
@@ -18,7 +19,7 @@ export class EldiarioWidget extends Component {
         this.state = {
             articles: 'No news today :(',
             contentReady: false,
-            error: false
+            error: true
         };
     }
 
@@ -65,20 +66,6 @@ export class EldiarioWidget extends Component {
         }
         return list;
     };
-
-    processData = function(feedData) {
-        const self = this;
-        var convert = require('xml-js');
-        var jsonData = convert.xml2json(feedData, { compact: false, spaces: 4 });
-        self.setState(state => {
-            state.articles = self.getArticles(jsonData);
-            state.contentReady = true;
-            if (_isEmpty(state.articles)) {
-                state.error = true;
-            }
-            return state;
-        });
-    }
 
     componentDidMount() {
         if (this.props.mocksEnabled) {

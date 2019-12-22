@@ -19,7 +19,7 @@ class ElpaisWidget extends AbstractWidget {
         this.state = {
             articles: 'No news today :(',
             contentReady: false,
-            error: false
+            error: true
         };
     }
 
@@ -68,8 +68,8 @@ class ElpaisWidget extends AbstractWidget {
             });
         }
         catch (exception) {
-            console.log('EXCEPTION', exception);
-            list = [];
+            isWidgetLoading(false);
+            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
         }
         return list;
     };

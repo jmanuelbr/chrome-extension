@@ -19,7 +19,7 @@ class SlashdotWidget extends AbstractWidget {
         this.state = {
             articles: 'No news today :(',
             contentReady: false,
-            error: false
+            error: true
         };
     }
 
@@ -69,7 +69,8 @@ class SlashdotWidget extends AbstractWidget {
             orderedArticles = _orderBy(list, ['comments'],['desc']);
         }
         catch (exception) {
-            console.log('EXCEPTION', exception);
+            isWidgetLoading(false);
+            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
             orderedArticles = [];
         }
         

@@ -15,11 +15,11 @@ class RedditWidget extends AbstractWidget {
         this.PROPERTIES = {
             feedUrl: "https://www.reddit.com/r/chess/top/.json?t=day",
             needsJsonParse: true
-        }
+        };
         this.state = {
             articles: [],
             contentReady: false,
-            error: false
+            error: true
         };
     }
 
@@ -32,8 +32,8 @@ class RedditWidget extends AbstractWidget {
             });
         }
         catch (exception) {
-            console.log('EXCEPTION', exception);
-            list = [];
+            isWidgetLoading(false);
+            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
         }
        
         return list;
@@ -45,8 +45,8 @@ class RedditWidget extends AbstractWidget {
         self.setState(state => {
             state.articles = self.getArticles(feedData);
             state.contentReady = true;
-            if (_isEmpty(state.articles)) {
-                state.error = true;
+            if (!_isEmpty(state.articles)) {
+                state.error = false;
             }
             return state;
         });

@@ -82,7 +82,7 @@ class Tabs extends Component {
       left: `${size.left}px`,
       right: `${size.right}px`,
       transition: transitionStyle,
-    }
+    };
   }
 }
 

@@ -13,8 +13,7 @@ class CurrencyWidget extends AbstractWidget {
       needsJsonParse: true
     };
     this.state = {
-      currencyRate: "N/A",
-      error: false
+      currencyRate: "N/A"
     };
   }
 

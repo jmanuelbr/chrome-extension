@@ -19,7 +19,7 @@ class ContractorUKWidget extends AbstractWidget {
         this.state = {
             articles: [],
             contentReady: false,
-            error: false
+            error: true
 		};
     }
 
@@ -53,9 +53,7 @@ class ContractorUKWidget extends AbstractWidget {
                             break; 
                         } 
                         case "media:content": {
-                            // if (property.attributes.width === "460") {
-                            //     article.thumbnail = property.attributes.url;   
-                            // }
+                            // Do nothing
                             break; 
                         } 
                         default: { 
@@ -68,37 +66,12 @@ class ContractorUKWidget extends AbstractWidget {
             });
         }
         catch (exception) {
-            console.log('EXCEPTION', exception);
-            list = [];
+            isWidgetLoading(false);
+            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
         }
 
         return list;
     };
-
-    processData(feedData) {
-        const self = this;
-        try {
-            var convert = require('xml-js');
-            var jsonData = convert.xml2json(feedData, {compact: false, spaces: 4});
-            self.setState(state => {
-                state.articles = self.getArticles(jsonData);
-                state.contentReady = true;
-                if (_isEmpty(state.articles)) {
-                    state.error = true;
-                }
-                return state;
-            });
-        }
-        catch (error) {
-            console.info('Error parsing feed ->', error);
-            self.setState(state => {
-                state.contentReady = true;
-                state.error = true;
-                return state;
-            });
-            
-        }
-    }
     
     componentDidMount() {
         if (this.props.mocksEnabled) {
@@ -129,8 +102,7 @@ class ContractorUKWidget extends AbstractWidget {
             };
             return (
                 <div className="news-feed-container">
-                    {_map(this.state.articles, (article, i) => 
-                    {
+                    {_map(this.state.articles, (article, i) => {
                         article.thumbnail = chrome.runtime.getURL("../assets/contractor-uk.png");
                         return (
                             <Article 
@@ -139,8 +111,8 @@ class ContractorUKWidget extends AbstractWidget {
                                 css={css}
                             />
                         );
+                        })
                     }
-                    )}
                 </div>
             );
         }

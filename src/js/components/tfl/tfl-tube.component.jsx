@@ -19,7 +19,7 @@ class TflTube extends AbstractWidget {
         this.state = {
             contentReady: false,
             tubeData: {},
-            error: false
+            error: true
         };
     }
 
@@ -29,13 +29,14 @@ class TflTube extends AbstractWidget {
         try {
             self.setState(state => {
                 state.tubeData = feedData[0];
+                state.error = false;
                 state.contentReady = true;
                 return state;
             });
         }
         catch(exception) {
-            state.error = true;
-            return state;
+            isWidgetLoading(false);
+            console.error('*** EXCEPTION (I could not process all data) -> ', exception);
         }
     }
 

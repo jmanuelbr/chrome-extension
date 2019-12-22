@@ -27,7 +27,7 @@ export class WeatherWidget extends Component {
     this.toggleTodayForecast = this.toggleTodayForecast.bind(this);
   }
 
-  processData = function(feedData) {
+  processData(feedData) {
     const self = this;
     self.setState(state => {
       if (_isEmpty(feedData)) {
@@ -84,7 +84,7 @@ export class WeatherWidget extends Component {
           <div className="current">
             <a
               href="https://www.google.com/search?q=london+forecast"
-              target="_blank"
+              target="_blank" rel="noopener noreferrer"
             >
               <div
                 style={imageStyle}

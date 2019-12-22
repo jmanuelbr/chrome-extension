@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';
@@ -8,8 +8,9 @@ import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../mocks/as.mocks';
 import { FETCH_CONTENT } from '../actions/types';
+import AbstractWidget from './abstract-widget.component';
 
-export class AsWidget extends Component {
+export class AsWidget extends AbstractWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
@@ -18,7 +19,7 @@ export class AsWidget extends Component {
         this.state = {
             articles: [],
             contentReady: false,
-            error: false
+            error: true
         };
     }
 
@@ -65,25 +66,11 @@ export class AsWidget extends Component {
             });
         }
         catch (exception) {
-            console.log('EXCEPTION', exception);
-            list = [];
+            isWidgetLoading(false);
+            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
         }
         return list;
     };
-
-    processData = (feedData) => {
-        const self = this;
-        var convert = require('xml-js');
-        var jsonData = convert.xml2json(feedData, { compact: false, spaces: 4 });
-        self.setState(state => {
-            state.articles = self.getArticles(jsonData);
-            if (_isEmpty(state.articles)) {
-                state.error = true;
-            }
-            state.contentReady = true;
-            return state;
-        });
-    }
 
     componentDidMount = () => {
         if (this.props.mocksEnabled) {

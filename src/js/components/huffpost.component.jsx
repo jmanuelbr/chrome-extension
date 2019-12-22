@@ -19,7 +19,7 @@ export class HuffPostWidget extends AbstractWidget {
         this.state = {
             articles: [],
             contentReady: false,
-            error: false
+            error: true
         };
     }
 
@@ -61,8 +61,8 @@ export class HuffPostWidget extends AbstractWidget {
             });
         }
         catch (exception) {
-            console.log('EXCEPTION', exception);
-            list = [];
+            isWidgetLoading(false);
+            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
         }
         return list;
     };

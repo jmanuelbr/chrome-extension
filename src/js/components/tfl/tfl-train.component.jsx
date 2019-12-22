@@ -19,7 +19,7 @@ class TflTrain extends AbstractWidget {
     this.state = {
       contentReady: false,
       trainData: {},
-      error: false,
+      error: true,
       showInfo: true
     };
   }
@@ -51,14 +51,12 @@ class TflTrain extends AbstractWidget {
         state.trainData.isDisrupted = journey.legs[0].isDisrupted;
         state.trainData.disruptions = journey.legs[0].disruptions;
         state.contentReady = true;
+        state.error = false;
         return state;
       });
     } catch (exception) {
-      self.setState(state => {
-        state.contentReady = true;
-        state.error = true;
-        return state;
-      });
+      isWidgetLoading(false);
+      console.error('*** EXCEPTION (I could not process all data) -> ', exception);
     }
   };
 

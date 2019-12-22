@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import CreateReactClass from "create-react-class";
 
-
-
 export default class LichessWidget extends Component {
     constructor (props) {
         super(props);
@@ -33,6 +31,3 @@ export default class LichessWidget extends Component {
         );
     }
 }
-
-
-
