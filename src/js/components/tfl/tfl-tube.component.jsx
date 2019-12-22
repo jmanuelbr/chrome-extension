@@ -17,7 +17,7 @@ class TflTube extends AbstractWidget {
             needsJsonParse: true
         };
         this.state = {
-            contentReady: false,
+            loading: false,
             tubeData: {},
             error: true
         };
@@ -30,12 +30,12 @@ class TflTube extends AbstractWidget {
             self.setState(state => {
                 state.tubeData = feedData[0];
                 state.error = false;
-                state.contentReady = true;
+                state.loading = true;
                 return state;
             });
         }
         catch(exception) {
-            isWidgetLoading(false);
+            loading(false);
             console.error('*** EXCEPTION (I could not process all data) -> ', exception);
         }
     }
@@ -61,7 +61,7 @@ class TflTube extends AbstractWidget {
             }
         }
         const statusClass = (showIcon) ? "multiple-status" : "status";
-        if (!this.state.contentReady) {
+        if (!this.state.loading) {
             return (
                 <LoaderTabs/>
             );

@@ -18,7 +18,7 @@ class ContractorUKWidget extends AbstractWidget {
         };
         this.state = {
             articles: [],
-            contentReady: false,
+            loading: false,
             error: true
 		};
     }
@@ -66,7 +66,7 @@ class ContractorUKWidget extends AbstractWidget {
             });
         }
         catch (exception) {
-            isWidgetLoading(false);
+            loading(false);
             console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
         }
 
@@ -86,7 +86,7 @@ class ContractorUKWidget extends AbstractWidget {
 
     
     render() {
-        if (!this.state.contentReady) {
+        if (!this.state.loading) {
             return (
                 <LoaderTabs/>
             );

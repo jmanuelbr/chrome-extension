@@ -18,7 +18,7 @@ export class EldiarioWidget extends AbstractWidget {
         }
         this.state = {
             articles: 'No news today :(',
-            contentReady: false,
+            loading: false,
             error: true
         };
     }
@@ -79,7 +79,7 @@ export class EldiarioWidget extends AbstractWidget {
     }
 
     render() {
-        if (!this.state.contentReady) {
+        if (!this.state.loading) {
             return (
                 <LoaderTabs/>
             );

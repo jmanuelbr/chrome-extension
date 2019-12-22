@@ -1,7 +1,7 @@
 import { MOCKS_ENABLED } from "../actions/types";
 
 const INITIAL_STATE = {
-  mocksEnabled: false
+  mocksEnabled: true
 };
 
 export default (state = INITIAL_STATE, action) => {

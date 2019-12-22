@@ -18,7 +18,7 @@ class RedditWidget extends AbstractWidget {
         };
         this.state = {
             articles: [],
-            contentReady: false,
+            loading: false,
             error: true
         };
     }
@@ -32,7 +32,7 @@ class RedditWidget extends AbstractWidget {
             });
         }
         catch (exception) {
-            isWidgetLoading(false);
+            loading(false);
             console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
         }
        
@@ -44,7 +44,7 @@ class RedditWidget extends AbstractWidget {
         const self = this;
         self.setState(state => {
             state.articles = self.getArticles(feedData);
-            state.contentReady = true;
+            state.loading = true;
             if (!_isEmpty(state.articles)) {
                 state.error = false;
             }
@@ -64,7 +64,7 @@ class RedditWidget extends AbstractWidget {
     }
 
     render() {
-        if (!this.state.contentReady) {
+        if (!this.state.loading) {
             return (
                 <LoaderTabs/>
             );

@@ -16,15 +16,15 @@ export default class AbstractWidget extends Component {
             if (!_isEmpty(state.articles)) {
                 state.error = false;
             }
-            state.contentReady = true;
+            state.loading = true;
             return state;
         });
     }
 
-    isWidgetLoading(loadingState) {
+    loading(loadingState) {
         const self = this;
         self.setState(state => {
-            state.contentReady(loadingState);
+            state.loading(loadingState);
             return state;
         });
     }

@@ -18,7 +18,7 @@ export class ElMundoWidget extends AbstractWidget {
     };
     this.state = {
       articles: "No news today :(",
-      contentReady: false,
+      loading: false,
       error: true
     };
   }
@@ -65,7 +65,7 @@ export class ElMundoWidget extends AbstractWidget {
         list.push(article);
       });
     } catch (exception) {
-      isWidgetLoading(false);
+      loading(false);
       console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
     }
     return list;
@@ -82,7 +82,7 @@ export class ElMundoWidget extends AbstractWidget {
   }
 
   render() {
-    if (!this.state.contentReady) {
+    if (!this.state.loading) {
       return <LoaderTabs />;
     } else if (this.state.error) {
       return <Error />;

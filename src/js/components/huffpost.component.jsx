@@ -18,7 +18,7 @@ export class HuffPostWidget extends AbstractWidget {
         };
         this.state = {
             articles: [],
-            contentReady: false,
+            loading: false,
             error: true
         };
     }
@@ -61,7 +61,7 @@ export class HuffPostWidget extends AbstractWidget {
             });
         }
         catch (exception) {
-            isWidgetLoading(false);
+            loading(false);
             console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
         }
         return list;
@@ -79,7 +79,7 @@ export class HuffPostWidget extends AbstractWidget {
     }
 
     render() {
-        if (!this.state.contentReady) {
+        if (!this.state.loading) {
             return (
                 <LoaderTabs/>
             );

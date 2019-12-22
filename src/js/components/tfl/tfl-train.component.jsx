@@ -17,7 +17,7 @@ class TflTrain extends AbstractWidget {
       needsJsonParse: true
     };
     this.state = {
-      contentReady: false,
+      loading: false,
       trainData: {},
       error: true,
       showInfo: true
@@ -50,12 +50,12 @@ class TflTrain extends AbstractWidget {
         state.trainData.to = journey.legs[0].arrivalPoint.commonName;
         state.trainData.isDisrupted = journey.legs[0].isDisrupted;
         state.trainData.disruptions = journey.legs[0].disruptions;
-        state.contentReady = true;
+        state.loading = true;
         state.error = false;
         return state;
       });
     } catch (exception) {
-      isWidgetLoading(false);
+      loading(false);
       console.error('*** EXCEPTION (I could not process all data) -> ', exception);
     }
   };
@@ -73,7 +73,7 @@ class TflTrain extends AbstractWidget {
       } else {
         const self = this;
         self.setState(state => {
-          state.contentReady = true;
+          state.loading = true;
           state.showInfo = false;
           return state;
         });
@@ -101,7 +101,7 @@ class TflTrain extends AbstractWidget {
   }
 
   render() {
-    if (!this.state.contentReady) {
+    if (!this.state.loading) {
       return <LoaderTabs />;
     } else if (this.state.error) {
       return <Error />;

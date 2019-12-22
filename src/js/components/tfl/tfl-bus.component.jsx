@@ -18,7 +18,7 @@ class TflBus extends AbstractWidget {
         };
         this.MAX_BUSES = 5;
         this.state = {
-            contentReady: false,
+            loading: false,
             busDataLeft: [],
             busDataRight: [],
             error: true
@@ -33,7 +33,7 @@ class TflBus extends AbstractWidget {
                 const sortedList = _orderBy(feedData, ['timeToStation'],['asc']);
                 state.busDataLeft = sortedList.slice(0, this.MAX_BUSES);
                 state.busDataRight = sortedList.slice(this.MAX_BUSES, this.MAX_BUSES*2);
-                state.contentReady = true;
+                state.loading = true;
                 if (!_isEmpty(sortedList)) {
                     state.error = false;
                 }
@@ -41,7 +41,7 @@ class TflBus extends AbstractWidget {
             });
         }
         catch(exception) {
-            isWidgetLoading(false);
+            loading(false);
             console.error('*** EXCEPTION (I could not process all data) -> ', exception);
         }
     }
@@ -58,7 +58,7 @@ class TflBus extends AbstractWidget {
     }
 
     render() {
-        if (!this.state.contentReady) {
+        if (!this.state.loading) {
             return (
                 <LoaderTabs/>
             );

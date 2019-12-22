@@ -18,7 +18,7 @@ export class BbcWidget extends AbstractWidget {
         };
         this.state = {
             articles: 'No news today :(',
-            contentReady: false,
+            loading: false,
             error: true
         };
     }
@@ -61,7 +61,7 @@ export class BbcWidget extends AbstractWidget {
             });
         }
         catch (exception) {
-            isWidgetLoading(false);
+            loading(false);
             console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
         }
         return list;
@@ -92,7 +92,7 @@ export class BbcWidget extends AbstractWidget {
     }
 
     render() {
-        if (!this.state.contentReady) {
+        if (!this.state.loading) {
             return (
                 <LoaderTabs/>
             );

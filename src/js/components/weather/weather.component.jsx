@@ -17,7 +17,7 @@ export class WeatherWidget extends Component {
   }
     this.state = {
       data: {},
-      contentReady: false,
+      loading: false,
       error: false,
       nextDaysVisible: false,
       todayVisible: false
@@ -34,7 +34,7 @@ export class WeatherWidget extends Component {
         state.error = true;
       }
       state.data = feedData;
-      state.contentReady = true;
+      state.loading = true;
       return state;
     });
   };
@@ -69,7 +69,7 @@ export class WeatherWidget extends Component {
   }
 
   render() {
-    if (!this.state.contentReady) {
+    if (!this.state.loading) {
       return <Loader />;
     } else {
       const weather = this.state.data;
