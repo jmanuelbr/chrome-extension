@@ -101,14 +101,14 @@ class SlashdotWidget extends AbstractWidget {
         }
         else {
             return (
-                <div className="news-feed-container">
+                <React.Fragment>
                     {_map(this.state.articles, (article, i) => (
                         <SlashdotArticle
                             key={i}
                             articleData={article}
                         />
                     ))}
-                </div>
+                </React.Fragment>
             );
         }
     }

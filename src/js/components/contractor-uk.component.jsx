@@ -101,7 +101,7 @@ class ContractorUKWidget extends AbstractWidget {
                 "cssThumbnail": "small"
             };
             return (
-                <div className="news-feed-container">
+                <React.Fragment>
                     {_map(this.state.articles, (article, i) => {
                         article.thumbnail = chrome.runtime.getURL("../assets/contractor-uk.png");
                         return (
@@ -113,7 +113,7 @@ class ContractorUKWidget extends AbstractWidget {
                         );
                         })
                     }
-                </div>
+                </React.Fragment>
             );
         }
     }

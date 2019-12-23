@@ -80,7 +80,7 @@ export class BbcWidget extends AbstractWidget {
 
     renderComponent() {
         return (
-            <div className="news-feed-container">
+            <div>
                 {_map(this.state.articles, (article, i) => (
                     <Article
                         key={i}
@@ -104,14 +104,14 @@ export class BbcWidget extends AbstractWidget {
         }
         else {
             return(
-                <div className="news-feed-container">
+                <React.Fragment>
                     {_map(this.state.articles, (article, i) => (
                         <Article
                             key={i}
                             articleData={article}
                         />
                     ))}
-                </div>
+                </React.Fragment>
             );
         }
     }

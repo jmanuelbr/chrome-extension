@@ -96,14 +96,14 @@ export class AsWidget extends AbstractWidget {
         }
         else {
             return(
-                <div className="news-feed-container">
+                <React.Fragment>
                     {_map(this.state.articles, (article, i) => (
                         <Article
                             key={i}
                             articleData={article}
                         />
                     ))}
-                </div>
+                </React.Fragment>
             );
         }
     }
