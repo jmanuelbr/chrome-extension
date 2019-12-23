@@ -27,6 +27,10 @@
         border-bottom: 1px solid lightgray;
         padding: 8px 0;
     }
+    .toggle-description {
+        cursor: pointer;
+        user-select: none;
+    }
     .thumbnail-container {
         overflow: hidden;
         height: 138px;
