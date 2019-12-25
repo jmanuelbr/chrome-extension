@@ -1,35 +1,55 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { updateSelectedArticle } from '../actions/configuration.actions';
 
-export default class Article extends Component {
+class Article extends Component {
     constructor (props) {
         super(props);
+        this.setCurrentArticle = this.setCurrentArticle.bind(this);
+    }
+
+    setCurrentArticle(e) {
+        e.preventDefault();
+        this.props.updateSelectedArticle(this.props.articleData);
     }
 
     render() {
-        const {description, link, thumbnail} = this.props.articleData;
-        let {title} = this.props.articleData;
+        const {title, link, thumbnail} = this.props.articleData;
         let cssThumbnail = "";
-        if (this.props.css) { // Tailor made CSS for article
+        if (this.props.css) { // Custom CSS for some articles
             cssThumbnail = this.props.css.cssThumbnail;
         }
-        title += "<span class='toggle-description'> ➡️</span>";
 
         return (
             <React.Fragment>
-                {/* <div className="description"
-                    dangerouslySetInnerHTML={{ __html: description }}>
-                </div> */}
                 <div className="article">
                     <a href={link} target="_blank" rel="noopener noreferrer">
                         <div className={`thumbnail-container ${cssThumbnail}`}>
                             <img src={thumbnail}/>
                         </div>
                     </a>
-                    <p className="title"
-                        dangerouslySetInnerHTML={{ __html: title }}>
-                    </p>
+                    <div className="title"
+                        dangerouslySetInnerHTML={{ __html: title }}
+                        onClick={this.setCurrentArticle}>
+                    </div>
+                    
                 </div>
             </React.Fragment>
         );
     }    
 }
+
+Article.propTypes = {
+    articleData: PropTypes.object.isRequired,
+    css: PropTypes.object,
+    updateSelectedArticle: PropTypes.func
+};
+
+function mapDispatchToProps(dispatch) {
+    return {
+        updateSelectedArticle: article => dispatch(updateSelectedArticle(article))
+    };
+}
+
+export default connect(null, mapDispatchToProps)(Article);

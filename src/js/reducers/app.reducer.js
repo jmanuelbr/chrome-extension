@@ -1,15 +1,21 @@
-import { MOCKS_ENABLED } from "../actions/types";
+import { UPDATE_SELECTED_ARTICLE } from "../actions/types";
 
 const INITIAL_STATE = {
-  mocksEnabled: true
+  mocksEnabled: true,
+  articleSelected: {}
 };
 
-export default (state = INITIAL_STATE, action) => {
+  export default function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case MOCKS_ENABLED: {
-      return {
-        ...state
-      };
+    case UPDATE_SELECTED_ARTICLE: { 
+      if (action.payload.title === state.articleSelected.title) {
+        return Object.assign({}, state, {
+          articleSelected: {}
+        });  
+      }
+      return Object.assign({}, state, {
+        articleSelected: action.payload
+      });
     }
     default:
       return state;

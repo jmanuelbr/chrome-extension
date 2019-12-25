@@ -5,6 +5,7 @@ import { OPEN_OPTIONS_PAGE } from "../actions/types";
 import CurrencyWidget from "./currency.component";
 import WeatherWidget from "./weather/weather.component";
 import TabsContainerWidget  from './tabs-container.component';
+import ArticleSelected from "./article-selected.component";
 
 export default class App extends Component {
   constructor(props) {
@@ -25,6 +26,7 @@ export default class App extends Component {
                 src={chrome.runtime.getURL("../assets/options.png")}
               />
           </button>
+          <ArticleSelected/>
           <CurrencyWidget />
           <WeatherWidget />
           <TabsContainerWidget/>
