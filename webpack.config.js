@@ -7,7 +7,8 @@ var path = require("path");
 module.exports = {
     entry: {
         content: "./src/js/content.js",
-        background: "./src/js/background.js"
+        background: "./src/js/background.js",
+        options: "./src/js/options/options.js"
     },
     output: {
         path: path.resolve(__dirname, "build/js"),
@@ -64,6 +65,11 @@ module.exports = {
             to: '../manifest.json',
             toType: 'file'
         }]),
+        new CopyWebpackPlugin([{
+            from: 'src/options.html',
+            to: '../options.html',
+            toType: 'file'
+        }]),
         new MiniCssExtractPlugin({
             filename: "../css/styles.css",
             chunkFilename: "[id].css"
@@ -71,7 +77,7 @@ module.exports = {
         new WebpackNotifierPlugin({
             title: 'Webpack Making Noise',
             skipFirstNotification: false,
-            contentImage: path.join(__dirname, 'webpack/webpack-notification.jpg'),
+            contentImage: path.join(__dirname, 'src/assets/webpack-notification.png'),
             excludeWarnings: true
         })
     ],

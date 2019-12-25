@@ -5,6 +5,8 @@ $duration: 1.4s;
     text-align: center;
     .spinner {
         animation: rotator $duration linear infinite;
+        width: 65px; 
+        height: 65px;
       }
       
       @keyframes rotator {

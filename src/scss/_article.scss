@@ -26,6 +26,7 @@
         margin: 0px;
         border-bottom: 1px solid lightgray;
         padding: 8px 0;
+        cursor: pointer;
     }
     .thumbnail-container {
         overflow: hidden;
@@ -52,5 +53,36 @@
             width: 30px;
             height: 30px;
         }
+    }
+}
+
+.article-selected {
+    position: absolute;
+    top: 139px;
+    left: 271px;
+    width: 350px;
+    background-color: white;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-family: $font-stack;
+    .title-section {
+        h2 {
+            width: 309px;
+            padding-right: 10px;
+            display: inline-block;
+        }
+        img {
+            width: 24px;
+            display: inline-block;
+            position: relative;
+            top: -17px;
+            user-select: none;
+            cursor: pointer;
+        }
+    }
+    p {
+        font-size: 1.16em;
+        
     }
 }

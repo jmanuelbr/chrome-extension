@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SlashdotArticle from './slashdot-article.component';
 import _orderBy from 'lodash/orderBy';
 import _map from 'lodash/map';
@@ -8,18 +8,22 @@ import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../../mocks/slashdot.mocks';
 import { FETCH_CONTENT } from '../../actions/types';
+import AbstractWidget from '../abstract-widget.component';
 
-export class SlashdotWidget extends Component {
+class SlashdotWidget extends AbstractWidget {
     constructor(props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://slashdot.org/slashdot.xml"
+        };
         this.state = {
             articles: 'No news today :(',
-            contentReady: false,
-            error: false
+            loading: false,
+            error: true
         };
     }
 
-    getArticles = function (jsonData) {
+    getArticles(jsonData) {
         let orderedArticles = [];
         try {
             let list = [];
@@ -65,41 +69,27 @@ export class SlashdotWidget extends Component {
             orderedArticles = _orderBy(list, ['comments'],['desc']);
         }
         catch (exception) {
-            console.log('EXCEPTION', exception);
+            loading(false);
+            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
             orderedArticles = [];
         }
-
         
         return orderedArticles;
     };
 
-    processData = function(feedData) {
-        const self = this;
-        var convert = require('xml-js');
-        var jsonData = convert.xml2json(feedData, { compact: false, spaces: 4 });
-        self.setState(state => {
-            state.articles = self.getArticles(jsonData);
-            state.contentReady = true;
-            if (_isEmpty(state.articles)) {
-                state.error = true;
-            }
-            return state;
-        });
-    }
-
     componentDidMount() {
         if (this.props.mocksEnabled) {
-            this.processData(getMockData())
+            this.processData(getMockData());
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "slashdot" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }
 
     render() {
-        if (!this.state.contentReady) {
+        if (!this.state.loading) {
             return (
                 <LoaderTabs/>
             );
@@ -111,14 +101,14 @@ export class SlashdotWidget extends Component {
         }
         else {
             return (
-                <div className="news-feed-container">
+                <React.Fragment>
                     {_map(this.state.articles, (article, i) => (
                         <SlashdotArticle
                             key={i}
                             articleData={article}
                         />
                     ))}
-                </div>
+                </React.Fragment>
             );
         }
     }

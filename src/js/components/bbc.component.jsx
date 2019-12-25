@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';
@@ -8,18 +8,22 @@ import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../mocks/bbc.mocks';
 import { FETCH_CONTENT } from '../actions/types';
+import AbstractWidget from './abstract-widget.component';
 
-export class BbcWidget extends Component {
+export class BbcWidget extends AbstractWidget {
     constructor(props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://feeds.bbci.co.uk/news/rss.xml?edition=uk"
+        };
         this.state = {
             articles: 'No news today :(',
-            contentReady: false,
-            error: false
+            loading: false,
+            error: true
         };
     }
 
-    getArticles = function (jsonData) {
+    getArticles(jsonData) {
         var list = [];
         try {
             jsonData = HELPER.parseFeed(jsonData);
@@ -57,25 +61,11 @@ export class BbcWidget extends Component {
             });
         }
         catch (exception) {
-            console.log('EXCEPTION', exception);
-            list = [];
+            loading(false);
+            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
         }
         return list;
     };
-
-    processData = function(feedData) {
-        const self = this;
-        var convert = require('xml-js');
-        var jsonData = convert.xml2json(feedData, { compact: false, spaces: 4 });
-        self.setState(state => {
-            state.articles = self.getArticles(jsonData);
-            if (_isEmpty(state.articles)) {
-                state.error = true;
-            }
-            state.contentReady = true;
-            return state;
-        });
-    }
 
     componentDidMount() {
         if (this.props.mocksEnabled) {
@@ -83,14 +73,14 @@ export class BbcWidget extends Component {
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "bbc" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }
 
     renderComponent() {
         return (
-            <div className="news-feed-container">
+            <div>
                 {_map(this.state.articles, (article, i) => (
                     <Article
                         key={i}
@@ -102,7 +92,7 @@ export class BbcWidget extends Component {
     }
 
     render() {
-        if (!this.state.contentReady) {
+        if (!this.state.loading) {
             return (
                 <LoaderTabs/>
             );
@@ -114,14 +104,14 @@ export class BbcWidget extends Component {
         }
         else {
             return(
-                <div className="news-feed-container">
+                <React.Fragment>
                     {_map(this.state.articles, (article, i) => (
                         <Article
                             key={i}
                             articleData={article}
                         />
                     ))}
-                </div>
+                </React.Fragment>
             );
         }
     }

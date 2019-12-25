@@ -1,15 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 import * as CONSTANTS from "../constants";
 import { getMockData } from "../mocks/currency.mocks";
 import { connect } from "react-redux";
 import { FETCH_CONTENT } from "../actions/types";
+import AbstractWidget from './abstract-widget.component';
 
-export class CurrencyWidget extends Component {
+class CurrencyWidget extends AbstractWidget {
   constructor(props) {
     super(props);
+    this.PROPERTIES = {
+      feedUrl: "http://spreadsheets.google.com/feeds/list/0Av2v4lMxiJ1AdE9laEZJdzhmMzdmcW90VWNfUTYtM2c/5/public/basic?alt=json",
+      needsJsonParse: true
+    };
     this.state = {
-      currencyRate: "N/A",
-      error: false
+      currencyRate: "N/A"
     };
   }
 
@@ -24,7 +28,8 @@ export class CurrencyWidget extends Component {
     return "N/A";
   }
 
-  processData = function(feedData) {
+  // Overrides
+  processData(feedData) {
     this.setState(state => {
       try {
         state.currencyRate = this.getValueFromData(feedData);
@@ -41,9 +46,8 @@ export class CurrencyWidget extends Component {
       this.processData(getMockData());
     } else {
       chrome.runtime.sendMessage(
-        { contentScriptQuery: FETCH_CONTENT, itemId: "currency" },
-        feedData => this.processData(feedData)
-      );
+        { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
+        feedData => this.processData(feedData));
     }
   }
 
@@ -55,7 +59,7 @@ export class CurrencyWidget extends Component {
       <div className="currency-section">
         <div className="widget-table">
           <div className="currency-image">
-            <a href={CONSTANTS.CURRENCY_URL} target="_blank">
+            <a href={CONSTANTS.CURRENCY_URL} target="_blank" rel="noopener noreferrer">
               <img className="ukeur--logo--margin" src={image} height="20px" />
             </a>
           </div>

@@ -12,7 +12,7 @@ export default class TflDisruption extends Component {
         if (this.props.showicon) {
             return (
                 <img className="icon" src={icon} />
-            )
+            );
         }
     }
 

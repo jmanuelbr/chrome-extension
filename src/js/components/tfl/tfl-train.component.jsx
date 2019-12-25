@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import _map from "lodash/map";
 import LoaderTabs from "../loader/loader-tabs.component";
 import Error from "../error.component";
@@ -6,19 +6,38 @@ import { connect } from "react-redux";
 import { getMockData } from "../../mocks/tfl-train.mocks";
 import { FETCH_CONTENT } from "../../actions/types";
 import TflTrainDisruption from "./tfl-traindisruption";
+import AbstractWidget from '../abstract-widget.component';
 
-export class TflTrain extends Component {
+class TflTrain extends AbstractWidget {
   constructor(props) {
     super(props);
+    let url = this.getUrl();
+    this.PROPERTIES = {
+      feedUrl: url,
+      needsJsonParse: true
+    };
     this.state = {
-      contentReady: false,
+      loading: false,
       trainData: {},
-      error: false,
+      error: true,
       showInfo: true
     };
   }
 
-  processData = function(feedData) {
+  getUrl() {
+    const today = new Date(); 
+    if (today.getHours() > 10 && today.getHours() < 23) {
+      // From Shenfield to Stratford
+      return "https://api.tfl.gov.uk/journey/journeyresults/1006448/to/1000226?app_id=7a545d8e&app_key=a126ea9826d6227c33bebc86df0fd87f";
+    }
+    else{
+      // From Stratford to Shenfield ok
+      return "https://api.tfl.gov.uk/journey/journeyresults/1000226/to/1006448?app_id=7a545d8e&app_key=a126ea9826d6227c33bebc86df0fd87f";
+    }
+  }
+
+  // Overrides
+  processData(feedData) {
     const journey = feedData.journeys[0];
     const self = this;
     try {
@@ -31,15 +50,13 @@ export class TflTrain extends Component {
         state.trainData.to = journey.legs[0].arrivalPoint.commonName;
         state.trainData.isDisrupted = journey.legs[0].isDisrupted;
         state.trainData.disruptions = journey.legs[0].disruptions;
-        state.contentReady = true;
+        state.loading = true;
+        state.error = false;
         return state;
       });
     } catch (exception) {
-      self.setState(state => {
-        state.contentReady = true;
-        state.error = true;
-        return state;
-      });
+      loading(false);
+      console.error('*** EXCEPTION (I could not process all data) -> ', exception);
     }
   };
 
@@ -51,13 +68,12 @@ export class TflTrain extends Component {
       if (today.getDay() < 6) {
         // E.g. all workdays Mon to Fri
         chrome.runtime.sendMessage(
-          { contentScriptQuery: FETCH_CONTENT, itemId: "tfl-train" },
-          feedData => this.processData(feedData)
-        );
+          { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
+          feedData => this.processData(feedData));
       } else {
         const self = this;
         self.setState(state => {
-          state.contentReady = true;
+          state.loading = true;
           state.showInfo = false;
           return state;
         });
@@ -85,7 +101,7 @@ export class TflTrain extends Component {
   }
 
   render() {
-    if (!this.state.contentReady) {
+    if (!this.state.loading) {
       return <LoaderTabs />;
     } else if (this.state.error) {
       return <Error />;

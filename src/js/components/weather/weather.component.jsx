@@ -11,9 +11,13 @@ import { FETCH_CONTENT } from "../../actions/types";
 export class WeatherWidget extends Component {
   constructor(props) {
     super(props);
+    this.PROPERTIES = {
+      feedUrl: "https://api.darksky.net/forecast/e9231a0d68ba35226274ad3b5e1f6dc4/51.5177896,0.1085338000000000?units=ca",
+      needsJsonParse: true
+  }
     this.state = {
       data: {},
-      contentReady: false,
+      loading: false,
       error: false,
       nextDaysVisible: false,
       todayVisible: false
@@ -23,14 +27,14 @@ export class WeatherWidget extends Component {
     this.toggleTodayForecast = this.toggleTodayForecast.bind(this);
   }
 
-  processData = function(feedData) {
+  processData(feedData) {
     const self = this;
     self.setState(state => {
       if (_isEmpty(feedData)) {
         state.error = true;
       }
       state.data = feedData;
-      state.contentReady = true;
+      state.loading = true;
       return state;
     });
   };
@@ -41,9 +45,8 @@ export class WeatherWidget extends Component {
       this.processData(data);
     } else {
       chrome.runtime.sendMessage(
-        { contentScriptQuery: FETCH_CONTENT, itemId: "weather" },
-        feedData => this.processData(feedData)
-      );
+        { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
+        feedData => this.processData(feedData));
     }
   }
 
@@ -66,7 +69,7 @@ export class WeatherWidget extends Component {
   }
 
   render() {
-    if (!this.state.contentReady) {
+    if (!this.state.loading) {
       return <Loader />;
     } else {
       const weather = this.state.data;
@@ -81,7 +84,7 @@ export class WeatherWidget extends Component {
           <div className="current">
             <a
               href="https://www.google.com/search?q=london+forecast"
-              target="_blank"
+              target="_blank" rel="noopener noreferrer"
             >
               <div
                 style={imageStyle}

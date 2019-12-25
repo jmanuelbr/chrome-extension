@@ -10,10 +10,11 @@ export default class RedditArticle extends Component {
             this.props.articleData.thumbnail = chrome.runtime.getURL('../assets/reddit-article.png');
         }
 
-        const {permalink, score, num_comments, thumbnail, thumbnail_height, thumbnail_width, title} = this.props.articleData;
+        const { permalink, score, num_comments, thumbnail, thumbnail_height, 
+                thumbnail_width, title } = this.props.articleData;
         return (
             <div className="reddit-article">
-                <a href={'https://www.reddit.com/' + permalink} target="_blank">
+                <a href={'https://www.reddit.com/' + permalink} target="_blank" rel="noopener noreferrer">
                     <div className="votes">
                     <ul>
                         <li>

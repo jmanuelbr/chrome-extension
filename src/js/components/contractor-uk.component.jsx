@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';
@@ -8,19 +8,22 @@ import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../mocks/contractor-uk.mocks';
 import { FETCH_CONTENT } from '../actions/types';
+import AbstractWidget from './abstract-widget.component';
 
-
-export class ContractorUKWidget extends Component {
+class ContractorUKWidget extends AbstractWidget {
     constructor (props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://www.contractoruk.com/forums/external.php?type=RSS2&forumids=4"
+        };
         this.state = {
             articles: [],
-            contentReady: false,
-            error: false
+            loading: false,
+            error: true
 		};
     }
 
-    getArticles = (jsonData) => {
+    getArticles(jsonData) {
         var list = [];
         try {
             jsonData = HELPER.parseFeed(jsonData);
@@ -50,9 +53,7 @@ export class ContractorUKWidget extends Component {
                             break; 
                         } 
                         case "media:content": {
-                            // if (property.attributes.width === "460") {
-                            //     article.thumbnail = property.attributes.url;   
-                            // }
+                            // Do nothing
                             break; 
                         } 
                         default: { 
@@ -65,52 +66,27 @@ export class ContractorUKWidget extends Component {
             });
         }
         catch (exception) {
-            console.log('EXCEPTION', exception);
-            list = [];
+            loading(false);
+            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
         }
 
         return list;
     };
-
-    processData = function(feedData) {
-        const self = this;
-        try {
-            var convert = require('xml-js');
-            var jsonData = convert.xml2json(feedData, {compact: false, spaces: 4});
-            self.setState(state => {
-                state.articles = self.getArticles(jsonData);
-                state.contentReady = true;
-                if (_isEmpty(state.articles)) {
-                    state.error = true;
-                }
-                return state;
-            });
-        }
-        catch (error) {
-            console.info('Error parsing feed ->', error);
-            self.setState(state => {
-                state.contentReady = true;
-                state.error = true;
-                return state;
-            });
-            
-        }
-    }
     
     componentDidMount() {
         if (this.props.mocksEnabled) {
-            this.processData(getMockData())
+            this.processData(getMockData());
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "contractor-uk" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }
 
     
     render() {
-        if (!this.state.contentReady) {
+        if (!this.state.loading) {
             return (
                 <LoaderTabs/>
             );
@@ -125,9 +101,8 @@ export class ContractorUKWidget extends Component {
                 "cssThumbnail": "small"
             };
             return (
-                <div className="news-feed-container">
-                    {_map(this.state.articles, (article, i) => 
-                    {
+                <React.Fragment>
+                    {_map(this.state.articles, (article, i) => {
                         article.thumbnail = chrome.runtime.getURL("../assets/contractor-uk.png");
                         return (
                             <Article 
@@ -135,10 +110,10 @@ export class ContractorUKWidget extends Component {
                                 articleData={article}
                                 css={css}
                             />
-                        )
+                        );
+                        })
                     }
-                    )}
-                </div>
+                </React.Fragment>
             );
         }
     }

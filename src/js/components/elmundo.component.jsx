@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import * as HELPER from "../helper";
 import Article from "./article.component";
 import _map from "lodash/map";
@@ -8,18 +8,22 @@ import _isEmpty from "lodash/isEmpty";
 import { connect } from "react-redux";
 import { getMockData } from "../mocks/elmundo.mocks";
 import { FETCH_CONTENT } from "../actions/types";
+import AbstractWidget from "./abstract-widget.component";
 
-export class ElMundoWidget extends Component {
+export class ElMundoWidget extends AbstractWidget {
   constructor(props) {
     super(props);
+    this.PROPERTIES = {
+      feedUrl: "https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml"
+    };
     this.state = {
       articles: "No news today :(",
-      contentReady: false,
-      error: false
+      loading: false,
+      error: true
     };
   }
 
-  getArticles = function(jsonData) {
+  getArticles(jsonData) {
     var list = [];
     try {
       jsonData = HELPER.parseFeed(jsonData);
@@ -61,24 +65,10 @@ export class ElMundoWidget extends Component {
         list.push(article);
       });
     } catch (exception) {
-      console.log("EXCEPTION", exception);
-      list = [];
+      loading(false);
+      console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
     }
     return list;
-  };
-
-  processData = function(feedData) {
-    const self = this;
-    var convert = require("xml-js");
-    var jsonData = convert.xml2json(feedData, { compact: false, spaces: 4 });
-    self.setState(state => {
-      state.articles = self.getArticles(jsonData);
-      state.contentReady = true;
-      if (_isEmpty(state.articles)) {
-        state.error = true;
-      }
-      return state;
-    });
   };
 
   componentDidMount() {
@@ -86,24 +76,23 @@ export class ElMundoWidget extends Component {
       this.processData(getMockData());
     } else {
       chrome.runtime.sendMessage(
-        { contentScriptQuery: FETCH_CONTENT, itemId: "elmundo" },
-        feedData => this.processData(feedData)
-      );
+        { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
+        feedData => this.processData(feedData));
     }
   }
 
   render() {
-    if (!this.state.contentReady) {
+    if (!this.state.loading) {
       return <LoaderTabs />;
     } else if (this.state.error) {
       return <Error />;
     } else {
       return (
-        <div className="news-feed-container">
+        <React.Fragment>
           {_map(this.state.articles, (article, i) => (
             <Article key={i} articleData={article} />
           ))}
-        </div>
+        </React.Fragment>
       );
     }
   }

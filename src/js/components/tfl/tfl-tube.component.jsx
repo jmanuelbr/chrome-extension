@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TflStatus from './tfl-status.component';
 import _map from 'lodash/map';
 import LoaderTabs from '../loader/loader-tabs.component';
@@ -6,40 +6,47 @@ import Error from '../error.component';
 import { connect } from 'react-redux';
 import { getMockData } from '../../mocks/tfl-tube.mocks';
 import { FETCH_CONTENT } from '../../actions/types';
+import AbstractWidget from '../abstract-widget.component';
 
 
-export class TflTube extends Component {
+class TflTube extends AbstractWidget {
     constructor (props) {
         super(props);
+        this.PROPERTIES = {
+            feedUrl: "https://api.tfl.gov.uk/line/mode/overground/status",
+            needsJsonParse: true
+        };
         this.state = {
-            contentReady: false,
+            loading: false,
             tubeData: {},
-            error: false
+            error: true
         };
     }
 
-    processData = function(feedData) {
+    // Overrides 
+    processData(feedData) {
         const self = this;
         try {
             self.setState(state => {
                 state.tubeData = feedData[0];
-                state.contentReady = true;
+                state.error = false;
+                state.loading = true;
                 return state;
             });
         }
         catch(exception) {
-            state.error = true;
-            return state;
+            loading(false);
+            console.error('*** EXCEPTION (I could not process all data) -> ', exception);
         }
     }
 
     componentDidMount() {
         if (this.props.mocksEnabled) {
-            this.processData(getMockData())
+            this.processData(getMockData());
         }
         else {
             chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, itemId: "tfl-tube" }, 
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
     }
@@ -54,7 +61,7 @@ export class TflTube extends Component {
             }
         }
         const statusClass = (showIcon) ? "multiple-status" : "status";
-        if (!this.state.contentReady) {
+        if (!this.state.loading) {
             return (
                 <LoaderTabs/>
             );
