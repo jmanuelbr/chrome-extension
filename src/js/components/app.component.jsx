@@ -18,7 +18,8 @@ export default class App extends Component {
         { contentScriptQuery: OPEN_OPTIONS_PAGE }, 
         null);
     };
-    
+    const {chromeStorage} = this.props.store;
+
     return (
       <Provider store={this.props.store}>
           <button className="options-button" onClick={this.openOptionsPage}>
@@ -28,7 +29,7 @@ export default class App extends Component {
           </button>
           <ArticleSelected/>
           <CurrencyWidget />
-          <WeatherWidget />
+          <WeatherWidget chromeStorage={chromeStorage}/>
           <TabsContainerWidget/>
       </Provider>
     );

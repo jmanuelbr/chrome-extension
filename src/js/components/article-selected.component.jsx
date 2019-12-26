@@ -27,7 +27,9 @@ class ArticleSelected extends Component {
                         src={chrome.runtime.getURL("../assets/close-article.png")}
                         onClick={this.setCurrentArticle}/>
                 </div>
-                <p dangerouslySetInnerHTML={{ __html: description }}></p>
+
+                <div className="description-section"
+                 dangerouslySetInnerHTML={{ __html: description }}></div>
 
             </div>
         );

@@ -8,14 +8,13 @@ const INITIAL_STATE = {
   export default function rootReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case UPDATE_SELECTED_ARTICLE: { 
-      if (action.payload.title === state.articleSelected.title) {
-        return Object.assign({}, state, {
-          articleSelected: {}
-        });  
+      let articleSelected = {};
+      if (action.payload.title !== state.articleSelected.title) {
+        articleSelected = action.payload;
       }
       return Object.assign({}, state, {
-        articleSelected: action.payload
-      });
+        articleSelected: articleSelected
+      });  
     }
     default:
       return state;
