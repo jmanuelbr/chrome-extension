@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class RedditArticle extends Component {
     constructor (props) {
@@ -41,3 +42,15 @@ export default class RedditArticle extends Component {
         );
     }    
 }
+
+RedditArticle.propTypes = {
+    articleData: PropTypes.shape({
+        permalink: PropTypes.string,
+        score: PropTypes.number,
+        num_comments: PropTypes.number,
+        thumbnail: PropTypes.string,
+        thumbnail_height: PropTypes.number,
+        thumbnail_width: PropTypes.number,
+        title: PropTypes.string,
+    })
+};

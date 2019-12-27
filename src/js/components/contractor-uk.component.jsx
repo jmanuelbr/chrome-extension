@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { getMockData } from '../mocks/contractor-uk.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
+import PropTypes from 'prop-types';
 
 class ContractorUKWidget extends AbstractWidget {
     constructor (props) {
@@ -118,10 +119,15 @@ class ContractorUKWidget extends AbstractWidget {
         }
     }
 }
+
 function mapStateToProps(state) {
 	return {
 		mocksEnabled: state.configuration.mocksEnabled
 	};
 }
+
+ContractorUKWidget.propTypes = {
+    mocksEnabled: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps)(ContractorUKWidget);

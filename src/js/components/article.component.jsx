@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateSelectedArticle } from '../actions/configuration.actions';
+import PropTypes from 'prop-types';
 
 class Article extends Component {
     constructor (props) {
@@ -41,9 +41,13 @@ class Article extends Component {
 }
 
 Article.propTypes = {
-    articleData: PropTypes.object.isRequired,
+    articleData: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        link: PropTypes.string,
+        thumbnail: PropTypes.string
+    }),
     css: PropTypes.object,
-    updateSelectedArticle: PropTypes.func
+    updateSelectedArticle: PropTypes.func.isRequired
 };
 
 function mapDispatchToProps(dispatch) {

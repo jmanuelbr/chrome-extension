@@ -6,6 +6,7 @@ import CurrencyWidget from "./currency.component";
 import WeatherWidget from "./weather/weather.component";
 import TabsContainerWidget  from './tabs-container.component';
 import ArticleSelected from "./article-selected.component";
+import PropTypes from 'prop-types';
 
 export default class App extends Component {
   constructor(props) {
@@ -35,3 +36,9 @@ export default class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  store: PropTypes.shape({
+    chromeStorage: PropTypes.object
+  })
+};

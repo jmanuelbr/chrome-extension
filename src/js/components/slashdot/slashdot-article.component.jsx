@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {_startCase} from 'lodash/startCase';
+import PropTypes from 'prop-types';
 
 export default class SlashdotArticle extends Component {
     constructor (props) {
@@ -42,3 +43,13 @@ export default class SlashdotArticle extends Component {
         );
     }    
 }
+
+SlashdotArticle.propTypes = {
+    articleData: PropTypes.shape({
+        title: PropTypes.string,
+        link: PropTypes.string,
+        thumbnail: PropTypes.string,
+        comments: PropTypes.number,
+        section: PropTypes.string,
+    })
+};

@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { getMockData } from '../mocks/elpais.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
+import PropTypes from 'prop-types';
 
 class ElpaisWidget extends AbstractWidget {
     constructor(props) {
@@ -115,5 +116,9 @@ function mapStateToProps(state) {
 		mocksEnabled: state.configuration.mocksEnabled
 	};
 }
+
+ElpaisWidget.propTypes = {
+    mocksEnabled: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps)(ElpaisWidget);

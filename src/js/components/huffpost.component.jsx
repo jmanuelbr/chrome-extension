@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { getMockData } from '../mocks/huffpost.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
+import PropTypes from 'prop-types';
 
 export class HuffPostWidget extends AbstractWidget {
     constructor(props) {
@@ -109,5 +110,9 @@ function mapStateToProps(state) {
 		mocksEnabled: state.configuration.mocksEnabled
 	};
 }
+
+HuffPostWidget.propTypes = {
+    mocksEnabled: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps)(HuffPostWidget);

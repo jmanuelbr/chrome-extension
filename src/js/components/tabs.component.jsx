@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 const transitionTime = 200;
 const transitionStyle = `left ${transitionTime}ms, right ${transitionTime}ms`;
 
-class Tabs extends Component {
+export default class Tabs extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -86,4 +87,8 @@ class Tabs extends Component {
   }
 }
 
-export default Tabs;
+Tabs.propTypes = {
+  children: PropTypes.array.isRequired,
+  active: PropTypes.number,
+  onChange: PropTypes.func
+};

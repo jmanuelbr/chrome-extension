@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import WeatherTemperatureChart from './charts/weather-temperature-chart.componet';
 import WeatherRainChart from './charts/weather-rain-chart.component';
 import WeatherWindChart from './charts/weather-wind-chart.component';
+import PropTypes from 'prop-types';
 
 export default class WeatherToday extends Component {
     constructor(props) {
@@ -81,6 +82,13 @@ export default class WeatherToday extends Component {
                     />
                 </div>
             </div>
-          )
+          );
     }
 }
+
+WeatherToday.propTypes = {
+    todayData: PropTypes.shape({
+        data: PropTypes.array
+    }),
+    visibility: PropTypes.bool
+};

@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { getMockData } from '../mocks/theguardian.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
+import PropTypes from 'prop-types';
 
 class TheGuardianWidget extends AbstractWidget {
     constructor (props) {
@@ -111,6 +112,10 @@ const mapStateToProps = (state) => {
 	return {
 		mocksEnabled: state.configuration.mocksEnabled
 	};
+};
+
+TheGuardianWidget.propTypes = {
+    mocksEnabled: PropTypes.bool.isRequired
 };
 
 export default connect(mapStateToProps)(TheGuardianWidget);

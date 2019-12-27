@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { getMockData } from '../mocks/bbc.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
+import PropTypes from 'prop-types';
 
 export class BbcWidget extends AbstractWidget {
     constructor(props) {
@@ -121,5 +122,9 @@ function mapStateToProps(state) {
 		mocksEnabled: state.configuration.mocksEnabled
 	};
 }
+
+BbcWidget.propTypes = {
+    mocksEnabled: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps)(BbcWidget);

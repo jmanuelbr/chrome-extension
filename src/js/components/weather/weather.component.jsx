@@ -7,6 +7,7 @@ import WeatherToday from "./weather-today.component";
 import { connect } from "react-redux";
 import { getMockData } from "../../mocks/weather.mocks";
 import { FETCH_CONTENT } from "../../actions/types";
+import PropTypes from 'prop-types';
 
 export class WeatherWidget extends Component {
   constructor(props) {
@@ -155,5 +156,10 @@ function mapStateToProps(state) {
     mocksEnabled: state.configuration.mocksEnabled
   };
 }
+
+WeatherWidget.propTypes = {
+  chromeStorage: PropTypes.object,
+  mocksEnabled: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps)(WeatherWidget);

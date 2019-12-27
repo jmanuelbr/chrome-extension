@@ -7,6 +7,7 @@ import { getMockData } from "../../mocks/tfl-train.mocks";
 import { FETCH_CONTENT } from "../../actions/types";
 import TflTrainDisruption from "./tfl-traindisruption";
 import AbstractWidget from '../abstract-widget.component';
+import PropTypes from 'prop-types';
 
 class TflTrain extends AbstractWidget {
   constructor(props) {
@@ -147,10 +148,15 @@ class TflTrain extends AbstractWidget {
     }
   }
 }
+
 function mapStateToProps(state) {
   return {
     mocksEnabled: state.configuration.mocksEnabled
   };
 }
+
+TflTrain.propTypes = {
+  mocksEnabled: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps)(TflTrain);

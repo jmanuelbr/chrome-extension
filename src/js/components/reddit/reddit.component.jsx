@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { getMockData } from '../../mocks/reddit.mocks';
 import { FETCH_CONTENT } from '../../actions/types';
 import AbstractWidget from '../abstract-widget.component';
+import PropTypes from 'prop-types';
 
 class RedditWidget extends AbstractWidget {
     constructor(props) {
@@ -94,5 +95,9 @@ function mapStateToProps(state) {
 		mocksEnabled: state.configuration.mocksEnabled
 	};
 }
+
+RedditWidget.propTypes = {
+    mocksEnabled: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps)(RedditWidget);

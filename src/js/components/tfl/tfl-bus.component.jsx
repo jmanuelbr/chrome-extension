@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { getMockData } from '../../mocks/tfl-bus.mocks';
 import { FETCH_CONTENT } from '../../actions/types';
 import AbstractWidget from '../abstract-widget.component';
+import PropTypes from 'prop-types';
 
 class TflBus extends AbstractWidget {
     constructor (props) {
@@ -113,5 +114,9 @@ function mapStateToProps(state) {
 		mocksEnabled: state.configuration.mocksEnabled
 	};
 }
+
+TflBus.propTypes = {
+    mocksEnabled: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps)(TflBus);

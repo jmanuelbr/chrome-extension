@@ -4,6 +4,7 @@ import { getMockData } from "../mocks/currency.mocks";
 import { connect } from "react-redux";
 import { FETCH_CONTENT } from "../actions/types";
 import AbstractWidget from './abstract-widget.component';
+import PropTypes from 'prop-types';
 
 class CurrencyWidget extends AbstractWidget {
   constructor(props) {
@@ -13,7 +14,7 @@ class CurrencyWidget extends AbstractWidget {
       needsJsonParse: true
     };
     this.state = {
-      currencyRate: "N/A"
+      currencyRate: "Loading..."
     };
   }
 
@@ -76,5 +77,9 @@ function mapStateToProps(state) {
     mocksEnabled: state.configuration.mocksEnabled
   };
 }
+
+CurrencyWidget.propTypes = {
+  mocksEnabled: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps)(CurrencyWidget);

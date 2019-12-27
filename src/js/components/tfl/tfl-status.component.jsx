@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class TflDisruption extends Component {
     constructor (props) {
@@ -36,3 +37,11 @@ export default class TflDisruption extends Component {
         );
     }    
 }
+
+TflDisruption.propTypes = {
+    status: PropTypes.shape({
+        statusSeverityDescription: PropTypes.string,
+        reason: PropTypes.string,
+    }),
+    showicon: PropTypes.bool
+};
