@@ -59,30 +59,112 @@
     border-bottom: 2px solid rgb(243, 178, 81);
   }
   .reddit-tabs-section {
-    .Tabs {
-        position: relative;
+    width: 268px;
+    .tabs-bar{
+        width: 207px;
         display: inline-block;
-        height: 25px;
-        .Tabs__Tab {
+        .Tabs {
+            position: relative;
             display: inline-block;
-            padding: 0.2em;
-            margin: 1px 0 0 1px;
-            border-radius: 3px;
-            cursor: pointer;
-            &:hover {
-                background: rgb(234, 244, 255);
-                color: dimgrey;
+            height: 25px;
+            .Tabs__Tab {
+                display: inline-block;
+                padding: 0.2em;
+                margin: 1px 0 0 1px;
+                border-radius: 3px;
+                cursor: pointer;
+                &:hover {
+                    background: rgb(234, 244, 255);
+                    color: dimgrey;
+                  }
+              }
+              .Tabs__Tab--active{
+                  background-color: rgb(234, 244, 255);
+                  border: 1px solid #b3d9ff;
               }
           }
-          .Tabs__Tab--active{
-              background-color: rgb(234, 244, 255);
+          .Tabs__Underline {
+            display: none;
           }
-      }
-      .Tabs__Underline {
-        display: none;
-      }
-      .reddit-tab-container {
-        overflow-y: scroll;
-        height: 397px;
-      }
+    }
+    .dropdown-container {
+        width: 57px;
+        display: inline-block;
+        .dropdown {
+            display: inline-block;
+            position: relative;
+          }
+          
+          .dd-button {
+            display: inline-block;
+            border: 1px solid lightgray;
+            border-radius: 4px;
+            width: 47px;
+            cursor: pointer;
+            white-space: nowrap;
+            padding: 0.2em;
+          }
+          
+          .dd-button:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 4px;
+            transform: translateY(-50%);
+            width: 0; 
+            height: 0; 
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
+            border-top: 3px solid dimgray;
+          }
+          
+          .dd-button:hover {
+            background-color: #eeeeee;
+          }
+          
+          
+          .dd-input {
+            display: none;
+          }
+          
+          .dd-menu {
+            width: 47px;
+            padding: 0.2em;
+            position: absolute;
+            top: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin: 2px 0 0 0;
+            box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+            background-color: #ffffff;
+            list-style-type: none;
+            z-index: 999;
+          }
+          
+          .dd-input + .dd-menu {
+            display: none;
+          } 
+          
+          .dd-input:checked + .dd-menu {
+            display: block;
+          } 
+          
+          .dd-menu li {
+            cursor: pointer;
+            white-space: nowrap;
+          }
+          
+          .dd-menu li:hover {
+            background-color: #f6f6f6;
+          }
+          
+          .dd-menu li.divider{
+            padding: 0;
+            border-bottom: 1px solid #cccccc;
+          }
+    }
+    .reddit-tab-container {
+    overflow-y: scroll;
+    height: 397px;
+    }
   }

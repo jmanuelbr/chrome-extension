@@ -14,7 +14,7 @@ class RedditFeed extends AbstractWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
-            feedUrl: this.props.feedUrl,
+            feedUrl: this.props.feedUrl + "?t=" + this.props.period,
             needsJsonParse: true
         };
         this.state = {
