@@ -7,10 +7,10 @@ export default class RedditArticle extends Component {
     }
 
     render() {
-        if(this.props.articleData.thumbnail.match(/^(self|spoiler|default)$/)) {
+        if(!this.props.articleData.thumbnail ||
+            this.props.articleData.thumbnail.match(/^(self|spoiler|default)$/)) {
             this.props.articleData.thumbnail = chrome.runtime.getURL('../assets/reddit-article.png');
         }
-
         const { permalink, score, num_comments, thumbnail, thumbnail_height, 
                 thumbnail_width, title } = this.props.articleData;
         return (

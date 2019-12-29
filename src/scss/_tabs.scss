@@ -58,3 +58,27 @@
     right: 0;
     border-bottom: 2px solid rgb(243, 178, 81);
   }
+  .reddit-tabs-section {
+    .Tabs {
+        position: relative;
+        display: inline-block;
+        height: 25px;
+        .Tabs__Tab {
+            display: inline-block;
+            padding: 0.2em;
+            margin: 1px 0 0 1px;
+            border-radius: 3px;
+            cursor: pointer;
+            &:hover {
+                background: rgb(234, 244, 255);
+                color: dimgrey;
+              }
+          }
+          .Tabs__Tab--active{
+              background-color: rgb(234, 244, 255);
+          }
+      }
+      .Tabs__Underline {
+        display: none;
+      }
+  }

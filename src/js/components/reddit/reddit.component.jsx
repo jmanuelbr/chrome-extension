@@ -1,103 +1,51 @@
-import React from 'react';
-import RedditArticle from './reddit-article.component';
-import _map from 'lodash/map';
-import LoaderTabs from '../loader/loader-tabs.component';
-import Error from '../error.component';
-import _isEmpty from 'lodash/isEmpty';
-import { connect } from 'react-redux';
-import { getMockData } from '../../mocks/reddit.mocks';
-import { FETCH_CONTENT } from '../../actions/types';
-import AbstractWidget from '../abstract-widget.component';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import _map from "lodash/map";
+import Tabs from '../tabs.component';
+import RedditFeed from './reddit-feed.component';
 
-class RedditWidget extends AbstractWidget {
+export default class RedditWidget extends Component {
     constructor(props) {
-        super(props);
-        this.PROPERTIES = {
-            feedUrl: "https://www.reddit.com/r/chess/top/.json?t=day",
-            needsJsonParse: true
-        };
-        this.state = {
-            articles: [],
-            loading: false,
-            error: true
-        };
+      super(props);
+      this.state = { active: 0 };
     }
-
-    getArticles(feedData) {
-        try {
-            const data = feedData.data.children;
-            var list = [];
-            Object.values(data).map(element => {
-                    list.push(element.data);   
-            });
-        }
-        catch (exception) {
-            loading(false);
-            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
-        }
-       
-        return list;
-    }
-
-    // Overrides
-    processData(feedData) {
-        const self = this;
-        self.setState(state => {
-            state.articles = self.getArticles(feedData);
-            state.loading = true;
-            if (!_isEmpty(state.articles)) {
-                state.error = false;
-            }
-            return state;
-        });
-    }
-
-    componentDidMount() {
-        if (this.props.mocksEnabled) {
-            this.processData(getMockData());
-        }
-        else {
-            chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
-                feedData => this.processData(feedData));
-        }
-    }
-
     render() {
-        if (!this.state.loading) {
-            return (
-                <LoaderTabs/>
-            );
-        }
-        else if (this.state.error) {
-            return (
-                <Error/>
-            );
-        }
-        else {
-            return (
-                <React.Fragment>
-                    {_map(this.state.articles, (article, i) => (
-                        <RedditArticle
-                            key={i}
-                            articleData={article}
-                        />
-                    ))}
-                </React.Fragment>
-            );
-        }
+        const tabsContent = [
+            {
+              name: "chess",
+              feedUrl: "https://www.reddit.com/r/chess/top/.json?t=day"
+            },
+            {
+              name: "london",
+              feedUrl: "https://www.reddit.com/r/london/top/.json?t=day"
+            },
+            {
+              name: "programming",
+              feedUrl: "https://www.reddit.com/r/programming/top/.json?t=day"
+            }
+          ];
+
+        return (
+            <div className="reddit-tabs-section">
+            <Tabs
+              active={this.state.active}
+              onChange={active => this.setState({ active })}
+            >
+              {_map(tabsContent, (tabContent, i) => (
+                <span key={i} className="subreddit">{tabContent.name}</span>
+              ))}
+            </Tabs>
+            {_map(tabsContent, (tabContent, i) => (
+              <div
+                className="reddit-tab-container"
+                key={i}
+                style={{ display: this.state.active == i ? "block" : "none" }}
+              >
+                <RedditFeed
+                  key={i}
+                  feedUrl={tabContent.feedUrl}/>
+              </div>
+            ))}
+          </div>
+        );
     }
 }
-
-function mapStateToProps(state) {
-	return {
-		mocksEnabled: state.configuration.mocksEnabled
-	};
-}
-
-RedditWidget.propTypes = {
-    mocksEnabled: PropTypes.bool.isRequired
-};
-
-export default connect(mapStateToProps)(RedditWidget);

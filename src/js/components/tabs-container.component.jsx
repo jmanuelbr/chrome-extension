@@ -6,9 +6,9 @@ import HuffPostWidget from "./huffpost.component";
 import ElpaisWidget from "./elpais.component";
 import ContractorUKWidget from "./contractor-uk.component";
 import SlashdotWidget from "./slashdot/slashdot.component";
-import RedditWidget from "./reddit/reddit.component";
 import TflWidget from "./tfl/tfl.component";
 import LichessWidget from "./lichess.component";
+import RedditWidget from './reddit/reddit.component';
 
 export default class TabsContainerWidget extends Component {
     constructor(props) {
