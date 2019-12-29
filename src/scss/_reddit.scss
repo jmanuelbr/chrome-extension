@@ -56,6 +56,9 @@
         }
     }
     .thumbnail-container {
+        .title {
+            min-width: 240px;
+        }
         overflow: hidden;
         img {
             max-width: 183px;
