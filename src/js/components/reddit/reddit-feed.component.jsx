@@ -22,6 +22,8 @@ class RedditFeed extends AbstractWidget {
             loading: false,
             error: true
         };
+        this.update = false;
+        this.alreadyUpdated = false;
     }
 
     getArticles(feedData) {
@@ -61,6 +63,24 @@ class RedditFeed extends AbstractWidget {
             chrome.runtime.sendMessage(
                 { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
+        }
+    }
+    componentDidUpdate() {
+        this.PROPERTIES.feedUrl = this.props.feedUrl + "?t=" + this.props.period;
+        this.update = this.props.updateComponent;
+        if (this.update && !this.alreadyUpdated) {
+            this.alreadyUpdated = true;
+            if (this.props.mocksEnabled) {
+                this.processData(getMockData());
+            }
+            else {
+                chrome.runtime.sendMessage(
+                    { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
+                    feedData => this.processData(feedData, this.alreadyUpdated));
+            }
+        }
+        else {
+            this.alreadyUpdated = false;
         }
     }
 

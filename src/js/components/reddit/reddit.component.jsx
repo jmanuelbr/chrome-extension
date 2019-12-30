@@ -9,8 +9,10 @@ export default class RedditWidget extends Component {
       this.state = { 
         active: 0,
         dropdownSelected: "day"};
+      this.componentNeedsUpdate = false;
     }
     setDropdownOption(e) {
+      this.componentNeedsUpdate = true;
       const selected = e.currentTarget.dataset.id;
       if (selected) {
         this.setState({ dropdownSelected: selected });
@@ -18,7 +20,6 @@ export default class RedditWidget extends Component {
       
     };
     render() {
-      console.log('rendering');
       const dropdownContent = [
         {
           name: "hour"
@@ -94,7 +95,8 @@ export default class RedditWidget extends Component {
                   <RedditFeed
                     key={i}
                     feedUrl={tabContent.feedUrl}
-                    period={this.state.dropdownSelected}/>
+                    period={this.state.dropdownSelected}
+                    updateComponent={this.componentNeedsUpdate}/>
                 </div>
               ))}
             </div>

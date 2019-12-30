@@ -90,6 +90,7 @@
     .dropdown-container {
         width: 57px;
         display: inline-block;
+        user-select: none;
         .dropdown {
             display: inline-block;
             position: relative;
