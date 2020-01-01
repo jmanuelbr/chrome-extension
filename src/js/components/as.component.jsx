@@ -9,13 +9,14 @@ import { connect } from 'react-redux';
 import { getMockData } from '../mocks/as.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
+import PropTypes from 'prop-types';
 
 export class AsWidget extends AbstractWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
             feedUrl: "https://as.com/rss/tags/ultimas_noticias.xml"
-        }
+        };
         this.state = {
             articles: [],
             loading: false,
@@ -23,7 +24,7 @@ export class AsWidget extends AbstractWidget {
         };
     }
 
-    getArticles = (jsonData) => {
+    getArticles(jsonData) {
         var list = [];
         try {
             jsonData = HELPER.parseFeed(jsonData);
@@ -72,7 +73,7 @@ export class AsWidget extends AbstractWidget {
         return list;
     };
 
-    componentDidMount = () => {
+    componentDidMount() {
         if (this.props.mocksEnabled) {
             this.processData(getMockData());
         }
@@ -83,7 +84,7 @@ export class AsWidget extends AbstractWidget {
         }
     }
 
-    render = () => {
+    render() {
         if (!this.state.loading) {
             return (
                 <LoaderTabs/>
@@ -108,6 +109,10 @@ export class AsWidget extends AbstractWidget {
         }
     }
 }
+
+AsWidget.propTypes = {
+    mocksEnabled: PropTypes.bool.isRequired
+};
 
 function mapStateToProps(state) {
 	return {

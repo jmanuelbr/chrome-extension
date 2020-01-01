@@ -68,21 +68,41 @@
     font-family: $font-stack;
     .title-section {
         h2 {
-            width: 309px;
-            padding-right: 10px;
+            width: 299px;
             display: inline-block;
+            padding-left: 10px;
+            padding-right: 10px;
+            margin-bottom: 0;
+            font-size: 1.4em;
         }
         img {
             width: 24px;
             display: inline-block;
-            position: relative;
-            top: -17px;
+            position: absolute;
+            top: 17px;
             user-select: none;
             cursor: pointer;
+            -webkit-transition: -webkit-transform .2s ease-in-out;
+            transition: transform .2s ease-in-out;
+            &:hover {
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+              }
         }
     }
-    p {
+    .description-section {
+        margin: 10px;
         font-size: 1.16em;
-        
+        font-family: $font-stack;
+        p {
+            margin-left: 0;
+            margin-right: 0;
+            font-family: $font-stack;
+            font-size: 1em;
+        }
+        ul {
+            padding-left: 16px;
+            padding-top: 16px;
+        }
     }
 }

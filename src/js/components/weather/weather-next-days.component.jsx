@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import WeatherNextDayItem from './weather-next-day-item.component';
+import PropTypes from 'prop-types';
 
 export default class WeatherNextDays extends Component {
     constructor(props) {
@@ -19,3 +20,9 @@ export default class WeatherNextDays extends Component {
         );
     }
 }
+
+WeatherNextDays.propTypes = {
+    dailyData: PropTypes.shape({
+        data: PropTypes.array
+    })
+};

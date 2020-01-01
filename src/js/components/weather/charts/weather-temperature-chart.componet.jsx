@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { _startCase } from "lodash/startCase";
 import ChartistGraph from "react-chartist";
 import Chartist from "chartist";
+import PropTypes from 'prop-types';
 
 export default class WeatherTemperatureChart extends Component {
   constructor(props) {
@@ -157,3 +158,7 @@ export default class WeatherTemperatureChart extends Component {
     );
   }
 }
+
+WeatherTemperatureChart.propTypes = {
+  data: PropTypes.array
+};

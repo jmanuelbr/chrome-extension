@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 const transitionTime = 200;
 const transitionStyle = `left ${transitionTime}ms, right ${transitionTime}ms`;
 
-class Tabs extends Component {
+export default class Tabs extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,7 +49,7 @@ class Tabs extends Component {
       >
         {React.Children.map(this.props.children, (child, i) => {
           let className = `Tabs__Tab`;
-          if (child.key === this.props.active) {
+          if (child.key == this.props.active) {
             className = `${className} Tabs__Tab--active`;
           }
           return (
@@ -86,4 +87,8 @@ class Tabs extends Component {
   }
 }
 
-export default Tabs;
+Tabs.propTypes = {
+  children: PropTypes.array.isRequired,
+  active: PropTypes.number,
+  onChange: PropTypes.func
+};

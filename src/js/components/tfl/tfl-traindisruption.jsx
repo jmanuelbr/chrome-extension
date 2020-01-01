@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class TflTrainDisruption extends Component {
     constructor (props) {
@@ -21,3 +22,10 @@ export default class TflTrainDisruption extends Component {
         );
     }    
 }
+
+TflTrainDisruption.propTypes = {
+    data: PropTypes.shape({
+        category: PropTypes.string,
+        description: PropTypes.string,
+    })
+};

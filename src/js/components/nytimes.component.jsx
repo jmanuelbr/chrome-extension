@@ -6,16 +6,16 @@ import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
 import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
-import { getMockData } from '../mocks/theguardian.mocks';
+import { getMockData } from '../mocks/nytimes.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
 import PropTypes from 'prop-types';
 
-class TheGuardianWidget extends AbstractWidget {
+class NewYorkTimesWidget extends AbstractWidget {
     constructor (props) {
         super(props);
         this.PROPERTIES = {
-            feedUrl: "https://www.theguardian.com/uk/rss"
+            feedUrl: "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"
         };
         this.state = {
             articles: [],
@@ -49,9 +49,8 @@ class TheGuardianWidget extends AbstractWidget {
                             break; 
                         } 
                         case "media:content": {
-                            if (property.attributes.width === "460") {
-                                article.thumbnail = property.attributes.url;   
-                            }
+                            article.thumbnail = property.attributes.url;   
+
                             break; 
                         } 
                         default: { 
@@ -60,6 +59,9 @@ class TheGuardianWidget extends AbstractWidget {
                         } 
                     }
                 });
+                if (article.thumbnail === undefined) {
+                    article.thumbnail = chrome.runtime.getURL("../assets/noimageavailable.png");
+                }
                 list.push(article);
             });
         }
@@ -114,8 +116,8 @@ const mapStateToProps = (state) => {
 	};
 };
 
-TheGuardianWidget.propTypes = {
+NewYorkTimesWidget.propTypes = {
     mocksEnabled: PropTypes.bool.isRequired
 };
 
-export default connect(mapStateToProps)(TheGuardianWidget);
+export default connect(mapStateToProps)(NewYorkTimesWidget);

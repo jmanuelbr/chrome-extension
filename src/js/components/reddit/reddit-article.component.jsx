@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class RedditArticle extends Component {
     constructor (props) {
@@ -6,10 +7,10 @@ export default class RedditArticle extends Component {
     }
 
     render() {
-        if(this.props.articleData.thumbnail.match(/^(self|spoiler|default)$/)) {
+        if(!this.props.articleData.thumbnail ||
+            this.props.articleData.thumbnail.match(/^(self|spoiler|default)$/)) {
             this.props.articleData.thumbnail = chrome.runtime.getURL('../assets/reddit-article.png');
         }
-
         const { permalink, score, num_comments, thumbnail, thumbnail_height, 
                 thumbnail_width, title } = this.props.articleData;
         return (
@@ -41,3 +42,15 @@ export default class RedditArticle extends Component {
         );
     }    
 }
+
+RedditArticle.propTypes = {
+    articleData: PropTypes.shape({
+        permalink: PropTypes.string,
+        score: PropTypes.number,
+        num_comments: PropTypes.number,
+        thumbnail: PropTypes.string,
+        thumbnail_height: PropTypes.number,
+        thumbnail_width: PropTypes.number,
+        title: PropTypes.string,
+    })
+};

@@ -6,16 +6,16 @@ import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
 import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
-import { getMockData } from '../mocks/theguardian.mocks';
+import { getMockData } from '../mocks/cnn.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
 import PropTypes from 'prop-types';
 
-class TheGuardianWidget extends AbstractWidget {
+class CnnWidget extends AbstractWidget {
     constructor (props) {
         super(props);
         this.PROPERTIES = {
-            feedUrl: "https://www.theguardian.com/uk/rss"
+            feedUrl: "http://rss.cnn.com/rss/edition_world.xml"
         };
         this.state = {
             articles: [],
@@ -31,9 +31,11 @@ class TheGuardianWidget extends AbstractWidget {
             Object.values(jsonData).map(element => {
                 var article = {};
                 Object.values(element.elements).map(property => {
+                    console.log('property', property);
                     switch(property.name) { 
                         case "title": { 
-                            article.title = property.elements[0].text;
+                            console.log('title', property.elements[0]);
+                            article.title = property.elements[0].cdata;
                             break; 
                         } 
                         case "description": { 
@@ -48,10 +50,12 @@ class TheGuardianWidget extends AbstractWidget {
                             article.date = property.elements[0].text;
                             break; 
                         } 
-                        case "media:content": {
-                            if (property.attributes.width === "460") {
-                                article.thumbnail = property.attributes.url;   
-                            }
+                        case "media:group": {
+                            Object.values(property.elements).map(mediaContent => {
+                                if (mediaContent.attributes.width == "640") {
+                                    article.thumbnail = mediaContent.attributes.url;
+                                }
+                            });
                             break; 
                         } 
                         default: { 
@@ -60,6 +64,9 @@ class TheGuardianWidget extends AbstractWidget {
                         } 
                     }
                 });
+                if (article.thumbnail === undefined) {
+                    article.thumbnail = chrome.runtime.getURL("../assets/noimageavailable.png");
+                }
                 list.push(article);
             });
         }
@@ -114,8 +121,8 @@ const mapStateToProps = (state) => {
 	};
 };
 
-TheGuardianWidget.propTypes = {
+CnnWidget.propTypes = {
     mocksEnabled: PropTypes.bool.isRequired
 };
 
-export default connect(mapStateToProps)(TheGuardianWidget);
+export default connect(mapStateToProps)(CnnWidget);

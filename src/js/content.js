@@ -51,5 +51,10 @@ const store = createStore(
 	reducers,
 	composeEnhancers(applyMiddleware(reduxThunk))
 );
+chrome.storage.sync.get(null, function(chromeStorage) {
+    store.chromeStorage = chromeStorage;
+    ReactDOM.render(
+    <App store={store}/>, document.getElementById("chromeApp"));
+});
 
-ReactDOM.render(<App store={store}/>, document.getElementById("chromeApp"));
+

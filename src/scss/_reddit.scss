@@ -15,6 +15,7 @@
 .reddit-article {
     padding: 10px 10px 0 10px;
     .title {
+        width: 246px;
         font-family: $font-stack;
         font-size: 1.16em;
         color: dimgrey;
@@ -56,6 +57,9 @@
         }
     }
     .thumbnail-container {
+        .title {
+            min-width: 240px;
+        }
         overflow: hidden;
         img {
             max-width: 183px;

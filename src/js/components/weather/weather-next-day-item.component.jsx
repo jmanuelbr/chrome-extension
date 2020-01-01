@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _map from 'lodash/map';
+import PropTypes from 'prop-types';
 
 export default class WeatherNextDayItem extends Component {
     constructor(props) {
@@ -39,3 +40,6 @@ export default class WeatherNextDayItem extends Component {
         );
     }
 }
+WeatherNextDayItem.propTypes = {
+    dayData: PropTypes.object
+};

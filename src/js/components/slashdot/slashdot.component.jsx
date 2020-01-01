@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { getMockData } from '../../mocks/slashdot.mocks';
 import { FETCH_CONTENT } from '../../actions/types';
 import AbstractWidget from '../abstract-widget.component';
+import PropTypes from 'prop-types';
 
 class SlashdotWidget extends AbstractWidget {
     constructor(props) {
@@ -119,5 +120,9 @@ function mapStateToProps(state) {
 		mocksEnabled: state.configuration.mocksEnabled
 	};
 }
+
+SlashdotWidget.propTypes = {
+    mocksEnabled: PropTypes.bool.isRequired
+};
 
 export default connect(mapStateToProps)(SlashdotWidget);

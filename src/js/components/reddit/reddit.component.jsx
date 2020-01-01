@@ -1,98 +1,105 @@
-import React from 'react';
-import RedditArticle from './reddit-article.component';
-import _map from 'lodash/map';
-import LoaderTabs from '../loader/loader-tabs.component';
-import Error from '../error.component';
-import _isEmpty from 'lodash/isEmpty';
-import { connect } from 'react-redux';
-import { getMockData } from '../../mocks/reddit.mocks';
-import { FETCH_CONTENT } from '../../actions/types';
-import AbstractWidget from '../abstract-widget.component';
+import React, { Component } from 'react';
+import _map from "lodash/map";
+import Tabs from '../tabs.component';
+import RedditFeed from './reddit-feed.component';
 
-class RedditWidget extends AbstractWidget {
+export default class RedditWidget extends Component {
     constructor(props) {
-        super(props);
-        this.PROPERTIES = {
-            feedUrl: "https://www.reddit.com/r/chess/top/.json?t=day",
-            needsJsonParse: true
-        };
-        this.state = {
-            articles: [],
-            loading: false,
-            error: true
-        };
+      super(props);
+      this.state = { 
+        active: 0,
+        dropdownSelected: "day"};
+      this.componentNeedsUpdate = false;
     }
-
-    getArticles(feedData) {
-        try {
-            const data = feedData.data.children;
-            var list = [];
-            Object.values(data).map(element => {
-                    list.push(element.data);   
-            });
-        }
-        catch (exception) {
-            loading(false);
-            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
-        }
-       
-        return list;
-    }
-
-    // Overrides
-    processData(feedData) {
-        const self = this;
-        self.setState(state => {
-            state.articles = self.getArticles(feedData);
-            state.loading = true;
-            if (!_isEmpty(state.articles)) {
-                state.error = false;
-            }
-            return state;
-        });
-    }
-
-    componentDidMount() {
-        if (this.props.mocksEnabled) {
-            this.processData(getMockData());
-        }
-        else {
-            chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
-                feedData => this.processData(feedData));
-        }
-    }
-
+    setDropdownOption(e) {
+      this.componentNeedsUpdate = true;
+      const selected = e.currentTarget.dataset.id;
+      if (selected) {
+        this.setState({ dropdownSelected: selected });
+      }
+      
+    };
     render() {
-        if (!this.state.loading) {
-            return (
-                <LoaderTabs/>
-            );
-        }
-        else if (this.state.error) {
-            return (
-                <Error/>
-            );
-        }
-        else {
-            return (
-                <React.Fragment>
-                    {_map(this.state.articles, (article, i) => (
-                        <RedditArticle
-                            key={i}
-                            articleData={article}
-                        />
+      const dropdownContent = [
+        {
+          name: "hour"
+        },
+        {
+          name: "day"
+        },
+        {
+          name: "month"
+        },
+        {
+          name: "year"
+        },
+      ];
+      const tabsContent = [
+          {
+            name: "chess",
+            feedUrl: "https://www.reddit.com/r/chess/top/.json"
+          },
+          {
+            name: "london",
+            feedUrl: "https://www.reddit.com/r/london/top/.json"
+          },
+          {
+            name: "programming",
+            feedUrl: "https://www.reddit.com/r/programming/top/.json"
+          }
+        ];
+
+        return (
+            <div className="reddit-tabs-section">
+              <div className="tabs-bar">
+                <Tabs
+                  active={this.state.active}
+                  onChange={active => this.setState({ active })}>
+                    {_map(tabsContent, (tabContent, i) => (
+                      <span key={i} className="subreddit">{tabContent.name}</span>
                     ))}
-                </React.Fragment>
-            );
-        }
+                </Tabs>
+              </div>
+              <div className="dropdown-container">
+              <label className="dropdown">
+
+                <div className="dd-button">
+                  {this.state.dropdownSelected}
+                </div>
+
+                <input type="checkbox" className="dd-input" id="test"/>
+
+                <ul className="dd-menu">
+                  {/* <li>hour</li>
+                  <li>day</li>
+                  <li>month</li>
+                  <li>year</li> */}
+                  {_map(dropdownContent, (dropdownOption, i) => (
+                    <li
+                      className="dropdown-option"
+                      key={i}
+                      data-id={dropdownOption.name}
+                      onClick={this.setDropdownOption.bind(this)}>
+                        {dropdownOption.name}
+                    </li>
+                  ))}
+                </ul>
+
+                </label>
+              </div>
+              {_map(tabsContent, (tabContent, i) => (
+                <div
+                  className="reddit-tab-container"
+                  key={i}
+                  style={{ display: this.state.active == i ? "block" : "none" }}>
+                  <RedditFeed
+                    key={i}
+                    feedUrl={tabContent.feedUrl}
+                    period={this.state.dropdownSelected}
+                    updateComponent={this.componentNeedsUpdate}/>
+                </div>
+              ))}
+            </div>
+        );
     }
 }
-
-function mapStateToProps(state) {
-	return {
-		mocksEnabled: state.configuration.mocksEnabled
-	};
-}
-
-export default connect(mapStateToProps)(RedditWidget);

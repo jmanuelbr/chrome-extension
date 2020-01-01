@@ -6,6 +6,7 @@ import CurrencyWidget from "./currency.component";
 import WeatherWidget from "./weather/weather.component";
 import TabsContainerWidget  from './tabs-container.component';
 import ArticleSelected from "./article-selected.component";
+import PropTypes from 'prop-types';
 
 export default class App extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ export default class App extends Component {
         { contentScriptQuery: OPEN_OPTIONS_PAGE }, 
         null);
     };
-    
+    const {chromeStorage} = this.props.store;
+
     return (
       <Provider store={this.props.store}>
           <button className="options-button" onClick={this.openOptionsPage}>
@@ -28,9 +30,15 @@ export default class App extends Component {
           </button>
           <ArticleSelected/>
           <CurrencyWidget />
-          <WeatherWidget />
+          <WeatherWidget chromeStorage={chromeStorage}/>
           <TabsContainerWidget/>
       </Provider>
     );
   }
 }
+
+App.propTypes = {
+  store: PropTypes.shape({
+    chromeStorage: PropTypes.object
+  })
+};

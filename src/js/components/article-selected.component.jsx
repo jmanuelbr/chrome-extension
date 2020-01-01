@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import { connect } from 'react-redux';
 import { updateSelectedArticle } from '../actions/configuration.actions';
+import PropTypes from 'prop-types';
 
 class ArticleSelected extends Component {
     constructor(props) {
@@ -27,7 +28,9 @@ class ArticleSelected extends Component {
                         src={chrome.runtime.getURL("../assets/close-article.png")}
                         onClick={this.setCurrentArticle}/>
                 </div>
-                <p dangerouslySetInnerHTML={{ __html: description }}></p>
+
+                <div className="description-section"
+                 dangerouslySetInnerHTML={{ __html: description }}></div>
 
             </div>
         );
@@ -45,5 +48,13 @@ function mapDispatchToProps(dispatch) {
         updateSelectedArticle: article => dispatch(updateSelectedArticle(article))
     };
 }
+
+ArticleSelected.propTypes = {
+    article: PropTypes.shape({
+        title: PropTypes.string,
+        description: PropTypes.string,
+    }),
+    updateSelectedArticle: PropTypes.func.isRequired
+  };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleSelected);
