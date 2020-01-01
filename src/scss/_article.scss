@@ -91,9 +91,12 @@
         }
     }
     .description-section {
+        margin: 10px;
         font-size: 1.16em;
         font-family: $font-stack;
         p {
+            margin-left: 0;
+            margin-right: 0;
             font-family: $font-stack;
             font-size: 1em;
         }

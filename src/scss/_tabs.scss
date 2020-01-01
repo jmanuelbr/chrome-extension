@@ -17,7 +17,6 @@
 
 .tab-container {
     max-height: 450px;
-    overflow-y: scroll;
     overflow-x: hidden;
     background-color: white;
     &::-webkit-scrollbar {
@@ -61,13 +60,14 @@
   .reddit-tabs-section {
     width: 268px;
     .tabs-bar{
-        width: 207px;
+        width: 216px;
         display: inline-block;
         .Tabs {
             position: relative;
             display: inline-block;
             height: 25px;
             .Tabs__Tab {
+                border: 1px solid white;
                 display: inline-block;
                 padding: 0.2em;
                 margin: 1px 0 0 1px;
@@ -88,7 +88,7 @@
           }
     }
     .dropdown-container {
-        width: 57px;
+        width: 49px;
         display: inline-block;
         user-select: none;
         .dropdown {
@@ -100,7 +100,7 @@
             display: inline-block;
             border: 1px solid lightgray;
             border-radius: 4px;
-            width: 47px;
+            width: 43px;
             cursor: pointer;
             white-space: nowrap;
             padding: 0.2em;
@@ -129,7 +129,7 @@
           }
           
           .dd-menu {
-            width: 47px;
+            width: 43px;
             padding: 0.2em;
             position: absolute;
             top: 100%;
@@ -165,7 +165,16 @@
           }
     }
     .reddit-tab-container {
-    overflow-y: scroll;
-    height: 397px;
+        overflow-y: scroll;
+        height: 422px;
+        width: 266px;
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        &::-webkit-scrollbar-thumb {
+            border-radius: 8px;
+            border: 1px solid #CCC;
+        }
     }
   }
