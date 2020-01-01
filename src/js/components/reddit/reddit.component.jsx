@@ -33,8 +33,15 @@ export default class RedditWidget extends Component {
         {
           name: "year"
         },
+        {
+          name: "all"
+        }
       ];
       const tabsContent = [
+          {
+            name: "front",
+            feedUrl: "https://www.reddit.com/top/.json"
+          },
           {
             name: "chess",
             feedUrl: "https://www.reddit.com/r/chess/top/.json"
@@ -70,10 +77,6 @@ export default class RedditWidget extends Component {
                 <input type="checkbox" className="dd-input" id="test"/>
 
                 <ul className="dd-menu">
-                  {/* <li>hour</li>
-                  <li>day</li>
-                  <li>month</li>
-                  <li>year</li> */}
                   {_map(dropdownContent, (dropdownOption, i) => (
                     <li
                       className="dropdown-option"
