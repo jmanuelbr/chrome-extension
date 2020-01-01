@@ -7,7 +7,7 @@ export default class RedditWidget extends Component {
     constructor(props) {
       super(props);
       this.state = { 
-        active: 0,
+        active: '0',
         dropdownSelected: "day"};
       this.componentNeedsUpdate = false;
     }

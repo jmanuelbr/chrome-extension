@@ -1,5 +1,4 @@
-export function getMockData() {
-    const data = `
+const data = `
     <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet title="XSL_formatting" type="text/xsl" href="/shared/bsp/xsl/rss/nolsol.xsl"?>
 <rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:media="http://search.yahoo.com/mrss/">
@@ -323,7 +322,14 @@ export function getMockData() {
         </item>
     </channel>
 </rss>
-    `;
-    return data;
-}
+`;
 
+export function getMockData() {
+    if (process.env.NODE_ENV == 'development') {
+        return data;
+        }
+    else {
+        // No need to load mock data in prod
+        return null;
+    }
+}

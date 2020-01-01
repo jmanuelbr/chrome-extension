@@ -1,7 +1,5 @@
-export function getMockData() {
-    const data = `
-    [
-{
+const data = `
+[{
     "$type": "Tfl.Api.Presentation.Entities.Line, Tfl.Api.Presentation.Entities",
     "id": "london-overground",
     "name": "London Overground",
@@ -132,8 +130,14 @@ export function getMockData() {
     {
         "$type": "Tfl.Api.Presentation.Entities.Crowding, Tfl.Api.Presentation.Entities"
     }
-}]
-    `;
-    return JSON.parse(data);
-}
+}]`;
 
+export function getMockData() {
+    if (process.env.NODE_ENV == 'development') {
+        return JSON.parse(data);
+        }
+    else {
+        // No need to load mock data in prod
+        return null;
+    }
+}

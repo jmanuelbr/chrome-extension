@@ -1,5 +1,4 @@
-export function getMockData() {
-    const data = `
+const data = `
     <?xml version="1.0" encoding="UTF-8"?>
     <?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss2full.xsl"?>
     <?xml-stylesheet type="text/css" media="screen" href="http://rss.cnn.com/~d/styles/itemcontent.css"?>
@@ -671,6 +670,13 @@ export function getMockData() {
         </channel>
     </rss>
 `;
-    return data;
-}
 
+export function getMockData() {
+    if (process.env.NODE_ENV == 'development') {
+        return data;
+        }
+    else {
+        // No need to load mock data in prod
+        return null;
+    }
+}
