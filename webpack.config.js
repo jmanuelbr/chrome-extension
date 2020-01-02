@@ -1,7 +1,8 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const WebpackNotifierPlugin = require('webpack-notifier');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 var path = require("path");
 
@@ -16,26 +17,30 @@ module.exports = {
         filename: "[name].js",
         publicPath: "/build"
     },
+    optimization: {
+        minimizer: [new UglifyJsPlugin({
+            uglifyOptions: {
+              output: {
+                comments: false,
+              },
+            },
+          })],
+      },
     module: {
         rules: [
             {
                 enforce: "pre",
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 exclude: [/node_modules/, /build/],
                 use: "eslint-loader"
             },
             {
-                test: /\.js$/,
-                exclude: [/node_modules/],
+                test: [/\.jsx?$/],
+                exclude: /node_modules/,
                 use: {
                     loader: "babel-loader"
                 }
             },
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader'
-              },
             {
                 test: /\.scss$/,
                 use: [
