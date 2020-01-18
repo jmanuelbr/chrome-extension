@@ -1,5 +1,6 @@
 import React from 'react';
 import TflStatus from './tfl-status.component';
+import TflLiveDepartures from './tfl-live-departures.component';
 import _map from 'lodash/map';
 import LoaderTabs from '../loader/loader-tabs.component';
 import Error from '../error.component';
@@ -85,6 +86,8 @@ class TflTube extends AbstractWidget {
                                 showicon={showIcon}
                             />
                         ))}
+                        <TflLiveDepartures
+                            status={this.state}/>
                     </div>
                 </div>
             );

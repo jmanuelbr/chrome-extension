@@ -108,6 +108,9 @@
             margin-right: 0;
             font-family: $font-stack;
             font-size: 1em;
+            a {
+                font-family: $font-stack;
+            }
         }
         ul {
             padding-left: 16px;

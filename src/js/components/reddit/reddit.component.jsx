@@ -28,6 +28,9 @@ export default class RedditWidget extends Component {
           name: "day"
         },
         {
+          name: "week"
+        },
+        {
           name: "month"
         },
         {
@@ -39,10 +42,6 @@ export default class RedditWidget extends Component {
       ];
       const tabsContent = [
           {
-            name: "front",
-            feedUrl: "https://www.reddit.com/top/.json"
-          },
-          {
             name: "chess",
             feedUrl: "https://www.reddit.com/r/chess/top/.json"
           },
@@ -53,7 +52,11 @@ export default class RedditWidget extends Component {
           {
             name: "programming",
             feedUrl: "https://www.reddit.com/r/programming/top/.json"
-          }
+          },
+          {
+            name: "world",
+            feedUrl: "https://www.reddit.com/r/worldnews/top/.json"
+          },
         ];
 
         return (

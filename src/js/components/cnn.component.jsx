@@ -31,10 +31,8 @@ class CnnWidget extends AbstractWidget {
             Object.values(jsonData).map(element => {
                 var article = {};
                 Object.values(element.elements).map(property => {
-                    console.log('property', property);
                     switch(property.name) { 
                         case "title": { 
-                            console.log('title', property.elements[0]);
                             article.title = property.elements[0].cdata;
                             break; 
                         } 

@@ -15,7 +15,7 @@ class ElpaisWidget extends AbstractWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
-            feedUrl: "https://ep00.epimg.net/rss/tags/ultimas_noticias.xml"
+            feedUrl: "https://ep00.epimg.net/rss/elpais/portada.xml"
         };
         this.state = {
             articles: 'No news today :(',

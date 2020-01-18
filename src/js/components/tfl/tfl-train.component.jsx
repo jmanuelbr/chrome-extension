@@ -65,20 +65,9 @@ class TflTrain extends AbstractWidget {
     if (this.props.mocksEnabled) {
       this.processData(getMockData());
     } else {
-      const today = new Date();
-      if (today.getDay() < 6) {
-        // E.g. all workdays Mon to Fri
         chrome.runtime.sendMessage(
           { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
           feedData => this.processData(feedData));
-      } else {
-        const self = this;
-        self.setState(state => {
-          state.loading = true;
-          state.showInfo = false;
-          return state;
-        });
-      }
     }
   }
 
