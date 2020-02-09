@@ -56,12 +56,15 @@ class TflLiveDepartures extends AbstractWidget {
                 <div className="header">Highbury & Islington</div>
                 <div className="table">
                     {_map(this.state.liveDeparturesData, (status, i) => {
+                        const timeString = status.expectedArrival.split('T')[1]; 
+                        const timeStringSplitted = timeString.split(':'); 
+                        const expectedArrivalTime = timeStringSplitted[0] + ':' + timeStringSplitted[1];
                         const timeToStation = Math.round(status.timeToStation/60);
                         return (
                             <div className="new-arrival" key={i}>
                                 <div className="arrival-destination">Stratford</div>
-                                <div className="arrival-time">{timeToStation > 0 ? `${timeToStation} min`: 'Due'}</div>
-                                <div className="arrival-status">On time</div>
+                                <div className="arrival-time">{timeToStation > 0 ? `${timeToStation} min`: 'Due'} <span className="expected-arrival-time">({expectedArrivalTime})</span></div>
+                                <div className="arrival-status">{status.platformName.replace("Unknown", "🤷🏻‍♂️")}</div>
                             </div>
                         );
                     })}

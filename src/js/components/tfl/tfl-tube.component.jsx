@@ -75,20 +75,22 @@ class TflTube extends AbstractWidget {
         else {
             return (
                     <div className="tfl-tube-container">
-                    <div className="name">
-                        {this.state.tubeData.name}
-                    </div>
-                    <div className={statusClass}>
-                        {_map(lineStatuses, (status, i) => (
-                            <TflStatus
-                                key={i}
-                                status={status}
-                                showicon={showIcon}
-                            />
-                        ))}
-                        <TflLiveDepartures
+                        <div className="overground-line-status">
+                            <div className="name">
+                                {this.state.tubeData.name}
+                            </div>
+                            <div className={statusClass}>
+                                {_map(lineStatuses, (status, i) => (
+                                    <TflStatus
+                                        key={i}
+                                        status={status}
+                                        showicon={showIcon}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    <TflLiveDepartures
                             status={this.state}/>
-                    </div>
                 </div>
             );
         }
