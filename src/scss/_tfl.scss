@@ -246,7 +246,7 @@
                     margin-right: 15px;
                 }   
                 .arrival-time {
-                    width: 85px;
+                    width: 100px;
                     display: inline-block;
                     margin-right: 5px;
                     font-weight: 600;
@@ -255,12 +255,28 @@
                         font-size: 0.87em;
                     }
                 }
-                .arrival-status {
+                .OnTime {
                     display: inline-block;
-                    width: 70px;
+                    width: 55px;
                     text-align: right;
                     padding-right: 5px;
                     color: darkgreen;
+                }
+                .Cancelled {
+                    display: inline-block;
+                    width: 55px;
+                    text-align: right;
+                    padding-right: 5px;
+                    color: rgb(181, 38, 38);
+                    font-weight: 600;
+                }
+                .Delayed {
+                    display: inline-block;
+                    width: 55px;
+                    text-align: right;
+                    padding-right: 5px;
+                    color: rgb(226, 113, 0);
+                    font-weight: 600; 
                 }
             }
         }

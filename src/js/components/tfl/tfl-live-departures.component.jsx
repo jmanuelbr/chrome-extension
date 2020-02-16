@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { number } from 'prop-types';
 import AbstractWidget from '../abstract-widget.component';
 import { getMockData } from '../../mocks/tfl-live-departures.mocks';
 import { connect } from 'react-redux';
@@ -11,7 +11,7 @@ class TflLiveDepartures extends AbstractWidget {
     constructor (props) {
         super(props);
         this.PROPERTIES = {
-            feedUrl: "https://api.tfl.gov.uk/StopPoint/910GHGHI/Arrivals?mode=tube",
+            feedUrl: "https://api.tfl.gov.uk/StopPoint/910GHGHI/ArrivalDepartures?lineIds=london-overground",
             needsJsonParse: true
         };
         this.state = {
@@ -28,7 +28,11 @@ class TflLiveDepartures extends AbstractWidget {
         try {
             self.setState(state => {
                 const filteredResults = feedData.filter(this.getStratfordResults);
-                const orderedResults = _orderBy(filteredResults, ['timeToStation'],['asc']);
+                for (let i = 0; i < filteredResults.length; i++) {
+                    const timeInMillis = new Date(filteredResults[i].estimatedTimeOfArrival).getTime();
+                    filteredResults[i].millis = timeInMillis;
+                }
+                const orderedResults = _orderBy(filteredResults, ['millis'],['asc']);
                 state.liveDeparturesData = orderedResults;
                 return state;
             });
@@ -50,21 +54,46 @@ class TflLiveDepartures extends AbstractWidget {
         }
     }
 
+    getFormattedTime(string) {
+        const timeString = string.split('T')[1]; 
+        const timeStringSplitted = timeString.split(':'); 
+        return timeStringSplitted[0] + ':' + timeStringSplitted[1]; 
+    }
+
+    getFormattedArrivalTime(timeString) {
+        if (timeString.length > 1) {
+            let splitted = timeString.split(':'); 
+            const minToSec = parseInt(splitted[0])*60;
+            const totalSeconds = minToSec + parseInt(splitted[1]);
+            let date = new Date(null);
+            date.setSeconds(totalSeconds);
+            let toFormatTime = date.toISOString().substr(11, 8);
+            splitted = toFormatTime.split(':');
+            if (splitted[0] != "00") {
+                return splitted[0] + "h" + splitted[1] + "m";
+            }
+            else {
+                return splitted[1] + "m";
+            }
+        }
+        else {
+            return "🤷🏻‍♂️";
+        }
+    }
+
     render() {
         return (
             <div className="tfl-live-departures-container">
                 <div className="header">Highbury & Islington</div>
                 <div className="table">
                     {_map(this.state.liveDeparturesData, (status, i) => {
-                        const timeString = status.expectedArrival.split('T')[1]; 
-                        const timeStringSplitted = timeString.split(':'); 
-                        const expectedArrivalTime = timeStringSplitted[0] + ':' + timeStringSplitted[1];
-                        const timeToStation = Math.round(status.timeToStation/60);
+                        const scheduledTimeOfArrival = this.getFormattedTime(status.scheduledTimeOfArrival);
+                        const timeToStation = this.getFormattedArrivalTime(status.minutesAndSecondsToArrival);
                         return (
                             <div className="new-arrival" key={i}>
                                 <div className="arrival-destination">Stratford</div>
-                                <div className="arrival-time">{timeToStation > 0 ? `${timeToStation} min`: 'Due'} <span className="expected-arrival-time">({expectedArrivalTime})</span></div>
-                                <div className="arrival-status">{status.platformName.replace("Unknown", "🤷🏻‍♂️")}</div>
+                                <div className="arrival-time">{scheduledTimeOfArrival} <span className="expected-arrival-time">({timeToStation})</span></div>
+                                <div className={status.departureStatus}>{status.departureStatus}</div>
                             </div>
                         );
                     })}
