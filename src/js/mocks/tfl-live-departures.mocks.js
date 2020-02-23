@@ -40,7 +40,7 @@ const data = `[
     "scheduledTimeOfDeparture": "2020-02-16T10:04:00Z",
     "minutesAndSecondsToArrival": "80:11",
     "minutesAndSecondsToDeparture": "80:11",
-    "departureStatus": "OnTime"
+    "departureStatus": "Delayed"
 },
 {
     "$type": "Tfl.Api.Presentation.Entities.ArrivalDeparture, Tfl.Api.Presentation.Entities",
