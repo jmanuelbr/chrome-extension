@@ -149,6 +149,9 @@ class NationalRailLiveDepartures extends AbstractWidget {
                 <div className="header">{header}</div>
                 <div className="table">
                     {_map(this.state.liveDeparturesData, (status, i) => {
+                        const iballStyle = {
+                            display: (status.legs[0].isDisrupted ? "block" : "none")
+                          };
                         const startDateTime = this.getFormattedTime(status.startDateTime);
                         // const timeToStation = this.getFormattedArrivalTime(status.minutesAndSecondsToArrival);
                         return (
@@ -157,7 +160,7 @@ class NationalRailLiveDepartures extends AbstractWidget {
                                 <div className="arrival-time">{startDateTime}</div>
                                 <div className={`is-disrupted-${status.legs[0].isDisrupted}`}>
                                     {status.legs[0].isDisrupted ? "Disrupted" : "Good Service"}
-                                        <span className="iball">
+                                        <span className="iball" style={iballStyle}>
                                             <img
                                                 onClick={() => this.togglePopup(status.legs[0].disruptions, i)}
                                                 src={chrome.runtime.getURL('../../assets/iball.png')}/>
