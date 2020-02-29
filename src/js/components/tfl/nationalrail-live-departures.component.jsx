@@ -34,7 +34,6 @@ class NationalRailLiveDepartures extends AbstractWidget {
         this.popupClicked = -1;
     }
 
-
     togglePopup(disruptions, indexClicked) {
         let showPopup = false;
         if (indexClicked != this.popupClicked) {
@@ -78,11 +77,11 @@ class NationalRailLiveDepartures extends AbstractWidget {
         const formattedTime = this.getFormattedTimeURL(today);
         if (this.travelingHome(today)) {
           // From Shenfield to Stratford
-        return `https://api.tfl.gov.uk/journey/journeyresults/1006448/to/1000226?time=${formattedTime}&date=${formattedDate}&timeIs=departing`;
+        return `https://api.tfl.gov.uk/journey/journeyresults/1006448/to/1000226?time=${formattedTime}&date=${formattedDate}&timeIs=departing&app_id=7a545d8e&app_key=a126ea9826d6227c33bebc86df0fd87f`;
         }
         else{
           // From Stratford to Shenfield ok
-          return `https://api.tfl.gov.uk/journey/journeyresults/1000226/to/1006448?time=0845&date=${formattedDate}&timeIs=departing`;
+          return `https://api.tfl.gov.uk/journey/journeyresults/1000226/to/1006448?time=0845&date=${formattedDate}&timeIs=departing&app_id=7a545d8e&app_key=a126ea9826d6227c33bebc86df0fd87f`;
         }
       }
 
@@ -150,10 +149,9 @@ class NationalRailLiveDepartures extends AbstractWidget {
                 <div className="table">
                     {_map(this.state.liveDeparturesData, (status, i) => {
                         const iballStyle = {
-                            display: (status.legs[0].isDisrupted ? "block" : "none")
+                            display: (status.legs[0].isDisrupted ? "inline-block" : "none")
                           };
                         const startDateTime = this.getFormattedTime(status.startDateTime);
-                        // const timeToStation = this.getFormattedArrivalTime(status.minutesAndSecondsToArrival);
                         return (
                             <div className="new-arrival" key={i}>
                                 <div className="arrival-destination">{arrivalDestination}</div>
