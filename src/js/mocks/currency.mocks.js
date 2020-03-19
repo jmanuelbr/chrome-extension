@@ -1,5 +1,4 @@
-export function getMockData() {
-  let data = `
+const data = `
   {
     "version": "1.0",
     "encoding": "UTF-8",
@@ -2617,7 +2616,14 @@ export function getMockData() {
         ]
     }
 }
-      `;
-
-  return JSON.parse(data);
+`;
+ 
+export function getMockData() {
+    if (process.env.NODE_ENV == 'development') {
+        return JSON.parse(data);
+        }
+    else {
+        // No need to load mock data in prod
+        return null;
+    }
 }

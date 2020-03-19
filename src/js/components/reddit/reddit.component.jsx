@@ -7,7 +7,7 @@ export default class RedditWidget extends Component {
     constructor(props) {
       super(props);
       this.state = { 
-        active: 0,
+        active: '0',
         dropdownSelected: "day"};
       this.componentNeedsUpdate = false;
     }
@@ -28,11 +28,17 @@ export default class RedditWidget extends Component {
           name: "day"
         },
         {
+          name: "week"
+        },
+        {
           name: "month"
         },
         {
           name: "year"
         },
+        {
+          name: "all"
+        }
       ];
       const tabsContent = [
           {
@@ -46,7 +52,11 @@ export default class RedditWidget extends Component {
           {
             name: "programming",
             feedUrl: "https://www.reddit.com/r/programming/top/.json"
-          }
+          },
+          {
+            name: "world",
+            feedUrl: "https://www.reddit.com/r/worldnews/top/.json"
+          },
         ];
 
         return (
@@ -70,10 +80,6 @@ export default class RedditWidget extends Component {
                 <input type="checkbox" className="dd-input" id="test"/>
 
                 <ul className="dd-menu">
-                  {/* <li>hour</li>
-                  <li>day</li>
-                  <li>month</li>
-                  <li>year</li> */}
                   {_map(dropdownContent, (dropdownOption, i) => (
                     <li
                       className="dropdown-option"

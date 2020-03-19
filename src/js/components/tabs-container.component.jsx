@@ -13,8 +13,9 @@ import NewYorkTimesWidget from './nytimes.component';
 export default class TabsContainerWidget extends Component {
     constructor(props) {
       super(props);
-      this.state = { active: 0 };
+      this.state = { active: '0' };
     }
+
     render() {
         const tabsContent = [
             {

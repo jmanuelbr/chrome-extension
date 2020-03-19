@@ -1,6 +1,8 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const WebpackNotifierPlugin = require('webpack-notifier');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 var path = require("path");
 
@@ -15,25 +17,30 @@ module.exports = {
         filename: "[name].js",
         publicPath: "/build"
     },
+    optimization: {
+        minimizer: [new UglifyJsPlugin({
+            uglifyOptions: {
+              output: {
+                comments: false,
+              },
+            },
+          })],
+      },
     module: {
-        rules: [{
+        rules: [
+            {
                 enforce: "pre",
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 exclude: [/node_modules/, /build/],
                 use: "eslint-loader"
             },
             {
-                test: /\.js$/,
+                test: [/\.jsx?$/],
                 exclude: /node_modules/,
                 use: {
                     loader: "babel-loader"
                 }
             },
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader'
-              },
             {
                 test: /\.scss$/,
                 use: [
@@ -60,16 +67,18 @@ module.exports = {
             to: '../assets',
             toType: 'dir'
         }]),
-        new CopyWebpackPlugin([{
-            from: 'src/manifest.json',
-            to: '../manifest.json',
-            toType: 'file'
-        }]),
-        new CopyWebpackPlugin([{
-            from: 'src/options.html',
-            to: '../options.html',
-            toType: 'file'
-        }]),
+        new CopyWebpackPlugin([
+            {
+                from: 'src/manifest.json',
+                to: '../manifest.json',
+                toType: 'file'
+            },
+            {
+                from: 'src/options.html',
+                to: '../options.html',
+                toType: 'file'
+            }
+        ]),
         new MiniCssExtractPlugin({
             filename: "../css/styles.css",
             chunkFilename: "[id].css"
@@ -79,11 +88,12 @@ module.exports = {
             skipFirstNotification: false,
             contentImage: path.join(__dirname, 'src/assets/webpack-notification.png'),
             excludeWarnings: true
-        })
+        }),
+
+        // new BundleAnalyzerPlugin()
     ],
     watchOptions: {                  
         ignored: ['build/**/*.js', 'node_modules'],
         aggregateTimeout: 300
-      }
-      
+      },
 };

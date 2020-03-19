@@ -1,5 +1,6 @@
 import React from 'react';
 import TflStatus from './tfl-status.component';
+import TflLiveDepartures from './tfl-live-departures.component';
 import _map from 'lodash/map';
 import LoaderTabs from '../loader/loader-tabs.component';
 import Error from '../error.component';
@@ -74,18 +75,22 @@ class TflTube extends AbstractWidget {
         else {
             return (
                     <div className="tfl-tube-container">
-                    <div className="name">
-                        {this.state.tubeData.name}
-                    </div>
-                    <div className={statusClass}>
-                        {_map(lineStatuses, (status, i) => (
-                            <TflStatus
-                                key={i}
-                                status={status}
-                                showicon={showIcon}
-                            />
-                        ))}
-                    </div>
+                        <div className="overground-line-status">
+                            <div className="name">
+                                {this.state.tubeData.name}
+                            </div>
+                            <div className={statusClass}>
+                                {_map(lineStatuses, (status, i) => (
+                                    <TflStatus
+                                        key={i}
+                                        status={status}
+                                        showicon={showIcon}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    <TflLiveDepartures
+                            status={this.state}/>
                 </div>
             );
         }

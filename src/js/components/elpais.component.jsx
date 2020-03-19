@@ -15,7 +15,7 @@ class ElpaisWidget extends AbstractWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
-            feedUrl: "https://ep00.epimg.net/rss/tags/ultimas_noticias.xml"
+            feedUrl: "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada"
         };
         this.state = {
             articles: 'No news today :(',
@@ -49,10 +49,15 @@ class ElpaisWidget extends AbstractWidget {
                                 article.date = HELPER.getDataFromProperty(property);
                                 break;
                             }
-                            case "enclosure": {
-                                if (property.attributes.type == "image/jpeg") {
-                                    article.thumbnail = property.attributes.url;
+                            case "media:content": {
+                                article.thumbnail = property.attributes.url;
+                                if (property.attributes.url.indexOf(".mp4") > 0) {
+                                    article.video = property.attributes.url;
                                 }
+                                break;
+                            }
+                            case "content:encoded": {
+                                article.description += "</br>" + HELPER.getDataFromProperty(property);
                                 break;
                             }
                             default: {

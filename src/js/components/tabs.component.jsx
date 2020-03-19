@@ -89,6 +89,6 @@ export default class Tabs extends Component {
 
 Tabs.propTypes = {
   children: PropTypes.array.isRequired,
-  active: PropTypes.number,
+  active: PropTypes.string,
   onChange: PropTypes.func
 };

@@ -25,45 +25,63 @@
                 position: relative;
             }
         }
-        .info-container {
-            margin-top: 1px;
-            padding: 5px;
-            border: 1px solid lightgray;
-            border-radius: 4px;
-            .from-station {
-                display: inline-block;
-                .logo { 
-                    width: 18px;
-                    float: left;
-                }
-                .station-name {
-                    float: left;
-                    font-size: 1.18em;
-                    padding-left: 6px;
-                }
+        .train-live-departures-container {
+            margin-top: 7px;
+            .header {
+                color: steelblue;
+                font-size: 1.03em;
+                font-weight: 600;
+                margin-bottom: 2px;
+                padding-left: 3px;
             }
-            .to-station {
-                display: inline-block;
-                .logo { 
-                    width: 18px;
-                    float: left;
-                }
-                .station-name {
-                    float: left;
-                    font-size: 1.18em;
-                    padding-left: 6px;
-                }
-            }
-            .fare {
-                padding-left: 24px;
-                .amount {
-                    font-weight: 600;
-                }
-            }
-            .duration { 
-                padding-left: 24px;
-                .time {
-                    font-weight: 600;
+            .table {
+                font-size: 1.1em;
+                border: 1px solid lightgray;
+                border-radius: 3px;
+                padding: 3px 0;
+                margin-bottom: 5px;
+                .new-arrival {
+                    display: block;
+                    padding: 0 5px;
+                    .arrival-destination {
+                        width: 48px;
+                        display: inline-block;
+                        margin-right: 15px;
+                    }   
+                    .arrival-time {
+                        width: 55px;
+                        display: inline-block;
+                        margin-right: 5px;
+                        font-weight: 600;
+                        .expected-arrival-time {
+                            font-weight: 400;
+                            font-size: 0.87em;
+                        }
+                    }
+                    .is-disrupted-false {
+                        display: inline-block;
+                        width: 100px;
+                        text-align: right;
+                        padding-right: 5px;
+                        color: darkgreen;
+                    }
+                    .is-disrupted-true {
+                        display: inline-block;
+                        width: 100px;
+                        text-align: right;
+                        padding-right: 5px;
+                        color: rgb(181, 38, 38);
+                        font-weight: 600;
+                        .iball{
+                            vertical-align: middle;
+                            text-decoration: none;
+                            cursor: pointer;
+                            img {
+                                width: 15px;
+                                margin-left: 5px;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -104,50 +122,53 @@
         display: inline-block;
         padding-top: 5px;
         padding-bottom: 5px;
-        .name {
-            background-color: coral;
-            color: white;
-            text-align: center;
-            width: 50%;
-            float: left;
-            font-weight: 501;
-            border-radius: 4px;
-            font-size: 1em;
-            line-height: 21px;
-            padding: 0 3px;
-        }
-        .status {
-            float: left;
-            width: 43%;
-            position: relative;
-            top: 2px;
-            left: 4px;
-            .disruption {
-                .reason {
-                    .title {
-                        padding-left: 5px;
-                        font-weight: 600;
+        .overground-line-status {
+            display: inline-block;
+            .name {
+                background-color: coral;
+                color: white;
+                text-align: center;
+                width: 115px;
+                float: left;
+                font-weight: 501;
+                border-radius: 4px;
+                font-size: 1em;
+                line-height: 21px;
+                padding: 0 3px;
+            }
+            .status {
+                float: left;
+                width: 119px;
+                position: relative;
+                top: 2px;
+                left: 4px;
+                .disruption {
+                    .reason {
+                        .title {
+                            padding-left: 5px;
+                            font-weight: 600;
+                        }
                     }
                 }
             }
-        }
-        .multiple-status {
-            display: inline-block;
-            .disruption {
-                .reason {
-                    .icon {
-                        float: left;
-                        width: 16px;
-                        height: 16px;
-                        margin-right: 7px;
-                        position: relative;
-                        top: 1px;
-                    }
-                    .title {
-                        margin-top: 6px;
-                        position: relative;
-                        top: 2px;
-                        font-weight: 600;
+            .multiple-status {
+                display: inline-block;
+                .disruption {
+                    .reason {
+                        .icon {
+                            float: left;
+                            width: 16px;
+                            height: 16px;
+                            margin-right: 7px;
+                            position: relative;
+                            top: 1px;
+                        }
+                        .title {
+                            margin-top: 6px;
+                            position: relative;
+                            top: 2px;
+                            font-weight: 600;
+                        }
                     }
                 }
             }
@@ -219,4 +240,113 @@
             }
         }
     }
+    .tfl-live-departures-container {
+        margin-top: 7px;
+        .header {
+            color: coral;
+            font-size: 1.03em;
+            font-weight: 600;
+            margin-bottom: 2px;
+            padding-left: 3px;
+        }
+        .table {
+            font-size: 1.1em;
+            border: 1px solid lightgray;
+            border-radius: 3px;
+            padding: 3px 0;
+            margin-bottom: 5px;
+            .new-arrival {
+                display: block;
+                padding: 0 5px;
+                .arrival-destination {
+                    width: 48px;
+                    display: inline-block;
+                    margin-right: 15px;
+                }   
+                .arrival-time {
+                    width: 100px;
+                    display: inline-block;
+                    margin-right: 5px;
+                    font-weight: 600;
+                    .expected-arrival-time {
+                        font-weight: 400;
+                        font-size: 0.87em;
+                    }
+                }
+                .OnTime {
+                    display: inline-block;
+                    width: 55px;
+                    text-align: right;
+                    padding-right: 5px;
+                    color: darkgreen;
+                }
+                .Cancelled {
+                    display: inline-block;
+                    width: 55px;
+                    text-align: right;
+                    padding-right: 5px;
+                    color: rgb(181, 38, 38);
+                    font-weight: 600;
+                }
+                .Delayed {
+                    display: inline-block;
+                    width: 55px;
+                    text-align: right;
+                    padding-right: 5px;
+                    color: rgb(226, 113, 0);
+                    font-weight: 600; 
+                }
+            }
+        }
+    }
 }
+
+.popup {  
+    position: absolute;
+    left: 271px;
+    top: 199px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    min-width: 300px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: white;
+    .title {
+        font-size: 1.7em;
+        padding: 4px 5px 12px 13px;
+        color: rgb(181, 38, 38);
+    }
+    .close-button {
+        img {
+            width: 25px;
+            user-select: none;
+            -webkit-transition: -webkit-transform .2s ease-in-out;
+            transition: transform .2s ease-in-out;
+            &:hover {
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+            }
+        }
+    }
+    .disruption-container {
+        max-height: 327px;
+        overflow-y: scroll;
+        &::-webkit-scrollbar {
+            width: 6px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 8px;
+            border: 1px solid #CCC;
+        }
+    }
+    .disruption {
+        margin-bottom: 15px;
+        padding-left: 10px;
+        padding-right: 5px;
+        .category {
+            margin-bottom: 5px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+    }
+  }  

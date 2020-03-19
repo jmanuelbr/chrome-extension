@@ -15,7 +15,7 @@ class ContractorUKWidget extends AbstractWidget {
     constructor (props) {
         super(props);
         this.PROPERTIES = {
-            feedUrl: "https://www.contractoruk.com/forums/external.php?type=RSS2&forumids=4"
+            feedUrl: "https://www.contractoruk.com/forums/external.php?type=RSS2&forumids=2"
         };
         this.state = {
             articles: [],
