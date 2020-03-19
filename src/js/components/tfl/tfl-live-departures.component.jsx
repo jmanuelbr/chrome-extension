@@ -11,7 +11,7 @@ class TflLiveDepartures extends AbstractWidget {
     constructor (props) {
         super(props);
         this.PROPERTIES = {
-            feedUrl: "https://api.tfl.gov.uk/StopPoint/910GHGHI/ArrivalDepartures?lineIds=london-overground",
+            feedUrl: "https://api.tfl.gov.uk/StopPoint/910GHGHI/ArrivalDepartures?lineIds=london-overground&app_id=7a545d8e&app_key=a126ea9826d6227c33bebc86df0fd87f",
             needsJsonParse: true
         };
         this.state = {

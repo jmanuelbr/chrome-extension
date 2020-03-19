@@ -14,6 +14,19 @@ class Article extends Component {
         this.props.updateSelectedArticle(this.props.articleData);
     }
 
+    articleMedia(props) {
+        console.log('asdf',props);
+        if (props.video !== undefined && props.video.length > 1) {
+            console.log('get video');
+            return (
+                <video width="245" height="150" controls>
+                  <source src={props.video} type="video/mp4"/>
+                 </video>);
+        }
+        else {
+            return (<img src={props.thumbnail}/>);
+        }
+    } 
     render() {
         const {title, link, thumbnail} = this.props.articleData;
         let cssThumbnail = "";
@@ -26,7 +39,7 @@ class Article extends Component {
                 <div className="article">
                     <a href={link} target="_blank" rel="noopener noreferrer">
                         <div className={`thumbnail-container ${cssThumbnail}`}>
-                            <img src={thumbnail}/>
+                            {this.articleMedia(this.props.articleData)}
                         </div>
                     </a>
                     <div className="title"
