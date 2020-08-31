@@ -1,7 +1,7 @@
 {
   "name": "Jose Chrome Extension",
   "description": "¯\\_(ツ)_/¯",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "manifest_version": 2,
   "icons": { "128": "assets/icon.png" },
   "web_accessible_resources": [
@@ -20,7 +20,7 @@
     "content_scripts": [
     {
       "matches": ["https://*/?gfe_rd*","https://www.google.com/"],
-      "css": ["css/styles.css"],
+      "css": ["css/styles.css","css/chartist.css"],
       "js": ["js/content.js"]
     }
   ],

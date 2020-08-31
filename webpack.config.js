@@ -77,6 +77,11 @@ module.exports = {
                 from: 'src/options.html',
                 to: '../options.html',
                 toType: 'file'
+            },
+            {
+                from: 'src/vendors/chartist.css',
+                to: '../css/chartist.css',
+                toType: 'file'
             }
         ]),
         new MiniCssExtractPlugin({
