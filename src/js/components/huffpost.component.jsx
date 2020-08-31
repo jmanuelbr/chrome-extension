@@ -62,8 +62,8 @@ export class HuffPostWidget extends AbstractWidget {
             });
         }
         catch (exception) {
-            loading(false);
-            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
+            super.loading(false);
+            console.error('*** EXCEPTION Huffpost component (I could not parse all articles) -> ', exception);
         }
         return list;
     };

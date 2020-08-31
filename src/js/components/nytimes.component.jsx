@@ -31,7 +31,7 @@ class NewYorkTimesWidget extends AbstractWidget {
             Object.values(jsonData).map(element => {
                 var article = {};
                 Object.values(element.elements).map(property => {
-                    switch(property.name) { 
+                        switch(property.name) { 
                         case "title": { 
                             article.title = property.elements[0].text;
                             break; 
@@ -58,6 +58,7 @@ class NewYorkTimesWidget extends AbstractWidget {
                         break; 
                         } 
                     }
+                    
                 });
                 if (article.thumbnail === undefined) {
                     article.thumbnail = chrome.runtime.getURL("../assets/noimageavailable.png");
@@ -66,8 +67,8 @@ class NewYorkTimesWidget extends AbstractWidget {
             });
         }
         catch (exception) {
-            loading(false);
-            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
+            super.loading(false);
+            console.error('*** EXCEPTION NYTimes component (I could not parse all articles) -> ', exception);
         }
 
         return list;

@@ -70,8 +70,8 @@ class SlashdotWidget extends AbstractWidget {
             orderedArticles = _orderBy(list, ['comments'],['desc']);
         }
         catch (exception) {
-            loading(false);
-            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
+            super.loading(false);
+            console.error('*** EXCEPTION SlashDot component (I could not parse all articles) -> ', exception);
             orderedArticles = [];
         }
         

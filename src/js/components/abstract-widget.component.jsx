@@ -22,10 +22,6 @@ export default class AbstractWidget extends Component {
     }
 
     loading(loadingState) {
-        const self = this;
-        self.setState(state => {
-            state.loading(loadingState);
-            return state;
-        });
+      
     }
 }

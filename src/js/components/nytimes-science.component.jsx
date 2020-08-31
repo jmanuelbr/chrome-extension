@@ -31,7 +31,8 @@ class NewYorkTimesScienceWidget extends AbstractWidget {
             Object.values(jsonData).map(element => {
                 var article = {};
                 Object.values(element.elements).map(property => {
-                    switch(property.name) { 
+                    if (property.elements !== undefined) {
+                        switch(property.name) { 
                         case "title": { 
                             article.title = property.elements[0].text;
                             break; 
@@ -57,6 +58,7 @@ class NewYorkTimesScienceWidget extends AbstractWidget {
                         break; 
                         } 
                     }
+                    }
                 });
                 if (article.thumbnail === undefined) {
                     article.thumbnail = chrome.runtime.getURL("../assets/noimageavailable.png");
@@ -65,8 +67,8 @@ class NewYorkTimesScienceWidget extends AbstractWidget {
             });
         }
         catch (exception) {
-            loading(false);
-            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
+            super.loading(false);
+            console.error('*** EXCEPTION NYTimes science component (I could not parse all articles) -> ', exception);
         }
 
         return list;
