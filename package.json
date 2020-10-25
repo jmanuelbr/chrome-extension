@@ -44,7 +44,6 @@
     "mini-css-extract-plugin": "^0.5.0",
     "minimist": "^1.2.3",
     "mocha": "latest",
-    "node-sass": "^4.11.0",
     "postcss-loader": "^1.2.1",
     "pug-cli": "^1.0.0-alpha6",
     "rimraf": "^2.4.3",
@@ -60,15 +59,16 @@
     "webpack-notifier": "^1.7.0"
   },
   "dependencies": {
+    "chartist": "0.11.0",
     "lodash": "^4.17.19",
+    "node-sass": "^4.14.1",
     "prop-types": "15.7.2",
     "react": "16.8.6",
+    "react-chartist": "0.13.3",
+    "react-dom": "16.8.6",
     "react-redux": "7.0.3",
     "redux": "4.0.1",
     "redux-thunk": "2.3.0",
-    "react-dom": "16.8.6",
-    "xml-js": "^1.6.8",
-    "react-chartist": "0.13.3",
-    "chartist": "0.11.0"
+    "xml-js": "^1.6.8"
   }
 }
