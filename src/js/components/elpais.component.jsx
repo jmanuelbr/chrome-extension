@@ -70,6 +70,9 @@ class ElpaisWidget extends AbstractWidget {
                         // Do nothing
                     }
                 });
+                if (article.thumbnail === undefined) {
+                    article.thumbnail = chrome.runtime.getURL("../assets/spain.jpg");
+                }
                 list.push(article);
             });
         }

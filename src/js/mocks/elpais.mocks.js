@@ -7,7 +7,7 @@ const data = `<?xml version="1.0" encoding="utf-8"?>
         <link>https://elpais.com</link>
         <item>
             <guid isPermaLink="true">https://elpais.com/sociedad/2020-03-09/giuseppe-conte-habria-sido-criminal-ocultar-datos-del-coronavirus-o-minimizarlo.html</guid>
-            <title>Giuseppe Conte: “Habría sido criminal ocultar datos del coronavirus o minimizarlo” </title>
+            <title>MOCKS - Giuseppe Conte: “Habría sido criminal ocultar datos del coronavirus o minimizarlo” </title>
             <pubDate>Mon, 09 Mar 2020 07:15:45 GMT</pubDate>
             <link>https://elpais.com/sociedad/2020-03-09/giuseppe-conte-habria-sido-criminal-ocultar-datos-del-coronavirus-o-minimizarlo.html</link>
             <dc:creator>STEFANO CAPPELLINI</dc:creator>

@@ -9,6 +9,7 @@ import TflWidget from "./tfl/tfl.component";
 import RedditWidget from './reddit/reddit.component';
 import NewYorkTimesScienceWidget from './nytimes-science.component';
 import NewYorkTimesWidget from './nytimes.component';
+import EuropaPressWidget from './europapress.component';
 
 export default class TabsContainerWidget extends Component {
     constructor(props) {
@@ -22,14 +23,19 @@ export default class TabsContainerWidget extends Component {
               widget: <TheGuardianWidget />,
               icon: chrome.runtime.getURL("../assets/theguardian.png")
             },
-            {
-              widget: <NewYorkTimesWidget />,
-              icon: chrome.runtime.getURL("../assets/nytimes.png")
-            },
+            // {
+            //   widget: <NewYorkTimesWidget />,
+            //   icon: chrome.runtime.getURL("../assets/nytimes.png")
+            // },
             {
               widget: <ElpaisWidget />,
               icon: chrome.runtime.getURL("../assets/elpais.png")
             },
+            {
+              widget: <EuropaPressWidget />,
+              icon: chrome.runtime.getURL("../assets/europapress.png")
+            },
+            
             {
               widget: <ContractorUKWidget />,
               icon: chrome.runtime.getURL("../assets/contractor-uk.png")
