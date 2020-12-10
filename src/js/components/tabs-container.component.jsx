@@ -7,8 +7,8 @@ import ContractorUKWidget from "./contractor-uk.component";
 import SlashdotWidget from "./slashdot/slashdot.component";
 import TflWidget from "./tfl/tfl.component";
 import RedditWidget from './reddit/reddit.component';
-import NewYorkTimesScienceWidget from './nytimes-science.component';
 import NewYorkTimesWidget from './nytimes.component';
+import ExpansionWidget from './expansion.component';
 
 export default class TabsContainerWidget extends Component {
     constructor(props) {
@@ -31,16 +31,16 @@ export default class TabsContainerWidget extends Component {
               icon: chrome.runtime.getURL("../assets/elpais.png")
             },
             {
+              widget: <ExpansionWidget />,
+              icon: chrome.runtime.getURL("../assets/expansion.png")
+            },
+            {
               widget: <ContractorUKWidget />,
               icon: chrome.runtime.getURL("../assets/contractor-uk.png")
             },
             {
               widget: <SlashdotWidget />,
               icon: chrome.runtime.getURL("../assets/slashdot.png")
-            },
-            {
-              widget: <NewYorkTimesScienceWidget/>,
-              icon: chrome.runtime.getURL("../assets/nytimes-science.png")
             },
             {
               widget: <RedditWidget />,
