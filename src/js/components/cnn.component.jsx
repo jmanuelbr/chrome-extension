@@ -69,8 +69,8 @@ class CnnWidget extends AbstractWidget {
             });
         }
         catch (exception) {
-            loading(false);
-            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
+            super.loading(false);
+            console.error('*** EXCEPTION CNN component (I could not parse all articles) -> ', exception);
         }
 
         return list;

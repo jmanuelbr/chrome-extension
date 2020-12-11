@@ -36,7 +36,7 @@ class TflTube extends AbstractWidget {
             });
         }
         catch(exception) {
-            loading(false);
+            super.loading(false);
             console.error('*** EXCEPTION (I could not process all data) -> ', exception);
         }
     }

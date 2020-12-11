@@ -70,12 +70,15 @@ class ElpaisWidget extends AbstractWidget {
                         // Do nothing
                     }
                 });
+                if (article.thumbnail === undefined) {
+                    article.thumbnail = chrome.runtime.getURL("../assets/spain.jpg");
+                }
                 list.push(article);
             });
         }
         catch (exception) {
-            loading(false);
-            console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
+            super.loading(false);
+            console.error('*** EXCEPTION ElPais component (I could not parse all articles) -> ', exception);
         }
         return list;
     };

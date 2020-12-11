@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, { number } from 'prop-types';
+import PropTypes from 'prop-types';
 import AbstractWidget from '../abstract-widget.component';
 import { getMockData } from '../../mocks/tfl-live-departures.mocks';
 import { connect } from 'react-redux';
@@ -38,7 +38,7 @@ class TflLiveDepartures extends AbstractWidget {
             });
         }
         catch(exception) {
-            loading(false);
+            super.loading(false);
             console.error('*** EXCEPTION (I could not process all data) -> ', exception);
         }
     }

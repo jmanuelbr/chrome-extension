@@ -6,16 +6,16 @@ import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
 import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
-import { getMockData } from '../mocks/huffpost.mocks';
+import { getMockData } from '../mocks/europapress.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
 import PropTypes from 'prop-types';
 
-export class HuffPostWidget extends AbstractWidget {
+export class EuropaPressWidget extends AbstractWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
-            feedUrl: "https://www.huffpost.com/section/world-news/feed"
+            feedUrl: "https://www.europapress.es/rss/rss.aspx?ch=00285"
         };
         this.state = {
             articles: [],
@@ -25,11 +25,11 @@ export class HuffPostWidget extends AbstractWidget {
     }
 
     getArticles(jsonData) {
-        var list = [];
+        let list = [];
         try {
             jsonData = HELPER.parseFeed(jsonData);
             Object.values(jsonData).map(element => {
-                var article = {};
+                let article = {};
                 Object.values(element.elements).map(property => {
                     switch (property.name) {
                         case "title": {
@@ -49,6 +49,10 @@ export class HuffPostWidget extends AbstractWidget {
                             break;
                         }
                         case "enclosure": {
+                            if (property.attributes.type == "image/jpeg" &&
+                                property.attributes.url.indexOf("miniatura") > 0) {
+                                article.thumbnail = property.attributes.url;
+                            }
                             article.thumbnail = property.attributes.url;
                             break;
                         }
@@ -57,13 +61,17 @@ export class HuffPostWidget extends AbstractWidget {
                             break;
                         }
                     }
+
                 });
+                if (article.thumbnail === undefined) {
+                    article.thumbnail = chrome.runtime.getURL("../assets/extremadura.jpg");
+                }
                 list.push(article);
             });
         }
         catch (exception) {
             super.loading(false);
-            console.error('*** EXCEPTION Huffpost component (I could not parse all articles) -> ', exception);
+            console.error('*** EXCEPTION AS component (I could not parse all articles) -> ', exception);
         }
         return list;
     };
@@ -105,14 +113,14 @@ export class HuffPostWidget extends AbstractWidget {
     }
 }
 
+EuropaPressWidget.propTypes = {
+    mocksEnabled: PropTypes.bool.isRequired
+};
+
 function mapStateToProps(state) {
 	return {
 		mocksEnabled: state.configuration.mocksEnabled
 	};
 }
 
-HuffPostWidget.propTypes = {
-    mocksEnabled: PropTypes.bool.isRequired
-};
-
-export default connect(mapStateToProps)(HuffPostWidget);
+export default connect(mapStateToProps)(EuropaPressWidget);

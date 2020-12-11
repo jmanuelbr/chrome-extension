@@ -15,9 +15,7 @@ class Article extends Component {
     }
 
     articleMedia(props) {
-        console.log('asdf',props);
         if (props.video !== undefined && props.video.length > 1) {
-            console.log('get video');
             return (
                 <video width="245" height="150" controls>
                   <source src={props.video} type="video/mp4"/>

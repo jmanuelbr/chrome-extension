@@ -66,8 +66,8 @@ export class ElMundoWidget extends AbstractWidget {
         list.push(article);
       });
     } catch (exception) {
-      loading(false);
-      console.error('*** EXCEPTION (I could not parse all articles) -> ', exception);
+      super.loading(false);
+      console.error('*** EXCEPTION ElMundo component (I could not parse all articles) -> ', exception);
     }
     return list;
   };

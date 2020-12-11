@@ -1,7 +1,7 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const WebpackNotifierPlugin = require('webpack-notifier');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 var path = require("path");
@@ -76,6 +76,11 @@ module.exports = {
             {
                 from: 'src/options.html',
                 to: '../options.html',
+                toType: 'file'
+            },
+            {
+                from: 'src/vendors/chartist.css',
+                to: '../css/chartist.css',
                 toType: 'file'
             }
         ]),

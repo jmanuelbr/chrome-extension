@@ -33,7 +33,6 @@ function ready(callback) {
 
 ready(function(){
     document.head.innerHTML += `<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700" />`;
-    document.head.innerHTML += `<link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">`;
 });
 
 const appContainter = 
