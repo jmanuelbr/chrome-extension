@@ -10,6 +10,7 @@ import { getMockData } from '../mocks/theguardian.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
 import PropTypes from 'prop-types';
+import { MAX_ARTICLES } from '../constants';
 
 class TheGuardianWidget extends AbstractWidget {
     constructor (props) {
@@ -21,11 +22,12 @@ class TheGuardianWidget extends AbstractWidget {
             articles: [],
             loading: false,
             error: true
-		};
+        };
       }
 
     getArticles(jsonData) {
-        var list = [];
+        let list = [];
+        let count = 0;
         try {
             jsonData = HELPER.parseFeed(jsonData);
             Object.values(jsonData).map(element => {
@@ -60,7 +62,11 @@ class TheGuardianWidget extends AbstractWidget {
                         } 
                     }
                 });
-                list.push(article);
+                if (count < MAX_ARTICLES) {
+                    list.push(article);
+                    count += 1;
+                }
+                
             });
         }
         catch (exception) {

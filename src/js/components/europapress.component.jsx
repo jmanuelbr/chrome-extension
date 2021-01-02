@@ -10,6 +10,7 @@ import { getMockData } from '../mocks/europapress.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
 import PropTypes from 'prop-types';
+import { MAX_ARTICLES} from '../constants';
 
 export class EuropaPressWidget extends AbstractWidget {
     constructor(props) {
@@ -26,6 +27,7 @@ export class EuropaPressWidget extends AbstractWidget {
 
     getArticles(jsonData) {
         let list = [];
+        let count = 0;
         try {
             jsonData = HELPER.parseFeed(jsonData);
             Object.values(jsonData).map(element => {
@@ -66,7 +68,10 @@ export class EuropaPressWidget extends AbstractWidget {
                 if (article.thumbnail === undefined) {
                     article.thumbnail = chrome.runtime.getURL("../assets/extremadura.jpg");
                 }
-                list.push(article);
+                if (count < MAX_ARTICLES) {
+                    list.push(article);
+                    count += 1;
+                }
             });
         }
         catch (exception) {

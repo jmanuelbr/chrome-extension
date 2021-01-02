@@ -10,6 +10,7 @@ import { getMockData } from '../mocks/elpais.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
 import PropTypes from 'prop-types';
+import { MAX_ARTICLES } from '../constants';
 
 class ElpaisWidget extends AbstractWidget {
     constructor(props) {
@@ -26,6 +27,7 @@ class ElpaisWidget extends AbstractWidget {
 
     getArticles(jsonData) {
         var list = [];
+        let count = 0;
         try {
             jsonData = HELPER.parseFeed(jsonData);
             Object.values(jsonData).map(element => {
@@ -73,7 +75,10 @@ class ElpaisWidget extends AbstractWidget {
                 if (article.thumbnail === undefined) {
                     article.thumbnail = chrome.runtime.getURL("../assets/spain.jpg");
                 }
-                list.push(article);
+                if (count < MAX_ARTICLES) {
+                    list.push(article);
+                    count += 1;
+                }
             });
         }
         catch (exception) {

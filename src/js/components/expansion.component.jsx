@@ -10,6 +10,7 @@ import { getMockData } from '../mocks/expansion.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
 import PropTypes from 'prop-types';
+import { MAX_ARTICLES } from '../constants';
 
 class ExpansionWidget extends AbstractWidget {
     constructor(props) {
@@ -26,6 +27,7 @@ class ExpansionWidget extends AbstractWidget {
 
     getArticles(jsonData) {
         var list = [];
+        let count = 0;
         try {
             jsonData = HELPER.parseFeed(jsonData);
             Object.values(jsonData).map(element => {
@@ -70,7 +72,10 @@ class ExpansionWidget extends AbstractWidget {
                         // Do nothing
                     }
                 });
-                list.push(article);
+                if (count < MAX_ARTICLES) {
+                    list.push(article);
+                    count += 1;
+                }
             });
         }
         catch (exception) {

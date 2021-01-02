@@ -23,7 +23,7 @@ class ArticleSelected extends Component {
             <div className="article-selected"
             style={{'display': (title !== undefined)? 'block': 'none'}}>
                 <div className="title-section">
-                    <h2>{title}</h2>
+                    <h2 dangerouslySetInnerHTML={{ __html: title }}></h2>
                     <img 
                         src={chrome.runtime.getURL("../assets/close-article.png")}
                         onClick={this.setCurrentArticle}/>

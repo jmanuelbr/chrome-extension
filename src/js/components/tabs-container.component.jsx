@@ -3,12 +3,12 @@ import Tabs from "./tabs.component";
 import _map from "lodash/map";
 import TheGuardianWidget from "./theguardian.component";
 import ElpaisWidget from "./elpais.component";
-import ContractorUKWidget from "./contractor-uk.component";
 import SlashdotWidget from "./slashdot/slashdot.component";
 import TflWidget from "./tfl/tfl.component";
 import RedditWidget from './reddit/reddit.component';
 import ExpansionWidget from './expansion.component';
 import EuropaPressWidget from './europapress.component';
+import LaVanguardiaWidget from './lavanguardia.component';
 
 export default class TabsContainerWidget extends Component {
     constructor(props) {
@@ -27,16 +27,16 @@ export default class TabsContainerWidget extends Component {
               icon: chrome.runtime.getURL("../assets/elpais.png")
             },
             {
+              widget: <LaVanguardiaWidget />,
+              icon: chrome.runtime.getURL("../assets/lavanguardia.png")
+            },
+            {
               widget: <EuropaPressWidget />,
               icon: chrome.runtime.getURL("../assets/europapress.png")
             },
             {
               widget: <ExpansionWidget />,
               icon: chrome.runtime.getURL("../assets/expansion.png")
-            },
-            {
-              widget: <ContractorUKWidget />,
-              icon: chrome.runtime.getURL("../assets/contractor-uk.png")
             },
             {
               widget: <SlashdotWidget />,
