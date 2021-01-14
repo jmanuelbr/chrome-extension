@@ -4,9 +4,9 @@ import Article from './article.component';
 import _map from 'lodash/map';
 import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
-import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../mocks/theguardian.mocks';
+import { getMockData2 } from '../mocks/theguardian2.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
 import PropTypes from 'prop-types';
@@ -14,16 +14,49 @@ import { MAX_ARTICLES } from '../constants';
 
 class TheGuardianWidget extends AbstractWidget {
     constructor (props) {
+        console.log('jose CONSTRUCTOR');
         super(props);
+        const me = this;
         this.PROPERTIES = {
             feedUrl: "https://www.theguardian.com/uk/rss"
         };
+
         this.state = {
             articles: [],
             loading: false,
-            error: true
+            error: true,
+            hasUpdates: false
         };
-      }
+
+        setTimeout(function() {
+        if (props.mocksEnabled) {
+            const oldFirstArticleTitle = me.state.articles[0].title;
+            me.processData(getMockData2());
+            if (oldFirstArticleTitle !== me.state.articles[0].title) {
+                me.state.hasUpdates = true;
+                console.log('jose send parent Callback');
+                props.parentCallback("0");
+
+            }
+
+            me.forceUpdate();
+
+        }
+        else {
+
+            const oldFirstArticleTitle = me.state.articles[0].title;
+            chrome.runtime.sendMessage(
+                { contentScriptQuery: FETCH_CONTENT, properties: me.PROPERTIES},
+                feedData => me.processData(feedData));
+            if (oldFirstArticleTitle !== me.state.articles[0].title) {
+                me.state.hasUpdates = true;
+                props.parentCallback("0");
+            }
+        }
+        }, 4000); // Check every 3 minutes
+
+    }
+
 
     getArticles(jsonData) {
         let list = [];
@@ -76,8 +109,8 @@ class TheGuardianWidget extends AbstractWidget {
 
         return list;
     };
-    
-    componentDidMount() {
+
+    initializeArticles() {
         if (this.props.mocksEnabled) {
             this.processData(getMockData());
         }
@@ -86,6 +119,9 @@ class TheGuardianWidget extends AbstractWidget {
                 { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
+    }
+    componentDidMount() {
+        this.initializeArticles();
     }
     
     render() {

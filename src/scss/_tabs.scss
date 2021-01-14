@@ -1,5 +1,17 @@
 @import 'variables';
 
+@keyframes color-pulse {
+  0% {
+    background-color: white;
+  }
+  50% {
+    background-color: #f3d7be;
+  }
+  100% {
+    background-color: white;
+  }
+}
+
 .tabs-section {
     margin: 2px 0;
     border: 1px solid lightgrey;
@@ -44,7 +56,13 @@
         width: 19px;
     }
   }
-  
+  .Tabs__Tab--notification {
+    background-color: #222;
+    animation-name: color-pulse;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+
+  }
   .Tabs__Tab:hover {
     background: rgb(234, 244, 255);
     color: white;

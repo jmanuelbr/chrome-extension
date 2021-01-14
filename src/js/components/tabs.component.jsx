@@ -52,6 +52,9 @@ export default class Tabs extends Component {
           if (child.key == this.props.active) {
             className = `${className} Tabs__Tab--active`;
           }
+          if (this.props.notifications && child.key in this.props.notifications) {
+            className = `${className} Tabs__Tab--notification`;
+          }
           return (
             <div
               className={className}
@@ -90,5 +93,6 @@ export default class Tabs extends Component {
 Tabs.propTypes = {
   children: PropTypes.array.isRequired,
   active: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  notifications: PropTypes.array
 };

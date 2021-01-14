@@ -7,10 +7,14 @@ export default class AbstractWidget extends Component {
         super(props);
     }
 
+    getXml(feedData) {
+        const convert = require('xml-js');
+        return convert.xml2json(feedData, { compact: false, spaces: 4 });
+    }
+
     processData(feedData) {
         const self = this;
-        var convert = require('xml-js');
-        var jsonData = convert.xml2json(feedData, { compact: false, spaces: 4 });
+        const jsonData = self.getXml(feedData);
         self.setState(state => {
             state.articles = self.getArticles(jsonData);
             if (!_isEmpty(state.articles)) {
