@@ -14,9 +14,7 @@ import { MAX_ARTICLES } from '../constants';
 
 class TheGuardianWidget extends AbstractWidget {
     constructor (props) {
-        console.log('jose CONSTRUCTOR');
         super(props);
-        const me = this;
         this.PROPERTIES = {
             feedUrl: "https://www.theguardian.com/uk/rss"
         };
@@ -24,37 +22,8 @@ class TheGuardianWidget extends AbstractWidget {
         this.state = {
             articles: [],
             loading: false,
-            error: true,
-            hasUpdates: false
+            error: true
         };
-
-        setTimeout(function() {
-        if (props.mocksEnabled) {
-            const oldFirstArticleTitle = me.state.articles[0].title;
-            me.processData(getMockData2());
-            if (oldFirstArticleTitle !== me.state.articles[0].title) {
-                me.state.hasUpdates = true;
-                console.log('jose send parent Callback');
-                props.parentCallback("0");
-
-            }
-
-            me.forceUpdate();
-
-        }
-        else {
-
-            const oldFirstArticleTitle = me.state.articles[0].title;
-            chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, properties: me.PROPERTIES},
-                feedData => me.processData(feedData));
-            if (oldFirstArticleTitle !== me.state.articles[0].title) {
-                me.state.hasUpdates = true;
-                props.parentCallback("0");
-            }
-        }
-        }, 4000); // Check every 3 minutes
-
     }
 
 
@@ -70,7 +39,7 @@ class TheGuardianWidget extends AbstractWidget {
                         case "title": { 
                             article.title = property.elements[0].text;
                             break; 
-                        } 
+                        }
                         case "description": { 
                             article.description = property.elements[0].text;
                             break; 
@@ -120,8 +89,42 @@ class TheGuardianWidget extends AbstractWidget {
                 feedData => this.processData(feedData));
         }
     }
+
+    processQuery(feedData) {
+        const oldArticle = this.state.articles[0].title;
+        this.processData(feedData);
+        if (oldArticle != this.state.articles[0].title) {
+            console.log('jose FOUND UPDATES theGuardian!!');
+            console.log('jose old article', oldArticle);
+            console.log('jose new article', this.state.articles[0].title);
+            this.props.parentCallback("0");
+            this.forceUpdate();
+        }
+    }
+
+    checkForNewUpdates() {
+        if (this.props.mocksEnabled) {
+            const oldFirstArticleTitle = this.state.articles[0].title;
+            this.processData(getMockData2());
+            if (oldFirstArticleTitle != this.state.articles[0].title) {
+                this.props.parentCallback("0");
+            }
+            this.forceUpdate();
+
+        }
+        else {
+            chrome.runtime.sendMessage(
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
+                feedData => this.processQuery(feedData));
+        }
+    }
+
     componentDidMount() {
         this.initializeArticles();
+        this.interval = setInterval(() => this.checkForNewUpdates(), 60000);
+    }
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
     
     render() {

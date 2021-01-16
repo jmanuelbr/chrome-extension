@@ -11,6 +11,7 @@ import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
 import PropTypes from 'prop-types';
 import { MAX_ARTICLES} from '../constants';
+import {getMockData2} from "../mocks/theguardian2.mocks";
 
 export class EuropaPressWidget extends AbstractWidget {
     constructor(props) {
@@ -81,7 +82,7 @@ export class EuropaPressWidget extends AbstractWidget {
         return list;
     };
 
-    componentDidMount() {
+    initializeArticles() {
         if (this.props.mocksEnabled) {
             this.processData(getMockData());
         }
@@ -90,6 +91,43 @@ export class EuropaPressWidget extends AbstractWidget {
                 { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
                 feedData => this.processData(feedData));
         }
+    }
+
+    processQuery(feedData) {
+        const oldArticle = this.state.articles[0].title;
+        this.processData(feedData);
+        if (oldArticle != this.state.articles[0].title) {
+            this.props.parentCallback("3");
+            console.log('jose FOUND UPDATES europapress!!');
+            console.log('jose old article', oldArticle);
+            console.log('jose new article', this.state.articles[0].title);
+            this.forceUpdate();
+        }
+    }
+
+    checkForNewUpdates() {
+        if (this.props.mocksEnabled) {
+            const oldFirstArticleTitle = this.state.articles[0].title;
+            this.processData(getMockData2());
+            if (oldFirstArticleTitle != this.state.articles[0].title) {
+                this.props.parentCallback("3");
+            }
+            this.forceUpdate();
+
+        }
+        else {
+            chrome.runtime.sendMessage(
+                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
+                feedData => this.processQuery(feedData));
+        }
+    }
+
+    componentDidMount() {
+        this.initializeArticles();
+        this.interval = setInterval(() => this.checkForNewUpdates(), 60000);
+    }
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
     render() {

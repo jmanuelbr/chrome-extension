@@ -9,29 +9,88 @@ import RedditWidget from './reddit/reddit.component';
 import ExpansionWidget from './expansion.component';
 import EuropaPressWidget from './europapress.component';
 import LaVanguardiaWidget from './lavanguardia.component';
+import _isEmpty from 'lodash/isEmpty';
 
 export default class TabsContainerWidget extends Component {
     constructor(props) {
-      super(props);
-      this.state = { active: '0' };
+        super(props);
+        this.state = {
+            active: '0',
+            notifications: []
+        };
+        this.setNoticationForTab=this.setNoticationForTab.bind(this);
+        this.setTabIcon=this.setTabIcon.bind(this);
+    }
+
+    componentDidMount() {
+        window.timer_interval = 0;
+    }
+    componentWillUnmount() {
+        clearInterval(window.timer_interval);
+        window.timer_interval = 0;
+    }
+
+    tabFocusChanged(active) {
+        if (this.state.notifications && this.state.notifications.includes(active)) {
+            const index = this.state.notifications.indexOf(active);
+            if (index > -1) {
+                this.state.notifications.splice(index, 1);
+            }
+        }
+        if (_isEmpty(this.state.notifications)) {
+            clearInterval(window.timer_interval);
+            window.timer_interval = 0;
+            this.setTabIcon(chrome.runtime.getURL("../../assets/google_favicon.png"));
+        }
+        this.setState({active});
+    }
+
+    setTabIcon(iconPath) {
+        let link = document.querySelector("link[rel~='icon']");
+        if (!link) {
+            link = document.createElement('link');
+            link.rel = 'icon';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        }
+        link.href = iconPath;
+    }
+
+    setNoticationForTab(tabNumber) {
+        if (this.state.notifications.indexOf(tabNumber) === -1 && this.state.active != tabNumber) {
+            this.state.notifications.push(tabNumber);
+            this.forceUpdate();
+        }
+        let intervalBooleanFlag = true;
+        let myself = this;
+        if (window.timer_interval == 0) {
+            window.timer_interval = setInterval(function() {
+                if (intervalBooleanFlag) {
+                    intervalBooleanFlag=false;
+                    myself.setTabIcon(chrome.runtime.getURL("../../assets/google_favicon_bell.png"));
+                } else {
+                    intervalBooleanFlag=true;
+                    myself.setTabIcon(chrome.runtime.getURL("../../assets/google_favicon.png"));
+                }
+            }, 1000); // Swap notification alert message every second
+        }
     }
 
     render() {
         const tabsContent = [
             {
-              widget: <TheGuardianWidget />,
+              widget: <TheGuardianWidget parentCallback={this.setNoticationForTab} />,
               icon: chrome.runtime.getURL("../assets/theguardian.png")
             },
             {
-              widget: <ElpaisWidget />,
+              widget: <ElpaisWidget parentCallback={this.setNoticationForTab} />,
               icon: chrome.runtime.getURL("../assets/elpais.png")
             },
             {
-              widget: <LaVanguardiaWidget />,
+              widget: <LaVanguardiaWidget parentCallback={this.setNoticationForTab} />,
               icon: chrome.runtime.getURL("../assets/lavanguardia.png")
             },
             {
-              widget: <EuropaPressWidget />,
+              widget: <EuropaPressWidget parentCallback={this.setNoticationForTab} />,
               icon: chrome.runtime.getURL("../assets/europapress.png")
             },
             {
@@ -56,7 +115,8 @@ export default class TabsContainerWidget extends Component {
             <div className="tabs-section">
             <Tabs
               active={this.state.active}
-              onChange={active => this.setState({ active })}
+              onChange={active => this.tabFocusChanged(active)}
+              notifications={this.state.notifications}
             >
               {_map(tabsContent, (tabContent, i) => (
                 <img src={tabContent.icon} key={i} />

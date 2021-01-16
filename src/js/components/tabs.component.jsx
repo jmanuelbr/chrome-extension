@@ -52,7 +52,7 @@ export default class Tabs extends Component {
           if (child.key == this.props.active) {
             className = `${className} Tabs__Tab--active`;
           }
-          if (this.props.notifications && child.key in this.props.notifications) {
+          if (this.props.notifications && this.props.notifications.includes(child.key)) {
             className = `${className} Tabs__Tab--notification`;
           }
           return (
