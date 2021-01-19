@@ -4,31 +4,22 @@ import Article from './article.component';
 import _map from 'lodash/map';
 import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
-import _isEmpty from 'lodash/isEmpty';
-import { connect } from 'react-redux';
 import { getMockData } from '../mocks/europapress.mocks';
-import { FETCH_CONTENT } from '../actions/types';
-import AbstractWidget from './abstract-widget.component';
-import PropTypes from 'prop-types';
-import { MAX_ARTICLES} from '../constants';
-import {getMockData2} from "../mocks/theguardian2.mocks";
+import { NewsUpdatableWidget, connect } from './news-updatable-widget';
+import { MAX_ARTICLES } from '../constants';
 
-export class EuropaPressWidget extends AbstractWidget {
+class EuropaPressWidget extends NewsUpdatableWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
-            feedUrl: "https://www.europapress.es/rss/rss.aspx?ch=00285"
+            feedUrl: props.feedUrl
         };
-        this.state = {
-            articles: [],
-            loading: false,
-            error: true
-        };
+        this.mockFunction = getMockData;
     }
 
     getArticles(jsonData) {
         let list = [];
-        let count = 0;
+        let articleCount = 0;
         try {
             jsonData = HELPER.parseFeed(jsonData);
             Object.values(jsonData).map(element => {
@@ -67,11 +58,11 @@ export class EuropaPressWidget extends AbstractWidget {
 
                 });
                 if (article.thumbnail === undefined) {
-                    article.thumbnail = chrome.runtime.getURL("../assets/extremadura.jpg");
+                    article.thumbnail = chrome.runtime.getURL("../assets/no_photo_available.png");
                 }
-                if (count < MAX_ARTICLES) {
+                if (articleCount < MAX_ARTICLES) {
                     list.push(article);
-                    count += 1;
+                    articleCount += 1;
                 }
             });
         }
@@ -82,49 +73,9 @@ export class EuropaPressWidget extends AbstractWidget {
         return list;
     };
 
-    initializeArticles() {
-        if (this.props.mocksEnabled) {
-            this.processData(getMockData());
-        }
-        else {
-            chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
-                feedData => this.processData(feedData));
-        }
-    }
-
-    processQuery(feedData) {
-        const oldArticle = this.state.articles[0].title;
-        this.processData(feedData);
-        if (oldArticle != this.state.articles[0].title) {
-            this.props.parentCallback("3");
-            console.log('jose FOUND UPDATES europapress!!');
-            console.log('jose old article', oldArticle);
-            console.log('jose new article', this.state.articles[0].title);
-            this.forceUpdate();
-        }
-    }
-
-    checkForNewUpdates() {
-        if (this.props.mocksEnabled) {
-            const oldFirstArticleTitle = this.state.articles[0].title;
-            this.processData(getMockData2());
-            if (oldFirstArticleTitle != this.state.articles[0].title) {
-                this.props.parentCallback("3");
-            }
-            this.forceUpdate();
-
-        }
-        else {
-            chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
-                feedData => this.processQuery(feedData));
-        }
-    }
-
     componentDidMount() {
-        this.initializeArticles();
-        this.interval = setInterval(() => this.checkForNewUpdates(), 60000);
+        this.initializeArticles(this.mockFunction);
+        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction), 60000);
     }
     componentWillUnmount() {
         clearInterval(this.interval);
@@ -156,14 +107,4 @@ export class EuropaPressWidget extends AbstractWidget {
     }
 }
 
-EuropaPressWidget.propTypes = {
-    mocksEnabled: PropTypes.bool.isRequired
-};
-
-function mapStateToProps(state) {
-	return {
-		mocksEnabled: state.configuration.mocksEnabled
-	};
-}
-
-export default connect(mapStateToProps)(EuropaPressWidget);
+export default connect(EuropaPressWidget);

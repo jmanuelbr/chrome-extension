@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import _map from 'lodash/map';
 import _isEmpty from 'lodash/isEmpty';
 
 export default class AbstractWidget extends Component {

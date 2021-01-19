@@ -2,13 +2,13 @@
 
 @keyframes color-pulse {
   0% {
-    background-color: white;
+    background-color: #fff0dc;
   }
   50% {
-    background-color: #f3d7be;
+    background-color: #ffdeb8;
   }
   100% {
-    background-color: white;
+    background-color: #fff0dc;
   }
 }
 
@@ -59,7 +59,7 @@
   .Tabs__Tab--notification {
     background-color: #222;
     animation-name: color-pulse;
-    animation-duration: 5s;
+    animation-duration: 3s;
     animation-iteration-count: infinite;
 
   }

@@ -78,36 +78,36 @@ export default class TabsContainerWidget extends Component {
     render() {
         const tabsContent = [
             {
-              widget: <TheGuardianWidget parentCallback={this.setNoticationForTab} />,
-              icon: chrome.runtime.getURL("../assets/theguardian.png")
+                widget: <TheGuardianWidget parentCallback={this.setNoticationForTab} notificationIndex={"0"} />,
+                icon: chrome.runtime.getURL("../assets/theguardian.png")
             },
             {
-              widget: <ElpaisWidget parentCallback={this.setNoticationForTab} />,
-              icon: chrome.runtime.getURL("../assets/elpais.png")
+                widget: <ElpaisWidget parentCallback={this.setNoticationForTab} notificationIndex={"1"} />,
+                icon: chrome.runtime.getURL("../assets/elpais.png")
             },
             {
-              widget: <LaVanguardiaWidget parentCallback={this.setNoticationForTab} />,
-              icon: chrome.runtime.getURL("../assets/lavanguardia.png")
+                widget: <LaVanguardiaWidget parentCallback={this.setNoticationForTab} notificationIndex={"2"} />,
+                icon: chrome.runtime.getURL("../assets/lavanguardia.png")
             },
             {
-              widget: <EuropaPressWidget parentCallback={this.setNoticationForTab} />,
-              icon: chrome.runtime.getURL("../assets/europapress.png")
+                widget: <EuropaPressWidget parentCallback={this.setNoticationForTab} notificationIndex={"3"} feedUrl={"https://www.europapress.es/rss/rss.aspx?ch=00285"}/>,
+                icon: chrome.runtime.getURL("../assets/extremadura_icon.png")
             },
             {
-              widget: <ExpansionWidget />,
-              icon: chrome.runtime.getURL("../assets/expansion.png")
+                widget: <EuropaPressWidget parentCallback={this.setNoticationForTab} notificationIndex={"4"} feedUrl={"https://www.europapress.es/rss/rss.aspx?ch=00295"}/>,
+                icon: chrome.runtime.getURL("../assets/murcia_icon.png")
             },
             {
-              widget: <SlashdotWidget />,
-              icon: chrome.runtime.getURL("../assets/slashdot.png")
+                widget: <ExpansionWidget />,
+                icon: chrome.runtime.getURL("../assets/expansion.png")
             },
             {
-              widget: <RedditWidget />,
-              icon: chrome.runtime.getURL("../assets/reddit.png")
+                widget: <SlashdotWidget />,
+                icon: chrome.runtime.getURL("../assets/slashdot.png")
             },
             {
-              widget: <TflWidget />,
-              icon: chrome.runtime.getURL("../assets/tfl.png")
+                widget: <RedditWidget />,
+                icon: chrome.runtime.getURL("../assets/reddit.png")
             }
           ];
 

@@ -3,25 +3,17 @@ import Article from './article.component';
 import _map from 'lodash/map';
 import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
-import { connect } from 'react-redux';
-import { getMockData } from '../mocks/lavanguardia.mocks';
-import { FETCH_CONTENT } from '../actions/types';
-import AbstractWidget from './abstract-widget.component';
-import PropTypes from 'prop-types';
+import { NewsUpdatableWidget, connect } from './news-updatable-widget';
 import { MAX_ARTICLES } from '../constants';
-import {getMockData2} from "../mocks/theguardian2.mocks";
+import {getMockData} from "../mocks/lavanguardia.mocks";
 
-class LaVanguardiaWidget extends AbstractWidget {
+class LaVanguardiaWidget extends NewsUpdatableWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
             feedUrl: "https://www.lavanguardia.com/newsml/home.xml"
         };
-        this.state = {
-            articles: 'No news today :(',
-            loading: false,
-            error: true
-        };
+        this.mockFunction = getMockData;
     }
 
      unEntity(str){
@@ -53,8 +45,8 @@ class LaVanguardiaWidget extends AbstractWidget {
     };
 
     getArticles(jsonData) {
-        var list = [];
-        let count = 0;
+        let list = [];
+        let articleCount = 0;
         try {
             jsonData = this.parseFeed(jsonData);
             Object.values(jsonData).map(element => {
@@ -73,7 +65,7 @@ class LaVanguardiaWidget extends AbstractWidget {
                                         break;
                                     }
                                     case "DeriveredFrom": {
-                                        article.link = myType.elements[0].text;;
+                                        article.link = myType.elements[0].text;
                                         break;
                                     }
                                     default: {
@@ -88,13 +80,14 @@ class LaVanguardiaWidget extends AbstractWidget {
                         });
                     }
                     else if (property.name === "NewsComponent") {
+                        // TODO: This is going to break sooner or later
                         article.thumbnail = property.elements[0].elements[2].elements[1].elements[2].elements[0].elements[0].elements[0].elements[0].elements[0].attributes.source;
                     }
                    
                 });
-                if (count < MAX_ARTICLES) {
+                if (articleCount < MAX_ARTICLES) {
                     list.push(article);
-                    count += 1;
+                    articleCount += 1;
                 }
             });
         }
@@ -105,49 +98,9 @@ class LaVanguardiaWidget extends AbstractWidget {
         return list;
     };
 
-    initializeArticles() {
-        if (this.props.mocksEnabled) {
-            this.processData(getMockData());
-        }
-        else {
-            chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
-                feedData => this.processData(feedData));
-        }
-    }
-
-    processQuery(feedData) {
-        const oldArticle = this.state.articles[0].title;
-        this.processData(feedData);
-        if (oldArticle != this.state.articles[0].title) {
-            console.log('jose FOUND UPDATES lavanguardia!!');
-            console.log('jose old article', oldArticle);
-            console.log('jose new article', this.state.articles[0].title);
-            this.props.parentCallback("2");
-            this.forceUpdate();
-        }
-    }
-
-    checkForNewUpdates() {
-        if (this.props.mocksEnabled) {
-            const oldFirstArticleTitle = this.state.articles[0].title;
-            this.processData(getMockData2());
-            if (oldFirstArticleTitle != this.state.articles[0].title) {
-                this.props.parentCallback("2");
-            }
-            this.forceUpdate();
-
-        }
-        else {
-            chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
-                feedData => this.processQuery(feedData));
-        }
-    }
-
     componentDidMount() {
-        this.initializeArticles();
-        this.interval = setInterval(() => this.checkForNewUpdates(), 60000);
+        this.initializeArticles(this.mockFunction);
+        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction), 60000);
     }
     componentWillUnmount() {
         clearInterval(this.interval);
@@ -178,14 +131,5 @@ class LaVanguardiaWidget extends AbstractWidget {
         }
     }
 }
-function mapStateToProps(state) {
-	return {
-		mocksEnabled: state.configuration.mocksEnabled
-	};
-}
 
-LaVanguardiaWidget.propTypes = {
-    mocksEnabled: PropTypes.bool.isRequired
-};
-
-export default connect(mapStateToProps)(LaVanguardiaWidget);
+export default connect(LaVanguardiaWidget);

@@ -4,38 +4,28 @@ import Article from './article.component';
 import _map from 'lodash/map';
 import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
-import { connect } from 'react-redux';
 import { getMockData } from '../mocks/theguardian.mocks';
-import { getMockData2 } from '../mocks/theguardian2.mocks';
-import { FETCH_CONTENT } from '../actions/types';
-import AbstractWidget from './abstract-widget.component';
-import PropTypes from 'prop-types';
+import { NewsUpdatableWidget, connect } from './news-updatable-widget';
 import { MAX_ARTICLES } from '../constants';
 
-class TheGuardianWidget extends AbstractWidget {
-    constructor (props) {
+class TheGuardianWidget extends NewsUpdatableWidget {
+    constructor(props) {
         super(props);
         this.PROPERTIES = {
             feedUrl: "https://www.theguardian.com/uk/rss"
         };
-
-        this.state = {
-            articles: [],
-            loading: false,
-            error: true
-        };
+        this.mockFunction = getMockData;
     }
-
 
     getArticles(jsonData) {
         let list = [];
-        let count = 0;
+        let articleCount = 0;
         try {
             jsonData = HELPER.parseFeed(jsonData);
             Object.values(jsonData).map(element => {
-                var article = {};
+                let article = {};
                 Object.values(element.elements).map(property => {
-                    switch(property.name) { 
+                    switch (property.name) {
                         case "title": { 
                             article.title = property.elements[0].text;
                             break; 
@@ -64,9 +54,9 @@ class TheGuardianWidget extends AbstractWidget {
                         } 
                     }
                 });
-                if (count < MAX_ARTICLES) {
+                if (articleCount < MAX_ARTICLES) {
                     list.push(article);
-                    count += 1;
+                    articleCount += 1;
                 }
                 
             });
@@ -79,49 +69,9 @@ class TheGuardianWidget extends AbstractWidget {
         return list;
     };
 
-    initializeArticles() {
-        if (this.props.mocksEnabled) {
-            this.processData(getMockData());
-        }
-        else {
-            chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
-                feedData => this.processData(feedData));
-        }
-    }
-
-    processQuery(feedData) {
-        const oldArticle = this.state.articles[0].title;
-        this.processData(feedData);
-        if (oldArticle != this.state.articles[0].title) {
-            console.log('jose FOUND UPDATES theGuardian!!');
-            console.log('jose old article', oldArticle);
-            console.log('jose new article', this.state.articles[0].title);
-            this.props.parentCallback("0");
-            this.forceUpdate();
-        }
-    }
-
-    checkForNewUpdates() {
-        if (this.props.mocksEnabled) {
-            const oldFirstArticleTitle = this.state.articles[0].title;
-            this.processData(getMockData2());
-            if (oldFirstArticleTitle != this.state.articles[0].title) {
-                this.props.parentCallback("0");
-            }
-            this.forceUpdate();
-
-        }
-        else {
-            chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
-                feedData => this.processQuery(feedData));
-        }
-    }
-
     componentDidMount() {
-        this.initializeArticles();
-        this.interval = setInterval(() => this.checkForNewUpdates(), 60000);
+        this.initializeArticles(this.mockFunction);
+        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction), 60000);
     }
     componentWillUnmount() {
         clearInterval(this.interval);
@@ -153,14 +103,4 @@ class TheGuardianWidget extends AbstractWidget {
     }
 }
 
-const mapStateToProps = (state) => {
-	return {
-		mocksEnabled: state.configuration.mocksEnabled
-	};
-};
-
-TheGuardianWidget.propTypes = {
-    mocksEnabled: PropTypes.bool.isRequired
-};
-
-export default connect(mapStateToProps)(TheGuardianWidget);
+export default connect(TheGuardianWidget);
