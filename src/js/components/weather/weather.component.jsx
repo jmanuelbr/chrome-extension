@@ -85,7 +85,7 @@ export class WeatherWidget extends Component {
         <React.Fragment>
           <div className="current">
             <a
-              href="https://www.google.com/search?q=london+forecast"
+              href="https://www.google.com/search?q=murcia+forecast"
               target="_blank" rel="noopener noreferrer"
             >
               <div

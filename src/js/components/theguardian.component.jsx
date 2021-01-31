@@ -7,6 +7,7 @@ import Error from './error.component';
 import { getMockData } from '../mocks/theguardian.mocks';
 import { NewsUpdatableWidget, connect } from './news-updatable-widget';
 import { MAX_ARTICLES } from '../constants';
+import {getMockData2} from "../mocks/theguardian2.mocks";
 
 class TheGuardianWidget extends NewsUpdatableWidget {
     constructor(props) {
@@ -15,6 +16,7 @@ class TheGuardianWidget extends NewsUpdatableWidget {
             feedUrl: "https://www.theguardian.com/uk/rss"
         };
         this.mockFunction = getMockData;
+        this.mockFunction2 = getMockData2;
     }
 
     getArticles(jsonData) {
@@ -71,7 +73,7 @@ class TheGuardianWidget extends NewsUpdatableWidget {
 
     componentDidMount() {
         this.initializeArticles(this.mockFunction);
-        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction), 60000);
+        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction, this.mockFunction2), 60000);
     }
     componentWillUnmount() {
         clearInterval(this.interval);
@@ -92,7 +94,7 @@ class TheGuardianWidget extends NewsUpdatableWidget {
             return (
                 <React.Fragment>
                     {_map(this.state.articles, (article, i) => (
-                        <Article 
+                        <Article
                             key={i}
                             articleData={article}
                         />

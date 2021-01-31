@@ -1,7 +1,7 @@
 import { UPDATE_SELECTED_ARTICLE } from "../actions/types";
 
 const INITIAL_STATE = {
-  mocksEnabled: false,
+  mocksEnabled: true,
   articleSelected: {}
 };
 

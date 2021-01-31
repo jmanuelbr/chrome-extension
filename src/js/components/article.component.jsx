@@ -22,11 +22,16 @@ class Article extends Component {
                  </video>);
         }
         else {
+            props.thumbnail = (props.thumbnail) ?
+                props.thumbnail : chrome.runtime.getURL("../assets/no_photo_available.png");
             return (<img src={props.thumbnail}/>);
         }
     } 
     render() {
-        const {title, link, thumbnail} = this.props.articleData;
+        let {title, link, thumbnail, hasUpdates} = this.props.articleData;
+        if (hasUpdates) {
+            title = "🆕 " + title;
+        }
         let cssThumbnail = "";
         if (this.props.css) { // Custom CSS for some articles
             cssThumbnail = this.props.css.cssThumbnail;
@@ -55,7 +60,8 @@ Article.propTypes = {
     articleData: PropTypes.shape({
         title: PropTypes.string.isRequired,
         link: PropTypes.string,
-        thumbnail: PropTypes.string
+        thumbnail: PropTypes.string,
+        hasUpdates: PropTypes.bool
     }),
     css: PropTypes.object,
     updateSelectedArticle: PropTypes.func.isRequired

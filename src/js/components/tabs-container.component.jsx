@@ -4,11 +4,10 @@ import _map from "lodash/map";
 import TheGuardianWidget from "./theguardian.component";
 import ElpaisWidget from "./elpais.component";
 import SlashdotWidget from "./slashdot/slashdot.component";
-import TflWidget from "./tfl/tfl.component";
 import RedditWidget from './reddit/reddit.component';
-import ExpansionWidget from './expansion.component';
 import EuropaPressWidget from './europapress.component';
 import LaVanguardiaWidget from './lavanguardia.component';
+import LibertadDigitalWidget from './libertaddigital.component';
 import _isEmpty from 'lodash/isEmpty';
 
 export default class TabsContainerWidget extends Component {
@@ -90,16 +89,16 @@ export default class TabsContainerWidget extends Component {
                 icon: chrome.runtime.getURL("../assets/lavanguardia.png")
             },
             {
-                widget: <EuropaPressWidget parentCallback={this.setNoticationForTab} notificationIndex={"3"} feedUrl={"https://www.europapress.es/rss/rss.aspx?ch=00285"}/>,
+                widget: <LibertadDigitalWidget parentCallback={this.setNoticationForTab} notificationIndex={"3"} />,
+                icon: chrome.runtime.getURL("../assets/libertaddigital.png")
+            },
+            {
+                widget: <EuropaPressWidget parentCallback={this.setNoticationForTab} notificationIndex={"4"} feedUrl={"https://www.europapress.es/rss/rss.aspx?ch=00285"}/>,
                 icon: chrome.runtime.getURL("../assets/extremadura_icon.png")
             },
             {
-                widget: <EuropaPressWidget parentCallback={this.setNoticationForTab} notificationIndex={"4"} feedUrl={"https://www.europapress.es/rss/rss.aspx?ch=00295"}/>,
+                widget: <EuropaPressWidget parentCallback={this.setNoticationForTab} notificationIndex={"5"} feedUrl={"https://www.europapress.es/rss/rss.aspx?ch=00295"}/>,
                 icon: chrome.runtime.getURL("../assets/murcia_icon.png")
-            },
-            {
-                widget: <ExpansionWidget />,
-                icon: chrome.runtime.getURL("../assets/expansion.png")
             },
             {
                 widget: <SlashdotWidget />,

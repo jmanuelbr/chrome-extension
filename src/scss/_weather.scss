@@ -7,6 +7,16 @@
   display: block;
 }
 
+@keyframes dropFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .today-hours-panel {
   border: solid 1px lightgrey;
   border-radius: 4px;
@@ -193,74 +203,128 @@
   height: 57px;
   border-radius: 4px;
   background-color: white;
-  .next-days-panel {
-    .day {
-      width: 50px;
-      height: 57px;
-      float: left;
-      background: transparent;
-      &:hover {
-        background: rgb(234, 244, 255);
-      }
-      .weather-icon-small {
-        position: relative;
-        left: 9px;
-      }
-      .cloudy {
-        background-position: -67px -21px !important;
-      }
-      .third {
-        background-position: -124px -21px !important;
-      }
-      .clear-day {
-        background-position: -180px -20px !important;
-      }
-      .snow {
-        background-position: -236px -21px !important;
-      }
-      .clear-night {
-        background-position: -180px -21px !important;
-      }
-      .rain {
-        background-position: -12px -68px !important;
-      }
-      .sleet {
-        background-position: -236px -122px !important;
-      }
-      .wind {
-        background-position: -182px -163px !important;
-      }
-      .fog {
-        background-position: -125px -163px !important;
-      }
-      .partly-cloudy-day {
-        background-position: -70px -65px !important;
-      }
-      .partly-cloudy-night {
-        background-position: -70px -65px !important;
-      }
-      .day-name {
-        text-align: center;
-        height: 10px;
-        font-size: 0.84em;
-      }
-      .temperature {
-        text-align: center;
-        font-size: 0.96em;
-        .high {
-          color: lightcoral;
-          font-weight: 501;
+  .next-days-container {
+    .next-days-panel {
+      height: 60px;
+      .day {
+        width: 50px;
+        height: 57px;
+        float: left;
+        background: transparent;
+        &:hover {
+          background: rgb(234, 244, 255);
         }
-        .low {
-          color: rgb(115, 139, 204);
-          font-weight: 501;
+        .weather-icon-small {
+          position: relative;
+          left: 9px;
+        }
+        .cloudy {
+          background-position: -67px -21px !important;
+        }
+        .third {
+          background-position: -124px -21px !important;
+        }
+        .clear-day {
+          background-position: -180px -20px !important;
+        }
+        .snow {
+          background-position: -236px -21px !important;
+        }
+        .clear-night {
+          background-position: -180px -21px !important;
+        }
+        .rain {
+          background-position: -12px -68px !important;
+        }
+        .sleet {
+          background-position: -236px -122px !important;
+        }
+        .wind {
+          background-position: -182px -163px !important;
+        }
+        .fog {
+          background-position: -125px -163px !important;
+        }
+        .partly-cloudy-day {
+          background-position: -70px -65px !important;
+        }
+        .partly-cloudy-night {
+          background-position: -70px -65px !important;
+        }
+        .day-name {
+          text-align: center;
+          height: 10px;
+          font-size: 0.84em;
+        }
+        .temperature {
+          text-align: center;
+          font-size: 0.96em;
+          .high {
+            color: lightcoral;
+            font-weight: 501;
+          }
+          .low {
+            color: rgb(115, 139, 204);
+            font-weight: 501;
+          }
+        }
+        .celsius {
+          font-size: 0.7em;
+          position: relative;
+          top: -2px;
         }
       }
-      .celsius {
-        font-size: 0.7em;
-        position: relative;
-        top: -2px;
+    }
+    .next-day-details {
+      padding: 5px;
+      font-size: 1.16em;
+      .summary {
+        margin-bottom: 5px;
       }
+
+      .dawn {
+        img {
+          width: 35px;
+        }
+        .text {
+          position: relative;
+          top: -13px;
+          left: 5px;
+        }
+      }
+
+      .dusk {
+        img {
+          width: 35px;
+        }
+        .text {
+          position: relative;
+          top: -13px;
+          left: 5px;
+        }
+      }
+      .moonphase {
+        img {
+          width: 40px;
+          position: relative;
+          left: -1px;
+          float: left;
+        }
+        .text {
+          position: relative;
+          left: 1px;
+          float: left;
+          top: 3px;
+        }
+      }
+    }
+    .show-nextdays {
+      transform: translate3d(0,0,0);
+      display: block;
+      animation: dropFadeInUp 300ms;
+    }
+    .hide-nextdays {
+      display: none; //none
     }
   }
 }

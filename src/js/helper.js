@@ -32,3 +32,12 @@ export const getDataFromProperty = (property) => {
         return property.elements[0].text;
     }
 };
+
+export const getFormattedTime = (unixTime) => {
+    const date = new Date(unixTime * 1000);
+    const hours = date.getHours();
+    const minutes = "0" + date.getMinutes();
+    const formattedTime = hours + ':' + minutes.substr(-2);
+
+    return formattedTime;
+};

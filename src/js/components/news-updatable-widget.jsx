@@ -27,26 +27,21 @@ export class NewsUpdatableWidget extends AbstractWidget {
     }
 
     processQuery(feedData) {
-        const oldArticle = this.state.articles[0].title;
-        this.processData(feedData);
-        if (oldArticle != this.state.articles[0].title) {
-            console.log('*** FOUND UPDATES', this.props.notificationIndex);
-            console.log('* old article ->   ', oldArticle);
-            console.log('* new article ->   ', this.state.articles[0].title);
+        console.log('>>> processing query for ', this.props.notificationIndex);
+        const oldArticleList = this.state.articles;
+        let hasUpdates = this.processData(feedData, oldArticleList);
+        if (hasUpdates) {
+            console.log('*** FOUND UPDATES ', this.props.notificationIndex, this.state.articles);
             this.props.parentCallback(this.props.notificationIndex);
             this.forceUpdate();
         }
     }
 
-    checkForNewUpdates(mockDataFunction) {
+    checkForNewUpdates(mockDataFunction, mocksDataFunction2) {
         if (this.props.mocksEnabled) {
-            const oldFirstArticleTitle = this.state.articles[0].title;
-            this.processData(mockDataFunction());
-            if (oldFirstArticleTitle != this.state.articles[0].title) {
-                this.props.parentCallback(this.props.notificationIndex);
-            }
+            let mockFunction = (mocksDataFunction2) ? mocksDataFunction2 : mockDataFunction;
+            this.processQuery(mockFunction());
             this.forceUpdate();
-
         }
         else {
             chrome.runtime.sendMessage(
