@@ -27,10 +27,6 @@ export default class AbstractWidget extends Component {
             let newArticleListLinks = this.getUrlLinkFromList(newArticleList);
             let oldArticleListLinks = this.getUrlLinkFromList(oldArticleList);
             hasUpdates = (newArticleListLinks[0] != oldArticleListLinks[0]);
-                if (hasUpdates) {
-                    console.log('jose new article -> ', newArticleListLinks[0]);
-                    console.log('jose old article ->', oldArticleListLinks[0]);
-                }
             newArticleListLinks.forEach(function (item, index) {
                 if (!oldArticleListLinks.includes(item)) {
                     newArticleList[index].hasUpdates = true;
@@ -49,7 +45,6 @@ export default class AbstractWidget extends Component {
         if (oldArticleList) {
             hasUpdates = this.hasUpdates(oldArticleList, newArticleList);
             if (hasUpdates) {
-                console.log('jose updating article list');
                 self.setState(state => {
                     state.articles = newArticleList;
                     if (!_isEmpty(state.articles)) {
@@ -61,7 +56,6 @@ export default class AbstractWidget extends Component {
             }
         }
         else {
-            console.log('jose setting article list for first time');
             self.setState(state => {
                 state.articles = newArticleList;
                 if (!_isEmpty(state.articles)) {

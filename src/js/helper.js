@@ -9,11 +9,21 @@ export const parseFeed = (jsonData) => {
                 Object.values(element.elements).map((rssElement) => {
                     if (rssElement.name === "channel") {
                         Object.values(rssElement.elements).map((rssFeedItem) => {
-                            if (rssFeedItem.name === "item") {
+                            if (rssFeedItem.name === "item" || rssFeedItem.name === "entry") {
                                 list.push(rssFeedItem);
                             }
                         });
                     }
+                });
+            }
+            else if (element.name === "feed") {
+                Object.values(element.elements).map((rssElement) => {
+                    list.push(rssElement);
+                    // if (rssElement.name === "entry") {
+                    //     Object.values(rssElement.elements).map((rssFeedItem) => {
+                    //         list.push(rssFeedItem);
+                    //     });
+                    // }
                 });
             }
         });

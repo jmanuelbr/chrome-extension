@@ -4,18 +4,17 @@ import Article from './article.component';
 import _map from 'lodash/map';
 import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
-import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
-import { getMockData } from '../mocks/eldiario.mocks';
+import { getMockData } from '../mocks/elconfidencial.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
 import PropTypes from 'prop-types';
 
-export class EldiarioWidget extends AbstractWidget {
+export class ElconfidencialWidget extends AbstractWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
-            feedUrl: "https://www.eldiario.es/rss"
+            feedUrl: "https://rss.elconfidencial.com/espana/"
         };
         this.state = {
             articles: 'No news today :(',
@@ -29,36 +28,38 @@ export class EldiarioWidget extends AbstractWidget {
         try {
             jsonData = HELPER.parseFeed(jsonData);
             Object.values(jsonData).map(element => {
-                var article = {};
-                Object.values(element.elements).map(property => {
-                    switch (property.name) {
-                        case "title": {
-                            article.title = HELPER.getDataFromProperty(property);
-                            break;
+                if (element.name === "entry") {
+                    var article = {};
+                    Object.values(element.elements).map(property => {
+                        switch (property.name) {
+                            case "title": {
+                                article.title = HELPER.getDataFromProperty(property);
+                                break;
+                            }
+                            case "content": {
+                                article.description = HELPER.getDataFromProperty(property);
+                                break;
+                            }
+                            case "link": {
+                                article.thumbnail = property.attributes.href;
+                                break;
+                            }
+                            case "id": {
+                                article.link = HELPER.getDataFromProperty(property);
+                                break;
+                            }
+                            case "enclosure": {
+                                article.thumbnail = property.attributes.url;
+                                break;
+                            }
+                            default: {
+                                // Do nothing
+                                break;
+                            }
                         }
-                        case "description": {
-                            article.description = HELPER.getDataFromProperty(property);
-                            break;
-                        }
-                        case "link": {
-                            article.link = HELPER.getDataFromProperty(property);
-                            break;
-                        }
-                        case "pubDate": {
-                            article.date = HELPER.getDataFromProperty(property);
-                            break;
-                        }
-                        case "enclosure": {
-                            article.thumbnail = property.attributes.url;
-                            break;
-                        }
-                        default: {
-                            // Do nothing
-                            break;
-                        }
-                    }
-                });
-                list.push(article);
+                    });
+                    list.push(article);
+                }
             });
         }
         catch (exception) {
@@ -111,8 +112,8 @@ function mapStateToProps(state) {
 	};
 }
 
-EldiarioWidget.propTypes = {
+ElconfidencialWidget.propTypes = {
     mocksEnabled: PropTypes.bool.isRequired
 };
 
-export default connect(mapStateToProps)(EldiarioWidget);
+export default connect(mapStateToProps)(ElconfidencialWidget);

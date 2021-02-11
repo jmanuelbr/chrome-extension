@@ -9,6 +9,7 @@ import EuropaPressWidget from './europapress.component';
 import LaVanguardiaWidget from './lavanguardia.component';
 import LibertadDigitalWidget from './libertaddigital.component';
 import _isEmpty from 'lodash/isEmpty';
+import ElconfidencialWidget from "./elconfidencial.component";
 
 export default class TabsContainerWidget extends Component {
     constructor(props) {
@@ -88,9 +89,13 @@ export default class TabsContainerWidget extends Component {
                 widget: <LaVanguardiaWidget parentCallback={this.setNoticationForTab} notificationIndex={"2"} />,
                 icon: chrome.runtime.getURL("../assets/lavanguardia.png")
             },
+            // {
+            //     widget: <LibertadDigitalWidget parentCallback={this.setNoticationForTab} notificationIndex={"3"} />,
+            //     icon: chrome.runtime.getURL("../assets/libertaddigital.png")
+            // },
             {
-                widget: <LibertadDigitalWidget parentCallback={this.setNoticationForTab} notificationIndex={"3"} />,
-                icon: chrome.runtime.getURL("../assets/libertaddigital.png")
+                widget: <ElconfidencialWidget parentCallback={this.setNoticationForTab} notificationIndex={"3"} />,
+                icon: chrome.runtime.getURL("../assets/elconfidencial.png")
             },
             {
                 widget: <EuropaPressWidget parentCallback={this.setNoticationForTab} notificationIndex={"4"} feedUrl={"https://www.europapress.es/rss/rss.aspx?ch=00285"}/>,

@@ -22,7 +22,6 @@ export default class WeatherNextDays extends Component {
     }
 
     getMoonPhase(moonPhaseValue) {
-        console.log('getting moonphase of', moonPhaseValue);
         let moonPhase = {
             phaseNameEng: "none",
             phaseNameEs: "nada"
@@ -68,7 +67,6 @@ export default class WeatherNextDays extends Component {
             moonPhase.phaseNameEng = "Waning Crescent";
             moonPhase.phaseNameEs = "Luna Creciente";
         }
-        console.log('returning moonphase ', moonPhase);
         return moonPhase;
     }
 
@@ -91,7 +89,6 @@ export default class WeatherNextDays extends Component {
     }
 
     render() {
-        console.log('hovered day ', this.hoveredDay);
         const nextDaysArray = this.props.dailyData.data;
         return(
             <div className="next-days-container"

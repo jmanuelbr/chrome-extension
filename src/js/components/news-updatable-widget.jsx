@@ -27,11 +27,9 @@ export class NewsUpdatableWidget extends AbstractWidget {
     }
 
     processQuery(feedData) {
-        console.log('>>> processing query for ', this.props.notificationIndex);
         const oldArticleList = this.state.articles;
         let hasUpdates = this.processData(feedData, oldArticleList);
         if (hasUpdates) {
-            console.log('*** FOUND UPDATES ', this.props.notificationIndex, this.state.articles);
             this.props.parentCallback(this.props.notificationIndex);
             this.forceUpdate();
         }

@@ -1,0 +1,10 @@
+@import 'variables';
+
+.map-container {
+  position: absolute;
+  left: 278px;
+  top: 5px;
+  visibility: visible;
+  border: 1px solid $border-color;
+  border-radius: 3px;
+}

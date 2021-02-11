@@ -12,6 +12,7 @@
 @import 'error';
 @import 'tfl';
 @import 'button';
+@import "map";
 
 .parent-widget-container {
     position: absolute;
@@ -20,7 +21,7 @@
     margin: 15px;
     font-size: 85%;
     color: #777;
-    width: 268px;
+    width: 276px; // TODO: What is going on with this?
     font-family: $font-stack;
     z-index: 99999 !important;
     background-color: transparent;

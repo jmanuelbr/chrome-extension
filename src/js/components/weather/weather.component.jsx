@@ -96,7 +96,7 @@ export class WeatherWidget extends Component {
             <div className="today-summary" onClick={this.toggleTodayForecast}>
               <div className="summary">
                 <div className="real">
-                  {parseInt(weather.currently.temperature)}{" "}
+                  {parseInt(weather.currently.temperature)}
                   <span className="celsius">°C</span>
                 </div>
                 <div className="apparent">
