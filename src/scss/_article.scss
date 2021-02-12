@@ -116,5 +116,13 @@
             padding-left: 16px;
             padding-top: 16px;
         }
+        img {
+            max-width: 100%;
+            max-height: 200px;
+        }
+        video {
+            max-width: 333px;
+            max-height: 200px;
+        }
     }
 }
