@@ -2060,7 +2060,7 @@ var x = document.createElement('script');
 </NewsML>`;
 
 export function getMockData() {
-    if (process.env.NODE_ENV == 'development') {
+    if (process.env.NODE_ENV === 'development') {
         return data;
         }
     else {
