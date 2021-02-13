@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import Tabs from "./tabs.component";
-import _map from "lodash/map";
 import TheGuardianWidget from "./theguardian.component";
 import ElpaisWidget from "./elpais.component";
 import SlashdotWidget from "./slashdot/slashdot.component";
@@ -121,11 +120,11 @@ export default class TabsContainerWidget extends Component {
                     onChange={active => this.tabFocusChanged(active)}
                     notifications={this.state.notifications}
                 >
-                    {_map(tabsContent, (tabContent, i) => (
+                    {tabsContent.map((tabContent, i) => (
                         <img src={tabContent.icon} key={i} />
                     ))}
                 </Tabs>
-                {_map(tabsContent, (tabContent, i) => (
+                {tabsContent.map((tabContent, i) => (
                     <div
                         className="tab-container"
                         key={i}

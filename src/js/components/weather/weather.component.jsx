@@ -1,5 +1,4 @@
 import {Component, Fragment} from "react";
-import _isEmpty from "lodash/isEmpty";
 import Loader from "../loader/loader.component";
 import WeatherNextDays from "./weather-next-days.component";
 import WeatherToday from "./weather-today.component";
@@ -7,6 +6,7 @@ import { connect } from "react-redux";
 import { getMockData } from "../../mocks/weather.mocks";
 import { FETCH_CONTENT } from "../../actions/types";
 import PropTypes from 'prop-types';
+import {isEmpty} from "../../helper";
 
 export class WeatherWidget extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ export class WeatherWidget extends Component {
   processData(feedData) {
     const self = this;
     self.setState(state => {
-      if (_isEmpty(feedData)) {
+      if (isEmpty(feedData)) {
         state.error = true;
       }
       state.data = feedData;

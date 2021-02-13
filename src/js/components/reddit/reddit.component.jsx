@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import _map from "lodash/map";
 import Tabs from '../tabs.component';
 import RedditFeed from './reddit-feed.component';
 
@@ -65,7 +64,7 @@ export default class RedditWidget extends Component {
                     <Tabs
                       active={this.state.active}
                       onChange={active => this.setState({ active })}>
-                        {_map(tabsContent, (tabContent, i) => (
+                        {tabsContent.map((tabContent, i) => (
                             <span key={i} className="subreddit">{tabContent.name}</span>
                         ))}
                     </Tabs>
@@ -79,7 +78,7 @@ export default class RedditWidget extends Component {
                         <input type="checkbox" className="dd-input" id="test"/>
 
                         <ul className="dd-menu">
-                            {_map(dropdownContent, (dropdownOption, i) => (
+                            {dropdownContent.map((dropdownOption, i) => (
                                 <li
                                   className="dropdown-option"
                                   key={i}
@@ -92,7 +91,7 @@ export default class RedditWidget extends Component {
 
                     </label>
                 </div>
-                {_map(tabsContent, (tabContent, i) => (
+                {tabsContent.map((tabContent, i) => (
                     <div
                       className="reddit-tab-container"
                       key={i}

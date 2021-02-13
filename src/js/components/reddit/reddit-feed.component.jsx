@@ -1,14 +1,13 @@
 import RedditArticle from './reddit-article.component';
-import _map from 'lodash/map';
 import LoaderTabs from '../loader/loader-tabs.component';
 import Error from '../error.component';
-import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../../mocks/reddit.mocks';
 import { FETCH_CONTENT } from '../../actions/types';
 import AbstractWidget from '../abstract-widget.component';
 import PropTypes from 'prop-types';
 import {Fragment} from "react";
+import {isEmpty} from "../../helper";
 
 class RedditFeed extends AbstractWidget {
     constructor(props) {
@@ -48,7 +47,7 @@ class RedditFeed extends AbstractWidget {
         self.setState(state => {
             state.articles = self.getArticles(feedData);
             state.loading = true;
-            if (!_isEmpty(state.articles)) {
+            if (!isEmpty(state.articles)) {
                 state.error = false;
             }
             return state;
@@ -98,7 +97,7 @@ class RedditFeed extends AbstractWidget {
         else {
             return (
                 <Fragment>
-                    {_map(this.state.articles, (article, i) => (
+                    {this.state.articles.map((article, i) => (
                         <RedditArticle
                             key={i}
                             articleData={article}

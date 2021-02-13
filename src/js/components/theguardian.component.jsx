@@ -1,6 +1,5 @@
 import * as HELPER from '../helper';
 import Article from './article.component';
-import _map from 'lodash/map';
 import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
 import { getMockData } from '../mocks/theguardian.mocks';
@@ -93,7 +92,7 @@ class TheGuardianWidget extends NewsUpdatableWidget {
         else {
             return (
                 <Fragment>
-                    {_map(this.state.articles, (article, i) => (
+                    {this.state.articles.map((article, i) => (
                         <Article
                             key={i}
                             articleData={article}

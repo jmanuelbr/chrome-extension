@@ -1,4 +1,3 @@
-import _isEmpty from 'lodash/isEmpty';
 
 export const parseFeed = (jsonData) => {
     let list = [];
@@ -35,7 +34,7 @@ export const parseFeed = (jsonData) => {
 };
 
 export const getDataFromProperty = (property) => {
-    if (!_isEmpty(property.elements[0].cdata)) {
+    if (!isEmpty(property.elements[0].cdata)) {
         return property.elements[0].cdata;
     }
     else {

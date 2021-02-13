@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import _isEmpty from 'lodash/isEmpty';
+import {isEmpty} from "../helper";
 
 export default class AbstractWidget extends Component {
     constructor(props) {
@@ -47,7 +47,7 @@ export default class AbstractWidget extends Component {
             if (hasUpdates) {
                 self.setState(state => {
                     state.articles = newArticleList;
-                    if (!_isEmpty(state.articles)) {
+                    if (!isEmpty(state.articles)) {
                         state.error = false;
                     }
                     state.loading = true;
@@ -58,7 +58,7 @@ export default class AbstractWidget extends Component {
         else {
             self.setState(state => {
                 state.articles = newArticleList;
-                if (!_isEmpty(state.articles)) {
+                if (!isEmpty(state.articles)) {
                     state.error = false;
                 }
                 state.loading = true;

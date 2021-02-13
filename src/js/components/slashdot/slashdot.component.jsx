@@ -1,6 +1,4 @@
 import SlashdotArticle from './slashdot-article.component';
-import _orderBy from 'lodash/orderBy';
-import _map from 'lodash/map';
 import LoaderTabs from '../loader/loader-tabs.component';
 import Error from '../error.component';
 import { connect } from 'react-redux';
@@ -66,7 +64,8 @@ class SlashdotWidget extends AbstractWidget {
                     list.push(article);
                 });
             });
-            orderedArticles = _orderBy(list, ['comments'],['desc']);
+            // orderedArticles = _orderBy(list, ['comments'],['desc']);
+            orderedArticles = list;
         }
         catch (exception) {
             super.loading(false);
@@ -102,7 +101,7 @@ class SlashdotWidget extends AbstractWidget {
         else {
             return (
                 <Fragment>
-                    {_map(this.state.articles, (article, i) => (
+                    {this.state.articles.map((article, i) => (
                         <SlashdotArticle
                             key={i}
                             articleData={article}
