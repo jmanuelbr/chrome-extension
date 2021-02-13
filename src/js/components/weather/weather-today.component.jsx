@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import WeatherTemperatureChart from './charts/weather-temperature-chart.componet';
 import WeatherRainChart from './charts/weather-rain-chart.component';
 import WeatherWindChart from './charts/weather-wind-chart.component';

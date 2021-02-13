@@ -1,4 +1,3 @@
-import React from "react";
 import * as CONSTANTS from "../constants";
 import { getMockData } from "../mocks/currency.mocks";
 import { connect } from "react-redux";

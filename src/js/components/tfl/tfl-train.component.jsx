@@ -1,5 +1,3 @@
-import React from "react";
-import _map from "lodash/map";
 import { connect } from "react-redux";
 import AbstractWidget from '../abstract-widget.component';
 import PropTypes from 'prop-types';

@@ -1,7 +1,6 @@
 /* global chrome, window, document, XMLHttpRequest */
 require('../scss/global.scss');
 import * as CONSTANTS from './constants';
-import React from 'react';
 import ReactDOM from "react-dom";
 import App from './components/app.component';
 import reduxThunk from 'redux-thunk';

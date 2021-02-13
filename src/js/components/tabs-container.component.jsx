@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import Tabs from "./tabs.component";
 import _map from "lodash/map";
 import TheGuardianWidget from "./theguardian.component";
@@ -7,9 +7,8 @@ import SlashdotWidget from "./slashdot/slashdot.component";
 import RedditWidget from './reddit/reddit.component';
 import EuropaPressWidget from './europapress.component';
 import LaVanguardiaWidget from './lavanguardia.component';
-import LibertadDigitalWidget from './libertaddigital.component';
-import _isEmpty from 'lodash/isEmpty';
 import ElconfidencialWidget from "./elconfidencial.component";
+import { isEmpty } from "../helper";
 
 export default class TabsContainerWidget extends Component {
     constructor(props) {
@@ -37,7 +36,7 @@ export default class TabsContainerWidget extends Component {
                 this.state.notifications.splice(index, 1);
             }
         }
-        if (_isEmpty(this.state.notifications)) {
+        if (isEmpty(this.state.notifications)) {
             clearInterval(window.timer_interval);
             window.timer_interval = 0;
             this.setTabIcon(chrome.runtime.getURL("../../assets/google_favicon.png"));

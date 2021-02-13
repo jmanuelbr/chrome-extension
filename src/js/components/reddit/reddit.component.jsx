@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import _map from "lodash/map";
 import Tabs from '../tabs.component';
 import RedditFeed from './reddit-feed.component';

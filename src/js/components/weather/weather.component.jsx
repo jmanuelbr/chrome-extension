@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import {Component, Fragment} from "react";
 import _isEmpty from "lodash/isEmpty";
 import Loader from "../loader/loader.component";
 import WeatherNextDays from "./weather-next-days.component";
@@ -81,7 +81,7 @@ export class WeatherWidget extends Component {
         width: "56px"
       };
       return (
-          <React.Fragment>
+          <Fragment>
               <div className="current">
                   <a
                   href="https://www.google.com/search?q=murcia+forecast"
@@ -144,7 +144,7 @@ export class WeatherWidget extends Component {
                   visibility={this.state.todayVisible}
               />
               </div>
-          </React.Fragment>
+          </Fragment>
       );
     }
   }

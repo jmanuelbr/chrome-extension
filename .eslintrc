@@ -36,6 +36,8 @@
     "react/no-multi-comp": 2,
     "react/jsx-indent": 2,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
     "comma-dangle": 0,
     "no-underscore-dangle": 0,
     "class-methods-use-this": 0,

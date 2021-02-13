@@ -1,4 +1,3 @@
-import React from 'react';
 import TflStatus from './tfl-status.component';
 import TflLiveDepartures from './tfl-live-departures.component';
 import _map from 'lodash/map';

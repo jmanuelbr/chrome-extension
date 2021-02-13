@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 
-import _isEmpty from 'lodash/isEmpty';
 import TflTube from './tfl-tube.component';
 import TflBus from './tfl-bus.component';
 import TflTrain from './tfl-train.component';

@@ -1,4 +1,3 @@
-import React from 'react';
 import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';
@@ -8,6 +7,7 @@ import { getMockData } from '../mocks/theguardian.mocks';
 import { NewsUpdatableWidget, connect } from './news-updatable-widget';
 import { MAX_ARTICLES } from '../constants';
 import {getMockData2} from "../mocks/theguardian2.mocks";
+import {Fragment} from "react";
 
 class TheGuardianWidget extends NewsUpdatableWidget {
     constructor(props) {
@@ -92,14 +92,14 @@ class TheGuardianWidget extends NewsUpdatableWidget {
         }
         else {
             return (
-                <React.Fragment>
+                <Fragment>
                     {_map(this.state.articles, (article, i) => (
                         <Article
                             key={i}
                             articleData={article}
                         />
                     ))}
-                </React.Fragment>
+                </Fragment>
             );
         }
     }

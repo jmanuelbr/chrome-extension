@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { Provider } from "react-redux";
 import { OPEN_OPTIONS_PAGE } from "../actions/types";
 import CurrencyWidget from "./currency.component";

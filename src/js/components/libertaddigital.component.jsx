@@ -1,4 +1,3 @@
-import React from 'react';
 import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';
@@ -7,6 +6,7 @@ import Error from './error.component';
 import { getMockData } from '../mocks/libertaddigital.mocks';
 import { NewsUpdatableWidget, connect } from './news-updatable-widget';
 import { MAX_ARTICLES } from '../constants';
+import {Fragment} from "react";
 
 class LibertadDigitalWidget extends NewsUpdatableWidget {
     constructor(props) {
@@ -101,14 +101,14 @@ class LibertadDigitalWidget extends NewsUpdatableWidget {
         }
         else {
             return (
-                <React.Fragment>
+                <Fragment>
                     {_map(this.state.articles, (article, i) => (
                         <Article
                             key={i}
                             articleData={article}
                         />
                     ))}
-                </React.Fragment>
+                </Fragment>
             );
         }
     }

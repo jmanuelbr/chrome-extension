@@ -1,10 +1,8 @@
-import React from 'react';
 import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';
 import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
-import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../mocks/contractor-uk.mocks';
 import { FETCH_CONTENT } from '../actions/types';

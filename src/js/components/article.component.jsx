@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import {Component, Fragment} from 'react';
 import { connect } from 'react-redux';
 import { updateSelectedArticle } from '../actions/configuration.actions';
 import PropTypes from 'prop-types';
@@ -38,7 +38,7 @@ class Article extends Component {
         }
 
         return (
-            <React.Fragment>
+            <Fragment>
                 <div className="article">
                     <a href={link} target="_blank" rel="noopener noreferrer">
                         <div className={`thumbnail-container ${cssThumbnail}`}>
@@ -51,7 +51,7 @@ class Article extends Component {
                     </div>
                     
                 </div>
-            </React.Fragment>
+            </Fragment>
         );
     }    
 }

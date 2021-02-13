@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import {_startCase} from 'lodash/startCase';
+import { Component } from 'react';
 import ChartistGraph from 'react-chartist';
 import PropTypes from 'prop-types';
 

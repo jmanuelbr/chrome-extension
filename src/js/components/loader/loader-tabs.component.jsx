@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import Loader from './loader.component';
 
 export default class LoaderTabs extends Component {

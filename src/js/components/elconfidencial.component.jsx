@@ -1,4 +1,3 @@
-import React from 'react';
 import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';
@@ -9,6 +8,7 @@ import { getMockData } from '../mocks/elconfidencial.mocks';
 import { FETCH_CONTENT } from '../actions/types';
 import AbstractWidget from './abstract-widget.component';
 import PropTypes from 'prop-types';
+import {Fragment} from "react";
 
 export class ElconfidencialWidget extends AbstractWidget {
     constructor(props) {
@@ -93,14 +93,14 @@ export class ElconfidencialWidget extends AbstractWidget {
         }
         else {
             return (
-                <React.Fragment>
+                <Fragment>
                     {_map(this.state.articles, (article, i) => (
                         <Article
                             key={i}
                             articleData={article}
                         />
                     ))}
-                </React.Fragment>
+                </Fragment>
             );
         }
     }

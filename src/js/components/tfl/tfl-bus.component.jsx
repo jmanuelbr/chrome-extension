@@ -1,4 +1,3 @@
-import React from 'react';
 import _map from 'lodash/map';
 import _orderBy from 'lodash/orderBy';
 import _isEmpty from 'lodash/isEmpty';

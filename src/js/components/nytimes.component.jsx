@@ -1,4 +1,3 @@
-import React from 'react';
 import * as HELPER from '../helper';
 import Article from './article.component';
 import _map from 'lodash/map';

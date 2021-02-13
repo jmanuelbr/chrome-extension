@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import AbstractWidget from '../abstract-widget.component';
 import { getMockData } from '../../mocks/tfl-live-departures.mocks';

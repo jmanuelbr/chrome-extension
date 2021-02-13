@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import WeatherNextDayItem from './weather-next-day-item.component';
 import PropTypes from 'prop-types';
 import {getFormattedTime} from '../../helper';

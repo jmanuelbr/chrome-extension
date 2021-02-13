@@ -1,15 +1,14 @@
-import React from 'react';
 import SlashdotArticle from './slashdot-article.component';
 import _orderBy from 'lodash/orderBy';
 import _map from 'lodash/map';
 import LoaderTabs from '../loader/loader-tabs.component';
 import Error from '../error.component';
-import _isEmpty from 'lodash/isEmpty';
 import { connect } from 'react-redux';
 import { getMockData } from '../../mocks/slashdot.mocks';
 import { FETCH_CONTENT } from '../../actions/types';
 import AbstractWidget from '../abstract-widget.component';
 import PropTypes from 'prop-types';
+import {Fragment} from "react";
 
 class SlashdotWidget extends AbstractWidget {
     constructor(props) {
@@ -102,14 +101,14 @@ class SlashdotWidget extends AbstractWidget {
         }
         else {
             return (
-                <React.Fragment>
+                <Fragment>
                     {_map(this.state.articles, (article, i) => (
                         <SlashdotArticle
                             key={i}
                             articleData={article}
                         />
                     ))}
-                </React.Fragment>
+                </Fragment>
             );
         }
     }
