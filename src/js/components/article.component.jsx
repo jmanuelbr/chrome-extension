@@ -18,8 +18,8 @@ class Article extends Component {
         if (props.video !== undefined && props.video.length > 1) {
             return (
                 <video width="245" height="150" controls>
-                  <source src={props.video} type="video/mp4"/>
-                 </video>);
+                    <source src={props.video} type="video/mp4"/>
+                </video>);
         }
         else {
             props.thumbnail = (props.thumbnail) ?

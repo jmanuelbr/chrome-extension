@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { _startCase } from "lodash/startCase";
 import ChartistGraph from "react-chartist";
 import Chartist from "chartist";
 import PropTypes from 'prop-types';
@@ -19,21 +18,21 @@ export default class WeatherTemperatureChart extends Component {
   addLabel(position, data) {
     // if x and y exist concat them otherwise output only the existing value
     let value =
-      data.value.x !== undefined && data.value.y
-        ? data.value.x + ", " + data.value.y
-        : data.value.y || data.value.x;
+        data.value.x !== undefined && data.value.y
+            ? data.value.x + ", " + data.value.y
+            : data.value.y || data.value.x;
 
     let element = data.group
-      .elem(
-        "text",
-        {
-          x: position.x,
-          y: position.y - 10, // Y offset
-          style: "text-anchor: middle"
-        },
-        "ct-label"
-      )
-      .text(Math.round(value) + "°");
+        .elem(
+            "text",
+            {
+              x: position.x,
+              y: position.y - 10, // Y offset
+              style: "text-anchor: middle"
+            },
+            "ct-label"
+        )
+        .text(Math.round(value) + "°");
 
     element.animate({
       opacity: {
@@ -49,12 +48,12 @@ export default class WeatherTemperatureChart extends Component {
   onDrawHandler(data) {
     if (data.type === "point") {
       let circle = new Chartist.Svg(
-        "circle",
-        {
-          cx: [data.x],
-          cy: [data.y]
-        },
-        "ct-circle"
+          "circle",
+          {
+            cx: [data.x],
+            cy: [data.y]
+          },
+          "ct-circle"
       );
 
       const positonCalculator = function(data) {
@@ -82,10 +81,10 @@ export default class WeatherTemperatureChart extends Component {
           begin: data.index,
           dur: 600,
           from: data.path
-            .clone()
-            .scale(1, 0)
-            .translate(0, data.chartRect.height())
-            .stringify(),
+              .clone()
+              .scale(1, 0)
+              .translate(0, data.chartRect.height())
+              .stringify(),
           to: data.path.clone().stringify(),
           easing: Chartist.Svg.Easing.easeOutQuint
         }
@@ -147,14 +146,14 @@ export default class WeatherTemperatureChart extends Component {
 
   render() {
     return (
-      <ChartistGraph
-        data={this.state.data}
-        options={this.state.options}
-        type={"Line"}
-        listener={{
-          draw: e => this.onDrawHandler(e)
-        }}
-      />
+        <ChartistGraph
+            data={this.state.data}
+            options={this.state.options}
+            type={"Line"}
+            listener={{
+              draw: e => this.onDrawHandler(e)
+            }}
+        />
     );
   }
 }

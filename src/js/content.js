@@ -53,7 +53,7 @@ const store = createStore(
 chrome.storage.sync.get(null, function(chromeStorage) {
     store.chromeStorage = chromeStorage;
     ReactDOM.render(
-    <App store={store}/>, document.getElementById("chromeApp"));
+        <App store={store}/>, document.getElementById("chromeApp"));
 });
 
 

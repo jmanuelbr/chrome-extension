@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { _startCase } from "lodash/startCase";
 import ChartistGraph from "react-chartist";
 import Chartist from "chartist";
 import PropTypes from 'prop-types';
@@ -20,21 +19,21 @@ export default class WeatherWindChart extends Component {
     const offset = 5 + imgSize / 2;
     // if x and y exist concat them otherwise output only the existing value
     const value =
-      data.value.x !== undefined && data.value.y
-        ? data.value.x + ", " + data.value.y
-        : data.value.y || data.value.x;
+        data.value.x !== undefined && data.value.y
+            ? data.value.x + ", " + data.value.y
+            : data.value.y || data.value.x;
 
     let element = data.group
-      .elem(
-        "text",
-        {
-          x: position.x,
-          y: position.y - offset, // Y offset
-          style: "text-anchor: middle"
-        },
-        "ct-label"
-      )
-      .text(Math.round(value) + "kmh");
+        .elem(
+            "text",
+            {
+              x: position.x,
+              y: position.y - offset, // Y offset
+              style: "text-anchor: middle"
+            },
+            "ct-label"
+        )
+        .text(Math.round(value) + "kmh");
     element.animate({
       opacity: {
         begin: delayIncrement !== undefined ? delayIncrement : 200,
@@ -71,13 +70,13 @@ export default class WeatherWindChart extends Component {
       const transOriginY = data.y - imgSize / 2;
       const transformStr = transOriginX + "px " + transOriginY + "px";
       const rotateStr =
-        "rotate(" +
-        meta.windBearing +
-        "," +
-        imgSize / 2 +
-        "," +
-        imgSize / 2 +
-        ")";
+          "rotate(" +
+          meta.windBearing +
+          "," +
+          imgSize / 2 +
+          "," +
+          imgSize / 2 +
+          ")";
       let imageElement = new Chartist.Svg("image", {
         height: imgSize,
         width: imgSize,
@@ -97,10 +96,10 @@ export default class WeatherWindChart extends Component {
         }
       });
       this.addLabel(
-        this.positonCalculator(data),
-        data,
-        meta.delayIncrement,
-        imgSize
+          this.positonCalculator(data),
+          data,
+          meta.delayIncrement,
+          imgSize
       );
       data.element.replace(imageElement);
     }
@@ -128,7 +127,7 @@ export default class WeatherWindChart extends Component {
         value: Math.round(hourData.windSpeed),
         meta: {
           imageUrl: chrome.runtime.getURL(
-            "../assets/wind-arrow-serie" + series + ".png"
+              "../assets/wind-arrow-serie" + series + ".png"
           ),
           windBearing: hourData.windBearing,
           delayIncrement: delayIncrement
@@ -167,14 +166,14 @@ export default class WeatherWindChart extends Component {
 
   render() {
     return (
-      <ChartistGraph
-        data={this.state.data}
-        options={this.state.options}
-        type={"Line"}
-        listener={{
-          draw: e => this.onDrawHandler(e)
-        }}
-      />
+        <ChartistGraph
+            data={this.state.data}
+            options={this.state.options}
+            type={"Line"}
+            listener={{
+              draw: e => this.onDrawHandler(e)
+            }}
+        />
     );
   }
 }

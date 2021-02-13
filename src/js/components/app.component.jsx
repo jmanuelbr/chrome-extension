@@ -27,23 +27,23 @@ export default class App extends Component {
     const {chromeStorage} = this.props.store;
 
     return (
-      <Provider store={this.props.store}>
-          <button className="map-button" onClick={this.toggleMapOverlay}>
-              <img
+        <Provider store={this.props.store}>
+            <button className="map-button" onClick={this.toggleMapOverlay}>
+                <img
                   src={chrome.runtime.getURL("../assets/google-maps.png")}
-              />
-          </button>
-          <button className="options-button" onClick={this.openOptionsPage}>
-              <img
+                />
+            </button>
+            <button className="options-button" onClick={this.openOptionsPage}>
+                <img
                 src={chrome.runtime.getURL("../assets/settings-icon.png")}
-              />
-          </button>
-          <ArticleSelected/>
-          <CurrencyWidget />
-          <WeatherWidget chromeStorage={chromeStorage}/>
-          <TabsContainerWidget/>
-          <MapComponent/>
-      </Provider>
+                />
+            </button>
+            <ArticleSelected/>
+            <CurrencyWidget />
+            <WeatherWidget chromeStorage={chromeStorage}/>
+            <TabsContainerWidget/>
+            <MapComponent/>
+        </Provider>
     );
   }
 }

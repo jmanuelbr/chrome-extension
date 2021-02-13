@@ -57,17 +57,17 @@ class CurrencyWidget extends AbstractWidget {
     const currencyRate = this.state.currencyRate;
 
     return (
-      <div className="currency-section">
-        <div className="widget-table">
-          <div className="currency-image">
-            <a href={CONSTANTS.CURRENCY_URL} target="_blank" rel="noopener noreferrer">
-              <img className="ukeur--logo--margin" src={image} height="20px" />
-            </a>
-          </div>
-          <div className="currency-text">GBP/EUR</div>
-          <div className="currency-text currency-value">{currencyRate}</div>
+        <div className="currency-section">
+            <div className="widget-table">
+                <div className="currency-image">
+                    <a href={CONSTANTS.CURRENCY_URL} target="_blank" rel="noopener noreferrer">
+                        <img className="ukeur--logo--margin" src={image} height="20px" />
+                    </a>
+                </div>
+                <div className="currency-text">GBP/EUR</div>
+                <div className="currency-text currency-value">{currencyRate}</div>
+            </div>
         </div>
-      </div>
     );
   }
 }

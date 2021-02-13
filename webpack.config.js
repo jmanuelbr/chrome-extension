@@ -3,8 +3,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const WebpackNotifierPlugin = require('webpack-notifier');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
-var path = require("path");
+let path = require("path");
 
 module.exports = {
     entry: {
@@ -28,12 +29,6 @@ module.exports = {
       },
     module: {
         rules: [
-            {
-                enforce: "pre",
-                test: /\.jsx?$/,
-                exclude: [/node_modules/, /build/],
-                use: "eslint-loader"
-            },
             {
                 test: [/\.jsx?$/],
                 exclude: /node_modules/,
@@ -98,6 +93,9 @@ module.exports = {
             analyzerMode: 'disabled',
             generateStatsFile: true,
             statsOptions: { source: false }
+        }),
+        new ESLintPlugin({
+            extensions: ['jsx','js']
         })
     ],
     watchOptions: {                  

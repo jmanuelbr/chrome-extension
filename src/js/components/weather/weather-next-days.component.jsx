@@ -107,33 +107,33 @@ export default class WeatherNextDays extends Component {
                     )}
                 </div>
                 {/*{ true ? // this.showDetails*/}
-                    <div className={"next-day-details " + (this.showDetails ? 'show-nextdays' : 'hide-nextdays')} >
-                        <div className="summary">
-                            {this.hoveredDay.summary}
-                        </div>
-                        <div className="dawn">
-                            <img src={chrome.runtime.getURL('../../assets/sunrise.png')}/>
-                            <span className="text">
-                                Sunrise time {getFormattedTime(this.hoveredDay.sunriseTime)}
-                            </span>
-                        </div>
-                        <div className="dusk">
-                            <img src={chrome.runtime.getURL('../../assets/sunset.png')}/>
-                            <span className="text">
-                                Sunset time {getFormattedTime(this.hoveredDay.sunsetTime)}
-                            </span>
-                        </div>
-                        <div className="moonphase">
-                            <img src={chrome.runtime.getURL(this.hoveredDay.moonPhase.icon)}/>
-                            <div className="text">
-                                <div className="text-en">{this.hoveredDay.moonPhase.phaseNameEng}</div>
-                                <div className="text-es">{this.hoveredDay.moonPhase.phaseNameEs}</div>
-                            </div>
-
-
-                        </div>
+                <div className={"next-day-details " + (this.showDetails ? 'show-nextdays' : 'hide-nextdays')} >
+                    <div className="summary">
+                        {this.hoveredDay.summary}
                     </div>
-                    {/*: null }*/}
+                    <div className="dawn">
+                        <img src={chrome.runtime.getURL('../../assets/sunrise.png')}/>
+                        <span className="text">
+                            Sunrise time {getFormattedTime(this.hoveredDay.sunriseTime)}
+                        </span>
+                    </div>
+                    <div className="dusk">
+                        <img src={chrome.runtime.getURL('../../assets/sunset.png')}/>
+                        <span className="text">
+                            Sunset time {getFormattedTime(this.hoveredDay.sunsetTime)}
+                        </span>
+                    </div>
+                    <div className="moonphase">
+                        <img src={chrome.runtime.getURL(this.hoveredDay.moonPhase.icon)}/>
+                        <div className="text">
+                            <div className="text-en">{this.hoveredDay.moonPhase.phaseNameEng}</div>
+                            <div className="text-es">{this.hoveredDay.moonPhase.phaseNameEs}</div>
+                        </div>
+
+
+                    </div>
+                </div>
+                {/*: null }*/}
 
             </div>
         );

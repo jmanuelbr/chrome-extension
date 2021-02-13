@@ -117,25 +117,25 @@ export default class TabsContainerWidget extends Component {
 
         return (
             <div className="tabs-section">
-            <Tabs
-              active={this.state.active}
-              onChange={active => this.tabFocusChanged(active)}
-              notifications={this.state.notifications}
-            >
-              {_map(tabsContent, (tabContent, i) => (
-                <img src={tabContent.icon} key={i} />
-              ))}
-            </Tabs>
-            {_map(tabsContent, (tabContent, i) => (
-              <div
-                className="tab-container"
-                key={i}
-                style={{ display: this.state.active == i ? "block" : "none" }}
-              >
-                {tabContent.widget}
-              </div>
-            ))}
-          </div>
+                <Tabs
+                    active={this.state.active}
+                    onChange={active => this.tabFocusChanged(active)}
+                    notifications={this.state.notifications}
+                >
+                    {_map(tabsContent, (tabContent, i) => (
+                        <img src={tabContent.icon} key={i} />
+                    ))}
+                </Tabs>
+                {_map(tabsContent, (tabContent, i) => (
+                    <div
+                        className="tab-container"
+                        key={i}
+                        style={{ display: this.state.active == i ? "block" : "none" }}
+                    >
+                        {tabContent.widget}
+                    </div>
+                ))}
+            </div>
         );
     }
 }

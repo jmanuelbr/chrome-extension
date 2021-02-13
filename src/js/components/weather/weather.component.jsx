@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import _map from "lodash/map";
 import _isEmpty from "lodash/isEmpty";
 import Loader from "../loader/loader.component";
 import WeatherNextDays from "./weather-next-days.component";
@@ -47,8 +46,8 @@ export class WeatherWidget extends Component {
       this.processData(data);
     } else {
       chrome.runtime.sendMessage(
-        { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
-        feedData => this.processData(feedData));
+          { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
+          feedData => this.processData(feedData));
     }
   }
 
@@ -77,75 +76,75 @@ export class WeatherWidget extends Component {
       const weather = this.state.data;
       const imageStyle = {
         background:
-          "url(" + chrome.runtime.getURL("../assets/weather.png") + ") 0 0",
+            "url(" + chrome.runtime.getURL("../assets/weather.png") + ") 0 0",
         height: "56px",
         width: "56px"
       };
       return (
-        <React.Fragment>
-          <div className="current">
-            <a
-              href="https://www.google.com/search?q=murcia+forecast"
-              target="_blank" rel="noopener noreferrer"
-            >
-              <div
-                style={imageStyle}
-                className={"weather-icon " + weather.currently.icon}
-              />
-            </a>
-            <div className="today-summary" onClick={this.toggleTodayForecast}>
-              <div className="summary">
-                <div className="real">
-                  {parseInt(weather.currently.temperature)}
-                  <span className="celsius">°C</span>
-                </div>
-                <div className="apparent">
-                  Feel{" "}
-                  <b>
-                    {Math.round(weather.currently.apparentTemperature * 10) /
-                      10}
-                  </b>{" "}
-                  <span className="celsius">°C</span>
-                </div>
-              </div>
-              <div className="wind-current">
-                <img
-                  src={chrome.runtime.getURL("../assets/wind-arrow.png")}
-                  style={{
-                    transform: `rotate(${weather.currently.windBearing}deg)`
-                  }}
+          <React.Fragment>
+              <div className="current">
+                  <a
+                  href="https://www.google.com/search?q=murcia+forecast"
+                  target="_blank" rel="noopener noreferrer"
+              >
+                      <div
+                    style={imageStyle}
+                    className={"weather-icon " + weather.currently.icon}
                 />
-                <div className="label">
-                  {Math.round(weather.currently.windSpeed)} km/h
-                </div>
+                  </a>
+                  <div className="today-summary" onClick={this.toggleTodayForecast}>
+                      <div className="summary">
+                          <div className="real">
+                              {parseInt(weather.currently.temperature)}
+                              <span className="celsius">°C</span>
+                          </div>
+                          <div className="apparent">
+                              Feel{" "}
+                              <b>
+                                  {Math.round(weather.currently.apparentTemperature * 10) /
+                      10}
+                              </b>{" "}
+                              <span className="celsius">°C</span>
+                          </div>
+                      </div>
+                      <div className="wind-current">
+                          <img
+                      src={chrome.runtime.getURL("../assets/wind-arrow.png")}
+                      style={{
+                        transform: `rotate(${weather.currently.windBearing}deg)`
+                      }}
+                  />
+                          <div className="label">
+                              {Math.round(weather.currently.windSpeed)} km/h
+                          </div>
+                      </div>
+                  </div>
+                  <button className="daysWeekButton" onClick={this.toggleNextDays}>
+                      <img
+                    src={chrome.runtime.getURL("../assets/weather-calendar.png")}
+                />
+                  </button>
               </div>
-            </div>
-            <button className="daysWeekButton" onClick={this.toggleNextDays}>
-              <img
-                src={chrome.runtime.getURL("../assets/weather-calendar.png")}
+              <div
+                className="next-days"
+                style={{
+                  visibility: `${this.state.nextDaysVisible ? "visible" : "hidden"}`
+                }}
+            >
+                  <WeatherNextDays dailyData={weather.daily} />
+              </div>
+              <div
+                className="today-weather"
+                style={{
+                  visibility: `${this.state.todayVisible ? "visible" : "hidden"}`
+                }}
+            >
+                  <WeatherToday
+                  todayData={weather.hourly}
+                  visibility={this.state.todayVisible}
               />
-            </button>
-          </div>
-          <div
-            className="next-days"
-            style={{
-              visibility: `${this.state.nextDaysVisible ? "visible" : "hidden"}`
-            }}
-          >
-            <WeatherNextDays dailyData={weather.daily} />
-          </div>
-          <div
-            className="today-weather"
-            style={{
-              visibility: `${this.state.todayVisible ? "visible" : "hidden"}`
-            }}
-          >
-            <WeatherToday
-              todayData={weather.hourly}
-              visibility={this.state.todayVisible}
-            />
-          </div>
-        </React.Fragment>
+              </div>
+          </React.Fragment>
       );
     }
   }

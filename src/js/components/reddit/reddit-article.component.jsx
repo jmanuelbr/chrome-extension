@@ -17,16 +17,16 @@ export default class RedditArticle extends Component {
             <div className="reddit-article">
                 <a href={'https://www.reddit.com/' + permalink} target="_blank" rel="noopener noreferrer">
                     <div className="votes">
-                    <ul>
-                        <li>
-                            <img src={chrome.runtime.getURL('../assets/reddit-score.png')}/> 
-                            <span className='score-counter'>{score}</span>    
-                        </li>
-                        <li>
-                            <img src={chrome.runtime.getURL('../assets/comments.png')}/> 
-                            <span className='comments-counter'>{num_comments}</span>
-                        </li>
-                    </ul>
+                        <ul>
+                            <li>
+                                <img src={chrome.runtime.getURL('../assets/reddit-score.png')}/>
+                                <span className='score-counter'>{score}</span>
+                            </li>
+                            <li>
+                                <img src={chrome.runtime.getURL('../assets/comments.png')}/>
+                                <span className='comments-counter'>{num_comments}</span>
+                            </li>
+                        </ul>
                     </div>
                     <div className="thumbnail-container">
                         <img src={thumbnail} 

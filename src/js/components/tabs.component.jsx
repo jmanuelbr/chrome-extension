@@ -43,35 +43,35 @@ export default class Tabs extends Component {
 
   render() {
     return (
-      <div
-        className="Tabs"
-        ref={el => this.root = el}
-      >
-        {React.Children.map(this.props.children, (child, i) => {
-          let className = `Tabs__Tab`;
-          if (child.key == this.props.active) {
-            className = `${className} Tabs__Tab--active`;
-          }
-          if (this.props.notifications && this.props.notifications.includes(child.key)) {
-            className = `${className} Tabs__Tab--notification`;
-          }
-          return (
-            <div
-              className={className}
-              onClick={() => {
-                this.props.onChange(child.key);
-              }}
-              ref={el => this.els[child.key] = el}
-            >
-              {child}
-            </div>
-          );
-        })}
         <div
-          className="Tabs__Underline"
-          style={this.getUnderlineStyle()}
-        />
-      </div>
+            className="Tabs"
+            ref={el => this.root = el}
+        >
+            {React.Children.map(this.props.children, (child, i) => {
+            let className = `Tabs__Tab`;
+            if (child.key == this.props.active) {
+              className = `${className} Tabs__Tab--active`;
+            }
+            if (this.props.notifications && this.props.notifications.includes(child.key)) {
+              className = `${className} Tabs__Tab--notification`;
+            }
+            return (
+                <div
+                    className={className}
+                    onClick={() => {
+                      this.props.onChange(child.key);
+                    }}
+                    ref={el => this.els[child.key] = el}
+                >
+                    {child}
+                </div>
+            );
+          })}
+            <div
+              className="Tabs__Underline"
+              style={this.getUnderlineStyle()}
+          />
+        </div>
     );
   }
 
