@@ -1,4 +1,13 @@
 {
-  "presets": ["env", "stage-2", "react"],
-  "plugins": ["add-module-exports", "transform-decorators-legacy", "transform-runtime"]
+  "presets": [
+    ["@babel/preset-react", {
+      "runtime": "automatic"
+    }],
+    ["@babel/preset-env", {
+      "useBuiltIns": false
+    }]
+  ],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "decoratorsBeforeExport": true }],
+    "@babel/plugin-transform-runtime"]
 }

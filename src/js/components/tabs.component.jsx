@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, Children } from 'react';
 import PropTypes from 'prop-types';
 
 const transitionTime = 200;
@@ -47,7 +47,7 @@ export default class Tabs extends Component {
             className="Tabs"
             ref={el => this.root = el}
         >
-            {React.Children.map(this.props.children, (child, i) => {
+            {Children.map(this.props.children, (child, i) => {
             let className = `Tabs__Tab`;
             if (child.key == this.props.active) {
               className = `${className} Tabs__Tab--active`;
