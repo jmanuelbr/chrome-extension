@@ -51,13 +51,13 @@
     "webpack-notifier": "^1.7.0"
   },
   "dependencies": {
-    "chartist": "0.11.0",
+    "chartist": "0.11.4",
+    "react-chartist": "0.14.4",
     "lodash": "^4.17.19",
     "node-sass": "^4.14.1",
     "npm": "^7.5.4",
     "prop-types": "15.7.2",
     "react": "16.8.6",
-    "react-chartist": "0.13.3",
     "react-dom": "16.8.6",
     "react-redux": "7.0.3",
     "redux": "4.0.1",
