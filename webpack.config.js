@@ -2,8 +2,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const WebpackNotifierPlugin = require('webpack-notifier');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 const ESLintPlugin = require('eslint-webpack-plugin');
+
 
 let path = require("path");
 
@@ -19,13 +20,8 @@ module.exports = {
         publicPath: "/build"
     },
     optimization: {
-        minimizer: [new UglifyJsPlugin({
-            uglifyOptions: {
-              output: {
-                comments: false,
-              },
-            },
-          })],
+        minimize: true,
+        minimizer: [new TerserPlugin()]
       },
     module: {
         rules: [
@@ -97,9 +93,10 @@ module.exports = {
         new ESLintPlugin({
             extensions: ['jsx','js']
         })
-    ],
+],
     watchOptions: {                  
         ignored: ['build/**/*.js', 'node_modules'],
         aggregateTimeout: 300
       },
+    target: "node"
 };
