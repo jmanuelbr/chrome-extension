@@ -94,8 +94,11 @@ module.exports = {
             contentImage: path.join(__dirname, 'src/assets/webpack-notification.png'),
             excludeWarnings: true
         }),
-
-        // new BundleAnalyzerPlugin()
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'disabled',
+            generateStatsFile: true,
+            statsOptions: { source: false }
+        })
     ],
     watchOptions: {                  
         ignored: ['build/**/*.js', 'node_modules'],
