@@ -64,8 +64,7 @@ class SlashdotWidget extends AbstractWidget {
                     list.push(article);
                 });
             });
-            // orderedArticles = _orderBy(list, ['comments'],['desc']);
-            orderedArticles = list;
+            orderedArticles = list.sort((a, b) => (a.comments < b.comments) ? 1 : -1);
         }
         catch (exception) {
             super.loading(false);

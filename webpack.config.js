@@ -79,12 +79,6 @@ module.exports = {
             filename: "../css/styles.css",
             chunkFilename: "[id].css"
         }),
-        new WebpackNotifierPlugin({
-            title: 'Webpack Making Noise',
-            skipFirstNotification: false,
-            contentImage: path.join(__dirname, 'src/assets/webpack-notification.png'),
-            excludeWarnings: true
-        }),
         new BundleAnalyzerPlugin({
             analyzerMode: 'disabled',
             generateStatsFile: true,
@@ -92,6 +86,12 @@ module.exports = {
         }),
         new ESLintPlugin({
             extensions: ['jsx','js']
+        }),
+        new WebpackNotifierPlugin({
+            title: 'Webpack Making Noise',
+            skipFirstNotification: false,
+            contentImage: path.join(__dirname, 'src/assets/webpack-notification.png'),
+            excludeWarnings: true
         })
 ],
     watchOptions: {                  
