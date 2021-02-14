@@ -1,7 +1,7 @@
 {
   "name": "Jose Chrome Extension",
   "description": "¯\\_(ツ)_/¯",
-  "version": "2.9.0",
+  "version": "2.10.0",
   "manifest_version": 2,
   "icons": { "128": "assets/icon.png" },
   "web_accessible_resources": [
