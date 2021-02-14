@@ -1,5 +1,8 @@
 import * as CONSTANTS from "../constants";
-import { getMockData } from "../mocks/currency.mocks";
+let getMockData;
+if (process.env.NODE_ENV === 'development') {
+    getMockData = require('../mocks/currency.mocks').getMockData;
+}
 import { connect } from "react-redux";
 import { FETCH_CONTENT } from "../actions/types";
 import AbstractWidget from './abstract-widget.component';

@@ -2,10 +2,16 @@ import * as HELPER from '../helper';
 import Article from './article.component';
 import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
-import { getMockData } from '../mocks/theguardian.mocks';
+let getMockData;
+if (process.env.NODE_ENV === 'development') {
+    getMockData = require('../mocks/theguardian.mocks').getMockData;
+}
+let getMockData2;
+if (process.env.NODE_ENV === 'development') {
+    getMockData = require('../mocks/theguardian2.mocks').getMockData2;
+}
 import { NewsUpdatableWidget, connect } from './news-updatable-widget';
 import { MAX_ARTICLES } from '../constants';
-import {getMockData2} from "../mocks/theguardian2.mocks";
 import {Fragment} from "react";
 
 class TheGuardianWidget extends NewsUpdatableWidget {

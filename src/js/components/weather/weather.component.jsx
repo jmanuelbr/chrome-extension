@@ -3,7 +3,10 @@ import Loader from "../loader/loader.component";
 import WeatherNextDays from "./weather-next-days.component";
 import WeatherToday from "./weather-today.component";
 import { connect } from "react-redux";
-import { getMockData } from "../../mocks/weather.mocks";
+let getMockData;
+if (process.env.NODE_ENV === 'development') {
+    getMockData = require('../../mocks/weather.mocks').getMockData;
+}
 import { FETCH_CONTENT } from "../../actions/types";
 import PropTypes from 'prop-types';
 import {isEmpty} from "../../helper";

@@ -2,7 +2,10 @@ import * as HELPER from '../helper';
 import Article from './article.component';
 import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
-import { getMockData } from '../mocks/elpais.mocks';
+let getMockData;
+if (process.env.NODE_ENV === 'development') {
+    getMockData = require('../mocks/elpais.mocks').getMockData;
+}
 import { NewsUpdatableWidget, connect } from './news-updatable-widget';
 import { MAX_ARTICLES } from '../constants';
 import {Fragment} from "react";

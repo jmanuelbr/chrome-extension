@@ -3,7 +3,10 @@ import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
 import { NewsUpdatableWidget, connect } from './news-updatable-widget';
 import { MAX_ARTICLES } from '../constants';
-import {getMockData} from "../mocks/lavanguardia.mocks";
+let getMockData;
+if (process.env.NODE_ENV === 'development') {
+    getMockData = require('../mocks/lavanguardia.mocks').getMockData;
+}
 import {Fragment} from "react";
 
 class LaVanguardiaWidget extends NewsUpdatableWidget {

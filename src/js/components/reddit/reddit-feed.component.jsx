@@ -2,7 +2,10 @@ import RedditArticle from './reddit-article.component';
 import LoaderTabs from '../loader/loader-tabs.component';
 import Error from '../error.component';
 import { connect } from 'react-redux';
-import { getMockData } from '../../mocks/reddit.mocks';
+let getMockData;
+if (process.env.NODE_ENV === 'development') {
+    getMockData = require('../../mocks/reddit.mocks').getMockData;
+}
 import { FETCH_CONTENT } from '../../actions/types';
 import AbstractWidget from '../abstract-widget.component';
 import PropTypes from 'prop-types';
