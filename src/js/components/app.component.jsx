@@ -30,13 +30,13 @@ export default class App extends Component {
         <Provider store={this.props.store}>
             <button className="map-button" onClick={this.toggleMapOverlay}>
                 <img
-                  src={chrome.runtime.getURL("../assets/google-maps.png")}
-                />
+                    src={chrome.runtime.getURL("../assets/google-maps.png")}
+                    alt="Google Maps"/>
             </button>
             <button className="options-button" onClick={this.openOptionsPage}>
                 <img
-                src={chrome.runtime.getURL("../assets/settings-icon.png")}
-                />
+                    src={chrome.runtime.getURL("../assets/settings-icon.png")}
+                    alt="Settings"/>
             </button>
             <ArticleSelected/>
             <CurrencyWidget />

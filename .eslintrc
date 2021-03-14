@@ -10,7 +10,8 @@
     "test": true,
     "jest": true,
     "jQuery": true,
-    "$": true
+    "$": true,
+    "chrome": true
   },
   "parserOptions": {
     "ecmaVersion": 2018,

@@ -87,10 +87,6 @@ export default class TabsContainerWidget extends Component {
                 widget: <LaVanguardiaWidget parentCallback={this.setNoticationForTab} notificationIndex={"2"} />,
                 icon: chrome.runtime.getURL("../assets/lavanguardia.png")
             },
-            // {
-            //     widget: <LibertadDigitalWidget parentCallback={this.setNoticationForTab} notificationIndex={"3"} />,
-            //     icon: chrome.runtime.getURL("../assets/libertaddigital.png")
-            // },
             {
                 widget: <ElconfidencialWidget parentCallback={this.setNoticationForTab} notificationIndex={"3"} />,
                 icon: chrome.runtime.getURL("../assets/elconfidencial.png")

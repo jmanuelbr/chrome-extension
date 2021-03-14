@@ -1,11 +1,11 @@
 /* global chrome, window, document, XMLHttpRequest */
 require('../scss/global.scss');
-import * as CONSTANTS from './constants';
 import ReactDOM from "react-dom";
 import App from './components/app.component';
 import reduxThunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 import reducers from './reducers';
+import {MIN_VIEWPORT_WIDTH} from "./constants";
 
 // ******************************************************************
 //  Responsive hide logic
@@ -13,7 +13,7 @@ import reducers from './reducers';
 
 window.onresize = function() {
     const app = document.getElementById("chromeApp");   
-    if (document.body.clientWidth < CONSTANTS.MIN_VIEWPORT_WIDTH) {
+    if (document.body.clientWidth < MIN_VIEWPORT_WIDTH) {
         app.style.display = 'none';
     } else {
         app.style.display = 'block';
@@ -26,7 +26,7 @@ window.onresize = function() {
 
 function ready(callback) {
     // in case the document is already rendered
-    if (document.readyState!='loading') callback();
+    if (document.readyState !== 'loading') callback();
     else if (document.addEventListener) document.addEventListener('DOMContentLoaded', callback);
 }
 
