@@ -2,27 +2,20 @@ import * as HELPER from '../helper';
 import Article from './article.component';
 import LoaderTabs from './loader/loader-tabs.component';
 import Error from './error.component';
-import { connect } from 'react-redux';
 let getMockData;
 if (process.env.NODE_ENV === 'development') {
     getMockData = require('../mocks/elconfidencial.mocks').getMockData;
 }
-import { FETCH_CONTENT } from '../actions/types';
-import AbstractWidget from './abstract-widget.component';
-import PropTypes from 'prop-types';
 import {Fragment} from "react";
+import {NewsUpdatableWidget, connect} from './news-updatable-widget';
 
-export class ElconfidencialWidget extends AbstractWidget {
+class ElconfidencialWidget extends NewsUpdatableWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
             feedUrl: "https://rss.elconfidencial.com/espana/"
         };
-        this.state = {
-            articles: 'No news today :(',
-            loading: false,
-            error: true
-        };
+        this.mockFunction = getMockData;
     }
 
     getArticles(jsonData) {
@@ -31,7 +24,7 @@ export class ElconfidencialWidget extends AbstractWidget {
             jsonData = HELPER.parseFeed(jsonData);
             Object.values(jsonData).map(element => {
                 if (element.name === "entry") {
-                    var article = {};
+                    let article = {};
                     Object.values(element.elements).map(property => {
                         switch (property.name) {
                             case "title": {
@@ -72,14 +65,8 @@ export class ElconfidencialWidget extends AbstractWidget {
     };
 
     componentDidMount() {
-        if (this.props.mocksEnabled) {
-            this.processData(getMockData());
-        }
-        else {
-            chrome.runtime.sendMessage(
-                { contentScriptQuery: FETCH_CONTENT, properties: this.PROPERTIES},
-                feedData => this.processData(feedData));
-        }
+        this.initializeArticles(this.mockFunction);
+        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction), 60000);
     }
 
     render() {
@@ -108,14 +95,4 @@ export class ElconfidencialWidget extends AbstractWidget {
     }
 }
 
-function mapStateToProps(state) {
-	return {
-		mocksEnabled: state.configuration.mocksEnabled
-	};
-}
-
-ElconfidencialWidget.propTypes = {
-    mocksEnabled: PropTypes.bool.isRequired
-};
-
-export default connect(mapStateToProps)(ElconfidencialWidget);
+export default connect(ElconfidencialWidget);
