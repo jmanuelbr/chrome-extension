@@ -1,13 +1,9 @@
-import Article from './article.component';
-import LoaderTabs from './loader/loader-tabs.component';
-import Error from './error.component';
 import { NewsUpdatableWidget, connect } from './news-updatable-widget';
-import { MAX_ARTICLES } from '../constants';
+import {MAX_ARTICLES, ONE_HOUR} from '../constants';
 let getMockData;
 if (process.env.NODE_ENV === 'development') {
     getMockData = require('../mocks/lavanguardia.mocks').getMockData;
 }
-import {Fragment} from "react";
 
 class LaVanguardiaWidget extends NewsUpdatableWidget {
     constructor(props) {
@@ -102,35 +98,7 @@ class LaVanguardiaWidget extends NewsUpdatableWidget {
 
     componentDidMount() {
         this.initializeArticles(this.mockFunction);
-        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction), 60000);
-    }
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
-
-    render() {
-        if (!this.state.loading) {
-            return (
-                <LoaderTabs/>
-            );
-        }
-        else if (this.state.error) {
-            return (
-                <Error/>
-            );
-        }
-        else {
-            return (
-                <Fragment>
-                    {this.state.articles.map((article, i) => (
-                        <Article
-                            key={i}
-                            articleData={article}
-                        />
-                    ))}
-                </Fragment>
-            );
-        }
+        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction), ONE_HOUR);
     }
 }
 

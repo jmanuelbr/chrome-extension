@@ -1,11 +1,7 @@
 import * as HELPER from '../helper';
-import Article from './article.component';
-import LoaderTabs from './loader/loader-tabs.component';
-import Error from './error.component';
-import { getMockData } from '../mocks/europapress.mocks';
-import { NewsUpdatableWidget, connect } from './news-updatable-widget';
-import { MAX_ARTICLES } from '../constants';
-import {Fragment} from "react";
+import {getMockData} from '../mocks/europapress.mocks';
+import {NewsUpdatableWidget, connect} from './news-updatable-widget';
+import {MAX_ARTICLES, ONE_HOUR} from '../constants';
 
 class EuropaPressWidget extends NewsUpdatableWidget {
     constructor(props) {
@@ -74,35 +70,7 @@ class EuropaPressWidget extends NewsUpdatableWidget {
 
     componentDidMount() {
         this.initializeArticles(this.mockFunction);
-        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction), 60000);
-    }
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
-
-    render() {
-        if (!this.state.loading) {
-            return (
-                <LoaderTabs/>
-            );
-        }
-        else if (this.state.error) {
-            return (
-                <Error/>
-            );
-        }
-        else {
-            return(
-                <Fragment>
-                    {this.state.articles.map((article, i) => (
-                        <Article
-                            key={i}
-                            articleData={article}
-                        />
-                    ))}
-                </Fragment>
-            );
-        }
+        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction), ONE_HOUR);
     }
 }
 

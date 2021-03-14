@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'development') {
     getMockData = require('../mocks/elpais.mocks').getMockData;
 }
 import { NewsUpdatableWidget, connect } from './news-updatable-widget';
-import { MAX_ARTICLES } from '../constants';
+import {MAX_ARTICLES, ONE_HOUR} from '../constants';
 import {Fragment} from "react";
 
 class ElpaisWidget extends NewsUpdatableWidget {
@@ -84,35 +84,7 @@ class ElpaisWidget extends NewsUpdatableWidget {
 
     componentDidMount() {
         this.initializeArticles(this.mockFunction);
-        this.interval = setInterval(() => this.checkForNewUpdates(), 60000);
-    }
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
-
-    render() {
-        if (!this.state.loading) {
-            return (
-                <LoaderTabs/>
-            );
-        }
-        else if (this.state.error) {
-            return (
-                <Error/>
-            );
-        }
-        else {
-            return (
-                <Fragment>
-                    {this.state.articles.map((article, i) => (
-                        <Article
-                            key={i}
-                            articleData={article}
-                        />
-                    ))}
-                </Fragment>
-            );
-        }
+        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction), ONE_HOUR);
     }
 }
 

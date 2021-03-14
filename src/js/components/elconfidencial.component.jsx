@@ -1,13 +1,11 @@
 import * as HELPER from '../helper';
-import Article from './article.component';
-import LoaderTabs from './loader/loader-tabs.component';
-import Error from './error.component';
+
 let getMockData;
 if (process.env.NODE_ENV === 'development') {
     getMockData = require('../mocks/elconfidencial.mocks').getMockData;
 }
-import {Fragment} from "react";
 import {NewsUpdatableWidget, connect} from './news-updatable-widget';
+import {ONE_HOUR} from "../constants";
 
 class ElconfidencialWidget extends NewsUpdatableWidget {
     constructor(props) {
@@ -66,32 +64,7 @@ class ElconfidencialWidget extends NewsUpdatableWidget {
 
     componentDidMount() {
         this.initializeArticles(this.mockFunction);
-        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction), 60000);
-    }
-
-    render() {
-        if (!this.state.loading) {
-            return (
-                <LoaderTabs/>
-            );
-        }
-        else if (this.state.error) {
-            return (
-                <Error/>
-            );
-        }
-        else {
-            return (
-                <Fragment>
-                    {this.state.articles.map((article, i) => (
-                        <Article
-                            key={i}
-                            articleData={article}
-                        />
-                    ))}
-                </Fragment>
-            );
-        }
+        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction), ONE_HOUR);
     }
 }
 

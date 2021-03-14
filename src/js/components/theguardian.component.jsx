@@ -1,7 +1,5 @@
 import * as HELPER from '../helper';
-import Article from './article.component';
-import LoaderTabs from './loader/loader-tabs.component';
-import Error from './error.component';
+
 let getMockData;
 if (process.env.NODE_ENV === 'development') {
     getMockData = require('../mocks/theguardian.mocks').getMockData;
@@ -11,7 +9,7 @@ if (process.env.NODE_ENV === 'development') {
     getMockData = require('../mocks/theguardian2.mocks').getMockData2;
 }
 import { NewsUpdatableWidget, connect } from './news-updatable-widget';
-import { MAX_ARTICLES } from '../constants';
+import {MAX_ARTICLES, ONE_HOUR} from '../constants';
 import {Fragment} from "react";
 
 class TheGuardianWidget extends NewsUpdatableWidget {
@@ -78,35 +76,7 @@ class TheGuardianWidget extends NewsUpdatableWidget {
 
     componentDidMount() {
         this.initializeArticles(this.mockFunction);
-        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction, this.mockFunction2), 60000);
-    }
-    componentWillUnmount() {
-        clearInterval(this.interval);
-    }
-    
-    render() {
-        if (!this.state.loading) {
-            return (
-                <LoaderTabs/>
-            );
-        }
-        else if (this.state.error) {
-            return (
-                <Error/>
-            );
-        }
-        else {
-            return (
-                <Fragment>
-                    {this.state.articles.map((article, i) => (
-                        <Article
-                            key={i}
-                            articleData={article}
-                        />
-                    ))}
-                </Fragment>
-            );
-        }
+        this.interval = setInterval(() => this.checkForNewUpdates(this.mockFunction, this.mockFunction2), ONE_HOUR);
     }
 }
 
