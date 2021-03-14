@@ -1,7 +1,7 @@
-import * as HELPER from '../helper';
 import {getMockData} from '../mocks/europapress.mocks';
 import {NewsUpdatableWidget, connect} from './news-updatable-widget';
-import {MAX_ARTICLES, ONE_HOUR} from '../constants';
+import {DESCRIPTION, ENCLOSURE, LINK, MAX_ARTICLES, ONE_HOUR, PUB_DATE, TITLE} from '../constants';
+import {getDataFromProperty, parseFeed} from "../helper";
 
 class EuropaPressWidget extends NewsUpdatableWidget {
     constructor(props) {
@@ -16,28 +16,28 @@ class EuropaPressWidget extends NewsUpdatableWidget {
         let list = [];
         let articleCount = 0;
         try {
-            jsonData = HELPER.parseFeed(jsonData);
+            jsonData = parseFeed(jsonData);
             Object.values(jsonData).map(element => {
                 let article = {};
                 Object.values(element.elements).map(property => {
                     switch (property.name) {
-                        case "title": {
-                            article.title = HELPER.getDataFromProperty(property);
+                        case TITLE: {
+                            article.title = getDataFromProperty(property);
                             break;
                         }
-                        case "description": {
-                            article.description = HELPER.getDataFromProperty(property);
+                        case DESCRIPTION: {
+                            article.description = getDataFromProperty(property);
                             break;
                         }
-                        case "link": {
-                            article.link = HELPER.getDataFromProperty(property);
+                        case LINK: {
+                            article.link = getDataFromProperty(property);
                             break;
                         }
-                        case "pubDate": {
-                            article.date = HELPER.getDataFromProperty(property);
+                        case PUB_DATE: {
+                            article.date = getDataFromProperty(property);
                             break;
                         }
-                        case "enclosure": {
+                        case ENCLOSURE: {
                             if (property.attributes.type == "image/jpeg" &&
                                 property.attributes.url.indexOf("miniatura") > 0) {
                                 article.thumbnail = property.attributes.url;
@@ -52,9 +52,6 @@ class EuropaPressWidget extends NewsUpdatableWidget {
                     }
 
                 });
-                if (article.thumbnail === undefined) {
-                    article.thumbnail = chrome.runtime.getURL("../assets/no_photo_available.png");
-                }
                 if (articleCount < MAX_ARTICLES) {
                     list.push(article);
                     articleCount += 1;

@@ -1,11 +1,11 @@
-import * as HELPER from '../helper';
+import {NewsUpdatableWidget, connect} from './news-updatable-widget';
+import {CONTENT, ENCLOSURE, ID, LINK, ONE_HOUR, TITLE} from "../constants";
+import {parseFeed, getDataFromProperty} from "../helper";
 
 let getMockData;
 if (process.env.NODE_ENV === 'development') {
     getMockData = require('../mocks/elconfidencial.mocks').getMockData;
 }
-import {NewsUpdatableWidget, connect} from './news-updatable-widget';
-import {ONE_HOUR} from "../constants";
 
 class ElconfidencialWidget extends NewsUpdatableWidget {
     constructor(props) {
@@ -19,29 +19,29 @@ class ElconfidencialWidget extends NewsUpdatableWidget {
     getArticles(jsonData) {
         let list = [];
         try {
-            jsonData = HELPER.parseFeed(jsonData);
+            jsonData = parseFeed(jsonData);
             Object.values(jsonData).map(element => {
                 if (element.name === "entry") {
                     let article = {};
                     Object.values(element.elements).map(property => {
                         switch (property.name) {
-                            case "title": {
-                                article.title = HELPER.getDataFromProperty(property);
+                            case TITLE: {
+                                article.title = getDataFromProperty(property);
                                 break;
                             }
-                            case "content": {
-                                article.description = HELPER.getDataFromProperty(property);
+                            case CONTENT: {
+                                article.description = getDataFromProperty(property);
                                 break;
                             }
-                            case "link": {
+                            case LINK: {
                                 article.thumbnail = property.attributes.href;
                                 break;
                             }
-                            case "id": {
-                                article.link = HELPER.getDataFromProperty(property);
+                            case ID: {
+                                article.link = getDataFromProperty(property);
                                 break;
                             }
-                            case "enclosure": {
+                            case ENCLOSURE: {
                                 article.thumbnail = property.attributes.url;
                                 break;
                             }

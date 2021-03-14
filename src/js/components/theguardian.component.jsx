@@ -1,4 +1,6 @@
-import * as HELPER from '../helper';
+import {parseFeed} from '../helper';
+import { NewsUpdatableWidget, connect } from './news-updatable-widget';
+import {DESCRIPTION, LINK, MAX_ARTICLES, MEDIA_CONTENT, ONE_HOUR, PUB_DATE, TITLE} from '../constants';
 
 let getMockData;
 if (process.env.NODE_ENV === 'development') {
@@ -8,9 +10,6 @@ let getMockData2;
 if (process.env.NODE_ENV === 'development') {
     getMockData = require('../mocks/theguardian2.mocks').getMockData2;
 }
-import { NewsUpdatableWidget, connect } from './news-updatable-widget';
-import {MAX_ARTICLES, ONE_HOUR} from '../constants';
-import {Fragment} from "react";
 
 class TheGuardianWidget extends NewsUpdatableWidget {
     constructor(props) {
@@ -26,28 +25,28 @@ class TheGuardianWidget extends NewsUpdatableWidget {
         let list = [];
         let articleCount = 0;
         try {
-            jsonData = HELPER.parseFeed(jsonData);
+            jsonData = parseFeed(jsonData);
             Object.values(jsonData).map(element => {
                 let article = {};
                 Object.values(element.elements).map(property => {
                     switch (property.name) {
-                        case "title": { 
+                        case TITLE: {
                             article.title = property.elements[0].text;
                             break; 
                         }
-                        case "description": { 
+                        case DESCRIPTION: {
                             article.description = property.elements[0].text;
                             break; 
                         } 
-                        case "link": { 
+                        case LINK: {
                             article.link = property.elements[0].text;
                             break; 
                         } 
-                        case "pubDate": {
+                        case PUB_DATE: {
                             article.date = property.elements[0].text;
                             break; 
                         } 
-                        case "media:content": {
+                        case MEDIA_CONTENT: {
                             if (property.attributes.width === "460") {
                                 article.thumbnail = property.attributes.url;   
                             }

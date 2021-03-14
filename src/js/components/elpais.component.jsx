@@ -1,14 +1,11 @@
-import * as HELPER from '../helper';
-import Article from './article.component';
-import LoaderTabs from './loader/loader-tabs.component';
-import Error from './error.component';
+import {getDataFromProperty, parseFeed} from '../helper';
+import { NewsUpdatableWidget, connect } from './news-updatable-widget';
+import {CONTENT_ENCODED, DESCRIPTION, LINK, MAX_ARTICLES, MEDIA_CONTENT, ONE_HOUR, PUB_DATE, TITLE} from '../constants';
+
 let getMockData;
 if (process.env.NODE_ENV === 'development') {
     getMockData = require('../mocks/elpais.mocks').getMockData;
 }
-import { NewsUpdatableWidget, connect } from './news-updatable-widget';
-import {MAX_ARTICLES, ONE_HOUR} from '../constants';
-import {Fragment} from "react";
 
 class ElpaisWidget extends NewsUpdatableWidget {
     constructor(props) {
@@ -23,37 +20,37 @@ class ElpaisWidget extends NewsUpdatableWidget {
         let list = [];
         let articleCount = 0;
         try {
-            jsonData = HELPER.parseFeed(jsonData);
+            jsonData = parseFeed(jsonData);
             Object.values(jsonData).map(element => {
                 let article = {};
                 Object.values(element.elements).map(property => {
                     try {
                         switch (property.name) {
-                            case "title": {
-                                article.title = HELPER.getDataFromProperty(property);
+                            case TITLE: {
+                                article.title = getDataFromProperty(property);
                                 break;
                             }
-                            case "description": {
-                                article.description = HELPER.getDataFromProperty(property);
+                            case DESCRIPTION: {
+                                article.description = getDataFromProperty(property);
                                 break;
                             }
-                            case "link": {
-                                article.link = HELPER.getDataFromProperty(property);
+                            case LINK: {
+                                article.link = getDataFromProperty(property);
                                 break;
                             }
-                            case "pubDate": {
-                                article.date = HELPER.getDataFromProperty(property);
+                            case PUB_DATE: {
+                                article.date = getDataFromProperty(property);
                                 break;
                             }
-                            case "media:content": {
+                            case MEDIA_CONTENT: {
                                 article.thumbnail = property.attributes.url;
                                 if (property.attributes.url.indexOf(".mp4") > 0) {
                                     article.video = property.attributes.url;
                                 }
                                 break;
                             }
-                            case "content:encoded": {
-                                article.description += "</br>" + HELPER.getDataFromProperty(property);
+                            case CONTENT_ENCODED: {
+                                article.description += "</br>" + getDataFromProperty(property);
                                 break;
                             }
                             default: {

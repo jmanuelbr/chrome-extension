@@ -7,3 +7,16 @@ export const CURRENCY_URL =
 export const MIN_VIEWPORT_WIDTH = 1050;
 export const MAX_ARTICLES = 20;
 export const ONE_HOUR = 60000;
+
+
+// LITERALS
+
+export const TITLE = "title";
+export const DESCRIPTION = "description";
+export const LINK = "link";
+export const PUB_DATE = "pubDate";
+export const MEDIA_CONTENT = "media:content";
+export const CONTENT_ENCODED = "content:encoded";
+export const CONTENT = "content";
+export const ID = "id";
+export const ENCLOSURE = "enclosure";

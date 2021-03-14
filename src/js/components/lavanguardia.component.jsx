@@ -1,5 +1,6 @@
 import { NewsUpdatableWidget, connect } from './news-updatable-widget';
 import {MAX_ARTICLES, ONE_HOUR} from '../constants';
+
 let getMockData;
 if (process.env.NODE_ENV === 'development') {
     getMockData = require('../mocks/lavanguardia.mocks').getMockData;
