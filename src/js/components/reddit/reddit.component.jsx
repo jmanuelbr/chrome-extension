@@ -45,8 +45,8 @@ export default class RedditWidget extends Component {
             feedUrl: "https://www.reddit.com/r/chess/top/.json"
           },
           {
-            name: "london",
-            feedUrl: "https://www.reddit.com/r/london/top/.json"
+            name: "PS4",
+            feedUrl: "https://www.reddit.com/r/PS4Deals/top/.json"
           },
           {
             name: "programming",

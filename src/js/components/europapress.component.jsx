@@ -1,7 +1,11 @@
-import {getMockData} from '../mocks/europapress.mocks';
 import {NewsUpdatableWidget, connect} from './news-updatable-widget';
 import {DESCRIPTION, ENCLOSURE, LINK, MAX_ARTICLES, ONE_HOUR, PUB_DATE, TITLE} from '../constants';
 import {getDataFromProperty, parseFeed} from "../helper";
+
+let getMockData;
+if (process.env.NODE_ENV === 'development') {
+    getMockData = require('../mocks/europapress.mocks').getMockData;
+}
 
 class EuropaPressWidget extends NewsUpdatableWidget {
     constructor(props) {

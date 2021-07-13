@@ -2,11 +2,15 @@ import SlashdotArticle from './slashdot-article.component';
 import LoaderTabs from '../loader/loader-tabs.component';
 import Error from '../error.component';
 import { connect } from 'react-redux';
-import { getMockData } from '../../mocks/slashdot.mocks';
 import { FETCH_CONTENT } from '../../actions/types';
 import AbstractWidget from '../abstract-widget.component';
 import PropTypes from 'prop-types';
 import {Fragment} from "react";
+
+let getMockData;
+if (process.env.NODE_ENV === 'development') {
+    getMockData = require('../../mocks/slashdot.mocks').getMockData;
+}
 
 class SlashdotWidget extends AbstractWidget {
     constructor(props) {
