@@ -12,7 +12,7 @@ class CurrencyWidget extends AbstractWidget {
   constructor(props) {
     super(props);
     this.PROPERTIES = {
-      feedUrl: "http://spreadsheets.google.com/feeds/list/0Av2v4lMxiJ1AdE9laEZJdzhmMzdmcW90VWNfUTYtM2c/5/public/basic?alt=json",
+      feedUrl: "https://free.currconv.com/api/v7/convert?q=GBP_EUR&compact=ultra&apiKey=338efef6989e288b414c",
       needsJsonParse: true
     };
     this.state = {
@@ -21,12 +21,8 @@ class CurrencyWidget extends AbstractWidget {
   }
 
   getValueFromData(feedData) {
-    for (let i = 0; i < feedData.feed.entry.length; i += 1) {
-      const entry = feedData.feed.entry[i];
-
-      if (entry.title.$t === "EUR") {
-        return entry.content.$t.replace("_cokwr: ", "");
-      }
+    if (feedData && feedData.GBP_EUR) {
+      return feedData.GBP_EUR;
     }
     return "N/A";
   }
