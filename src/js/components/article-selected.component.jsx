@@ -17,10 +17,16 @@ class ArticleSelected extends Component {
         this.props.updateSelectedArticle(EMPTY_ARTICLE);
     }
 
+    scrollToTopDiv() {
+        const articleSelected = document.getElementById('article-selected');
+        if (articleSelected) articleSelected.scrollTop = 0;
+    }
+
     render() {
+        this.scrollToTopDiv();
         const {title, description} = this.props.article;
         return (
-            <div className="article-selected"
+            <div id="article-selected" className="article-selected"
             style={{'display': (title !== undefined)? 'block': 'none'}}>
                 <div className="title-section">
                     <h2 dangerouslySetInnerHTML={{ __html: title }}></h2>
