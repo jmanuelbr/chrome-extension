@@ -15,7 +15,7 @@ class Article extends Component {
     }
 
     isAnImage(url) {
-        return(url && url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+        return(url && url.match(/\.(jpeg|jpg|gif|png)(.*)$/) != null);
     }
 
     articleMedia(props) {
