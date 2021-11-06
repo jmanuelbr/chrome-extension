@@ -14,6 +14,10 @@ class Article extends Component {
         this.props.updateSelectedArticle(this.props.articleData);
     }
 
+    isAnImage(url) {
+        return(url && url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+    }
+
     articleMedia(props) {
         if (props.video !== undefined && props.video.length > 1) {
             return (
@@ -22,7 +26,7 @@ class Article extends Component {
                 </video>);
         }
         else {
-            props.thumbnail = (props.thumbnail) ?
+            props.thumbnail = (this.isAnImage(props.thumbnail)) ?
                 props.thumbnail : chrome.runtime.getURL("../assets/no_photo_available.png");
             return (<img src={props.thumbnail}/>);
         }
