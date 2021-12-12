@@ -12,7 +12,8 @@ class CurrencyWidget extends AbstractWidget {
   constructor(props) {
     super(props);
     this.PROPERTIES = {
-      feedUrl: "https://free.currconv.com/api/v7/convert?q=GBP_EUR&compact=ultra&apiKey=338efef6989e288b414c",
+      // New API, to check requests limits visit https://freecurrencyapi.net/dashboard
+      feedUrl: "https://freecurrencyapi.net/api/v2/latest?apikey=8e3cfe70-5b23-11ec-83fd-7b8cbd8c9e0d&base_currency=GBP",
       needsJsonParse: true
     };
     this.state = {
@@ -21,8 +22,8 @@ class CurrencyWidget extends AbstractWidget {
   }
 
   getValueFromData(feedData) {
-    if (feedData && feedData.GBP_EUR) {
-      return feedData.GBP_EUR;
+    if (feedData && feedData.data && feedData.data.EUR) {
+      return feedData.data.EUR;
     }
     return "N/A";
   }
