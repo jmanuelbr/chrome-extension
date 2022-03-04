@@ -2,7 +2,7 @@
 
 .map-container {
   position: absolute;
-  left: 278px;
+  left: $left-alignment;
   top: 5px;
   visibility: visible;
   border: 1px solid $border-color;

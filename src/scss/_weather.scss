@@ -25,7 +25,7 @@
   width: 740px;
   position: absolute;
   top: 38px;
-  left: 278px;
+  left: $left-alignment;
   display: block;
   .select-option {
     .radio {
@@ -197,7 +197,7 @@
 .next-days {
   position: absolute;
   top: 38px;
-  left: 278px;
+  left: $left-alignment;
   border: solid 1px lightgrey;
   width: 400px;
   height: 57px;
@@ -367,7 +367,7 @@
     height: 49px;
     position: absolute;
     top: 43px;
-    left: 214px;
+    left: 222px;
     background-color: white;
     cursor: pointer;
     img {
