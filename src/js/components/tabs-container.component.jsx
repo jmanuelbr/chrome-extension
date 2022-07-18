@@ -5,7 +5,7 @@ import ElpaisWidget from "./elpais.component";
 import SlashdotWidget from "./slashdot/slashdot.component";
 import RedditWidget from './reddit/reddit.component';
 import EuropaPressWidget from './europapress.component';
-import LaVanguardiaWidget from './lavanguardia.component';
+import TwentyMinutesWidget from './20minutos.component';
 import ElconfidencialWidget from "./elconfidencial.component";
 import { isEmpty } from "../helper";
 
@@ -84,8 +84,8 @@ export default class TabsContainerWidget extends Component {
                 icon: chrome.runtime.getURL("../assets/elpais.png")
             },
             {
-                widget: <LaVanguardiaWidget parentCallback={this.setNoticationForTab} notificationIndex={"2"} />,
-                icon: chrome.runtime.getURL("../assets/lavanguardia.png")
+                widget: <TwentyMinutesWidget parentCallback={this.setNoticationForTab} notificationIndex={"2"} />,
+                icon: chrome.runtime.getURL("../assets/20minutos.webp")
             },
             {
                 widget: <ElconfidencialWidget parentCallback={this.setNoticationForTab} notificationIndex={"3"} />,

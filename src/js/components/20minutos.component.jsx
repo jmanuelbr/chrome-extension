@@ -4,18 +4,14 @@ import {CONTENT_ENCODED, DESCRIPTION, LINK, MAX_ARTICLES, MEDIA_CONTENT, ONE_HOU
 
 let getMockData;
 if (process.env.NODE_ENV === 'development') {
-    getMockData = require('../mocks/elpais.mocks').getMockData;
+    getMockData = require('../mocks/20minutos.mocks').getMockData;
 }
 
-class TwitterWidget extends NewsUpdatableWidget {
+class TwentyMinutesWidget extends NewsUpdatableWidget {
     constructor(props) {
         super(props);
         this.PROPERTIES = {
-            appId: "21981019",
-            apiKey: "hXPCpgcEmzZGu07j5ET73bduW",
-            apiKeySecret: "YLqu2IsQIpdiUSt1x3gFokF9YlLLhFyRUVxW6AONrDlvbV0KlQ",
-            apiBearerToken: "AAAAAAAAAAAAAAAAAAAAAFtnTwEAAAAAj4eXbTIUCoVHsk6thz%2B3FCfu8SA%3DGiBCJY2C3MBq6GOMeMSLsxxtdR75BQUemFVK3Eub3HjnM5lkou",
-            feedUrl: "https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada"
+            feedUrl: "https://www.20minutos.es/rss/"
         };
         this.mockFunction = getMockData;
     }
@@ -78,7 +74,7 @@ class TwitterWidget extends NewsUpdatableWidget {
         }
         catch (exception) {
             super.loading(false);
-            console.error('*** EXCEPTION Twitter component (I could not parse all articles) -> ', exception);
+            console.error('*** EXCEPTION 20Minutos component (I could not parse all articles) -> ', exception);
         }
         return list;
     };
@@ -89,4 +85,4 @@ class TwitterWidget extends NewsUpdatableWidget {
     }
 }
 
-export default connect(TwitterWidget);
+export default connect(TwentyMinutesWidget);
