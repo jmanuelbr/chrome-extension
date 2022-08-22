@@ -14,7 +14,7 @@ class CurrencyWidget extends AbstractWidget {
     this.PROPERTIES = {
       // New API, to check requests limits visit https://freecurrencyapi.net/dashboard
       // feedUrl: "https://freecurrencyapi.net/api/v2/latest?apikey=8e3cfe70-5b23-11ec-83fd-7b8cbd8c9e0d&base_currency=GBP",
-      feedUrl: "https://api.exchangerate.host/latest?base=GBP",
+      feedUrl: "https://v6.exchangerate-api.com/v6/c05fc597e14f469e6310af71/latest/GBP",
       needsJsonParse: true
     };
     this.state = {
@@ -23,8 +23,8 @@ class CurrencyWidget extends AbstractWidget {
   }
 
   getValueFromData(feedData) {
-    if (feedData && feedData.rates && feedData.rates.EUR) {
-      return feedData.rates.EUR;
+    if (feedData && feedData.conversion_rates && feedData.conversion_rates.EUR) {
+      return feedData.conversion_rates.EUR;
     }
     return "N/A";
   }
