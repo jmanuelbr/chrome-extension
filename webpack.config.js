@@ -22,7 +22,7 @@ module.exports = {
     optimization: {
         minimize: true,
         minimizer: [new TerserPlugin()]
-      },
+    },
     module: {
         rules: [
             {
@@ -51,30 +51,34 @@ module.exports = {
     resolve: {
         modules: [__dirname, 'src/js', 'node_modules'],
         extensions: ['*', '.js', '.jsx'],
-      },
+    },
     plugins: [
-        new CopyWebpackPlugin([{
-            from: 'src/assets',
-            to: '../assets',
-            toType: 'dir'
-        }]),
-        new CopyWebpackPlugin([
-            {
-                from: 'src/manifest.json',
-                to: '../manifest.json',
-                toType: 'file'
-            },
-            {
-                from: 'src/options.html',
-                to: '../options.html',
-                toType: 'file'
-            },
-            {
-                from: 'src/vendors/chartist.css',
-                to: '../css/chartist.css',
-                toType: 'file'
-            }
-        ]),
+        new CopyWebpackPlugin({
+            patterns: [{
+                from: 'src/assets',
+                to: '../assets',
+                toType: 'dir'
+            }]
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: 'src/manifest.json',
+                    to: '../manifest.json',
+                    toType: 'file'
+                },
+                {
+                    from: 'src/options.html',
+                    to: '../options.html',
+                    toType: 'file'
+                },
+                {
+                    from: 'src/vendors/chartist.css',
+                    to: '../css/chartist.css',
+                    toType: 'file'
+                }
+            ]
+        }),
         new MiniCssExtractPlugin({
             filename: "../css/styles.css",
             chunkFilename: "[id].css"
@@ -82,10 +86,10 @@ module.exports = {
         new BundleAnalyzerPlugin({
             analyzerMode: 'disabled',
             generateStatsFile: true,
-            statsOptions: { source: false }
+            statsOptions: {source: false}
         }),
         new ESLintPlugin({
-            extensions: ['jsx','js']
+            extensions: ['jsx', 'js']
         }),
         new WebpackNotifierPlugin({
             title: 'Webpack Making Noise',
@@ -93,10 +97,10 @@ module.exports = {
             contentImage: path.join(__dirname, 'src/assets/webpack-notification.png'),
             excludeWarnings: true
         })
-],
-    watchOptions: {                  
+    ],
+    watchOptions: {
         ignored: ['build/**/*.js', 'node_modules'],
         aggregateTimeout: 300
-      },
+    },
     target: "node"
 };
