@@ -12,3 +12,8 @@ $tabsmenu-color: #AAA;
 $blue-color: #2e7da3;
 $left-alignment: 280px;
 
+@mixin respect-dark-mode {
+    filter: invert(1);
+    mix-blend-mode: difference;
+}
+

@@ -19,6 +19,7 @@
     font-family: $font-stack;
     font-size: 1.16em;
     color: dimgrey;
+    @include respect-dark-mode;
     margin: 0px;
     border-bottom: 1px solid lightgray;
     padding: 8px 0;
@@ -45,6 +46,7 @@
     float: left;
     padding: 5px 0 0 10px;
     color: dimgrey;
+    @include respect-dark-mode;
     ul {
       list-style-type: none;
       .section-title {

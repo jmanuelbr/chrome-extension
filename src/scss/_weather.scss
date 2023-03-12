@@ -17,11 +17,17 @@
   }
 }
 
+
+.ct-label {
+  color: dimgray;
+  @include respect-dark-mode;
+}
+
+
 .today-hours-panel {
   border: solid 1px lightgrey;
   border-radius: 4px;
   height: 253px;
-  background-color: white;
   width: 740px;
   position: absolute;
   top: 38px;
@@ -56,6 +62,7 @@
           background: #f4f4f4;
           border: solid 1px lightgrey;
           border-radius: 4px;
+          @include respect-dark-mode;
         }
       }
     }
@@ -125,7 +132,6 @@
     overflow-y: hidden;
     display: block;
     top: -200px;
-    background-color: white;
     .ct-chart {
       width: 2000px;
       height: 200px;
@@ -179,7 +185,6 @@
     top: -424px;
     height: 197px;
     top: -397px;
-    background-color: white;
     overflow-x: scroll;
     overflow-y: hidden;
     display: block;
@@ -202,7 +207,6 @@
   width: 400px;
   height: 57px;
   border-radius: 4px;
-  background-color: white;
   .next-days-container {
     .next-days-panel {
       height: 60px;
@@ -213,6 +217,7 @@
         background: transparent;
         &:hover {
           background: rgb(234, 244, 255);
+          @include respect-dark-mode;
         }
         .weather-icon-small {
           position: relative;
@@ -255,6 +260,7 @@
           text-align: center;
           height: 10px;
           font-size: 0.84em;
+          @include respect-dark-mode;
         }
         .temperature {
           text-align: center;
@@ -280,6 +286,7 @@
       font-size: 1.16em;
       .summary {
         margin-bottom: 5px;
+        @include respect-dark-mode;
       }
 
       .dawn {
@@ -290,6 +297,7 @@
           position: relative;
           top: -13px;
           left: 5px;
+          @include respect-dark-mode;
         }
       }
 
@@ -301,6 +309,7 @@
           position: relative;
           top: -13px;
           left: 5px;
+          @include respect-dark-mode;
         }
       }
       .moonphase {
@@ -315,6 +324,7 @@
           left: 1px;
           float: left;
           top: 3px;
+          @include respect-dark-mode;
         }
       }
     }
@@ -336,6 +346,7 @@
     &:visited,
     &:hover {
       color: dimgrey;
+      @include respect-dark-mode;
     }
   }
   height: 57px;
@@ -345,6 +356,7 @@
   .weather-icon {
     float: left;
     margin-right: 5px;
+    @include respect-dark-mode;
   }
   .today-summary {
     cursor: pointer;
@@ -354,6 +366,7 @@
     position: relative;
     top: -1px;
     max-height: 52px;
+    @include respect-dark-mode;
     &:hover {
       border: 1px solid lightgray;
       background-color: rgb(244, 244, 244);
@@ -368,7 +381,6 @@
     position: absolute;
     top: 43px;
     left: 222px;
-    background-color: white;
     cursor: pointer;
     img {
       width: 40px;
@@ -377,6 +389,7 @@
       border: 1px solid lightgray;
       background-color: rgb(244, 244, 244);
       border-radius: 3px;
+      @include respect-dark-mode;
     }
   }
   .summary {

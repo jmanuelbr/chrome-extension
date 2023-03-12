@@ -3,7 +3,6 @@
 
 .currency-section {
     font-family: $font-stack;
-    background-color: white;
 	.widget-table {
         border: 1px solid $white-color;
         padding: 4px;
@@ -24,11 +23,13 @@
                 top: 3px;
                 padding-right: 8px;
                 padding-left: 4px;
+                @include respect-dark-mode;
         }
         .currency-value {
             top: 2px;
             font-weight: 600;
             font-size: 110%;
+            @include respect-dark-mode;
         }
     }
 }
