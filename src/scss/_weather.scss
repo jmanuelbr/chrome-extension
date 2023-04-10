@@ -262,9 +262,17 @@
           font-size: 0.84em;
           @include respect-dark-mode;
         }
+        .weather-icon-daily {
+          width: 40px;
+          position: relative;
+          top: -4px;
+          left: 4px;
+        }
         .temperature {
           text-align: center;
           font-size: 0.96em;
+          position: relative;
+          top: -13px;
           .high {
             color: lightcoral;
             font-weight: 501;
@@ -312,7 +320,7 @@
           @include respect-dark-mode;
         }
       }
-      .moonphase {
+      .moon_phase {
         img {
           width: 40px;
           position: relative;
@@ -341,6 +349,7 @@
 
 .current {
   a {
+    filter: none !important;
     text-decoration: none;
     &:link,
     &:visited,

@@ -21,7 +21,7 @@ export default class WeatherToday extends Component {
     };
 
     render() {
-        const todayData = this.props.todayData.data;
+        const todayData = this.props.todayData;
         return (
             <div className={'today-hours-panel ' + this.visibilityClass} id="today-hours-id">
                 <div className="select-option">
@@ -87,8 +87,6 @@ export default class WeatherToday extends Component {
 }
 
 WeatherToday.propTypes = {
-    todayData: PropTypes.shape({
-        data: PropTypes.array
-    }),
+    todayData: PropTypes.array,
     visibility: PropTypes.bool
 };

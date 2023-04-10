@@ -122,20 +122,20 @@ export default class WeatherWindChart extends Component {
     let delayIncrement = 50;
     let series = 0;
     todayArray.map((hourData, key) => {
-      const hour = new Date(hourData.time * 1000).getHours();
+      const hour = new Date(hourData.dt * 1000).getHours();
       windList.push({
-        value: Math.round(hourData.windSpeed),
+        value: Math.round(hourData.wind_speed),
         meta: {
           imageUrl: chrome.runtime.getURL(
               "../assets/wind-arrow-serie" + series + ".png"
           ),
-          windBearing: hourData.windBearing,
+          windBearing: hourData.wind_deg,
           delayIncrement: delayIncrement
         }
       });
       delayIncrement += 15;
       hoursList.push(hour + "h");
-      allWindList.push(hourData.windSpeed);
+      allWindList.push(hourData.wind_speed);
       numHoursAdded++;
       if (hour == 0 || key == todayArrayLength) {
         series++;

@@ -9,9 +9,9 @@ export default class WeatherNextDays extends Component {
         this.self = this;
         this.hoveredDay = {
             summary: "Nothing",
-            sunriseTime: 0,
-            sunsetTime: 0,
-            moonPhase : {
+            sunrise: 0,
+            sunset: 0,
+            moon_phase : {
                 icon: '../../assets/0_new_moon.png',
                 phaseNameEng: "none",
                 phaseNameEs: "nada"
@@ -21,53 +21,53 @@ export default class WeatherNextDays extends Component {
 
     }
 
-    getMoonPhase(moonPhaseValue) {
-        let moonPhase = {
+    getmoon_phase(moon_phaseValue) {
+        let moon_phase = {
             phaseNameEng: "none",
             phaseNameEs: "nada"
         };
-        if (moonPhaseValue > 0.9375 || moonPhaseValue <= 0.0625) {
+        if (moon_phaseValue > 0.9375 || moon_phaseValue <= 0.0625) {
             // New Moon
-            moonPhase.icon = '../../assets/0_new_moon.png';
-            moonPhase.phaseNameEng = ((moonPhaseValue == 0) ? "Complete ": "") + "New Moon";
-            moonPhase.phaseNameEs = ((moonPhaseValue == 0) ? "Completa ": "") + "Luna Nueva";
-        } else if (moonPhaseValue > 0.0625 && moonPhaseValue <= 0.1875) {
+            moon_phase.icon = '../../assets/0_new_moon.png';
+            moon_phase.phaseNameEng = ((moon_phaseValue == 0) ? "Complete ": "") + "New Moon";
+            moon_phase.phaseNameEs = ((moon_phaseValue == 0) ? "Completa ": "") + "Luna Nueva";
+        } else if (moon_phaseValue > 0.0625 && moon_phaseValue <= 0.1875) {
             // Waxing Crescent
-            moonPhase.icon = '../../assets/1_waxing_crescent.png';
-            moonPhase.phaseNameEng = "Waxing Crescent";
-            moonPhase.phaseNameEs = "Luna Menguante";
-        } else if (moonPhaseValue > 0.1875 && moonPhaseValue <= 0.3125) {
+            moon_phase.icon = '../../assets/1_waxing_crescent.png';
+            moon_phase.phaseNameEng = "Waxing Crescent";
+            moon_phase.phaseNameEs = "Luna Menguante";
+        } else if (moon_phaseValue > 0.1875 && moon_phaseValue <= 0.3125) {
             // First Quarter
-            moonPhase.icon = '../../assets/2_first_quarter.png';
-            moonPhase.phaseNameEng = "First Quarter";
-            moonPhase.phaseNameEs = "Cuarto Menguante";
-        } else if (moonPhaseValue > 0.3125 && moonPhaseValue <= 0.4375) {
+            moon_phase.icon = '../../assets/2_first_quarter.png';
+            moon_phase.phaseNameEng = "First Quarter";
+            moon_phase.phaseNameEs = "Cuarto Menguante";
+        } else if (moon_phaseValue > 0.3125 && moon_phaseValue <= 0.4375) {
             // Waxing Gibbous
-            moonPhase.icon = '../../assets/3_waxing_gibbous.png';
-            moonPhase.phaseNameEng = "Waxing Gibbous";
-            moonPhase.phaseNameEs = "Gibosa Menguante";
-        } else if (moonPhaseValue > 0.4375 && moonPhaseValue <= 0.5625) {
+            moon_phase.icon = '../../assets/3_waxing_gibbous.png';
+            moon_phase.phaseNameEng = "Waxing Gibbous";
+            moon_phase.phaseNameEs = "Gibosa Menguante";
+        } else if (moon_phaseValue > 0.4375 && moon_phaseValue <= 0.5625) {
             // Full Moon
-            moonPhase.icon = '../../assets/4_full_moon.png';
-            moonPhase.phaseNameEng = ((moonPhaseValue == 0.5) ? "Complete ": "") + "Full Moon";
-            moonPhase.phaseNameEs = ((moonPhaseValue == 0.5) ? "Completa ": "") + "Luna Llena";
-        } else if (moonPhaseValue > 0.5625 && moonPhaseValue <= 0.7375) {
+            moon_phase.icon = '../../assets/4_full_moon.png';
+            moon_phase.phaseNameEng = ((moon_phaseValue == 0.5) ? "Complete ": "") + "Full Moon";
+            moon_phase.phaseNameEs = ((moon_phaseValue == 0.5) ? "Completa ": "") + "Luna Llena";
+        } else if (moon_phaseValue > 0.5625 && moon_phaseValue <= 0.7375) {
             // Waning Gibbous
-            moonPhase.icon = '../../assets/5_waning_gibbous.png';
-            moonPhase.phaseNameEng = "Waning Gibbous";
-            moonPhase.phaseNameEs = "Gibosa Creciente";
-        } else if (moonPhaseValue > 0.7375 && moonPhaseValue <= 0.8125) {
+            moon_phase.icon = '../../assets/5_waning_gibbous.png';
+            moon_phase.phaseNameEng = "Waning Gibbous";
+            moon_phase.phaseNameEs = "Gibosa Creciente";
+        } else if (moon_phaseValue > 0.7375 && moon_phaseValue <= 0.8125) {
             // Third Quarter
-            moonPhase.icon = '../../assets/6_third_quarter.png';
-            moonPhase.phaseNameEng = "Third Quarter";
-            moonPhase.phaseNameEs = "Cuarto Creciente";
-        } else if (moonPhaseValue > 0.8125 && moonPhaseValue <= 0.9375) {
+            moon_phase.icon = '../../assets/6_third_quarter.png';
+            moon_phase.phaseNameEng = "Third Quarter";
+            moon_phase.phaseNameEs = "Cuarto Creciente";
+        } else if (moon_phaseValue > 0.8125 && moon_phaseValue <= 0.9375) {
             // Waning Crescent
-            moonPhase.icon = '../../assets/7_waning_crescent.png';
-            moonPhase.phaseNameEng = "Waning Crescent";
-            moonPhase.phaseNameEs = "Luna Creciente";
+            moon_phase.icon = '../../assets/7_waning_crescent.png';
+            moon_phase.phaseNameEng = "Waning Crescent";
+            moon_phase.phaseNameEs = "Luna Creciente";
         }
-        return moonPhase;
+        return moon_phase;
     }
 
     setShowDetails(showDetails) {
@@ -80,16 +80,16 @@ export default class WeatherNextDays extends Component {
     }
 
     setHoveredDay(dayIndex) {
-        this.hoveredDay.summary = this.props.dailyData.data[dayIndex].summary;
-        this.hoveredDay.sunriseTime = this.props.dailyData.data[dayIndex].sunriseTime;
-        this.hoveredDay.sunsetTime = this.props.dailyData.data[dayIndex].sunsetTime;
-        this.hoveredDay.moonPhase = this.getMoonPhase(this.props.dailyData.data[dayIndex].moonPhase);
+        this.hoveredDay.summary = this.props.dailyData[dayIndex].weather.description;
+        this.hoveredDay.sunrise = this.props.dailyData[dayIndex].sunrise;
+        this.hoveredDay.sunset = this.props.dailyData[dayIndex].sunset;
+        this.hoveredDay.moon_phase = this.getmoon_phase(this.props.dailyData[dayIndex].moon_phase);
         this.showDetails = true;
         this.forceUpdate();
     }
 
     render() {
-        const nextDaysArray = this.props.dailyData.data;
+        const nextDaysArray = this.props.dailyData;
         return(
             <div className="next-days-container"
                  onMouseEnter={() => this.setShowDetails(true)}
@@ -114,20 +114,20 @@ export default class WeatherNextDays extends Component {
                     <div className="dawn">
                         <img src={chrome.runtime.getURL('../../assets/sunrise.png')}/>
                         <span className="text">
-                            Sunrise time {getFormattedTime(this.hoveredDay.sunriseTime)}
+                            Sunrise time {getFormattedTime(this.hoveredDay.sunrise)}
                         </span>
                     </div>
                     <div className="dusk">
                         <img src={chrome.runtime.getURL('../../assets/sunset.png')}/>
                         <span className="text">
-                            Sunset time {getFormattedTime(this.hoveredDay.sunsetTime)}
+                            Sunset time {getFormattedTime(this.hoveredDay.sunset)}
                         </span>
                     </div>
-                    <div className="moonphase">
-                        <img src={chrome.runtime.getURL(this.hoveredDay.moonPhase.icon)}/>
+                    <div className="moon_phase">
+                        <img src={chrome.runtime.getURL(this.hoveredDay.moon_phase.icon)}/>
                         <div className="text">
-                            <div className="text-en">{this.hoveredDay.moonPhase.phaseNameEng}</div>
-                            <div className="text-es">{this.hoveredDay.moonPhase.phaseNameEs}</div>
+                            <div className="text-en">{this.hoveredDay.moon_phase.phaseNameEng}</div>
+                            <div className="text-es">{this.hoveredDay.moon_phase.phaseNameEs}</div>
                         </div>
 
 
@@ -141,7 +141,5 @@ export default class WeatherNextDays extends Component {
 }
 
 WeatherNextDays.propTypes = {
-    dailyData: PropTypes.shape({
-        data: PropTypes.array
-    })
+    dailyData: PropTypes.array
 };

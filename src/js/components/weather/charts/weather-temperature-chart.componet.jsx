@@ -109,10 +109,10 @@ export default class WeatherTemperatureChart extends Component {
     const todayArrayLength = todayArray.length - 1;
 
     todayArray.map((hourData, key) => {
-      const hour = new Date(hourData.time * 1000).getHours();
-      temperatureList.push(hourData.temperature);
+      const hour = new Date(hourData.dt * 1000).getHours();
+      temperatureList.push(hourData.temp);
       hoursList.push(hour + "h");
-      allTemperatureList.push(hourData.temperature);
+      allTemperatureList.push(hourData.temp);
       numHoursAdded++;
       if (hour == 0 || key == todayArrayLength) {
         // break each day into 1 section to depict them in different colors

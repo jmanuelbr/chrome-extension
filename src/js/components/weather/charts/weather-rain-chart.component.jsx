@@ -82,8 +82,8 @@ export default class WeatherRainChart extends Component {
         const todayArrayLength = todayArray.length -1 ;
 
         todayArray.map((hourData, key) => {
-            const hour = new Date(hourData.time * 1000).getHours();
-            const rain = Math.round(hourData.precipProbability * 100);
+            const hour = new Date(hourData.dt * 1000).getHours();
+            const rain = Math.round(hourData.rain);
             rainList.push(rain);
             hoursList.push(hour + "h");
             numHoursAdded++;
