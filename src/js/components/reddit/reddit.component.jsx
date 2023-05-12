@@ -45,16 +45,16 @@ export default class RedditWidget extends Component {
             feedUrl: "https://www.reddit.com/r/chess/top/.json"
           },
           {
-            name: "PS4",
-            feedUrl: "https://www.reddit.com/r/PS4Deals/top/.json"
+            name: "PG",
+            feedUrl: "https://www.reddit.com/r/patientgamers/top/.json"
           },
           {
             name: "programming",
             feedUrl: "https://www.reddit.com/r/programming/top/.json"
           },
           {
-            name: "world",
-            feedUrl: "https://www.reddit.com/r/worldnews/top/.json"
+            name: "midj",
+            feedUrl: "https://www.reddit.com/r/midjourney/top/.json"
           },
         ];
 
