@@ -6,6 +6,7 @@ import SlashdotWidget from "./slashdot/slashdot.component";
 import RedditWidget from './reddit/reddit.component';
 import EuropaPressWidget from './europapress.component';
 import TwentyMinutesWidget from './20minutos.component';
+import LaOpinionWidget from './laopinion.component';
 import ElconfidencialWidget from "./elconfidencial.component";
 import { isEmpty } from "../helper";
 
@@ -92,12 +93,12 @@ export default class TabsContainerWidget extends Component {
                 icon: chrome.runtime.getURL("../assets/elconfidencial.png")
             },
             {
-                widget: <EuropaPressWidget parentCallback={this.setNoticationForTab} notificationIndex={"4"} feedUrl={"https://www.europapress.es/rss/rss.aspx?ch=00285"}/>,
-                icon: chrome.runtime.getURL("../assets/extremadura_icon.png")
+                widget: <LaOpinionWidget parentCallback={this.setNoticationForTab} notificationIndex={"3"} />,
+                icon: chrome.runtime.getURL("../assets/laopinion.jpeg")
             },
             {
-                widget: <EuropaPressWidget parentCallback={this.setNoticationForTab} notificationIndex={"5"} feedUrl={"https://www.europapress.es/rss/rss.aspx?ch=00295"}/>,
-                icon: chrome.runtime.getURL("../assets/murcia_icon.png")
+                widget: <EuropaPressWidget parentCallback={this.setNoticationForTab} notificationIndex={"4"} feedUrl={"https://www.europapress.es/rss/rss.aspx?ch=00285"}/>,
+                icon: chrome.runtime.getURL("../assets/extremadura_icon.png")
             },
             {
                 widget: <SlashdotWidget />,
