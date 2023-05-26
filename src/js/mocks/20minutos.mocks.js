@@ -10,7 +10,7 @@ const data = `<?xml version="1.0" encoding="UTF-8"?>
         <item>
             <guid isPermaLink="false">https://www.20minutos.es/noticia/5031197/0/adriana-lastra-dimite-como-vicesecretaria-general-del-psoe/</guid>
             <title>
-                <![CDATA[Adriana Lastra dimite como vicesecretaria general del PSOE por "motivos personales"]]>
+                <![CDATA[MOCKS - Adriana Lastra dimite como vicesecretaria general del PSOE por "motivos personales"]]>
             </title>
             <pubDate>Mon, 18 Jul 2022 09:38:37 +0200</pubDate>
             <link>https://www.20minutos.es/noticia/5031197/0/adriana-lastra-dimite-como-vicesecretaria-general-del-psoe/</link>

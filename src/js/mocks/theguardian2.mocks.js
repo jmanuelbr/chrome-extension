@@ -17,7 +17,7 @@ const data = `
       <link>https://www.theguardian.com</link>
     </image>
     <item>
-      <title>UPDATED MOCKS - Theresa May rebuffs fresh calls to resign</title>
+      <title>MOCKS - Theresa May rebuffs fresh calls to resign</title>
       <link>https://www.theguardian.com/politics/2019/may/08/theresa-may-rebuffs-fresh-calls-to-resign2</link>
       <description>&lt;p&gt;Prime minister has no plans to step down before getting Brexit deal passed, says No 10&lt;br&gt;&lt;/p&gt;&lt;p&gt;Theresa May has no intention of setting out a fresh timetable for her departure, Downing Street has signalled, with a spokesman insisting she is determined to “get Brexit done”.&lt;/p&gt;&lt;p&gt;The spokesman dismissed calls from Conservative backbenchers for the prime minister to step down, saying she had already “made a very generous and bold offer” to the 1922 Committee of &lt;a href="https://www.theguardian.com/politics/2019/mar/27/theresa-may-to-resign-before-next-phase-of-brexit"&gt;resigning if her Brexit deal is passed&lt;/a&gt;.&lt;/p&gt; &lt;a href="https://www.theguardian.com/politics/2019/may/08/theresa-may-rebuffs-fresh-calls-to-resign"&gt;Continue reading...&lt;/a&gt;</description>
       <category domain="https://www.theguardian.com/politics/theresamay">Theresa May</category>
