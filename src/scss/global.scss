@@ -25,4 +25,5 @@
     font-family: $font-stack;
     z-index: 99999 !important;
     background-color: transparent;
+    @include respect-dark-mode;
 }

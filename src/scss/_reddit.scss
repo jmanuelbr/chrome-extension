@@ -19,17 +19,15 @@
         font-family: $font-stack;
         font-size: 1.16em;
         color: dimgrey;
-        @include respect-dark-mode;
         display: inline-block;
         margin: 0px;
-        border-bottom: 1px solid lightgray;
+        border-bottom: 1px solid $border-color;
         padding: 8px 0;
     }
     .votes {
         float: left;
         padding-right: 10px;
         color: dimgrey;
-        @include respect-dark-mode;
         ul {
             list-style-type: none;
             li {

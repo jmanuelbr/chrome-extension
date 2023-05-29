@@ -10,7 +10,7 @@
     border: 1px solid transparent;
     cursor: pointer;
     &:hover {
-        border: 1px solid lightgray;
+        border: 1px solid $border-color;
         background-color: rgb(244, 244, 244);
         border-radius: 3px;
     }
@@ -32,7 +32,7 @@
     border: 1px solid transparent;
     cursor: pointer;
     &:hover {
-      border: 1px solid lightgray;
+      border: 1px solid $border-color;
       background-color: rgb(244, 244, 244);
       border-radius: 3px;
     }

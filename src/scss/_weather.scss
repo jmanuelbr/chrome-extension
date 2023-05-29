@@ -20,7 +20,6 @@
 
 .ct-label {
   color: dimgray;
-  @include respect-dark-mode;
 }
 
 
@@ -62,7 +61,6 @@
           background: #f4f4f4;
           border: solid 1px lightgrey;
           border-radius: 4px;
-          @include respect-dark-mode;
         }
       }
     }
@@ -217,7 +215,6 @@
         background: transparent;
         &:hover {
           background: rgb(234, 244, 255);
-          @include respect-dark-mode;
         }
         .weather-icon-small {
           position: relative;
@@ -260,7 +257,6 @@
           text-align: center;
           height: 10px;
           font-size: 0.84em;
-          @include respect-dark-mode;
         }
         .weather-icon-daily {
           width: 40px;
@@ -294,7 +290,6 @@
       font-size: 1.16em;
       .summary {
         margin-bottom: 5px;
-        @include respect-dark-mode;
       }
 
       .dawn {
@@ -305,7 +300,6 @@
           position: relative;
           top: -13px;
           left: 5px;
-          @include respect-dark-mode;
         }
       }
 
@@ -317,7 +311,6 @@
           position: relative;
           top: -13px;
           left: 5px;
-          @include respect-dark-mode;
         }
       }
       .moon_phase {
@@ -332,7 +325,6 @@
           left: 1px;
           float: left;
           top: 3px;
-          @include respect-dark-mode;
         }
       }
     }
@@ -355,17 +347,15 @@
     &:visited,
     &:hover {
       color: dimgrey;
-      @include respect-dark-mode;
     }
   }
   height: 57px;
-  border: solid 1px lightgray;
+  border: solid 1px $border-color;
   border-radius: 4px;
   margin-top: 3px;
   .weather-icon {
     float: left;
     margin-right: 5px;
-    @include respect-dark-mode;
   }
   .today-summary {
     cursor: pointer;
@@ -375,9 +365,8 @@
     position: relative;
     top: -1px;
     max-height: 52px;
-    @include respect-dark-mode;
     &:hover {
-      border: 1px solid lightgray;
+      border: 1px solid $border-color;
       background-color: rgb(244, 244, 244);
     }
   }
@@ -395,10 +384,9 @@
       width: 40px;
     }
     &:hover {
-      border: 1px solid lightgray;
+      border: 1px solid $border-color;
       background-color: rgb(244, 244, 244);
       border-radius: 3px;
-      @include respect-dark-mode;
     }
   }
   .summary {

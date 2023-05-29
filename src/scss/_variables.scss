@@ -11,9 +11,18 @@ $background2-color: #fff;
 $tabsmenu-color: #AAA;
 $blue-color: #2e7da3;
 $left-alignment: 280px;
-
+$border-color: #5f6368;
+ 
 @mixin respect-dark-mode {
     filter: invert(1);
-    mix-blend-mode: difference;
+    img, video, .map-container {
+        filter: invert(1);
+    }
+    .ct-chart {
+        filter: invert(1);
+        .ct-label {
+            filter: invert(1);
+        }
+    }
 }
 

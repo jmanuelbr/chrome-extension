@@ -23,9 +23,8 @@
         font-family: $font-stack;
         font-size: 1.16em;
         color: dimgrey;
-        @include respect-dark-mode;
         margin: 0px;
-        border-bottom: 1px solid lightgray;
+        border-bottom: 1px solid $border-color;
         padding: 8px 0;
         cursor: pointer;
     }
@@ -62,13 +61,12 @@
     top: 139px;
     left: $left-alignment;
     width: 350px;
-    border: 1px solid lightgrey;
+    border: 1px solid $border-color;
     border-radius: 4px;
     padding: 5px 10px;
     font-family: $font-stack;
     max-height: 439px;
     overflow-y: scroll;
-    @include respect-dark-mode;
     &::-webkit-scrollbar {
         width: 6px;
     }

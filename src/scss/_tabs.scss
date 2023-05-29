@@ -3,21 +3,18 @@
 @keyframes color-pulse {
   0% {
     background-color: #fff0dc;
-    @include respect-dark-mode;
   }
   50% {
     background-color: #ffdeb8;
-    @include respect-dark-mode;
   }
   100% {
     background-color: #fff0dc;
-    @include respect-dark-mode;
   }
 }
 
 .tabs-section {
     margin: 2px 0;
-    border: 1px solid lightgrey;
+    border: 1px solid $border-color;
     border-radius: 4px;
 
     &::-webkit-scrollbar {
@@ -60,7 +57,6 @@
   }
   .Tabs__Tab--notification {
     background-color: #222;
-    @include respect-dark-mode;
     animation-name: color-pulse;
     animation-duration: 3s;
     animation-iteration-count: infinite;
@@ -69,7 +65,6 @@
   .Tabs__Tab:hover {
     background: rgb(234, 244, 255);
     color: white;
-    @include respect-dark-mode;
   }
   
   .Tabs__Underline {
@@ -98,7 +93,6 @@
                 &:hover {
                     background: rgb(234, 244, 255);
                     color: dimgrey;
-                    @include respect-dark-mode;
                   }
               }
               .Tabs__Tab--active{
@@ -144,7 +138,6 @@
           
           .dd-button:hover {
             background-color: #eeeeee;
-            @include respect-dark-mode;
           }
           
           
@@ -162,7 +155,6 @@
             margin: 2px 0 0 0;
             box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
             background-color: #ffffff;
-            @include respect-dark-mode;
             list-style-type: none;
             z-index: 999;
           }
@@ -182,7 +174,6 @@
           
           .dd-menu li:hover {
             background-color: #f6f6f6;
-            @include respect-dark-mode;
           }
           
           .dd-menu li.divider{
