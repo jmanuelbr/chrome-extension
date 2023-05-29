@@ -65,8 +65,8 @@
     border-radius: 4px;
     padding: 5px 10px;
     font-family: $font-stack;
-    max-height: 439px;
-    overflow-y: scroll;
+    max-height: 440px;
+    overflow: hidden;
     &::-webkit-scrollbar {
         width: 6px;
     }
@@ -102,6 +102,11 @@
         margin: 10px;
         font-size: 1.16em;
         font-family: $font-stack;
+        max-height: 337px;
+        overflow-y: scroll;
+        padding-right: 17px;
+        box-sizing: content-box;
+        width: 342px;
         p {
             margin-left: 0;
             margin-right: 0;
