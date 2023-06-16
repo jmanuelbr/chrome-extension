@@ -30,10 +30,6 @@ class TwentyMinutesWidget extends NewsUpdatableWidget {
                                 article.title = getDataFromProperty(property);
                                 break;
                             }
-                            case DESCRIPTION: {
-                                article.description = getDataFromProperty(property);
-                                break;
-                            }
                             case LINK: {
                                 article.link = getDataFromProperty(property);
                                 break;
@@ -50,7 +46,7 @@ class TwentyMinutesWidget extends NewsUpdatableWidget {
                                 break;
                             }
                             case CONTENT_ENCODED: {
-                                article.description += "</br>" + getDataFromProperty(property);
+                                article.description = getDataFromProperty(property);
                                 break;
                             }
                             default: {
