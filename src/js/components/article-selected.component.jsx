@@ -18,7 +18,7 @@ class ArticleSelected extends Component {
     }
 
     scrollToTopDiv() {
-        const articleSelected = document.getElementById('article-selected');
+        const articleSelected = document.getElementById('article-description');
         if (articleSelected) articleSelected.scrollTop = 0;
     }
 
@@ -35,7 +35,7 @@ class ArticleSelected extends Component {
                         onClick={this.setCurrentArticle}/>
                 </div>
 
-                <div className="description-section"
+                <div id="article-description" className="description-section"
                  dangerouslySetInnerHTML={{ __html: description }}></div>
 
             </div>
